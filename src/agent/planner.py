@@ -84,6 +84,20 @@ class AnalyticalPlanner:
         elif bicomp and "medio" in text and any(word in text for word in ("analiza", "distribu", "por medio")):
             steps.append(PlanStep("analizar_medios", "desglosar la métrica por medio"))
             intent = "media_analysis"
+        elif bicomp and any(word in text for word in (
+            "region", "sector", "holding", "agencia", "ciudad", "categoria", "subsector",
+            "central", "pais", "producto", "soporte", "franja", "genero", "tipo_pauta",
+            "marca_agrupada", "anunciante_agrupado",
+        )):
+            # NEW: routes to the generic ranking_por_dimension tool for any
+            # dimension not already covered by a dedicated branch above
+            # (anunciante, marca, medio, vehiculo). Without this, questions
+            # like "inversión por región" fell through to the generic
+            # consultar_inversion_publicitaria fallback, which only returns a
+            # total with no breakdown, causing the model to spend its full
+            # step budget guessing at other tools and hit AgentMaxStepsError.
+            steps.append(PlanStep("ranking_por_dimension", "desglosar la métrica por la dimensión mencionada"))
+            intent = "dimension_breakdown"
         elif bicomp and any(word in text for word in ("ranking", "top", "lider")):
             tool = "ranking_anunciantes" if "anunciante" in text else "ranking_marcas"
             steps.append(PlanStep(tool, "ordenar inversión mediante BigQuery"))

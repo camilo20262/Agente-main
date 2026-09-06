@@ -30,7 +30,7 @@ class BigQueryRepository:
         semantic = load_semantic_layer()
         self.allowed_metrics = set(semantic["metrics"].keys())
         self.allowed_dimensions = set(semantic["dimensions"].keys())
-    
+
     @property
     def client(self) -> Any:
         """Create the Google client lazily."""
@@ -122,6 +122,8 @@ class BigQueryRepository:
         return field
 
     def _bicomp_filters(self, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None) -> tuple[str, list[tuple[str, str, Any]]]:
+        if filters is not None and not isinstance(filters, dict):
+            raise TypeError(f"'filtros' debe ser un objeto JSON (diccionario), se recibió {type(filters).__name__}: {filters!r}")
         clauses: list[str] = []
         parameters: list[tuple[str, str, Any]] = []
         for index, (field, value) in enumerate((filters or {}).items()):
@@ -309,7 +311,6 @@ class BigQueryRepository:
         if dimension == "rango_fechas":
             return self.obtener_rango_fechas()
         return self._catalog(dimension, filters=filters, limit=limit)
-    
 
     def comparar_entidades(self, *, dimension: str, value_a: str, value_b: str, metric: str = "inv_neta",
                             filters: dict[str, Any] | None = None, start_date: str | date | None = None,
@@ -325,6 +326,7 @@ class BigQueryRepository:
                 "difference_pct": None if difference is None or not b else difference / b * 100,
                 "ratio_a_over_b": None if a is None or not b else a / b,
                 "row_count": first["row_count"] + second["row_count"], "evidence": [first["evidence"], second["evidence"]]}
+
     def comparar_periodos(self, *, period_a: dict[str, str], period_b: dict[str, str], metric: str = "inv_neta", filters: dict[str, Any] | None = None) -> dict[str, Any]:
         return self.comparar_periodos_bicomp(period_a=period_a, period_b=period_b, metric=metric, filters=filters)
 
@@ -333,4 +335,3 @@ class BigQueryRepository:
         # (medio, vehiculo, formato) porque explicar_variacion_bicomp está
         # hardcodeado así. Generalizar cuando haya un segundo caso de uso real.
         return self.explicar_variacion_bicomp(brand=entity_value, current_period=current_period, previous_period=previous_period, metric=metric, filters=filters, driver_limit=driver_limit)
-       

@@ -73,6 +73,21 @@ class ToolRegistry:
         self.register(RegisteredTool("ranking_marcas", "Ranking de marcas calculado por BigQuery.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("ranking_marcas", a)))
         self.register(RegisteredTool("analizar_medios", "Distribuye inversión u otra métrica BICOMP por medio.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("analizar_medios", a)))
         self.register(RegisteredTool("analizar_vehiculos", "Distribuye inversión u otra métrica BICOMP por vehículo.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("analizar_vehiculos", a)))
+        # Generic dimension-agnostic ranking tool: reads valid dimensions from
+        # the semantic layer (dimensions.yaml) so it works for any dimension
+        # (region, sector, holding, ciudad, agencia, etc.), not just the four
+        # hardcoded above. This makes the pattern reusable for future clients
+        # too, since it adapts automatically to whatever dimensions.yaml lists.
+        dimensiones_disponibles = list(self.semantic["dimensions"].keys())
+        ranking_generico = {**common, "dimension": {"type": "string", "enum": dimensiones_disponibles}, "limite": {"type": "integer", "minimum": 1, "maximum": 100}}
+        self.register(RegisteredTool(
+            "ranking_por_dimension",
+            "Ranking de una métrica BICOMP agrupado por CUALQUIER dimensión disponible (region, sector, holding, ciudad, agencia, etc.), calculado por BigQuery. Usa esta herramienta cuando se pida un desglose por una dimensión que no sea anunciante, marca, medio o vehículo.",
+            {"type": "object", "properties": ranking_generico, "required": ["dimension"]},
+            lambda a: self._bicomp_repository_call(
+                "ranking", dimension=a["dimension"], metric=a.get("metrica", "inv_neta"),
+                filters=a.get("filtros"), start_date=a.get("fecha_inicio"), end_date=a.get("fecha_fin"),
+                limit=a.get("limite", 10))))
         self.register(RegisteredTool("consultar_inserciones_bicomp", "Consulta el total real de inserciones BICOMP.", {"type": "object", "properties": {k: v for k, v in common.items() if k != "metrica"}}, lambda a: self._bicomp("consultar_inserciones", a)))
         self.register(RegisteredTool("obtener_catalogo_bicomp", "Obtiene anunciantes, marcas, medios, rango de fechas o esquema disponibles en BICOMP.",
             {"type": "object", "properties": {"catalogo": {"type": "string", "enum": ["anunciantes", "marcas", "medios", "medios_agrupados", "vehiculos", "formatos", "dispositivos", "ciudades", "regiones", "tipos_pauta", "rango_fechas", "esquema"]}, "filtros": {"type": "object"}, "limite": {"type": "integer", "minimum": 1, "maximum": 5000}}, "required": ["catalogo"]}, self._bicomp_catalog))

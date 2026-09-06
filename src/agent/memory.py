@@ -23,7 +23,14 @@ class AnalyticalMemory:
         if period:
             self.last_period = {k: v for k, v in period.items() if v is not None}
         filters = arguments.get("filtros") or result.get("filters") or {}
-        if filters:
+        # FIX: the LLM occasionally sends "filtros" as a plain string (e.g.
+        # "region") instead of an object, when it misunderstands the tool
+        # schema. dict("region") would raise
+        # "dictionary update sequence element #0 has length 1; 2 is required"
+        # since Python tries to unpack each character as a key-value pair.
+        # Guard with isinstance so a malformed argument is silently ignored
+        # here instead of crashing the whole conversation turn.
+        if isinstance(filters, dict) and filters:
             self.last_filters = dict(filters)
         brands = [value for value in (arguments.get("marca_a"), arguments.get("marca_b"), filters.get("marca") if isinstance(filters, dict) else None) if isinstance(value, str)]
         if brands:
