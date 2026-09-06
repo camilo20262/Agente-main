@@ -1,0 +1,23 @@
+"""Repository contract and runtime repository factory."""
+
+from __future__ import annotations
+
+from typing import Any, Protocol
+
+from src.config import Settings
+
+
+class DataRepository(Protocol):
+    source: str
+    def consultar_metrica(self, *, metric: str, filters: dict | None, start_date, end_date) -> dict[str, Any]: ...
+    def ranking(self, *, dimension: str, metric: str, filters: dict | None, start_date, end_date, limit: int) -> dict[str, Any]: ...
+    def serie_temporal(self, *, metric: str, granularity: str, filters: dict | None, start_date, end_date) -> dict[str, Any]: ...
+    def catalogo(self, *, dimension: str, filters: dict | None, limit: int) -> dict[str, Any]: ...
+    def comparar_entidades(self, *, dimension: str, value_a: str, value_b: str, metric: str, filters: dict | None, start_date, end_date) -> dict[str, Any]: ...
+    def comparar_periodos(self, *, period_a: dict, period_b: dict, metric: str, filters: dict | None) -> dict[str, Any]: ...
+    def explicar_variacion(self, *, entity_dimension: str, entity_value: str, current_period: dict, previous_period: dict, metric: str, filters: dict | None, driver_limit: int) -> dict[str, Any]: ...
+
+
+def create_repository(settings: Settings) -> DataRepository:
+    from src.data.bigquery_repository import BigQueryRepository
+    return BigQueryRepository(settings)
