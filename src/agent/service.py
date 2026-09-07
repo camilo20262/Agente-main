@@ -16,6 +16,19 @@ from src.config import Settings
 from src.tools.registry import ToolRegistry
 
 
+def _extract_user_text(content: Any) -> str:
+    """Extract text for planning without modifying multimodal content."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return " ".join(
+            block["text"] for block in content
+            if isinstance(block, dict) and block.get("type") == "text"
+            and isinstance(block.get("text"), str) and block["text"]
+        )
+    return ""
+
+
 class AgentMaxStepsError(RuntimeError):
     """Raised when the model never produces a final answer."""
 
@@ -52,7 +65,8 @@ class AgentService:
         conversation = list(messages)
         if not conversation or conversation[0].get("role") != "system":
             conversation.insert(0, {"role": "system", "content": self.system_prompt})
-        question = next((str(item.get("content", "")) for item in reversed(conversation) if isinstance(item, dict) and item.get("role") == "user" and isinstance(item.get("content"), str)), "")
+        question = next((_extract_user_text(item.get("content")) for item in reversed(conversation)
+                         if isinstance(item, dict) and item.get("role") == "user"), "")
         plan: AnalyticalPlan = self.planner.plan(question, self.memory.context())
         conversation.append({"role": "system", "content": "PLAN ANALÍTICO INTERNO VALIDADO (no mostrar al usuario): " + json.dumps(plan.as_dict(), ensure_ascii=False) +
                              "\nMEMORIA ANALÍTICA RESUMIDA: " + json.dumps(self.memory.context(), ensure_ascii=False)})
@@ -61,20 +75,21 @@ class AgentService:
         calls_seen: set[str] = set()
         for step in range(1, self.settings.max_agent_steps + 1):
             self.metrics.total_llm_calls += 1
+            has_successful_evidence = any(item["result"].get("success") is True for item in evidence)
             tool_choice: Any = "auto"
             if step == 1 and plan.steps:
                 tool_choice = {"type": "function", "function": {"name": plan.steps[0].tool}}
-            elif evidence and "integrate.api.nvidia.com" in str(getattr(self.client, "base_url", "")):
+            elif has_successful_evidence and "integrate.api.nvidia.com" in str(getattr(self.client, "base_url", "")):
                 # NVIDIA's hosted GPT-OSS endpoint can repeat the forced tool call
                 # after receiving its result. At this point the validated plan has
-                # evidence, so require the model to produce the final narrative.
+                # successful evidence, so require the model to produce the final narrative.
                 tool_choice = "none"
             completion = self.client.chat.completions.create(model=model or self.settings.openrouter_model, messages=conversation,
                 tools=self.registry.schemas, tool_choice=tool_choice, temperature=temperature,
                 max_tokens=self.settings.llm_max_tokens)
             message = completion.choices[0].message
             if not message.tool_calls:
-                if plan.steps and not evidence:
+                if plan.steps and not has_successful_evidence:
                     conversation.append(message)
                     conversation.append({"role": "system", "content": "El plan requiere evidencia cuantitativa. No respondas todavía: ejecuta una tool registrada apropiada antes de concluir."})
                     continue
