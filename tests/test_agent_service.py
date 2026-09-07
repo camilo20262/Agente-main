@@ -46,12 +46,16 @@ class RepeatingCompletions:
 def test_repeated_identical_tool_call_is_stopped():
     client = SimpleNamespace(chat=SimpleNamespace(completions=RepeatingCompletions()))
     service = AgentService(client=client, settings=Settings(max_agent_steps=3), registry=FakeRegistry())
-    try:
-        service.run([{"role": "user", "content": "inversión"}])
-    except RepeatedToolCallError as exc:
-        assert "consultar_inversion_publicitaria" in str(exc)
-    else:
-        raise AssertionError("Expected repeated call prevention")
+    result = service.run([{"role": "user", "content": "inversión"}])
+    assert result.is_partial is True
+    assert result.steps == 2
+    assert len(result.evidence) == 1
+    assert "8.72" in result.answer
+    assert "repitió" in result.answer
+    assert "límite de pasos" not in result.answer
+    assert result.metrics["errors"] == ["repeated_tool_call"]
+    assert result.metrics["total_tool_calls"] == 1
+
 
 
 class MultiStepCompletions:
@@ -259,3 +263,99 @@ def test_max_steps_without_success_still_raises():
         service.run([{"role": "user", "content": "inversión"}])
     assert completions.calls == 2
     assert service.metrics.errors[-1] == "max_steps"
+
+
+@pytest.mark.parametrize("same_batch", [False, True])
+def test_unknown_tool_returns_current_partial_immediately(same_batch):
+    from unittest.mock import Mock
+
+    class Completions:
+        def __init__(self): self.calls = 0
+        def create(self, **kwargs):
+            self.calls += 1
+            known = SimpleNamespace(id="known", function=SimpleNamespace(name="consultar_inversion_publicitaria", arguments="{}"))
+            invented = SimpleNamespace(id="unknown", function=SimpleNamespace(name="ejecutar_sql_bicomp", arguments="{}"))
+            calls = [known, invented, invented] if same_batch else ([known] if self.calls == 1 else [invented, invented])
+            return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=calls))])
+
+    registry = FakeRegistry()
+    registry.execute = Mock(wraps=registry.execute)
+    completions = Completions()
+    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)), settings=Settings(max_agent_steps=4), registry=registry)
+    result = service.run([{"role": "user", "content": "inversión"}])
+    assert result.is_partial
+    assert "8.72" in result.answer
+    assert "herramienta no registrada" in result.answer
+    assert result.metrics["errors"] == ["unknown_tool"]
+    assert completions.calls == (1 if same_batch else 2)
+    registry.execute.assert_called_once()
+
+
+def test_second_question_unknown_tool_returns_labeled_historical_evidence():
+    from unittest.mock import Mock
+
+    completions = FakeCompletions()
+    registry = FakeRegistry()
+    registry.execute = Mock(wraps=registry.execute)
+    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)), settings=Settings(max_agent_steps=4), registry=registry)
+    messages = [{"role": "user", "content": "inversión de Volvo en enero"}]
+    first = service.run(messages)
+    first.evidence[0]["result"]["value"] = 999  # The retained snapshot must be independent.
+    invented = SimpleNamespace(id="invented", function=SimpleNamespace(name="ejecutar_sql_bicomp", arguments="{}"))
+    completion = SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[invented, invented]))])
+    service.client.chat.completions = SimpleNamespace(create=Mock(return_value=completion))
+    messages += [{"role": "assistant", "content": first.answer}, {"role": "user", "content": "¿Y la inversión de Renault en marzo?"}]
+    result = service.run(messages)
+    assert result.is_partial
+    assert result.steps == 1
+    assert "Evidencia histórica" in result.answer
+    assert "inversión de Volvo en enero" in result.answer
+    assert "no responden la consulta actual" in result.answer
+    assert "8.72" in result.answer and "999" not in result.answer
+    assert result.evidence[0]["historical"] is True
+    assert result.evidence[0]["origin_question"] == messages[0]["content"]
+    service.client.chat.completions.create.assert_called_once()
+    registry.execute.assert_called_once()
+    assert "repeated_tool_call" not in result.metrics["errors"]
+
+
+@pytest.mark.parametrize("name", ["consultar_inversion_publicitaria", "ejecutar_sql_bicomp"])
+def test_repeated_tool_without_any_success_still_raises(name):
+    from unittest.mock import Mock
+
+    class FailingRegistry(FakeRegistry):
+        def execute(self, name, arguments): return {"success": False, "error": "fallo"}
+
+    call = SimpleNamespace(id="same", function=SimpleNamespace(name=name, arguments="{}"))
+    completion = SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[call]))])
+    create = Mock(return_value=completion)
+    registry = FailingRegistry()
+    registry.execute = Mock(wraps=registry.execute)
+    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create))), settings=Settings(max_agent_steps=3), registry=registry)
+    with pytest.raises(RepeatedToolCallError):
+        service.run([{"role": "user", "content": "inversión"}])
+    assert create.call_count == 2
+    registry.execute.assert_called_once()
+    assert service.metrics.errors[-1] == "repeated_tool_call"
+
+
+def test_repeated_real_tool_can_fall_back_to_historical_evidence():
+    from unittest.mock import Mock
+
+    registry = FakeRegistry()
+    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=FakeCompletions())), settings=Settings(max_agent_steps=4), registry=registry)
+    service.run([{"role": "user", "content": "inversión de Volvo"}])
+    registry.execute = Mock(return_value={"success": False, "error": "fallo transitorio"})
+    call = SimpleNamespace(id="retry", function=SimpleNamespace(name="consultar_inversion_publicitaria", arguments='{"filtros":{"marca":"RENAULT"}}'))
+    create = Mock(return_value=SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[call]))]))
+    service.client.chat.completions = SimpleNamespace(create=create)
+    result = service.run([{"role": "user", "content": "inversión de Renault"}])
+    assert result.is_partial
+    assert "Evidencia histórica" in result.answer
+    assert "8.72" in result.answer
+    assert result.steps == 2
+    assert result.evidence[0]["result"]["success"] is False
+    assert result.evidence[1]["historical"] is True
+    assert result.metrics["errors"][-1] == "repeated_tool_call"
+    registry.execute.assert_called_once()
+    assert create.call_count == 2
