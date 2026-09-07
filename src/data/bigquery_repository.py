@@ -187,18 +187,20 @@ class BigQueryRepository:
                 "row_count": a.get("row_count", 0) + b.get("row_count", 0), "evidence": [a.get("evidence"), b.get("evidence")]}
 
     def explicar_variacion_bicomp(self, *, brand: str, current_period: dict[str, str], previous_period: dict[str, str], metric: str = "inv_neta", filters: dict[str, Any] | None = None, driver_limit: int = 20) -> dict[str, Any]:
+        if not 1 <= driver_limit <= 100:
+            raise ValueError("limit debe estar entre 1 y 100.")
         base_filters = {**(filters or {}), "marca": brand}
         comparison = self.comparar_periodos_bicomp(period_a=current_period, period_b=previous_period, metric=metric, filters=base_filters)
         drivers: list[dict[str, Any]] = []
         evidence = list(comparison.get("evidence", []))
         for dimension in ("medio", "vehiculo", "formato"):
-            current = self._ranking_bicomp(dimension=dimension, metric=metric, filters=base_filters,
-                start_date=current_period["start"], end_date=current_period["end"], limit=driver_limit)
-            previous = self._ranking_bicomp(dimension=dimension, metric=metric, filters=base_filters,
-                start_date=previous_period["start"], end_date=previous_period["end"], limit=driver_limit)
+            current = self._totales_dimension_bicomp(dimension=dimension, metric=metric, filters=base_filters,
+                start_date=current_period["start"], end_date=current_period["end"])
+            previous = self._totales_dimension_bicomp(dimension=dimension, metric=metric, filters=base_filters,
+                start_date=previous_period["start"], end_date=previous_period["end"])
             current_map = {str(row["dimension"]): row["value"] or 0 for row in current["rows"]}
             previous_map = {str(row["dimension"]): row["value"] or 0 for row in previous["rows"]}
-            for value in current_map.keys() | previous_map.keys():
+            for value in sorted(current_map.keys() | previous_map.keys()):
                 contribution = current_map.get(value, 0) - previous_map.get(value, 0)
                 drivers.append({"dimension": dimension, "value": value, "current_value": current_map.get(value, 0),
                                 "previous_value": previous_map.get(value, 0), "contribution": contribution})
@@ -208,6 +210,16 @@ class BigQueryRepository:
                 "current_period": current_period, "previous_period": previous_period, "current_value": comparison["value_a"],
                 "previous_value": comparison["value_b"], "change": comparison["difference"], "change_pct": comparison["difference_pct"],
                 "drivers": drivers[:driver_limit], "row_count": comparison["row_count"], "evidence": evidence}
+
+    def _totales_dimension_bicomp(self, *, dimension: str, metric: str, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None) -> dict[str, Any]:
+        """Return complete dimension totals for variation drivers."""
+        self._bicomp_field(dimension); self._bicomp_field(metric, metric=True)
+        where, parameters = self._bicomp_filters(filters, start_date, end_date)
+        # Do not cap categories before subtraction: that would distort drivers.
+        # _execute_bicomp uses _execute's dry-run check and maximum_bytes_billed
+        # to enforce the configured cost limit on these full aggregations.
+        sql = f"SELECT `{dimension}` AS dimension, SUM(`{metric}`) AS value FROM `{self.bicomp_table}`{where} GROUP BY dimension"
+        return self._execute_bicomp(QuerySpec(sql, parameters))
 
     def _ranking_bicomp(self, *, dimension: str, metric: str, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None, limit: int) -> dict[str, Any]:
         self._bicomp_field(dimension); self._bicomp_field(metric, metric=True)
