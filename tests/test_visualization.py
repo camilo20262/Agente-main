@@ -12,3 +12,16 @@ def test_time_series_chart_spec_and_plotly_figure():
 def test_ranking_chart_spec():
     spec = build_chart_spec("ranking_marcas", {"metric": "inv_neta", "rows": [{"dimension": "VOLVO", "value": 20}]})
     assert spec["type"] == "ranking"
+    assert spec["title"] == "Ranking por inv_neta"
+
+
+def test_generic_dimension_ranking_chart_spec():
+    rows = [{"dimension": "ANDINA", "value": 30}, {"dimension": "CARIBE", "value": 20}]
+    result = {"success": True, "dimension": "region", "metric": "inv_neta", "rows": rows}
+    spec = build_chart_spec("ranking_por_dimension", result)
+    assert spec == {"type": "ranking", "title": "Ranking por region — inv_neta",
+                    "data": rows, "x": "value", "y": "dimension"}
+
+
+def test_generic_dimension_ranking_without_rows_has_no_chart():
+    assert build_chart_spec("ranking_por_dimension", {"dimension": "region", "rows": []}) is None

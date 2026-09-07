@@ -15,6 +15,8 @@ class AnalyticalMemory:
     last_filters: dict[str, Any] = field(default_factory=dict)
 
     def update_from_result(self, tool: str, arguments: dict[str, Any], result: dict[str, Any]) -> None:
+        if result.get("success") is not True:
+            return
         domain = result.get("domain")
         if domain:
             self.last_domain = domain

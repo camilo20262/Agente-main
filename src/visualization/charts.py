@@ -20,8 +20,11 @@ def build_chart_spec(tool: str, result: dict[str, Any]) -> dict[str, Any] | None
         return None
     if tool == "serie_temporal_bicomp":
         return {"type": "line", "title": f"Evolución de {result.get('metric', 'métrica')}", "data": rows, "x": "period", "y": "value"}
-    if tool in {"ranking_anunciantes", "ranking_marcas", "analizar_medios", "analizar_vehiculos"}:
-        return {"type": "ranking", "title": f"Ranking por {result.get('metric', 'métrica')}", "data": rows, "x": "value", "y": "dimension"}
+    if tool in {"ranking_anunciantes", "ranking_marcas", "analizar_medios", "analizar_vehiculos", "ranking_por_dimension"}:
+        title = f"Ranking por {result.get('metric', 'métrica')}"
+        if result.get("dimension"):
+            title = f"Ranking por {result['dimension']} — {result.get('metric', 'métrica')}"
+        return {"type": "ranking", "title": title, "data": rows, "x": "value", "y": "dimension"}
     return None
 
 
