@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable
 
+from jsonschema import FormatChecker, ValidationError, validate
+
 from src.data.repository import DataRepository
 from src.semantic import load_semantic_layer
 
@@ -45,11 +47,17 @@ class ToolRegistry:
         if tool is None:
             return {"success": False, "error": f"Herramienta desconocida: {name}"}
         try:
+            validate(arguments, tool.parameters, format_checker=FormatChecker())
+        except ValidationError as exc:
+            path = ".".join(str(part) for part in exc.absolute_path) or "arguments"
+            return {"success": False, "source": self.repository.source,
+                    "error": f"Argumentos inválidos para '{name}': {path}: {exc.message}"}
+        try:
             result = tool.handler(arguments)
             if "success" not in result:
                 result = {"success": "error" not in result, "source": self.repository.source, **result}
             return result
-        except (ValueError, TypeError, RuntimeError, KeyError) as exc:
+        except (ValueError, TypeError, RuntimeError, KeyError, AttributeError) as exc:
             return {"success": False, "source": self.repository.source, "error": str(exc)}
 
     def _register_defaults(self) -> None:

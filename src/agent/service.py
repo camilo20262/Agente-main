@@ -29,8 +29,31 @@ def _extract_user_text(content: Any) -> str:
     return ""
 
 
+def _summarize_partial_evidence(evidence: list[dict[str, Any]]) -> str:
+    """Summarize successful results locally, preserving values and query context."""
+    lines = ["No pude completar el análisis: alcancé el límite de pasos. "
+             "Estos son los resultados parciales obtenidos:"]
+    fields = ("metric", "dimension", "brand", "brand_a", "brand_b", "filters", "period",
+              "period_a", "period_b", "current_period", "previous_period", "value",
+              "value_a", "value_b", "difference", "difference_pct", "current_value",
+              "previous_value", "change", "change_pct", "start", "end", "row_count")
+    for item in evidence:
+        result = item["result"]
+        if result.get("success") is not True:
+            continue
+        details = {key: result[key] for key in fields if key in result and result[key] is not None}
+        for key in ("rows", "drivers", "values"):
+            if isinstance(result.get(key), list):
+                details[key] = result[key][:5]
+                if len(result[key]) > 5:
+                    details[f"{key}_nota"] = f"Muestra de 5 de {len(result[key])} elementos."
+        summary = json.dumps(details, ensure_ascii=False, default=str) if details else "Consulta exitosa sin valores resumibles."
+        lines.append(f"- {item['tool']}: {summary}")
+    return "\n".join(lines)
+
+
 class AgentMaxStepsError(RuntimeError):
-    """Raised when the model never produces a final answer."""
+    """Raised when steps are exhausted without successful evidence."""
 
 
 class RepeatedToolCallError(RuntimeError):
@@ -45,6 +68,7 @@ class AgentResult:
     plan: dict[str, Any]
     chart_specs: list[dict[str, Any]]
     metrics: dict[str, Any]
+    is_partial: bool = False
 
 
 class AgentService:
@@ -153,4 +177,13 @@ class AgentService:
                     chart_specs.append(chart)
                 conversation.append({"role": "tool", "tool_call_id": call.id, "content": json.dumps(result, ensure_ascii=False, default=str)})
         self.metrics.errors.append("max_steps")
+        # Include results from the last step, which were not present at loop entry.
+        has_successful_evidence = any(item["result"].get("success") is True for item in evidence)
+        if has_successful_evidence:
+            self.metrics.total_latency_ms += round((time.perf_counter() - started) * 1000, 2)
+            return AgentResult(
+                answer=_summarize_partial_evidence(evidence), evidence=evidence,
+                steps=self.settings.max_agent_steps, plan=plan.as_dict(),
+                chart_specs=chart_specs, metrics=self.metrics.as_dict(), is_partial=True,
+            )
         raise AgentMaxStepsError(f"El agente excedió el máximo de {self.settings.max_agent_steps} pasos.")

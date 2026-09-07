@@ -32,6 +32,7 @@ def test_agent_iterates_and_keeps_tools_available():
     client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
     result = AgentService(client=client, settings=Settings(max_agent_steps=3), registry=FakeRegistry()).run([{"role": "user", "content": "inversión"}])
     assert result.answer == "Volvo registró inversión."
+    assert result.is_partial is False
     assert result.steps == 2
     assert result.evidence[0]["tool"] == "consultar_inversion_publicitaria"
 
@@ -177,3 +178,84 @@ def test_planner_uses_latest_user_text_and_preserves_content(monkeypatch, conten
     else:
         assert result.plan["intent"] == "out_of_domain"
         assert result.plan["steps"] == []
+
+
+@pytest.mark.parametrize("successful_step", [1, 2])
+def test_max_steps_returns_partial_evidence_without_extra_llm_call(successful_step):
+    class PartialRegistry(FakeRegistry):
+        def __init__(self):
+            self.calls = 0
+
+        def execute(self, name, arguments):
+            self.calls += 1
+            if self.calls != successful_step:
+                return {"success": False, "error": "No se pudo obtener el segundo dato", "value": 999}
+            return {"success": True, "source": "mock", "metric": "inv_neta", "value": 0,
+                    "filters": arguments["filtros"]}
+
+    completions = MultiStepCompletions()
+    client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
+    result = AgentService(client=client, settings=Settings(max_agent_steps=2), registry=PartialRegistry()).run(
+        [{"role": "user", "content": "inversión"}])
+    assert result.is_partial is True
+    assert result.steps == 2
+    assert completions.calls == 2
+    assert "No pude completar el análisis" in result.answer
+    assert "consultar_inversion_publicitaria" in result.answer
+    assert '"metric": "inv_neta"' in result.answer
+    assert '"value": 0' in result.answer
+    assert ("VOLVO" if successful_step == 1 else "RENAULT") in result.answer
+    assert "999" not in result.answer
+    assert len(result.evidence) == 2
+    assert result.metrics["errors"][-1] == "max_steps"
+    assert result.metrics["total_llm_calls"] == 2
+    assert result.plan["domains"] == ["bicomp"]
+
+
+def test_max_steps_preserves_ranking_chart_and_limits_summary_rows():
+    from src.tools.registry import RegisteredTool, ToolRegistry
+
+    rows = [{"dimension": f"REGION_{i}", "value": i} for i in range(7)]
+    registry = ToolRegistry(SimpleNamespace(source="mock"))
+    registry._tools["ranking_por_dimension"] = RegisteredTool(
+        "ranking_por_dimension", "Ranking", {"type": "object"},
+        lambda arguments: {"success": True, "metric": "inv_neta", "dimension": "region", "rows": rows})
+
+    class RankingCompletions:
+        def __init__(self):
+            self.calls = 0
+
+        def create(self, **kwargs):
+            self.calls += 1
+            assert self.calls == 1
+            function = SimpleNamespace(name="ranking_por_dimension", arguments='{"dimension":"region"}')
+            message = SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id="ranking", function=function)])
+            return SimpleNamespace(choices=[SimpleNamespace(message=message)])
+
+    completions = RankingCompletions()
+    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)),
+                           settings=Settings(max_agent_steps=1), registry=registry)
+    result = service.run([{"role": "user", "content": "inversión por región"}])
+    assert result.is_partial is True
+    assert '"dimension": "region"' in result.answer
+    assert "REGION_4" in result.answer
+    assert "REGION_5" not in result.answer
+    assert "Muestra de 5 de 7" in result.answer
+    assert result.evidence[0]["result"]["rows"] == rows
+    assert result.chart_specs[0]["data"] == rows
+
+
+def test_max_steps_without_success_still_raises():
+    from src.agent.service import AgentMaxStepsError
+
+    class FailingRegistry(FakeRegistry):
+        def execute(self, name, arguments):
+            return {"success": False, "error": "Consulta fallida"}
+
+    completions = MultiStepCompletions()
+    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)),
+                           settings=Settings(max_agent_steps=2), registry=FailingRegistry())
+    with pytest.raises(AgentMaxStepsError):
+        service.run([{"role": "user", "content": "inversión"}])
+    assert completions.calls == 2
+    assert service.metrics.errors[-1] == "max_steps"
