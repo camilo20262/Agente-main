@@ -73,14 +73,14 @@ class ToolRegistry:
                   ]}},
                   "fecha_inicio": {"type": "string", "format": "date"}, "fecha_fin": {"type": "string", "format": "date"}}
         self.register(RegisteredTool("consultar_inversion_publicitaria", "Suma inversión publicitaria real en BICOMP. Nunca calcules la suma manualmente.",
-            {"type": "object", "properties": common}, lambda a: self._bicomp("consultar_inversion", a)))
+            {"type": "object", "additionalProperties": False, "properties": common}, lambda a: self._bicomp("consultar_inversion", a)))
         self.register(RegisteredTool("comparar_marcas", "Compara dos marcas con cálculos reales de BICOMP.",
-            {"type": "object", "properties": {**common, "marca_a": {"type": "string"}, "marca_b": {"type": "string"}}, "required": ["marca_a", "marca_b"]}, lambda a: self._bicomp("comparar_marcas", a)))
+            {"type": "object", "additionalProperties": False, "properties": {**common, "marca_a": {"type": "string"}, "marca_b": {"type": "string"}}, "required": ["marca_a", "marca_b"]}, lambda a: self._bicomp("comparar_marcas", a)))
         ranking = {**common, "limite": {"type": "integer", "minimum": 1, "maximum": 100}}
-        self.register(RegisteredTool("ranking_anunciantes", "Ranking de anunciantes calculado por BigQuery.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("ranking_anunciantes", a)))
-        self.register(RegisteredTool("ranking_marcas", "Ranking de marcas calculado por BigQuery.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("ranking_marcas", a)))
-        self.register(RegisteredTool("analizar_medios", "Distribuye inversión u otra métrica BICOMP por medio.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("analizar_medios", a)))
-        self.register(RegisteredTool("analizar_vehiculos", "Distribuye inversión u otra métrica BICOMP por vehículo.", {"type": "object", "properties": ranking}, lambda a: self._bicomp("analizar_vehiculos", a)))
+        self.register(RegisteredTool("ranking_anunciantes", "Ranking de anunciantes calculado por BigQuery.", {"type": "object", "additionalProperties": False, "properties": ranking}, lambda a: self._bicomp("ranking_anunciantes", a)))
+        self.register(RegisteredTool("ranking_marcas", "Ranking de marcas calculado por BigQuery.", {"type": "object", "additionalProperties": False, "properties": ranking}, lambda a: self._bicomp("ranking_marcas", a)))
+        self.register(RegisteredTool("analizar_medios", "Distribuye inversión u otra métrica BICOMP por medio.", {"type": "object", "additionalProperties": False, "properties": ranking}, lambda a: self._bicomp("analizar_medios", a)))
+        self.register(RegisteredTool("analizar_vehiculos", "Distribuye inversión u otra métrica BICOMP por vehículo.", {"type": "object", "additionalProperties": False, "properties": ranking}, lambda a: self._bicomp("analizar_vehiculos", a)))
         # Generic dimension-agnostic ranking tool: reads valid dimensions from
         # the semantic layer (dimensions.yaml) so it works for any dimension
         # (region, sector, holding, ciudad, agencia, etc.), not just the four
@@ -91,22 +91,22 @@ class ToolRegistry:
         self.register(RegisteredTool(
             "ranking_por_dimension",
             "Ranking de una métrica BICOMP agrupado por CUALQUIER dimensión disponible (region, sector, holding, ciudad, agencia, etc.), calculado por BigQuery. Usa esta herramienta cuando se pida un desglose por una dimensión que no sea anunciante, marca, medio o vehículo.",
-            {"type": "object", "properties": ranking_generico, "required": ["dimension"]},
+            {"type": "object", "additionalProperties": False, "properties": ranking_generico, "required": ["dimension"]},
             lambda a: self._bicomp_repository_call(
                 "ranking", dimension=a["dimension"], metric=a.get("metrica", "inv_neta"),
                 filters=a.get("filtros"), start_date=a.get("fecha_inicio"), end_date=a.get("fecha_fin"),
                 limit=a.get("limite", 10))))
-        self.register(RegisteredTool("consultar_inserciones_bicomp", "Consulta el total real de inserciones BICOMP.", {"type": "object", "properties": {k: v for k, v in common.items() if k != "metrica"}}, lambda a: self._bicomp("consultar_inserciones", a)))
+        self.register(RegisteredTool("consultar_inserciones_bicomp", "Consulta el total real de inserciones BICOMP.", {"type": "object", "additionalProperties": False, "properties": {k: v for k, v in common.items() if k != "metrica"}}, lambda a: self._bicomp("consultar_inserciones", a)))
         self.register(RegisteredTool("obtener_catalogo_bicomp", "Obtiene anunciantes, marcas, medios, rango de fechas o esquema disponibles en BICOMP.",
-            {"type": "object", "properties": {"catalogo": {"type": "string", "enum": ["anunciantes", "marcas", "medios", "medios_agrupados", "vehiculos", "formatos", "dispositivos", "ciudades", "regiones", "tipos_pauta", "rango_fechas", "esquema"]}, "filtros": {"type": "object"}, "limite": {"type": "integer", "minimum": 1, "maximum": 5000}}, "required": ["catalogo"]}, self._bicomp_catalog))
-        self.register(RegisteredTool("obtener_cobertura_bicomp", "Obtiene periodo, filas y esquema real disponible en BICOMP.", {"type": "object", "properties": {}}, lambda _a: self._bicomp_repository_call("obtener_cobertura_bicomp")))
+            {"type": "object", "additionalProperties": False, "properties": {"catalogo": {"type": "string", "enum": ["anunciantes", "marcas", "medios", "medios_agrupados", "vehiculos", "formatos", "dispositivos", "ciudades", "regiones", "tipos_pauta", "rango_fechas", "esquema"]}, "filtros": {"type": "object"}, "limite": {"type": "integer", "minimum": 1, "maximum": 5000}}, "required": ["catalogo"]}, self._bicomp_catalog))
+        self.register(RegisteredTool("obtener_cobertura_bicomp", "Obtiene periodo, filas y esquema real disponible en BICOMP.", {"type": "object", "additionalProperties": False, "properties": {}}, lambda _a: self._bicomp_repository_call("obtener_cobertura_bicomp")))
         self.register(RegisteredTool("serie_temporal_bicomp", "Devuelve inversión o volumen BICOMP por día, semana o mes para tendencias y gráficos.",
-            {"type": "object", "properties": {**common, "granularidad": {"type": "string", "enum": ["day", "week", "month"]}}, "required": ["granularidad"]}, self._bicomp_series))
+            {"type": "object", "additionalProperties": False, "properties": {**common, "granularidad": {"type": "string", "enum": ["day", "week", "month"]}}, "required": ["granularidad"]}, self._bicomp_series))
         period = {"type": "object", "properties": {"start": {"type": "string", "format": "date"}, "end": {"type": "string", "format": "date"}}, "required": ["start", "end"]}
         self.register(RegisteredTool("comparar_periodos_bicomp", "Compara dos periodos BICOMP equivalentes con diferencias calculadas determinísticamente.",
-            {"type": "object", "properties": {"periodo_a": period, "periodo_b": period, "metrica": common["metrica"], "filtros": common["filtros"]}, "required": ["periodo_a", "periodo_b"]}, self._bicomp_compare_periods))
+            {"type": "object", "additionalProperties": False, "properties": {"periodo_a": period, "periodo_b": period, "metrica": common["metrica"], "filtros": common["filtros"]}, "required": ["periodo_a", "periodo_b"]}, self._bicomp_compare_periods))
         self.register(RegisteredTool("explicar_variacion_bicomp", "Investiga una variación BICOMP mediante periodo actual/anterior y drivers por medio, vehículo y formato.",
-            {"type": "object", "properties": {"marca": {"type": "string"}, "periodo_actual": period, "periodo_anterior": period,
+            {"type": "object", "additionalProperties": False, "properties": {"marca": {"type": "string"}, "periodo_actual": period, "periodo_anterior": period,
                 "metrica": common["metrica"], "filtros": common["filtros"], "limite_drivers": {"type": "integer", "minimum": 1, "maximum": 50}},
              "required": ["marca", "periodo_actual", "periodo_anterior"]}, self._bicomp_explain_variation))
 
