@@ -101,3 +101,28 @@ def test_brand_ranking_is_ordered_by_bigquery():
     assert result["dimension"] == "marca"
     assert result["rows"][0]["dimension"] == "Renault"
     assert result["row_count"] == 2
+
+
+def test_generic_and_specialized_brand_rankings_are_equivalent(monkeypatch):
+    repo = BigQueryRepository(settings(), client=FakeClient())
+    specs = []
+    rows = [{"dimension": "Volvo", "value": 350, "source_rows": 2}]
+
+    def execute(spec):
+        specs.append(spec)
+        return {"rows": rows, "evidence": {"bytes_processed": 128, "duration_ms": 1}}
+
+    monkeypatch.setattr(repo, "_execute_bicomp", execute)
+    arguments = {"metric": "inv_neta", "filters": {"marca": ["Volvo", "Renault"], "medio": "DIGITAL"},
+                 "start_date": "2026-01-01", "end_date": "2026-01-31", "limit": 5}
+    specialized = repo.ranking_marcas(**arguments)
+    generic = repo.ranking(dimension="marca", **arguments)
+    assert len(specs) == 2
+    assert specs[0] == specs[1]  # Identical SQL and parameter names/types/values.
+    assert "`marca` AS dimension" in specs[0].sql
+    assert "GROUP BY dimension ORDER BY value DESC LIMIT @limit" in specs[0].sql
+    assert ("limit", "INT64", 5) in specs[0].parameters
+    assert generic == specialized
+    assert generic["dimension"] == "marca"
+    assert generic["filters"] == arguments["filters"]
+    assert generic["rows"] == rows

@@ -15,10 +15,10 @@ def evaluate_planner(tool_names: set[str], cases_path: Path | None = None) -> di
     planner = AnalyticalPlanner(tool_names)
     correct_domain = correct_tool = evaluated_tools = 0
     failures = []
-    memory: dict[str, Any] = {}
     for case in cases:
+        memory: dict[str, Any] = {}
         if case.get("requires_memory"):
-            memory = {"last_domain": "bicomp", "last_entities": {"brands": ["VOLVO", "RENAULT"]}}
+            memory = case.get("memory", {"last_domain": "bicomp", "last_entities": {"brands": ["VOLVO", "RENAULT"]}})
         plan = planner.plan(case["question"], memory)
         predicted_tool = plan.steps[0].tool if plan.steps else None
         expected_domain = case["expected_domain"]
@@ -30,7 +30,8 @@ def evaluate_planner(tool_names: set[str], cases_path: Path | None = None) -> di
             correct_tool += int(tool_match)
         else:
             tool_match = predicted_tool is None
-        if not (domain_match and tool_match):
-            failures.append({"question": case["question"], "expected_tool": case.get("expected_tool"), "predicted_tool": predicted_tool, "domains": plan.domains})
+        intent_match = case.get("expected_intent", plan.intent) == plan.intent
+        if not (domain_match and tool_match and intent_match):
+            failures.append({"question": case["question"], "expected_tool": case.get("expected_tool"), "predicted_tool": predicted_tool, "domains": plan.domains, "expected_intent": case.get("expected_intent"), "predicted_intent": plan.intent})
     return {"cases": len(cases), "domain_accuracy": correct_domain / len(cases),
             "tool_selection_accuracy": correct_tool / evaluated_tools if evaluated_tools else 1.0, "failures": failures}

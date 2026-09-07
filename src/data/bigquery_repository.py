@@ -167,7 +167,9 @@ class BigQueryRepository:
         second = self.consultar_inversion(metric=metric, filters={**(filters or {}), "marca": brand_b}, start_date=start_date, end_date=end_date)
         a, b = first["value"], second["value"]
         difference = None if a is None or b is None else a - b
-        return {"success": True, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum", "brand_a": brand_a, "brand_b": brand_b,
+        missing = [brand for brand, value in ((brand_a, a), (brand_b, b)) if value is None]
+        return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum", "brand_a": brand_a, "brand_b": brand_b,
+                **({"error": "La consulta BICOMP no produjo resultados para las marcas: " + ", ".join(missing) + "."} if missing else {}),
                 "value_a": a, "value_b": b, "difference": difference, "difference_pct": None if difference is None or not b else difference / b * 100,
                 "ratio_a_over_b": None if a is None or not b else a / b,
                 "row_count": first["row_count"] + second["row_count"], "evidence": [first["evidence"], second["evidence"]]}
@@ -332,7 +334,9 @@ class BigQueryRepository:
         second = self.consultar_inversion(metric=metric, filters={**(filters or {}), dimension: value_b}, start_date=start_date, end_date=end_date)
         a, b = first["value"], second["value"]
         difference = None if a is None or b is None else a - b
-        return {"success": True, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum",
+        missing = [label for label, value in ((value_a, a), (value_b, b)) if value is None]
+        return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum",
+                **({"error": f"La consulta BICOMP no produjo resultados para {dimension}: " + ", ".join(missing) + "."} if missing else {}),
                 "dimension": dimension, "value_a_label": value_a, "value_b_label": value_b,
                 "value_a": a, "value_b": b, "difference": difference,
                 "difference_pct": None if difference is None or not b else difference / b * 100,

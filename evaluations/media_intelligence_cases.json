@@ -24,5 +24,10 @@
   {"question":"¿Quién eres?","expected_domain":"none","expected_tool":null},
   {"question":"Cuéntame un chiste.","expected_domain":"none","expected_tool":null},
   {"question":"Inversión en dólares por región.","expected_domain":"bicomp","expected_tool":"ranking_por_dimension"},
-  {"question":"Ranking de inversión por holding.","expected_domain":"bicomp","expected_tool":"ranking_por_dimension"}
+  {"question":"Ranking de inversión por holding.","expected_domain":"bicomp","expected_tool":"ranking_por_dimension"},
+  {"question":"y para 2026","expected_domain":"bicomp","expected_tool":"consultar_inversion_publicitaria","expected_intent":"metric_query","requires_memory":true,"memory":{"last_domain":"bicomp","last_metric":"inv_neta","last_entities":{"brands":["VOLVO"]},"last_filters":{"marca":"VOLVO"},"last_period":{"start":"2025-01-01","end":"2025-12-31"}}},
+  {"question":"¿y en marzo?","expected_domain":"bicomp","expected_tool":"consultar_inversion_publicitaria","expected_intent":"metric_query","requires_memory":true,"memory":{"last_domain":"bicomp","last_metric":"inv_neta","last_entities":{"brands":["VOLVO"]},"last_filters":{"marca":"VOLVO"},"last_period":{"start":"2025-01-01","end":"2025-12-31"}}},
+  {"question":"Inversión por formato","expected_domain":"bicomp","expected_tool":"ranking_por_dimension","expected_intent":"dimension_breakdown","requires_memory":false},
+  {"question":"Inserciones por región","expected_domain":"bicomp","expected_tool":"ranking_por_dimension","expected_intent":"dimension_breakdown","requires_memory":false},
+  {"question":"Ranking por marca.","expected_domain":"bicomp","expected_tool":"ranking_por_dimension"}
 ]

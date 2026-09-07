@@ -39,10 +39,25 @@ class AnalyticalPlanner:
         attachment = any(word in text for word in ("imagen", "captura", "pdf", "documento"))
         bicomp = any(word in text for word in ("invers", "invirti", "anunciante", "marca", "bicomp", "publicitaria", "insercion", "medio", "vehiculo", "volvo", "renault", "chevrolet"))
         domains = (["bicomp"] if bicomp else []) + (["attachments"] if attachment else [])
+        months = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre")
+        dimensions = (
+            "region", "sector", "holding", "agencia", "ciudad", "categoria", "subsector",
+            "central", "pais", "producto", "soporte", "franja", "genero", "tipo_pauta",
+            "marca_agrupada", "anunciante_agrupado", "formato", "dispositivo",
+        )
+        grouping_dimensions = (*dimensions, "marca", "anunciante", "medio", "medio_agrupado", "vehiculo")
+        dimension_breakdown = bool(re.search(r"\bpor\s+(?:" + "|".join(grouping_dimensions) + r")(?:es|s)?\b", text))
+        temporal_reference = bool(re.search(
+            r"\b(?:\d{4}|" + "|".join(months) + r"|(este|esta|el|la)\s+"
+            r"(mes|ano|trimestre|semestre|semana)(\s+(pasado|pasada|anterior|actual))?)\b", text))
         is_follow_up = bool(re.search(r"\b(ahora|también|tambien|solo|mismo|misma)\b", text))
+        if not domains and (memory or {}).get("last_domain") == "bicomp" and (temporal_reference or dimension_breakdown):
+            is_follow_up = True
+        inherited_bicomp = False
         if not domains and is_follow_up and memory and memory.get("last_domain"):
             domains = [memory["last_domain"]]
             bicomp = memory["last_domain"] == "bicomp"
+            inherited_bicomp = bicomp
 
         # FIX: previously this block forced domains = ["bicomp"] whenever
         # nothing matched, which meant every out-of-domain question (small
@@ -54,7 +69,7 @@ class AnalyticalPlanner:
             return AnalyticalPlan(intent="out_of_domain", domains=["none"], steps=[])
 
         steps: list[PlanStep] = []
-        month_mentions = sum(text.count(month) for month in ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"))
+        month_mentions = sum(text.count(month) for month in months)
         if attachment and not bicomp:
             intent = "attachment_analysis"
         elif bicomp and re.search(r"por que|explica|cayo|cambio|variacion|perdio", text):
@@ -75,7 +90,7 @@ class AnalyticalPlanner:
         elif bicomp and any(word in text for word in ("lista", "disponibles", "catálogo", "catalogo")):
             steps.append(PlanStep("obtener_catalogo_bicomp", "recuperar valores válidos de una dimensión"))
             intent = "catalog"
-        elif bicomp and ("insercion" in text or "inserción" in text) and not any(word in text for word in ("por medio", "ranking", "top")):
+        elif bicomp and ("insercion" in text or "inserción" in text) and not dimension_breakdown and not any(word in text for word in ("ranking", "top")):
             steps.append(PlanStep("consultar_inserciones_bicomp", "calcular volumen de inserciones"))
             intent = "insertions"
         elif bicomp and "vehicul" in text:
@@ -84,11 +99,7 @@ class AnalyticalPlanner:
         elif bicomp and "medio" in text and any(word in text for word in ("analiza", "distribu", "por medio")):
             steps.append(PlanStep("analizar_medios", "desglosar la métrica por medio"))
             intent = "media_analysis"
-        elif bicomp and any(word in text for word in (
-            "region", "sector", "holding", "agencia", "ciudad", "categoria", "subsector",
-            "central", "pais", "producto", "soporte", "franja", "genero", "tipo_pauta",
-            "marca_agrupada", "anunciante_agrupado",
-        )):
+        elif bicomp and (dimension_breakdown or any(word in text for word in dimensions)):
             # NEW: routes to the generic ranking_por_dimension tool for any
             # dimension not already covered by a dedicated branch above
             # (anunciante, marca, medio, vehiculo). Without this, questions
@@ -105,6 +116,8 @@ class AnalyticalPlanner:
         elif bicomp:
             remembered_brands = (memory or {}).get("last_entities", {}).get("brands", [])
             tool = "comparar_marcas" if is_follow_up and len(remembered_brands) >= 2 else "consultar_inversion_publicitaria"
+            if inherited_bicomp and len(remembered_brands) < 2 and (memory or {}).get("last_metric") == "total_insercion":
+                tool = "consultar_inserciones_bicomp"
             steps.append(PlanStep(tool, "reutilizar contexto y calcular la métrica solicitada en BigQuery"))
             intent = "metric_query"
         else:
