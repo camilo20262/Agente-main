@@ -31,6 +31,26 @@ class BigQueryRepository:
         self.allowed_metrics = set(semantic["metrics"].keys())
         self.allowed_dimensions = set(semantic["dimensions"].keys())
 
+        # Normalización conservadora para dimensiones categóricas donde
+        # mayúsculas/minúsculas y espacios no deberían crear categorías distintas.
+        # No se unifican sinónimos semánticos (p. ej. "TV NAL" vs
+        # "TELEVISION NACIONAL"); eso debe resolverse explícitamente en la capa
+        # semántica para no alterar silenciosamente el significado de la fuente.
+        self._normalizable_text_dimensions = {
+            "anunciante",
+            "anunciante_agrupado",
+            "marca",
+            "marca_agrupada",
+            "medio",
+            "medio_agrupado",
+            "vehiculo",
+            "formato",
+            "dispositivo",
+            "soporte",
+            "tipo_pauta",
+            "producto",
+        }
+
     @property
     def client(self) -> Any:
         """Create the Google client lazily."""
@@ -121,6 +141,17 @@ class BigQueryRepository:
             raise ValueError(f"El campo '{field}' no existe en el esquema real de BICOMP.")
         return field
 
+    def _dimension_group_expression(self, dimension: str) -> str:
+        """Return a safe grouping expression for categorical dimensions.
+
+        Only case/whitespace normalization is applied. Semantic aliases such as
+        "TV NAL" and "TELEVISION NACIONAL" are intentionally left separate.
+        """
+        self._bicomp_field(dimension)
+        if dimension in self._normalizable_text_dimensions:
+            return f"UPPER(TRIM(CAST(`{dimension}` AS STRING)))"
+        return f"`{dimension}`"
+
     def _bicomp_filters(self, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None) -> tuple[str, list[tuple[str, str, Any]]]:
         if filters is not None and not isinstance(filters, dict):
             raise TypeError(f"'filtros' debe ser un objeto JSON (diccionario), se recibió {type(filters).__name__}: {filters!r}")
@@ -153,7 +184,7 @@ class BigQueryRepository:
         where, parameters = self._bicomp_filters(filters, start_date, end_date)
         result = self._execute_bicomp(QuerySpec(f"SELECT SUM(`{metric}`) AS value, COUNT(*) AS source_rows FROM `{self.bicomp_table}`{where}", parameters))
         row = result["rows"][0] if result["rows"] else {"value": None, "source_rows": 0}
-        has_data = bool(row.get("source_rows"))
+        has_data = bool(row.get("source_rows")) and row.get("value") is not None
         return {"success": has_data, "domain": "bicomp", "source": "bigquery", "project": self.settings.gcp_project_id,
                 "dataset": self.settings.bigquery_dataset, "table": self.settings.bigquery_bicomp_table,
                 "metric": metric, "aggregation": "sum", "filters": filters or {}, "period": {"start": str(start_date) if start_date else None, "end": str(end_date) if end_date else None},
@@ -213,28 +244,124 @@ class BigQueryRepository:
                 "previous_value": comparison["value_b"], "change": comparison["difference"], "change_pct": comparison["difference_pct"],
                 "drivers": drivers[:driver_limit], "row_count": comparison["row_count"], "evidence": evidence}
 
-    def _totales_dimension_bicomp(self, *, dimension: str, metric: str, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None) -> dict[str, Any]:
+    def _totales_dimension_bicomp(
+        self,
+        *,
+        dimension: str,
+        metric: str,
+        filters: dict[str, Any] | None,
+        start_date: str | date | None,
+        end_date: str | date | None,
+    ) -> dict[str, Any]:
         """Return complete dimension totals for variation drivers."""
-        self._bicomp_field(dimension); self._bicomp_field(metric, metric=True)
+        self._bicomp_field(metric, metric=True)
+        dimension_expression = self._dimension_group_expression(dimension)
         where, parameters = self._bicomp_filters(filters, start_date, end_date)
+
         # Do not cap categories before subtraction: that would distort drivers.
-        # _execute_bicomp uses _execute's dry-run check and maximum_bytes_billed
-        # to enforce the configured cost limit on these full aggregations.
-        sql = f"SELECT `{dimension}` AS dimension, SUM(`{metric}`) AS value FROM `{self.bicomp_table}`{where} GROUP BY dimension"
+        # Normalize only case/whitespace for selected categorical dimensions.
+        sql = (
+            f"SELECT {dimension_expression} AS dimension, "
+            f"SUM(`{metric}`) AS value "
+            f"FROM `{self.bicomp_table}`{where} "
+            "GROUP BY dimension"
+        )
         return self._execute_bicomp(QuerySpec(sql, parameters))
 
-    def _ranking_bicomp(self, *, dimension: str, metric: str, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None, limit: int) -> dict[str, Any]:
-        self._bicomp_field(dimension); self._bicomp_field(metric, metric=True)
+    def _ranking_bicomp(
+        self,
+        *,
+        dimension: str,
+        metric: str,
+        filters: dict[str, Any] | None,
+        start_date: str | date | None,
+        end_date: str | date | None,
+        limit: int,
+    ) -> dict[str, Any]:
+        self._bicomp_field(metric, metric=True)
+        dimension_expression = self._dimension_group_expression(dimension)
+
         if not 1 <= limit <= 100:
             raise ValueError("limit debe estar entre 1 y 100.")
-        where, parameters = self._bicomp_filters(filters, start_date, end_date)
+
+        where, parameters = self._bicomp_filters(
+            filters,
+            start_date,
+            end_date,
+        )
         parameters.append(("limit", "INT64", limit))
-        sql = f"SELECT `{dimension}` AS dimension, SUM(`{metric}`) AS value, COUNT(*) AS source_rows FROM `{self.bicomp_table}`{where} GROUP BY dimension ORDER BY value DESC LIMIT @limit"
-        result = self._execute_bicomp(QuerySpec(sql, parameters))
-        return {"success": bool(result["rows"]), "domain": "bicomp", "source": "bigquery", "project": self.settings.gcp_project_id,
-                "dataset": self.settings.bigquery_dataset, "table": self.settings.bigquery_bicomp_table,
-                "metric": metric, "aggregation": "sum", "dimension": dimension, "filters": filters or {}, "rows": result["rows"], "row_count": len(result["rows"]),
-                "query_metadata": {"bytes_processed": result["evidence"]["bytes_processed"], "duration_ms": result["evidence"]["duration_ms"]}, "evidence": result["evidence"]}
+
+        # El total para share_pct se calcula ANTES del LIMIT, de modo que la
+        # participación corresponde al universo completo filtrado, no solo al top N.
+        sql = f"""
+        WITH grouped AS (
+            SELECT
+                {dimension_expression} AS dimension,
+                SUM(`{metric}`) AS value,
+                COUNT(*) AS source_rows
+            FROM `{self.bicomp_table}`
+            {where}
+            GROUP BY dimension
+        ),
+        scored AS (
+            SELECT
+                dimension,
+                value,
+                source_rows,
+                ROW_NUMBER() OVER (ORDER BY value DESC) AS rank,
+                SAFE_MULTIPLY(
+                    SAFE_DIVIDE(value, SUM(value) OVER ()),
+                    100
+                ) AS share_pct
+            FROM grouped
+            WHERE value IS NOT NULL
+        )
+        SELECT
+            dimension,
+            value,
+            source_rows,
+            rank,
+            share_pct
+        FROM scored
+        ORDER BY rank
+        LIMIT @limit
+        """
+
+        result = self._execute_bicomp(
+            QuerySpec(sql, parameters)
+        )
+
+        rows = result["rows"]
+        has_data = bool(rows)
+
+        return {
+            "success": has_data,
+            "domain": "bicomp",
+            "source": "bigquery",
+            "project": self.settings.gcp_project_id,
+            "dataset": self.settings.bigquery_dataset,
+            "table": self.settings.bigquery_bicomp_table,
+            "metric": metric,
+            "aggregation": "sum",
+            "dimension": dimension,
+            "filters": filters or {},
+            "period": {
+                "start": str(start_date) if start_date else None,
+                "end": str(end_date) if end_date else None,
+            },
+            "rows": rows,
+            "row_count": len(rows),
+            **(
+                {"error": "La consulta BICOMP no produjo resultados utilizables."}
+                if not has_data
+                else {}
+            ),
+            "query_metadata": {
+                "bytes_processed": result["evidence"]["bytes_processed"],
+                "duration_ms": result["evidence"]["duration_ms"],
+            },
+            "evidence": result["evidence"],
+        }
 
     def ranking_anunciantes(self, **kwargs: Any) -> dict[str, Any]:
         return self._ranking_bicomp(dimension="anunciante", metric=kwargs.pop("metric", "inv_neta"), **kwargs)
@@ -280,8 +407,17 @@ class BigQueryRepository:
     def obtener_rango_fechas(self) -> dict[str, Any]:
         self._bicomp_field("fecha")
         result = self._execute_bicomp(QuerySpec(f"SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `{self.bicomp_table}`", []))
-        row = result["rows"][0]
-        return {"success": True, "source": "bigquery", "start": str(row["start"]), "end": str(row["end"]), "row_count": row["source_rows"], "evidence": result["evidence"]}
+        row = result["rows"][0] if result["rows"] else {"start": None, "end": None, "source_rows": 0}
+        has_data = bool(row.get("source_rows")) and row.get("start") is not None and row.get("end") is not None
+        return {
+            "success": has_data,
+            "source": "bigquery",
+            "start": str(row["start"]) if row.get("start") is not None else None,
+            "end": str(row["end"]) if row.get("end") is not None else None,
+            "row_count": row.get("source_rows", 0),
+            **({"error": "BICOMP no tiene cobertura temporal utilizable."} if not has_data else {}),
+            "evidence": result["evidence"],
+        }
 
     def obtener_cobertura_bicomp(self) -> dict[str, Any]:
         period = self.obtener_rango_fechas()
@@ -290,17 +426,122 @@ class BigQueryRepository:
                 "period": {"start": period["start"], "end": period["end"]}, "row_count": period["row_count"],
                 "schema": self.get_bicomp_schema(), "evidence": period["evidence"]}
 
-    def serie_temporal_bicomp(self, *, metric: str = "inv_neta", granularity: str = "month", filters: dict[str, Any] | None = None, start_date: str | date | None = None, end_date: str | date | None = None) -> dict[str, Any]:
+    def serie_temporal_bicomp(
+        self,
+        *,
+        metric: str = "inv_neta",
+        granularity: str = "month",
+        filters: dict[str, Any] | None = None,
+        start_date: str | date | None = None,
+        end_date: str | date | None = None,
+    ) -> dict[str, Any]:
         self._bicomp_field(metric, metric=True)
-        expressions = {"day": "DATE(`fecha`)", "week": "DATE_TRUNC(DATE(`fecha`), WEEK(MONDAY))", "month": "DATE_TRUNC(DATE(`fecha`), MONTH)"}
+
+        expressions = {
+            "day": "DATE(`fecha`)",
+            "week": "DATE_TRUNC(DATE(`fecha`), WEEK(MONDAY))",
+            "month": "DATE_TRUNC(DATE(`fecha`), MONTH)",
+        }
         expression = expressions.get(granularity)
+
         if expression is None:
-            raise ValueError("granularity debe ser day, week o month.")
-        where, parameters = self._bicomp_filters(filters, start_date, end_date)
-        sql = f"SELECT {expression} AS period, SUM(`{metric}`) AS value, COUNT(*) AS source_rows FROM `{self.bicomp_table}`{where} GROUP BY period ORDER BY period"
-        result = self._execute_bicomp(QuerySpec(sql, parameters))
-        return {"success": bool(result["rows"]), "domain": "bicomp", "source": "bigquery", "metric": metric,
-                "aggregation": "sum", "granularity": granularity, "rows": result["rows"], "row_count": len(result["rows"]), "evidence": result["evidence"]}
+            raise ValueError(
+                "granularity debe ser day, week o month."
+            )
+
+        where, parameters = self._bicomp_filters(
+            filters,
+            start_date,
+            end_date,
+        )
+
+        sql = f"""
+        WITH grouped AS (
+            SELECT
+                {expression} AS period,
+                SUM(`{metric}`) AS value,
+                COUNT(*) AS source_rows
+            FROM `{self.bicomp_table}`
+            {where}
+            GROUP BY period
+        ),
+        scored AS (
+            SELECT
+                period,
+                value,
+                source_rows,
+                ROW_NUMBER() OVER (ORDER BY value DESC) AS rank,
+                SAFE_MULTIPLY(
+                    SAFE_DIVIDE(value, SUM(value) OVER ()),
+                    100
+                ) AS share_of_total_pct
+            FROM grouped
+            WHERE value IS NOT NULL
+        )
+        SELECT
+            period,
+            value,
+            source_rows,
+            rank,
+            share_of_total_pct,
+            rank = 1 AS is_peak
+        FROM scored
+        ORDER BY period
+        """
+
+        result = self._execute_bicomp(
+            QuerySpec(sql, parameters)
+        )
+
+        rows = result["rows"]
+        has_data = bool(rows)
+
+        peak_row = next(
+            (
+                row
+                for row in rows
+                if row.get("is_peak") is True
+            ),
+            None,
+        )
+
+        peak = None
+        if peak_row is not None:
+            peak = {
+                "period": str(peak_row.get("period")),
+                "value": peak_row.get("value"),
+                "share_of_total_pct": peak_row.get(
+                    "share_of_total_pct"
+                ),
+                "rank": peak_row.get("rank"),
+            }
+
+        return {
+            "success": has_data,
+            "domain": "bicomp",
+            "source": "bigquery",
+            "metric": metric,
+            "aggregation": "sum",
+            "granularity": granularity,
+            "filters": filters or {},
+            "period": {
+                "start": str(start_date) if start_date else None,
+                "end": str(end_date) if end_date else None,
+            },
+            "rows": rows,
+            "row_count": len(rows),
+            "peak": peak,
+            **(
+                {"error": "La consulta BICOMP no produjo resultados utilizables."}
+                if not has_data
+                else {}
+            ),
+            "query_metadata": {
+                "bytes_processed": result["evidence"]["bytes_processed"],
+                "duration_ms": result["evidence"]["duration_ms"],
+            },
+            "evidence": result["evidence"],
+        }
 
     # ---- Generic DataRepository protocol methods (thin wrappers) ----
     # Added to satisfy the new source-agnostic contract without touching
