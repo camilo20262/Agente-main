@@ -1,0 +1,364 @@
+{
+  "id": "holdout-02",
+  "family": "ranking",
+  "question": "¿Qué ciudades lideraron la inversión bruta en 2023? Muestra las cinco primeras.",
+  "expected_dimensions": [
+    "ciudad"
+  ],
+  "expected_metric": "inv_bruta",
+  "elapsed_s": 7.37,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Bogotá lideró la inversión bruta**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=BOGOTA: 33.089.305,00 (15,90 % del universo consultado).\n\n**Nacional ocupó el segundo lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=NACIONAL: 29.969.005,00 (14,41 % del universo consultado).\n\n**Medellín se posicionó en tercer lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=MEDELLIN: 14.153.116,00 (6,80 % del universo consultado).\n\n**Hallazgo**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=CALI: 7.621.368,00 (3,66 % del universo consultado).\n\n### Advertencias\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31): valores sin información en ciudad representan 55,18 %; valores informados, 44,82 %. Las etiquetas ausentes no son categorías de negocio.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "ciudad",
+          "limite": 5,
+          "metrica": "inv_bruta",
+          "filtros": {},
+          "fecha_inicio": "2023-01-01",
+          "fecha_fin": "2023-12-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_bruta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2023-01-01",
+            "end": "2023-12-31"
+          },
+          "requested_period": {
+            "start": "2023-01-01",
+            "end": "2023-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2023-01-01",
+            "end": "2023-12-01"
+          },
+          "effective_period": {
+            "start": "2023-01-01",
+            "end": "2023-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria bruta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "ciudad",
+          "composition": {
+            "denominator_known": true,
+            "total": 208043473.0,
+            "shown_share_pct": 95.9586201485879,
+            "top3_share_pct": 85.4923057355421
+          },
+          "data_quality": {
+            "unknown_share_pct": 55.18214551244297,
+            "unknown_value": 114802852.0,
+            "known_value": 93240621.0,
+            "known_share_pct": 44.81785448755703
+          },
+          "rows": [
+            {
+              "dimension": "N/A",
+              "value": 114802852.0,
+              "source_rows": 58995,
+              "rank": 1,
+              "share_pct": 55.18214551244297,
+              "total": 208043473.0,
+              "concentration_hhi": 3569.17753045077,
+              "unknown_value": 114802852.0
+            },
+            {
+              "dimension": "BOGOTA",
+              "value": 33089305.0,
+              "source_rows": 4151,
+              "rank": 2,
+              "share_pct": 15.904995491014514,
+              "total": 208043473.0,
+              "concentration_hhi": 3569.17753045077,
+              "unknown_value": 114802852.0
+            },
+            {
+              "dimension": "NACIONAL",
+              "value": 29969005.0,
+              "source_rows": 1530,
+              "rank": 3,
+              "share_pct": 14.405164732084625,
+              "total": 208043473.0,
+              "concentration_hhi": 3569.17753045077,
+              "unknown_value": 114802852.0
+            },
+            {
+              "dimension": "MEDELLIN",
+              "value": 14153116.0,
+              "source_rows": 2784,
+              "rank": 4,
+              "share_pct": 6.802960840785426,
+              "total": 208043473.0,
+              "concentration_hhi": 3569.17753045077,
+              "unknown_value": 114802852.0
+            },
+            {
+              "dimension": "CALI",
+              "value": 7621368.0,
+              "source_rows": 3160,
+              "rank": 5,
+              "share_pct": 3.6633535722603514,
+              "total": 208043473.0,
+              "concentration_hhi": 3569.17753045077,
+              "unknown_value": 114802852.0
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 17176402,
+            "duration_ms": 1282.98
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`ciudad` AS STRING))) AS dimension,\n                SUM(`inv_bruta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'DESCONOCIDO', 'N/A', 'N/D', 'NA', 'ND', 'NONE', 'NULL', 'SIN INFORMACION', 'SIN INFORMACIÓN', 'UNKNOWN'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2023-01-01",
+              "end_date": "2023-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 17176402,
+            "job_id": "793e4ecd-8cd5-4a12-a43d-3ebe928fb2d3",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T17:21:52.075958+00:00",
+            "duration_ms": 1282.98,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_bruta",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de ciudades por inversión bruta en 2023, limitado a las cinco primeras posiciones.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`ciudad` AS STRING))) AS dimension,\n                SUM(`inv_bruta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'DESCONOCIDO', 'N/A', 'N/D', 'NA', 'ND', 'NONE', 'NULL', 'SIN INFORMACION', 'SIN INFORMACIÓN', 'UNKNOWN'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2023-01-01",
+              "end_date": "2023-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 17176402,
+            "job_id": "793e4ecd-8cd5-4a12-a43d-3ebe928fb2d3",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T17:21:52.075958+00:00",
+            "duration_ms": 1282.98,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 2928.26
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de ciudades por inversión bruta en 2023, limitado a las cinco primeras posiciones.",
+          "arguments": {
+            "dimension": "ciudad",
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_bruta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2023
+        },
+        "dimensions": [
+          "ciudad"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles fueron las cinco ciudades con mayor inversión bruta en 2023?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_bruta",
+        "filters": {},
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "ciudad"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por ciudad — Inversión publicitaria bruta · 2023-01-01 a 2023-12-31",
+        "data": [
+          {
+            "dimension": "N/A",
+            "value": 114802852.0,
+            "source_rows": 58995,
+            "rank": 1,
+            "share_pct": 55.18214551244297,
+            "total": 208043473.0,
+            "concentration_hhi": 3569.17753045077,
+            "unknown_value": 114802852.0
+          },
+          {
+            "dimension": "BOGOTA",
+            "value": 33089305.0,
+            "source_rows": 4151,
+            "rank": 2,
+            "share_pct": 15.904995491014514,
+            "total": 208043473.0,
+            "concentration_hhi": 3569.17753045077,
+            "unknown_value": 114802852.0
+          },
+          {
+            "dimension": "NACIONAL",
+            "value": 29969005.0,
+            "source_rows": 1530,
+            "rank": 3,
+            "share_pct": 14.405164732084625,
+            "total": 208043473.0,
+            "concentration_hhi": 3569.17753045077,
+            "unknown_value": 114802852.0
+          },
+          {
+            "dimension": "MEDELLIN",
+            "value": 14153116.0,
+            "source_rows": 2784,
+            "rank": 4,
+            "share_pct": 6.802960840785426,
+            "total": 208043473.0,
+            "concentration_hhi": 3569.17753045077,
+            "unknown_value": 114802852.0
+          },
+          {
+            "dimension": "CALI",
+            "value": 7621368.0,
+            "source_rows": 3160,
+            "rank": 5,
+            "share_pct": 3.6633535722603514,
+            "total": 208043473.0,
+            "concentration_hhi": 3569.17753045077,
+            "unknown_value": 114802852.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 17176402,
+      "bigquery_queries": 1,
+      "total_latency_ms": 7369.27,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7841,
+      "output_tokens": 495,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1934.63
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_bruta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2023
+            },
+            "dimensions": [
+              "ciudad"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de ciudades por inversión bruta en 2023, limitado a las cinco primeras posiciones.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 2497.31
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Bogotá lideró la inversión bruta**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=BOGOTA: 33.089.305,00 (15,90 % del universo consultado).\n\n**Nacional ocupó el segundo lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=NACIONAL: 29.969.005,00 (14,41 % del universo consultado).\n\n**Medellín se posicionó en tercer lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=MEDELLIN: 14.153.116,00 (6,80 % del universo consultado).\n\n**Hallazgo**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=CALI: 7.621.368,00 (3,66 % del universo consultado).\n\n### Advertencias\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31): valores sin información en ciudad representan 55,18 %; valores informados, 44,82 %. Las etiquetas ausentes no son categorías de negocio."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 17176402,
+        "input_tokens": 7841,
+        "output_tokens": 495,
+        "cache_hits": 0,
+        "total_latency_ms": 7369.27
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

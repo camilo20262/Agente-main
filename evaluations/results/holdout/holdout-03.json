@@ -1,0 +1,364 @@
+{
+  "id": "holdout-03",
+  "family": "ranking",
+  "question": "Ordena los vehículos por duración publicitaria total de 2024, top cinco.",
+  "expected_dimensions": [
+    "vehiculo"
+  ],
+  "expected_metric": "total_duracion",
+  "elapsed_s": 14.93,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**LA FM PEREIRA lidera en duración publicitaria total**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM PEREIRA: 173.700,00 (2,34 % del universo consultado).\n\nTiene la mayor duración publicitaria total entre los vehículos analizados para el periodo solicitado.\n\n**CANAL CARACOL ocupa el segundo puesto**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=CANAL CARACOL: 155.123,00 (2,09 % del universo consultado).\n\nSu duración publicitaria total es la segunda más alta dentro del ranking solicitado.\n\n**RADIOACKTIVA FM BOG se posiciona en tercer lugar**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=RADIOACKTIVA FM BOG: 152.730,00 (2,06 % del universo consultado).\n\nSu duración publicitaria total lo coloca como el tercer vehículo con mayor exposición en el periodo.\n\n**LA FM MED aparece en cuarta posición**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM MED: 146.795,00 (1,98 % del universo consultado).\n\nSu duración publicitaria total es la cuarta más alta entre los vehículos evaluados.\n\n**LA FM BOG completa el top cinco**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM BOG: 141.675,00 (1,91 % del universo consultado).\n\nTiene la quinta duración publicitaria total más alta dentro del conjunto de datos consultado.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "vehiculo",
+          "limite": 5,
+          "metrica": "total_duracion",
+          "filtros": {},
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "total_duracion",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "requested_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "effective_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "duration",
+          "metric_label": "Duración total publicitaria",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "vehiculo",
+          "composition": {
+            "denominator_known": true,
+            "total": 7409813.0,
+            "shown_share_pct": 10.391935666932484,
+            "top3_share_pct": 6.498854964356051
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "unknown_value": 0.0,
+            "known_value": 7409813.0,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "LA FM PEREIRA",
+              "value": 173700.0,
+              "source_rows": 1108,
+              "rank": 1,
+              "share_pct": 2.3441887129945114,
+              "total": 7409813.0,
+              "concentration_hhi": 101.45136992104743,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "CANAL CARACOL",
+              "value": 155123.0,
+              "source_rows": 3716,
+              "rank": 2,
+              "share_pct": 2.093480631697453,
+              "total": 7409813.0,
+              "concentration_hhi": 101.45136992104743,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "RADIOACKTIVA FM BOG",
+              "value": 152730.0,
+              "source_rows": 708,
+              "rank": 3,
+              "share_pct": 2.0611856196640863,
+              "total": 7409813.0,
+              "concentration_hhi": 101.45136992104743,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "LA FM MED",
+              "value": 146795.0,
+              "source_rows": 1240,
+              "rank": 4,
+              "share_pct": 1.9810891313991323,
+              "total": 7409813.0,
+              "concentration_hhi": 101.45136992104743,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "LA FM BOG",
+              "value": 141675.0,
+              "source_rows": 985,
+              "rank": 5,
+              "share_pct": 1.9119915711773023,
+              "total": 7409813.0,
+              "concentration_hhi": 101.45136992104743,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 21205976,
+            "duration_ms": 1056.27
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`vehiculo` AS STRING))) AS dimension,\n                SUM(`total_duracion`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 21205976,
+            "job_id": "efbf65c3-7076-43c9-a2d4-b980be1b35ff",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:39:34.567575+00:00",
+            "duration_ms": 1056.27,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "total_duracion",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de vehículos por duración publicitaria total en 2024, limitado a los top 5.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`vehiculo` AS STRING))) AS dimension,\n                SUM(`total_duracion`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 21205976,
+            "job_id": "efbf65c3-7076-43c9-a2d4-b980be1b35ff",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:39:34.567575+00:00",
+            "duration_ms": 1056.27,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 2675.6
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de vehículos por duración publicitaria total en 2024, limitado a los top 5.",
+          "arguments": {
+            "dimension": "vehiculo",
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "total_duracion",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [
+          "vehiculo"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son los cinco vehículos con mayor duración publicitaria total en 2024?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "total_duracion",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "vehiculo"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por vehiculo — Duración total publicitaria · 2024-01-01 a 2024-12-31",
+        "data": [
+          {
+            "dimension": "LA FM PEREIRA",
+            "value": 173700.0,
+            "source_rows": 1108,
+            "rank": 1,
+            "share_pct": 2.3441887129945114,
+            "total": 7409813.0,
+            "concentration_hhi": 101.45136992104743,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "CANAL CARACOL",
+            "value": 155123.0,
+            "source_rows": 3716,
+            "rank": 2,
+            "share_pct": 2.093480631697453,
+            "total": 7409813.0,
+            "concentration_hhi": 101.45136992104743,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "RADIOACKTIVA FM BOG",
+            "value": 152730.0,
+            "source_rows": 708,
+            "rank": 3,
+            "share_pct": 2.0611856196640863,
+            "total": 7409813.0,
+            "concentration_hhi": 101.45136992104743,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "LA FM MED",
+            "value": 146795.0,
+            "source_rows": 1240,
+            "rank": 4,
+            "share_pct": 1.9810891313991323,
+            "total": 7409813.0,
+            "concentration_hhi": 101.45136992104743,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "LA FM BOG",
+            "value": 141675.0,
+            "source_rows": 985,
+            "rank": 5,
+            "share_pct": 1.9119915711773023,
+            "total": 7409813.0,
+            "concentration_hhi": 101.45136992104743,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 21205976,
+      "bigquery_queries": 1,
+      "total_latency_ms": 14929.36,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7838,
+      "output_tokens": 465,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2797.81
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "total_duracion",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [
+              "vehiculo"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de vehículos por duración publicitaria total en 2024, limitado a los top 5.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 9437.13
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**LA FM PEREIRA lidera en duración publicitaria total**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM PEREIRA: 173.700,00 (2,34 % del universo consultado).\n\nTiene la mayor duración publicitaria total entre los vehículos analizados para el periodo solicitado.\n\n**CANAL CARACOL ocupa el segundo puesto**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=CANAL CARACOL: 155.123,00 (2,09 % del universo consultado).\n\nSu duración publicitaria total es la segunda más alta dentro del ranking solicitado.\n\n**RADIOACKTIVA FM BOG se posiciona en tercer lugar**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=RADIOACKTIVA FM BOG: 152.730,00 (2,06 % del universo consultado).\n\nSu duración publicitaria total lo coloca como el tercer vehículo con mayor exposición en el periodo.\n\n**LA FM MED aparece en cuarta posición**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM MED: 146.795,00 (1,98 % del universo consultado).\n\nSu duración publicitaria total es la cuarta más alta entre los vehículos evaluados.\n\n**LA FM BOG completa el top cinco**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM BOG: 141.675,00 (1,91 % del universo consultado).\n\nTiene la quinta duración publicitaria total más alta dentro del conjunto de datos consultado."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 21205976,
+        "input_tokens": 7838,
+        "output_tokens": 465,
+        "cache_hits": 0,
+        "total_latency_ms": 14929.36
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

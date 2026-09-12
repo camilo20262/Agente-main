@@ -1,0 +1,102 @@
+{
+  "id": "independent-20",
+  "question": "¿Cómo interpretarías un pico de inversión?",
+  "family": "out_of_domain",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 2.33,
+  "result": {
+    "answer": "No pude producir una respuesta completa. Reformula la pregunta con el alcance que quieres analizar.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "out_of_domain",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {
+        "intent": "out_of_domain",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": null,
+        "filters": {},
+        "period": {
+          "kind": "all"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [],
+      "answer": "Un pico de inversión indica un aumento significativo y puntual en el gasto publicitario respecto a niveles habituales. Puede reflejar campañas estacionales (como Navidad o eventos deportivos), lanzamientos de productos, respuestas a acciones de la competencia o estrategias de branding intensivo. Para interpretarlo correctamente, es necesario analizar el contexto temporal, la marca o sector involucrado, los medios utilizados y si el pico se mantiene en el tiempo o es aislado.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 2326.25,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 6125,
+      "output_tokens": 169,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2309.96
+        },
+        {
+          "stage": "plan",
+          "intent": "out_of_domain",
+          "scope": {
+            "intent": "out_of_domain",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "all"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "out_of_domain",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 6125,
+        "output_tokens": 169,
+        "cache_hits": 0,
+        "total_latency_ms": 2326.25
+      },
+      "stop_reason": "out_of_domain"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "partial_or_fallback"
+  ],
+  "expected_family": "out_of_domain",
+  "actual_intent": "out_of_domain"
+}

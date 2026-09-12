@@ -1,413 +1,228 @@
-"""Deterministic validation and compaction for final analytical responses."""
-
+"""Compact evidence and deterministic, high-value output checks (not a semantic judge)."""
 from __future__ import annotations
-
 from dataclasses import dataclass
 from datetime import date, datetime
+from decimal import Decimal
+import math
 import re
 from typing import Any
-
-
-_PERCENT_KEYS = {
-    "share_pct",
-    "share_of_total_pct",
-    "difference_pct",
-    "change_pct",
-    "contribution_pct",
-    "ratio_pct",
-}
-
-_RISKY_CAUSAL_PATTERNS = (
-    r"\bblack\s*friday\b",
-    r"\bnavidad\b",
-    r"\blanzamiento\b",
-    r"\bpromoci[oó]n\b",
-    r"\bbranding\b",
-    r"\bawareness\b",
-    r"\bperformance\b",
-    r"\bpara llegar a (?:la|las|los|una|un)\s+audiencia",
-    r"\baudiencias? de alto poder adquisitivo\b",
-    r"\bestrategia que prioriza\b",
-    r"\bobjetivo de campa[nñ]a\b",
-    r"\bcampa[nñ]a de fin de a[nñ]o\b",
-)
-
-_PERCENT_RE = re.compile(
-    r"(?<![\w])(-?\d{1,3}(?:[.,]\d{1,3})?)\s*%",
-    flags=re.IGNORECASE,
-)
+from src.analytics.calculations import number
 
 
 @dataclass(frozen=True)
 class ValidationResult:
-    """Result of deterministic answer validation."""
-
     valid: bool
     issues: tuple[str, ...]
 
 
-def _as_json_safe(value: Any) -> Any:
+METADATA = {'sql', 'query_parameters', 'bytes_processed', 'duration_ms', 'query_metadata', 'evidence',
+            'job_id', 'source_rows', 'row_count', 'valid_values', 'project', 'dataset', 'table', 'schema'}
+
+
+def json_safe(value):
     if isinstance(value, (date, datetime)):
         return value.isoformat()
+    if isinstance(value, Decimal):
+        return float(value)
     if isinstance(value, dict):
-        return {
-            str(key): _as_json_safe(item)
-            for key, item in value.items()
-        }
-    if isinstance(value, list):
-        return [_as_json_safe(item) for item in value]
-    if isinstance(value, tuple):
-        return [_as_json_safe(item) for item in value]
+        return {str(k): json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [json_safe(v) for v in value]
     return value
 
 
-def _compact_row(row: dict[str, Any]) -> dict[str, Any]:
-    keys = (
-        "dimension",
-        "period",
-        "value",
-        "rank",
-        "share_pct",
-        "share_of_total_pct",
-        "difference",
-        "difference_pct",
-        "change",
-        "change_pct",
-        "current_value",
-        "previous_value",
-        "is_peak",
-    )
-    return {
-        key: _as_json_safe(row[key])
-        for key in keys
-        if key in row and row[key] is not None
-    }
-
-
-def compact_evidence(
-    evidence: list[dict[str, Any]],
-    *,
-    ranking_rows: int = 5,
-    series_rows: int = 24,
-    failed_tools: int = 3,
-) -> list[dict[str, Any]]:
-    """Keep only facts needed by the final-response model.
-
-    SQL, bytes, latency and other execution metadata are removed.
-    Temporal series retain more rows than rankings so the model can
-    assess the full period without receiving the raw query payload.
-    """
-    compact: list[dict[str, Any]] = []
-    failures = 0
-
+def compact_evidence(evidence, *, ranking_rows=10, series_rows=24, failed_tools=3):
+    compact, failures = [], 0
+    def clean(value):
+        if isinstance(value, dict):
+            return {k: clean(v) for k, v in value.items() if k not in METADATA}
+        if isinstance(value, list):
+            return [clean(v) for v in value]
+        return json_safe(value)
     for item in evidence:
-        result = item.get("result")
-        if not isinstance(result, dict):
-            continue
-
-        success = result.get("success") is True
-
-        if not success:
-            if failures >= failed_tools:
-                continue
+        result = item.get('result', {})
+        if result.get('success') is not True:
+            if failures < failed_tools:
+                compact.append({'tool': item.get('tool'), 'success': False, 'error_type': result.get('error_type'), 'error': result.get('error')})
             failures += 1
-            compact.append(
-                {
-                    "tool": item.get("tool"),
-                    "success": False,
-                    "error": result.get("error"),
-                }
-            )
             continue
-
-        entry: dict[str, Any] = {
-            "tool": item.get("tool"),
-            "success": True,
-        }
-
-        for key in (
-            "metric",
-            "aggregation",
-            "dimension",
-            "filters",
-            "period",
-            "granularity",
-            "value",
-            "value_a",
-            "value_b",
-            "difference",
-            "difference_pct",
-            "change",
-            "change_pct",
-            "current_value",
-            "previous_value",
-            "current_period",
-            "previous_period",
-            "period_a",
-            "period_b",
-            "brand",
-            "brand_a",
-            "brand_b",
-            "peak",
-            "start",
-            "end",
-        ):
-            if key in result and result[key] is not None:
-                entry[key] = _as_json_safe(result[key])
-
-        rows = result.get("rows")
-        if isinstance(rows, list):
-            keep = (
-                series_rows
-                if result.get("granularity")
-                else ranking_rows
-            )
-            entry["rows"] = [
-                _compact_row(row)
-                for row in rows[:keep]
-                if isinstance(row, dict)
-            ]
+        entry = {'id': item.get('id'), 'tool': item.get('tool'), **clean(result)}
+        if item.get('historical'):
+            entry.update(historical=True, origin_question=item.get('origin_question'))
+        for key in ('rows', 'drivers', 'values'):
+            rows = entry.get(key)
+            if not isinstance(rows, list):
+                continue
+            keep = series_rows if key == 'rows' and result.get('granularity') else ranking_rows
             if len(rows) > keep:
-                entry["rows_truncated"] = {
-                    "shown": keep,
-                    "total": len(rows),
-                }
-
-        drivers = result.get("drivers")
-        if isinstance(drivers, list):
-            entry["drivers"] = [
-                _as_json_safe(driver)
-                for driver in drivers[:ranking_rows]
-            ]
-
+                # Keep the latest window AND full-series statistics/peak, with an explicit omission marker.
+                entry[key] = rows[-keep:] if result.get('granularity') else rows[:keep]
+                entry[key + '_truncated'] = {'shown': keep, 'total': len(rows)}
+        if 'schema' in result:
+            entry['fields'] = list(result['schema'])
         compact.append(entry)
-
     return compact
 
 
-def _walk_percentages(value: Any) -> list[float]:
-    found: list[float] = []
-
-    if isinstance(value, dict):
-        for key, item in value.items():
-            if (
-                key in _PERCENT_KEYS
-                or key.endswith("_pct")
-                or key.endswith("_percentage")
-            ):
-                if (
-                    isinstance(item, (int, float))
-                    and not isinstance(item, bool)
-                ):
-                    found.append(float(item))
-            found.extend(_walk_percentages(item))
-
-    elif isinstance(value, list):
-        for item in value:
-            found.extend(_walk_percentages(item))
-
-    return found
+NUMERIC = re.compile(r'(?<![\w])(-?\d+(?:[.,]\d+)*)(?:\s*(mil millones|millones|millón|millon|mil|[MK])\b)?', re.I)
+PERCENT = re.compile(r'(?<![\w.,])(-?\d+(?:[.,]\d+)*)\s*(?:%|por ciento)', re.I)
+MONTHS = ('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre')
 
 
-def _supported_percentages(
-    evidence: list[dict[str, Any]],
-) -> list[float]:
-    values: list[float] = []
-
-    for item in evidence:
-        result = item.get("result")
-        if (
-            isinstance(result, dict)
-            and result.get("success") is True
-        ):
-            values.extend(_walk_percentages(result))
-
-    return values
+def parse_display(raw):
+    if ',' in raw and '.' in raw:
+        raw = raw.replace('.', '').replace(',', '.') if raw.rfind(',') > raw.rfind('.') else raw.replace(',', '')
+    elif raw.count('.') > 1 or raw.count(',') > 1:
+        raw = raw.replace('.', '').replace(',', '')
+    elif re.fullmatch(r'-?[1-9]\d{0,2}\.\d{3}', raw):
+        raw = raw.replace('.', '')
+    else:
+        raw = raw.replace(',', '.')
+    return float(raw)
 
 
-def _answer_percentages(answer: str) -> list[float]:
-    values: list[float] = []
-
-    for match in _PERCENT_RE.finditer(answer):
-        raw = match.group(1).replace(",", ".")
-        try:
-            values.append(float(raw))
-        except ValueError:
-            continue
-
-    return values
-
-
-def _pct_is_supported(
-    value: float,
-    supported: list[float],
-) -> bool:
-    """Allow normal display rounding, not new arithmetic."""
-    for candidate in supported:
-        if abs(value - round(candidate, 1)) <= 0.051:
-            return True
-        if abs(value - round(candidate, 2)) <= 0.006:
-            return True
-        if abs(value - candidate) <= 0.001:
-            return True
-
-    return False
-
-
-def _has_insertion_metric(
-    evidence: list[dict[str, Any]],
-) -> bool:
-    for item in evidence:
-        tool = str(item.get("tool") or "").lower()
-        result = item.get("result")
-
-        if not isinstance(result, dict):
-            continue
-
-        metric = str(result.get("metric") or "").lower()
-
-        if (
-            tool == "consultar_inserciones_bicomp"
-            or metric == "total_insercion"
-        ):
-            return True
-
-    return False
-
-
-def _years_in_evidence(
-    evidence: list[dict[str, Any]],
-) -> set[int]:
-    years: set[int] = set()
-
-    def visit(value: Any) -> None:
+def evidence_numbers(evidence, percentages=False):
+    values = []
+    def visit(value, key=''):
         if isinstance(value, dict):
-            for item in value.values():
-                visit(item)
+            for k, v in value.items():
+                if k not in METADATA:
+                    visit(v, k)
         elif isinstance(value, list):
-            for item in value:
-                visit(item)
-        elif isinstance(value, (date, datetime)):
-            years.add(value.year)
-        elif isinstance(value, str):
-            for match in re.finditer(
-                r"\b(20\d{2})\b",
-                value,
-            ):
-                years.add(int(match.group(1)))
-
+            for v in value:
+                visit(v, key)
+        elif number(value) is not None and (not percentages or key.endswith('_pct') or key.endswith('_percentage')):
+            values.append(float(value))
     for item in evidence:
-        result = item.get("result")
-        if (
-            isinstance(result, dict)
-            and result.get("success") is True
-        ):
-            visit(result.get("period"))
-            visit(result.get("current_period"))
-            visit(result.get("previous_period"))
-            visit(result.get("period_a"))
-            visit(result.get("period_b"))
-            visit(result.get("rows"))
-
-    return years
+        if item.get('result', {}).get('success') is True and not item.get('historical'):
+            visit(item['result'])
+    return values
 
 
-def validate_answer(
-    answer: str,
-    evidence: list[dict[str, Any]],
-    *,
-    finish_reason: str | None = None,
-) -> ValidationResult:
-    """Validate completion, presentation and high-value grounding rules."""
-    issues: list[str] = []
-    stripped = (answer or "").strip()
+def _supported(displayed, candidates, raw, multiplier=1):
+    decimals = len(re.split('[.,]', raw)[-1]) if '.' in raw or ',' in raw else 0
+    if re.fullmatch(r'-?[1-9]\d{0,2}\.\d{3}', raw):
+        decimals = 0
+    tolerance = (0.5 * 10 ** -decimals) * multiplier + 1e-8
+    return any(abs(displayed - candidate) <= tolerance for candidate in candidates)
 
-    if not stripped:
-        issues.append("respuesta_vacia")
-        return ValidationResult(False, tuple(issues))
 
-    if finish_reason in {"length", "max_tokens"}:
-        issues.append("respuesta_truncada_por_proveedor")
+def _evidence_strings(value):
+    if isinstance(value, dict):
+        return [s for k, v in value.items() if k not in METADATA for s in _evidence_strings(v)]
+    if isinstance(value, list):
+        return [s for v in value for s in _evidence_strings(v)]
+    return [value] if isinstance(value, str) else []
 
-    if stripped[-1] not in ".!?)]}\"'":
-        issues.append("respuesta_parece_cortada")
 
-    if stripped.count("**") % 2 != 0:
-        issues.append("markdown_negrita_incompleta")
+def _percentage_supported(match, text, candidates):
+    raw = match[1]
+    value = parse_display(raw) if ',' in raw and '.' in raw else float(raw.replace(',', '.'))
+    if _supported(value, candidates, raw):
+        return True
+    clause = re.split(r'[;\n]', text[max(0, match.start()-65):match.end()])[ -1]
+    # A fall of 12% is the ordinary verbal rendering of a signed -12% change.
+    if value > 0 and re.search(r'cay[oó]|baj[oó]|disminu|ca[ií]da|reducci[oó]n|menos|inferior', clause, re.I):
+        return _supported(-value, candidates, raw)
+    return False
 
-    if stripped.count("```") % 2 != 0:
-        issues.append("bloque_codigo_incompleto")
 
-    if re.search(
-        r"(?m)^\s*\|.*\|\s*$",
-        stripped,
-    ):
-        issues.append("tabla_markdown_no_permitida")
-
-    if (
-        re.search(
-            r"\b\d[\d\s.,]*\s+inserciones\b",
-            stripped,
-            re.IGNORECASE,
-        )
-        and not _has_insertion_metric(evidence)
-    ):
-        issues.append("row_count_presentado_como_inserciones")
-
-    supported = _supported_percentages(evidence)
-
-    if supported:
-        unsupported = [
-            value
-            for value in _answer_percentages(stripped)
-            if not _pct_is_supported(
-                value,
-                supported,
-            )
-        ]
-
-        if unsupported:
-            rendered = ", ".join(
-                f"{value:g}%"
-                for value in unsupported[:5]
-            )
-            issues.append(
-                f"porcentajes_no_respaldados:{rendered}"
-            )
-
-    lower = stripped.lower()
-    hypothesis_pos = lower.find("### hipótesis")
-
-    factual_zone = (
-        stripped
-        if hypothesis_pos == -1
-        else stripped[:hypothesis_pos]
-    )
-
-    for pattern in _RISKY_CAUSAL_PATTERNS:
-        if re.search(
-            pattern,
-            factual_zone,
-            re.IGNORECASE,
-        ):
-            issues.append(
-                "causa_no_demostrada_fuera_de_hipotesis"
-            )
-            break
-
-    if (
-        re.search(
-            r"\bestacional(?:idad|es)?\b",
-            factual_zone,
-            re.IGNORECASE,
-        )
-        and len(_years_in_evidence(evidence)) < 2
-    ):
-        issues.append(
-            "estacionalidad_sin_ciclos_comparables"
-        )
-
-    return ValidationResult(
-        valid=not issues,
-        issues=tuple(issues),
-    )
+def validate_answer(answer: str, evidence: list[dict[str, Any]], *, finish_reason=None,
+                    intent='open_analysis') -> ValidationResult:
+    issues = []
+    text = (answer or '').strip()
+    if not text:
+        return ValidationResult(False, ('respuesta_vacia',))
+    if finish_reason in {'length', 'max_tokens'}:
+        issues.append('respuesta_truncada_por_proveedor')
+    if text[-1] not in '.!?)]}\"\'»' or re.search(r'\b(y|de|con|para|porque|que|el|la)\s*[.!]?$', text, re.I):
+        issues.append('respuesta_parece_cortada')
+    if text.count('**') % 2:
+        issues.append('markdown_negrita_incompleta')
+    if text.count('```') % 2:
+        issues.append('bloque_codigo_incompleto')
+    if re.search(r'\[[^\]]*$', text) or re.search(r'\]\([^)]*$', text):
+        issues.append('markdown_enlace_incompleto')
+    if re.search(r'(?m)^\s*\|.*\|\s*$', text):
+        issues.append('tabla_markdown_no_permitida')
+    successful = [i['result'] for i in evidence if i.get('result', {}).get('success') is True and not i.get('historical')]
+    if intent not in {'out_of_domain', 'attachment_analysis', 'clarification'}:
+        pcts = evidence_numbers(evidence, percentages=True)
+        for match in PERCENT.finditer(text):
+            if not _percentage_supported(match, text, pcts):
+                issues.append('porcentaje_no_respaldado:' + match[0])
+        numbers = evidence_numbers(evidence)
+        # Exclude ISO dates, numbering, percentages and dates mentioned in actual scope/evidence.
+        scrubbed = re.sub(r'\b\d{4}-\d{2}-\d{2}\b', '', text)
+        scrubbed = PERCENT.sub('', scrubbed)
+        strings = _evidence_strings(successful)
+        # Digits inside exact source labels (e.g. a numbered brand) are not amounts.
+        labels = [s for s in strings if re.search(r'\d', s) and re.search(r'[A-Za-zÁÉÍÓÚáéíóú]', s)
+                  and not re.fullmatch(r'\d{4}-\d{2}-\d{2}.*', s)]
+        for label in sorted(set(labels), key=len, reverse=True):
+            scrubbed = re.sub(re.escape(label), '', scrubbed, flags=re.I)
+        for source in strings:
+            if re.fullmatch(r'\d{4}-\d{2}-\d{2}', source):
+                day, month = int(source[8:10]), MONTHS[int(source[5:7])-1]
+                scrubbed = re.sub(rf'\b{day}\s+de\s+{month}\b', '', scrubbed, flags=re.I)
+        scrubbed = re.sub(r'(?m)^\s*(?:\*\*)?\d+[.)]\s*', '', scrubbed)
+        known_years = set(re.findall(r'\b(?:19|20)\d{2}\b', str(compact_evidence(evidence))))
+        for match in NUMERIC.finditer(scrubbed):
+            raw, unit = match[1], (match[2] or '').lower()
+            if raw in known_years and not unit:
+                continue
+            multiplier = {'mil millones': 1e9, 'millones': 1e6, 'millón': 1e6, 'millon': 1e6, 'm': 1e6, 'mil': 1e3, 'k': 1e3}.get(unit, 1)
+            value = parse_display(raw) * multiplier
+            if not _supported(value, numbers, raw, multiplier):
+                clause = re.split(r'[;\n]', scrubbed[max(0, match.start()-60):match.end()])[-1]
+                decrease = re.search(r'rest[oó]|cay[oó]|baj[oó]|disminu|ca[ií]da|reducci[oó]n|menos|inferior', clause, re.I)
+                if not (value > 0 and decrease and _supported(-value, numbers, raw, multiplier)):
+                    issues.append('cifra_no_respaldada:' + match[0])
+        has_insertions = any(r.get('metric') == 'total_insercion' for r in successful)
+        if re.search(r'\d[\d\s.,]*\s+inserciones\b', text, re.I) and not has_insertions:
+            issues.append('row_count_presentado_como_inserciones')
+    factual, in_hypothesis = [], False
+    hypotheses = []
+    for line in text.splitlines():
+        if re.match(r'^\s*(?:#{1,6}\s*|\*\*)?hip[oó]tesis\b', line, re.I):
+            in_hypothesis = True
+        elif re.match(r'^\s*#{1,6}\s+', line):
+            in_hypothesis = False
+        (hypotheses if in_hypothesis else factual).append(line)
+    factual = '\n'.join(factual)
+    if intent == 'out_of_domain' and not evidence:
+        # General explanations can discuss possible causes and seasonal patterns;
+        # there is no observed business event to attribute without evidence.
+        factual = ''
+    causal = r'black\s*friday|navidad|lanzamiento|promoci[oó]n|branding|awareness|performance|audiencias? de alto poder adquisitivo|objetivo de campa[nñ]a|para llegar a.*audiencia|se debe a una campa[nñ]a'
+    for line in factual.splitlines():
+        if re.search(causal, line, re.I) and not re.search(r'no (?:se puede|permite|hay evidencia|demuestra)|sin evidencia|no es posible', line, re.I):
+            # An explicitly queried dimension label is a fact, not necessarily a causal claim.
+            labels = [str(r.get('dimension', '')).lower() for result in successful for r in result.get('rows', [])]
+            if not any(label and label in line.lower() and re.search(causal, label, re.I) for label in labels):
+                issues.append('causa_no_demostrada_fuera_de_hipotesis')
+    temporal_rows = [r for result in successful if result.get('granularity') for r in result.get('rows', [])]
+    months = {str(r.get('period', ''))[:7] for r in temporal_rows}
+    if len(months) < 24:
+        for line in factual.splitlines():
+            if re.search(r'\bestacional(?:idad|es)?\b', line, re.I) and not re.search(r'no.*estacional|sin.*estacional', line, re.I):
+                issues.append('estacionalidad_sin_ciclos_comparables')
+    if re.search(r'driver:\s*no identificado', text, re.I):
+        issues.append('driver_vacio_debe_omitirse')
+    for result in successful:
+        if result.get('is_partial'):
+            annual_lines = [line for line in text.splitlines() if not re.search(r'\bno\b|sin |no equivale', line, re.I)]
+            if re.search(r'total anual|a[nñ]o completo|total del a[nñ]o', '\n'.join(annual_lines), re.I):
+                issues.append('periodo_parcial_presentado_como_anual')
+            cutoff = result.get('effective_period', {}).get('end') or result.get('available_period', {}).get('end')
+            if cutoff:
+                month_name = MONTHS[int(cutoff[5:7])-1]
+                if cutoff not in text and month_name not in text.lower():
+                    issues.append('falta_fecha_de_corte')
+    # Direction checks are limited to a single unambiguous comparison.
+    comparisons = [r for r in successful if r.get('difference') is not None and number(r.get('difference')) is not None]
+    if len(comparisons) == 1 and not comparisons[0].get('drivers'):
+        delta = comparisons[0]['difference']
+        if (delta < 0 and re.search(r'\b(aument[oó]|creci[oó]|subi[oó])\b', factual, re.I)) or (delta > 0 and re.search(r'\b(cay[oó]|baj[oó]|disminuy[oó])\b', factual, re.I)):
+            issues.append('direccion_contradice_comparacion')
+    return ValidationResult(not issues, tuple(dict.fromkeys(issues)))

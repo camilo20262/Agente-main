@@ -1,0 +1,1522 @@
+{
+  "id": "additional-05",
+  "question": "¿Y el anterior?",
+  "elapsed_s": 5.75,
+  "memory_before": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "BMW"
+      ]
+    },
+    "last_filters": {
+      "marca": "BMW"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener la inversión neta total de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              }
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "formato"
+            }
+          },
+          {
+            "tool": "serie_temporal_bicomp",
+            "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "granularidad": "month"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW",
+                "medio": "DIGITAL"
+              },
+              "dimension": "formato"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          }
+        ]
+      }
+    ],
+    "last_peak": {
+      "period": "2025-11-01",
+      "value": 489740.9467873,
+      "source_rows": 142,
+      "rank": 1,
+      "share_of_total_pct": 30.698023303731258,
+      "is_peak": true,
+      "total": 1595350.1042778,
+      "change_from_previous_observation": {
+        "difference": 333856.8228748999,
+        "difference_pct": 214.16986829429305,
+        "ratio_a_over_b": 3.1416986829429305
+      },
+      "granularity": "month"
+    },
+    "last_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "max"
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-27"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-27"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "max"
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿Cuál fue el mes más fuerte?",
+      "scope": {
+        "intent": "temporal_extrema",
+        "operation": "discover_extreme",
+        "scope_mode": "inherit",
+        "filters": {
+          "marca": "BMW"
+        },
+        "period": {
+          "kind": "inherit"
+        },
+        "dimensions": [],
+        "analysis": {
+          "extreme": "max",
+          "granularity": "month"
+        }
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "BMW"
+      }
+    ]
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "BMW"
+      ]
+    },
+    "last_filters": {
+      "marca": "BMW"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener la inversión neta total de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              }
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "formato"
+            }
+          },
+          {
+            "tool": "serie_temporal_bicomp",
+            "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "granularidad": "month"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW",
+                "medio": "DIGITAL"
+              },
+              "dimension": "formato"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          }
+        ]
+      }
+    ],
+    "last_peak": {
+      "period": "2025-11-01",
+      "value": 489740.9467873,
+      "source_rows": 142,
+      "rank": 1,
+      "share_of_total_pct": 30.698023303731258,
+      "is_peak": true,
+      "total": 1595350.1042778,
+      "change_from_previous_observation": {
+        "difference": 333856.8228748999,
+        "difference_pct": 214.16986829429305,
+        "ratio_a_over_b": 3.1416986829429305
+      },
+      "granularity": "month"
+    },
+    "last_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "max"
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-27"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "extreme": "max",
+        "granularity": "month"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-27"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "max"
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿Y el anterior?",
+      "status": "controlled_error"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "BMW"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "temporal_extrema",
+      "operation": "discover_extreme",
+      "scope_mode": "inherit",
+      "filters": {
+        "marca": "BMW"
+      },
+      "period": {
+        "kind": "inherit"
+      },
+      "dimensions": [],
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Obtener el mes anterior al pico de inversión de BMW en 2025",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-10-31",
+            "filtros": {
+              "marca": "BMW"
+            },
+            "granularidad": "month",
+            "extremo": "max"
+          }
+        }
+      ],
+      "metric": "inv_neta"
+    },
+    {
+      "intent": "temporal_extrema",
+      "operation": "discover_extreme",
+      "scope_mode": "inherit",
+      "filters": {
+        "marca": "BMW"
+      },
+      "period": {
+        "kind": "inherit"
+      },
+      "dimensions": [],
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Obtener el mes anterior al pico de inversión de BMW en 2025",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-10-31",
+            "filtros": {
+              "marca": "BMW"
+            },
+            "granularidad": "month",
+            "extremo": "max"
+          }
+        }
+      ],
+      "metric": "inv_neta"
+    }
+  ],
+  "compiled_transition": {
+    "intent": "clarification",
+    "domains": [
+      "none"
+    ],
+    "steps": [],
+    "scope": {},
+    "analysis_questions": [],
+    "answer": "No recibí una pregunta.",
+    "budget": 0,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {},
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {}
+    }
+  },
+  "inherited_scope": {
+    "metric": "inv_neta",
+    "filters": {
+      "marca": "BMW"
+    },
+    "requested_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "comparison_period": {},
+    "dimensions": [],
+    "intent": "temporal_extrema",
+    "analysis": {
+      "extreme": "max",
+      "granularity": "month"
+    },
+    "operation": "discover_extreme",
+    "observed_period": {},
+    "available_period": {
+      "start": "2019-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 10,
+      "total_tool_calls": 6,
+      "bigquery_bytes_processed": 20830960,
+      "bigquery_queries": 6,
+      "total_latency_ms": 45551.13,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 1,
+      "input_tokens": 82777,
+      "output_tokens": 2779,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2943.6
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "El extremo de ese alcance ya está calculado. Si pide el periodo anterior al extremo, usa intent=lookup, operation=shift_period, period={kind:previous_period,anchor:peak}. Si pide repetir la misma consulta, declara continue_analysis. No redescubras el mismo extremo para un seguimiento temporal.",
+          "rejected_plan": {
+            "intent": "temporal_extrema",
+            "operation": "discover_extreme",
+            "scope_mode": "inherit",
+            "filters": {
+              "marca": "BMW"
+            },
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [],
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener el mes anterior al pico de inversión de BMW en 2025",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-10-31",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "granularidad": "month",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "metric": "inv_neta"
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2766.53
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "El extremo de ese alcance ya está calculado. Si pide el periodo anterior al extremo, usa intent=lookup, operation=shift_period, period={kind:previous_period,anchor:peak}. Si pide repetir la misma consulta, declara continue_analysis. No redescubras el mismo extremo para un seguimiento temporal.",
+          "rejected_plan": {
+            "intent": "temporal_extrema",
+            "operation": "discover_extreme",
+            "scope_mode": "inherit",
+            "filters": {
+              "marca": "BMW"
+            },
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [],
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener el mes anterior al pico de inversión de BMW en 2025",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-10-31",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "granularidad": "month",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "metric": "inv_neta"
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "El extremo de ese alcance ya está calculado. Si pide el periodo anterior al extremo, usa intent=lookup, operation=shift_period, period={kind:previous_period,anchor:peak}. Si pide repetir la misma consulta, declara continue_analysis. No redescubras el mismo extremo para un seguimiento temporal."
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "BMW"
+              ]
+            },
+            "last_filters": {
+              "marca": "BMW"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "open_analysis",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener la inversión neta total de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      }
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "formato"
+                    }
+                  },
+                  {
+                    "tool": "serie_temporal_bicomp",
+                    "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "granularidad": "month"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW",
+                  "medio": "DIGITAL"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "formato"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW",
+                        "medio": "DIGITAL"
+                      },
+                      "dimension": "formato"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "medio"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_peak": {
+              "period": "2025-11-01",
+              "value": 489740.9467873,
+              "source_rows": 142,
+              "rank": 1,
+              "share_of_total_pct": 30.698023303731258,
+              "is_peak": true,
+              "total": 1595350.1042778,
+              "change_from_previous_observation": {
+                "difference": 333856.8228748999,
+                "difference_pct": 214.16986829429305,
+                "ratio_a_over_b": 3.1416986829429305
+              },
+              "granularity": "month"
+            },
+            "last_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-27"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-27"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿Cuál fue el mes más fuerte?",
+              "scope": {
+                "intent": "temporal_extrema",
+                "operation": "discover_extreme",
+                "scope_mode": "inherit",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "period": {
+                  "kind": "inherit"
+                },
+                "dimensions": [],
+                "analysis": {
+                  "extreme": "max",
+                  "granularity": "month"
+                }
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "BMW"
+              }
+            ]
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "BMW"
+              ]
+            },
+            "last_filters": {
+              "marca": "BMW"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "open_analysis",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener la inversión neta total de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      }
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "formato"
+                    }
+                  },
+                  {
+                    "tool": "serie_temporal_bicomp",
+                    "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "granularidad": "month"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW",
+                  "medio": "DIGITAL"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "formato"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW",
+                        "medio": "DIGITAL"
+                      },
+                      "dimension": "formato"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "medio"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_peak": {
+              "period": "2025-11-01",
+              "value": 489740.9467873,
+              "source_rows": 142,
+              "rank": 1,
+              "share_of_total_pct": 30.698023303731258,
+              "is_peak": true,
+              "total": 1595350.1042778,
+              "change_from_previous_observation": {
+                "difference": 333856.8228748999,
+                "difference_pct": 214.16986829429305,
+                "ratio_a_over_b": 3.1416986829429305
+              },
+              "granularity": "month"
+            },
+            "last_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-27"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "extreme": "max",
+                "granularity": "month"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-27"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿Y el anterior?",
+              "status": "controlled_error"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "BMW"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 24763,
+        "output_tokens": 439,
+        "cache_hits": 0,
+        "total_latency_ms": 5749.860000000001
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  }
+}

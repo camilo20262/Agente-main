@@ -16,7 +16,11 @@ def main() -> None:
             break
         if question:
             messages.append({"role": "user", "content": question})
-            result = service.run(messages)
+            try:
+                result = service.run(messages)
+            except Exception as exc:
+                print(f"No se pudo completar el turno: {type(exc).__name__}.")
+                continue
             print("\n" + result.answer)
             messages.append({"role": "assistant", "content": result.answer})
 

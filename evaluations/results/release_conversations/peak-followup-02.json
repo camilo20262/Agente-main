@@ -1,0 +1,82 @@
+{
+  "id": "peak-followup-02",
+  "question": "¿Qué pasó en el mes más fuerte?",
+  "family": "diagnostic",
+  "expected_peak": "2025-11-01",
+  "elapsed_s": 0.57,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 6,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 39634421,
+      "bigquery_queries": 4,
+      "total_latency_ms": 51611.270000000004,
+      "errors": [
+        "planning:InternalServerError",
+        "planning:InternalServerError",
+        "run:InternalServerError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 25209,
+      "output_tokens": 1514,
+      "events": [
+        {
+          "stage": "error",
+          "type": "InternalServerError",
+          "detail": "Error code: 503 - {'error': {'message': 'Service temporarily overloaded', 'type': 'Service Unavailable', 'code': 503}}"
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_hits": 0,
+        "total_latency_ms": 571.8600000000006
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "lost_peak_year",
+    "wrong_peak_month",
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "clarification"
+}

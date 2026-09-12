@@ -1,0 +1,228 @@
+{
+  "id": "conversation-05",
+  "question": "¿Y BMW?",
+  "family": "composition",
+  "elapsed_s": 20.08,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 15,
+      "total_tool_calls": 9,
+      "bigquery_bytes_processed": 33872583,
+      "bigquery_queries": 11,
+      "total_latency_ms": 130180.1,
+      "errors": [
+        "run:ValueError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 91101,
+      "output_tokens": 4990,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 9924.13
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "Faltan periodos explícitos para comparar.",
+          "rejected_plan": {
+            "intent": "open_analysis",
+            "operation": "change_entity",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "inherit"
+            },
+            "comparison_period": null,
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la inversión neta de BMW en el periodo solicitado?",
+              "¿Cómo se distribuye la inversión de BMW por medio?",
+              "¿Cuál es el comportamiento temporal de la inversión de BMW?"
+            ],
+            "steps": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de BMW en el periodo heredado (2026-01-01 a 2026-12-31).",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum"
+                }
+              },
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Desglosar la inversión neta de BMW por medio para entender la distribución.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "dimension": "medio",
+                  "limite": 10
+                }
+              },
+              {
+                "tool": "serie_temporal_bicomp",
+                "purpose": "Analizar el comportamiento temporal mensual de la inversión neta de BMW en 2026.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "granularidad": "month"
+                }
+              }
+            ],
+            "answer": null
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 10123.55
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "Faltan periodos explícitos para comparar.",
+          "rejected_plan": {
+            "intent": "open_analysis",
+            "operation": "change_entity",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "inherit"
+            },
+            "comparison_period": null,
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la inversión neta de BMW en el periodo solicitado?",
+              "¿Cómo se distribuye la inversión de BMW por medio?",
+              "¿Cuál es el comportamiento temporal de la inversión de BMW?"
+            ],
+            "steps": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de BMW en el periodo heredado (2026-01-01 a 2026-12-31).",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum"
+                }
+              },
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Desglosar la inversión neta de BMW por medio para entender la distribución.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "dimension": "medio",
+                  "limite": 10
+                }
+              },
+              {
+                "tool": "serie_temporal_bicomp",
+                "purpose": "Analizar el comportamiento temporal mensual de la inversión neta de BMW en 2026.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "granularidad": "month"
+                }
+              }
+            ],
+            "answer": null
+          }
+        },
+        {
+          "stage": "error",
+          "type": "ValueError",
+          "detail": "Faltan periodos explícitos para comparar."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 18465,
+        "output_tokens": 1132,
+        "cache_hits": 0,
+        "total_latency_ms": 20079.380000000005
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "wrong_followup_entity",
+    "partial_or_fallback"
+  ],
+  "expected_family": "composition",
+  "actual_intent": "clarification"
+}

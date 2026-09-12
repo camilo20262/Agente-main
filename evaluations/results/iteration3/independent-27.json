@@ -1,0 +1,260 @@
+{
+  "id": "independent-27",
+  "question": "Muestra las cinco categorías con mayor inversión neta USD por sector en 2025.",
+  "family": "ranking",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 16.79,
+  "result": {
+    "answer": "Análisis parcial: no pude resolver los argumentos de una consulta.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "categoria",
+          "metrica": "inv_neta_usd",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "fecha": {
+              "kind": "year",
+              "year": 2025
+            }
+          },
+          "agregacion": "sum",
+          "limite": 5
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'ranking_por_dimension': filtros.fecha: {'kind': 'year', 'year': 2025} is not valid under any of the given schemas"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "fecha": {
+            "kind": "year",
+            "year": 2025
+          }
+        },
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada sector para 2025, limitado a las top 5 por sector.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 4.18
+      },
+      {
+        "id": "e2",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "categoria",
+          "metrica": "inv_neta_usd",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "fecha": {
+              "kind": "year",
+              "year": 2025
+            },
+            "sector": {
+              "kind": "values",
+              "values": []
+            }
+          },
+          "limite": 5
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'ranking_por_dimension': filtros.sector: {'kind': 'values', 'values': []} is not valid under any of the given schemas"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "fecha": {
+            "kind": "year",
+            "year": 2025
+          },
+          "sector": {
+            "kind": "values",
+            "values": []
+          }
+        },
+        "row_count": null,
+        "step": 2,
+        "purpose": "Obtener el ranking de las cinco categorías con mayor inversión neta USD por sector en 2025, agrupando por sector y categoria, usando el filtro de fecha correcto.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 6.7
+      }
+    ],
+    "steps": 2,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada sector para 2025, limitado a las top 5 por sector.",
+          "arguments": {
+            "dimension": "categoria",
+            "metrica": "inv_neta_usd",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {},
+            "agregacion": "sum",
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "scope_mode": "replace",
+        "metric": "inv_neta_usd",
+        "filters": {
+          "fecha": {
+            "kind": "year",
+            "year": 2025
+          }
+        },
+        "remove_filters": [],
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "sector",
+          "categoria"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son las cinco categorías con mayor inversión neta USD en cada sector durante 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta_usd",
+        "filters": {
+          "fecha": {
+            "kind": "year",
+            "year": 2025
+          }
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "sector",
+          "categoria"
+        ],
+        "intent": "ranking",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 2,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 16787.04,
+      "errors": [
+        "arguments",
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 10477,
+      "output_tokens": 562,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 8437.61
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "scope_mode": "replace",
+            "metric": "inv_neta_usd",
+            "filters": {
+              "fecha": {
+                "kind": "year",
+                "year": 2025
+              }
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "sector",
+              "categoria"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada sector para 2025, limitado a las top 5 por sector.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 8322.99
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "El error indica que el filtro de fecha con formato {'kind': 'year', 'year': 2025} no es válido para la herramienta ranking_por_dimension. Se debe convertir el filtro de fecha a un formato de rango explícito usando los campos fecha_inicio y fecha_fin, tal como lo define el scope del usuario: desde 2025-01-01 hasta 2025-12-31."
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de las cinco categorías con mayor inversión neta USD por sector en 2025, agrupando por sector y categoria, usando el filtro de fecha correcto.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "arguments",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 2,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 10477,
+        "output_tokens": 562,
+        "cache_hits": 0,
+        "total_latency_ms": 16787.04
+      },
+      "stop_reason": "arguments"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

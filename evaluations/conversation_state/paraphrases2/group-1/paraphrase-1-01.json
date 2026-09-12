@@ -1,0 +1,1692 @@
+{
+  "id": "paraphrase-1-01",
+  "question": "Ordena las marcas por cuánto aumentaron, no por su tamaño.",
+  "elapsed_s": 8.99,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2026-07-01",
+      "end": "2026-07-31"
+    },
+    "last_entities": {},
+    "last_filters": {},
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 100
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 100
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Ordena las marcas por cuánto aumentaron, no por su tamaño.",
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {},
+        "period": {
+          "kind": "current_month"
+        },
+        "comparison_period": {
+          "kind": "previous_period"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 100
+        }
+      },
+      "status": "planned_evidence_complete"
+    }
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "ranking_change",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {},
+      "period": {
+        "kind": "current_month"
+      },
+      "comparison_period": {
+        "kind": "previous_period"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      },
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "ranking_cambio_bicomp",
+          "arguments": {
+            "dimension": "marca",
+            "metrica": "inv_neta",
+            "periodo_a": {
+              "kind": "current_month"
+            },
+            "periodo_b": {
+              "kind": "previous_period"
+            },
+            "criterio": "absolute",
+            "orden": "desc",
+            "aceleracion": false,
+            "limite": 100
+          },
+          "purpose": "Ordenar marcas por aumento absoluto de inversión neta entre el mes actual y el periodo anterior"
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "ranking_change",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 100
+        }
+      }
+    ],
+    "scope": {
+      "intent": "ranking_change",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {},
+      "period": {
+        "kind": "current_month"
+      },
+      "comparison_period": {
+        "kind": "previous_period"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      }
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 100
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "Criterio: cambio absoluto, orden desc; foco 2026-07-01 a 2026-07-31, referencia 2026-06-01 a 2026-06-30.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RICH FIT TIPS: actual 1.067.799,00, referencia 0,00; cambio absoluto 1.067.799,00; cambio porcentual Sin información (base no positiva).\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=9ROUND: actual 1.672.613,00, referencia 630.000,00; cambio absoluto 1.042.613,00; cambio porcentual 165,49 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=SUZUKI: actual 682.158,94, referencia 111.191,69; cambio absoluto 570.967,25; cambio porcentual 513,50 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=360 FITNESS: actual 3.931.987,00, referencia 3.574.920,00; cambio absoluto 357.067,00; cambio porcentual 9,99 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=GOLDS GYM: actual 442.461,00, referencia 145.998,00; cambio absoluto 296.463,00; cambio porcentual 203,06 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=NISSAN: actual 252.124,65, referencia 4.588,40; cambio absoluto 247.536,25; cambio porcentual 5.394,83 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=FUNCTIONAL ROOM: actual 1.560.345,00, referencia 1.348.270,00; cambio absoluto 212.075,00; cambio porcentual 15,73 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RENAULT: actual 334.236,89, referencia 184.955,57; cambio absoluto 149.281,32; cambio porcentual 80,71 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=JEEP: actual 177.126,26, referencia 93.152,66; cambio absoluto 83.973,60; cambio porcentual 90,15 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=KIA: actual 137.250,21, referencia 71.531,08; cambio absoluto 65.719,13; cambio porcentual 91,87 %.\n\nOrden por cambio absoluto.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_cambio_bicomp",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 100,
+          "metrica": "inv_neta",
+          "filtros": {},
+          "periodo_a": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "periodo_b": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          }
+        },
+        "result": {
+          "success": true,
+          "error_type": null,
+          "source": "bigquery",
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "filters": {},
+          "dimension": "marca",
+          "rows": [
+            {
+              "dimension": "RICH FIT TIPS",
+              "value": 1067799.0,
+              "current_value": 1067799.0,
+              "previous_value": 0,
+              "difference": 1067799.0,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 1067799.0,
+              "rank": 1
+            },
+            {
+              "dimension": "9ROUND",
+              "value": 1672613.0,
+              "current_value": 1672613.0,
+              "previous_value": 630000.0,
+              "difference": 1042613.0,
+              "difference_pct": 165.49412698412698,
+              "new_in_window": false,
+              "order_value": 1042613.0,
+              "rank": 2
+            },
+            {
+              "dimension": "SUZUKI",
+              "value": 682158.9351497997,
+              "current_value": 682158.9351497997,
+              "previous_value": 111191.68702009991,
+              "difference": 570967.2481296997,
+              "difference_pct": 513.4981430999308,
+              "new_in_window": false,
+              "order_value": 570967.2481296997,
+              "rank": 3
+            },
+            {
+              "dimension": "360 FITNESS",
+              "value": 3931987.0,
+              "current_value": 3931987.0,
+              "previous_value": 3574920.0,
+              "difference": 357067.0,
+              "difference_pct": 9.988111622078257,
+              "new_in_window": false,
+              "order_value": 357067.0,
+              "rank": 4
+            },
+            {
+              "dimension": "GOLDS GYM",
+              "value": 442461.0,
+              "current_value": 442461.0,
+              "previous_value": 145998.0,
+              "difference": 296463.0,
+              "difference_pct": 203.05963095384868,
+              "new_in_window": false,
+              "order_value": 296463.0,
+              "rank": 5
+            },
+            {
+              "dimension": "NISSAN",
+              "value": 252124.65,
+              "current_value": 252124.65,
+              "previous_value": 4588.400000000001,
+              "difference": 247536.25,
+              "difference_pct": 5394.827172870717,
+              "new_in_window": false,
+              "order_value": 247536.25,
+              "rank": 6
+            },
+            {
+              "dimension": "FUNCTIONAL ROOM",
+              "value": 1560345.0,
+              "current_value": 1560345.0,
+              "previous_value": 1348270.0,
+              "difference": 212075.0,
+              "difference_pct": 15.72941621485311,
+              "new_in_window": false,
+              "order_value": 212075.0,
+              "rank": 7
+            },
+            {
+              "dimension": "RENAULT",
+              "value": 334236.8868996994,
+              "current_value": 334236.8868996994,
+              "previous_value": 184955.56842140012,
+              "difference": 149281.31847829928,
+              "difference_pct": 80.71198923742531,
+              "new_in_window": false,
+              "order_value": 149281.31847829928,
+              "rank": 8
+            },
+            {
+              "dimension": "JEEP",
+              "value": 177126.25550619993,
+              "current_value": 177126.25550619993,
+              "previous_value": 93152.65971440004,
+              "difference": 83973.59579179989,
+              "difference_pct": 90.14621380565777,
+              "new_in_window": false,
+              "order_value": 83973.59579179989,
+              "rank": 9
+            },
+            {
+              "dimension": "KIA",
+              "value": 137250.20855580008,
+              "current_value": 137250.20855580008,
+              "previous_value": 71531.07876049998,
+              "difference": 65719.1297953001,
+              "difference_pct": 91.87493175566468,
+              "new_in_window": false,
+              "order_value": 65719.1297953001,
+              "rank": 10
+            },
+            {
+              "dimension": "BYD",
+              "value": 26303.78786870002,
+              "current_value": 26303.78786870002,
+              "previous_value": 212.9349979,
+              "difference": 26090.85287080002,
+              "difference_pct": 12252.965988734733,
+              "new_in_window": false,
+              "order_value": 26090.85287080002,
+              "rank": 11
+            },
+            {
+              "dimension": "BODYTECH",
+              "value": 251667.82398659995,
+              "current_value": 251667.82398659995,
+              "previous_value": 232972.9328785999,
+              "difference": 18694.89110800004,
+              "difference_pct": 8.024490603696773,
+              "new_in_window": false,
+              "order_value": 18694.89110800004,
+              "rank": 12
+            },
+            {
+              "dimension": "FIN GYM",
+              "value": 30459.0,
+              "current_value": 30459.0,
+              "previous_value": 13739.0,
+              "difference": 16720.0,
+              "difference_pct": 121.69735788630905,
+              "new_in_window": false,
+              "order_value": 16720.0,
+              "rank": 13
+            },
+            {
+              "dimension": "SUBARU",
+              "value": 52711.24001389997,
+              "current_value": 52711.24001389997,
+              "previous_value": 36099.59437020001,
+              "difference": 16611.645643699965,
+              "difference_pct": 46.01615595274604,
+              "new_in_window": false,
+              "order_value": 16611.645643699965,
+              "rank": 14
+            },
+            {
+              "dimension": "CLINICA LOYOLA",
+              "value": 13737.0,
+              "current_value": 13737.0,
+              "previous_value": 0,
+              "difference": 13737.0,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 13737.0,
+              "rank": 15
+            },
+            {
+              "dimension": "ZEEKR",
+              "value": 24038.486833199975,
+              "current_value": 24038.486833199975,
+              "previous_value": 16259.472910599998,
+              "difference": 7779.013922599977,
+              "difference_pct": 47.84296493109949,
+              "new_in_window": false,
+              "order_value": 7779.013922599977,
+              "rank": 16
+            },
+            {
+              "dimension": "DRA DIAMOND",
+              "value": 7455.35,
+              "current_value": 7455.35,
+              "previous_value": 0,
+              "difference": 7455.35,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 7455.35,
+              "rank": 17
+            },
+            {
+              "dimension": "MG MOTORS",
+              "value": 21432.229925000003,
+              "current_value": 21432.229925000003,
+              "previous_value": 17333.15454010001,
+              "difference": 4099.075384899992,
+              "difference_pct": 23.648755772740838,
+              "new_in_window": false,
+              "order_value": 4099.075384899992,
+              "rank": 18
+            },
+            {
+              "dimension": "MINI",
+              "value": 21206.198375700063,
+              "current_value": 21206.198375700063,
+              "previous_value": 17769.52557419999,
+              "difference": 3436.6728015000735,
+              "difference_pct": 19.340261996020104,
+              "new_in_window": false,
+              "order_value": 3436.6728015000735,
+              "rank": 19
+            },
+            {
+              "dimension": "EQUILIBRIUM CLINIC",
+              "value": 3368.75,
+              "current_value": 3368.75,
+              "previous_value": 0,
+              "difference": 3368.75,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 3368.75,
+              "rank": 20
+            },
+            {
+              "dimension": "GEORGES FIT",
+              "value": 16262.399999999998,
+              "current_value": 16262.399999999998,
+              "previous_value": 14044.8,
+              "difference": 2217.5999999999985,
+              "difference_pct": 15.789473684210517,
+              "new_in_window": false,
+              "order_value": 2217.5999999999985,
+              "rank": 21
+            },
+            {
+              "dimension": "BURBUJAS KIDS SPA",
+              "value": 1766.1,
+              "current_value": 1766.1,
+              "previous_value": 0,
+              "difference": 1766.1,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 1766.1,
+              "rank": 22
+            },
+            {
+              "dimension": "PEUGEOT",
+              "value": 29318.100000000006,
+              "current_value": 29318.100000000006,
+              "previous_value": 27698.842600199998,
+              "difference": 1619.257399800008,
+              "difference_pct": 5.845938847236585,
+              "new_in_window": false,
+              "order_value": 1619.257399800008,
+              "rank": 23
+            },
+            {
+              "dimension": "POWER CLUB",
+              "value": 7804.0,
+              "current_value": 7804.0,
+              "previous_value": 6305.0,
+              "difference": 1499.0,
+              "difference_pct": 23.774781919111813,
+              "new_in_window": false,
+              "order_value": 1499.0,
+              "rank": 24
+            },
+            {
+              "dimension": "JMEV",
+              "value": 10904.122177500001,
+              "current_value": 10904.122177500001,
+              "previous_value": 10276.217551000002,
+              "difference": 627.9046264999997,
+              "difference_pct": 6.110269886597496,
+              "new_in_window": false,
+              "order_value": 627.9046264999997,
+              "rank": 25
+            },
+            {
+              "dimension": "DRA ILIANA ANGEL",
+              "value": 2917.2,
+              "current_value": 2917.2,
+              "previous_value": 2657.6,
+              "difference": 259.5999999999999,
+              "difference_pct": 9.768211920529799,
+              "new_in_window": false,
+              "order_value": 259.5999999999999,
+              "rank": 26
+            },
+            {
+              "dimension": "BEAUTY ARTIST",
+              "value": 1212.05,
+              "current_value": 1212.05,
+              "previous_value": 1147.6499999999999,
+              "difference": 64.40000000000009,
+              "difference_pct": 5.611466910643498,
+              "new_in_window": false,
+              "order_value": 64.40000000000009,
+              "rank": 27
+            },
+            {
+              "dimension": "FOTON",
+              "value": 63.0,
+              "current_value": 63.0,
+              "previous_value": 0,
+              "difference": 63.0,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 63.0,
+              "rank": 28
+            },
+            {
+              "dimension": "CYCLE HOUSE",
+              "value": 19.0,
+              "current_value": 19.0,
+              "previous_value": 0,
+              "difference": 19.0,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 19.0,
+              "rank": 29
+            },
+            {
+              "dimension": "EGLE",
+              "value": 8195.7,
+              "current_value": 8195.7,
+              "previous_value": 8195.7,
+              "difference": 0.0,
+              "difference_pct": 0.0,
+              "new_in_window": false,
+              "order_value": 0.0,
+              "rank": 30
+            },
+            {
+              "dimension": "PRANA",
+              "value": 7359.3,
+              "current_value": 7359.3,
+              "previous_value": 7359.3,
+              "difference": 0.0,
+              "difference_pct": 0.0,
+              "new_in_window": false,
+              "order_value": 0.0,
+              "rank": 31
+            },
+            {
+              "dimension": "SELF",
+              "value": 9246.3,
+              "current_value": 9246.3,
+              "previous_value": 9246.3,
+              "difference": 0.0,
+              "difference_pct": 0.0,
+              "new_in_window": false,
+              "order_value": 0.0,
+              "rank": 32
+            },
+            {
+              "dimension": "TECHNOGYM",
+              "value": 2700000.0,
+              "current_value": 2700000.0,
+              "previous_value": 2700000.0,
+              "difference": 0.0,
+              "difference_pct": 0.0,
+              "new_in_window": false,
+              "order_value": 0.0,
+              "rank": 33
+            },
+            {
+              "dimension": "VIVANTE",
+              "value": 6290.0,
+              "current_value": 6290.0,
+              "previous_value": 6290.0,
+              "difference": 0.0,
+              "difference_pct": 0.0,
+              "new_in_window": false,
+              "order_value": 0.0,
+              "rank": 34
+            },
+            {
+              "dimension": "SMADIA CLINIC",
+              "value": 4707.5,
+              "current_value": 4707.5,
+              "previous_value": 4720.099999999999,
+              "difference": -12.599999999999454,
+              "difference_pct": -0.26694349695979863,
+              "new_in_window": false,
+              "order_value": -12.599999999999454,
+              "rank": 35
+            },
+            {
+              "dimension": "BIORITMO",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 42.0,
+              "difference": -42.0,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -42.0,
+              "rank": 36
+            },
+            {
+              "dimension": "TURBAYORK",
+              "value": 250.95,
+              "current_value": 250.95,
+              "previous_value": 483.7,
+              "difference": -232.75,
+              "difference_pct": -48.11866859623734,
+              "new_in_window": false,
+              "order_value": -232.75,
+              "rank": 37
+            },
+            {
+              "dimension": "KARELYS SOTO",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 424.55,
+              "difference": -424.55,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -424.55,
+              "rank": 38
+            },
+            {
+              "dimension": "MARIA E SPA",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 424.55,
+              "difference": -424.55,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -424.55,
+              "rank": 39
+            },
+            {
+              "dimension": "CITROEN",
+              "value": 184.79999999999998,
+              "current_value": 184.79999999999998,
+              "previous_value": 789.9499999999999,
+              "difference": -605.15,
+              "difference_pct": -76.60611431103234,
+              "new_in_window": false,
+              "order_value": -605.15,
+              "rank": 40
+            },
+            {
+              "dimension": "YISETH GONZALEZ",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 677.5999999999999,
+              "difference": -677.5999999999999,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -677.5999999999999,
+              "rank": 41
+            },
+            {
+              "dimension": "PLANET FITNESS",
+              "value": 1.3731446,
+              "current_value": 1.3731446,
+              "previous_value": 771.8070105,
+              "difference": -770.4338659,
+              "difference_pct": -99.82208705268037,
+              "new_in_window": false,
+              "order_value": -770.4338659,
+              "rank": 42
+            },
+            {
+              "dimension": "SPORT SPICE",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 1380.4,
+              "difference": -1380.4,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -1380.4,
+              "rank": 43
+            },
+            {
+              "dimension": "SPA CARMEN ALVARADO",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 1617.0,
+              "difference": -1617.0,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -1617.0,
+              "rank": 44
+            },
+            {
+              "dimension": "CHERY",
+              "value": 30400.341952299976,
+              "current_value": 30400.341952299976,
+              "previous_value": 32667.560916300023,
+              "difference": -2267.218964000047,
+              "difference_pct": -6.940276226342874,
+              "new_in_window": false,
+              "order_value": -2267.218964000047,
+              "rank": 45
+            },
+            {
+              "dimension": "CHANGAN",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 2631.7335768000003,
+              "difference": -2631.7335768000003,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -2631.7335768000003,
+              "rank": 46
+            },
+            {
+              "dimension": "METROKIA",
+              "value": 65.2011045,
+              "current_value": 65.2011045,
+              "previous_value": 2970.0036447,
+              "difference": -2904.8025402000003,
+              "difference_pct": -97.80467931019709,
+              "new_in_window": false,
+              "order_value": -2904.8025402000003,
+              "rank": 47
+            },
+            {
+              "dimension": "ADIOS VELLOS",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 3099.25,
+              "difference": -3099.25,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -3099.25,
+              "rank": 48
+            },
+            {
+              "dimension": "D RAIZ",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 4113.2,
+              "difference": -4113.2,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -4113.2,
+              "rank": 49
+            },
+            {
+              "dimension": "ADORATTA",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 4435.2,
+              "difference": -4435.2,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -4435.2,
+              "rank": 50
+            },
+            {
+              "dimension": "DEEPAL",
+              "value": 21147.0,
+              "current_value": 21147.0,
+              "previous_value": 26114.35,
+              "difference": -4967.3499999999985,
+              "difference_pct": -19.021534137361254,
+              "new_in_window": false,
+              "order_value": -4967.3499999999985,
+              "rank": 51
+            },
+            {
+              "dimension": "MERCEDES BENZ",
+              "value": 42468.39328080004,
+              "current_value": 42468.39328080004,
+              "previous_value": 47657.1696364999,
+              "difference": -5188.776355699862,
+              "difference_pct": -10.887714052841813,
+              "new_in_window": false,
+              "order_value": -5188.776355699862,
+              "rank": 52
+            },
+            {
+              "dimension": "ATHLETIC",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 6031.199999999999,
+              "difference": -6031.199999999999,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -6031.199999999999,
+              "rank": 53
+            },
+            {
+              "dimension": "CUPRA",
+              "value": 131181.38962420018,
+              "current_value": 131181.38962420018,
+              "previous_value": 137292.94265870008,
+              "difference": -6111.553034499899,
+              "difference_pct": -4.451469184175591,
+              "new_in_window": false,
+              "order_value": -6111.553034499899,
+              "rank": 54
+            },
+            {
+              "dimension": "SEOUL",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 7359.3,
+              "difference": -7359.3,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -7359.3,
+              "rank": 55
+            },
+            {
+              "dimension": "ENJOY PILATES",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 9255.4,
+              "difference": -9255.4,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -9255.4,
+              "rank": 56
+            },
+            {
+              "dimension": "GWM",
+              "value": 9152.7,
+              "current_value": 9152.7,
+              "previous_value": 20375.45,
+              "difference": -11222.75,
+              "difference_pct": -55.07976510948224,
+              "new_in_window": false,
+              "order_value": -11222.75,
+              "rank": 57
+            },
+            {
+              "dimension": "AF GYM",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 14718.6,
+              "difference": -14718.6,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -14718.6,
+              "rank": 58
+            },
+            {
+              "dimension": "FITNESS 24 SEVEN",
+              "value": 654289.4661660001,
+              "current_value": 654289.4661660001,
+              "previous_value": 669993.9924234002,
+              "difference": -15704.526257400052,
+              "difference_pct": -2.343980160269204,
+              "new_in_window": false,
+              "order_value": -15704.526257400052,
+              "rank": 59
+            },
+            {
+              "dimension": "MG",
+              "value": 84095.10000000002,
+              "current_value": 84095.10000000002,
+              "previous_value": 105973.09999999999,
+              "difference": -21877.99999999997,
+              "difference_pct": -20.644861762088656,
+              "new_in_window": false,
+              "order_value": -21877.99999999997,
+              "rank": 60
+            },
+            {
+              "dimension": "AUDI",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 23244.9,
+              "difference": -23244.9,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -23244.9,
+              "rank": 61
+            },
+            {
+              "dimension": "FORD",
+              "value": 36417.85,
+              "current_value": 36417.85,
+              "previous_value": 61084.905618500015,
+              "difference": -24667.055618500017,
+              "difference_pct": -40.38158914831722,
+              "new_in_window": false,
+              "order_value": -24667.055618500017,
+              "rank": 62
+            },
+            {
+              "dimension": "TOYOTA",
+              "value": 39646.92053350006,
+              "current_value": 39646.92053350006,
+              "previous_value": 67364.30563600002,
+              "difference": -27717.38510249996,
+              "difference_pct": -41.14550701712803,
+              "new_in_window": false,
+              "order_value": -27717.38510249996,
+              "rank": 63
+            },
+            {
+              "dimension": "CHEVROLET",
+              "value": 40894.19778769999,
+              "current_value": 40894.19778769999,
+              "previous_value": 112284.17936850009,
+              "difference": -71389.9815808001,
+              "difference_pct": -63.57973312207121,
+              "new_in_window": false,
+              "order_value": -71389.9815808001,
+              "rank": 64
+            },
+            {
+              "dimension": "HYUNDAI",
+              "value": 677134.8819311998,
+              "current_value": 677134.8819311998,
+              "previous_value": 776639.7241806003,
+              "difference": -99504.84224940045,
+              "difference_pct": -12.812226718686556,
+              "new_in_window": false,
+              "order_value": -99504.84224940045,
+              "rank": 65
+            },
+            {
+              "dimension": "PILATES TOOLBOX",
+              "value": 1364132.0,
+              "current_value": 1364132.0,
+              "previous_value": 1491028.0,
+              "difference": -126896.0,
+              "difference_pct": -8.51063829787234,
+              "new_in_window": false,
+              "order_value": -126896.0,
+              "rank": 66
+            },
+            {
+              "dimension": "MAZDA",
+              "value": 57770.69381429998,
+              "current_value": 57770.69381429998,
+              "previous_value": 222252.37384520003,
+              "difference": -164481.68003090005,
+              "difference_pct": -74.00671461239934,
+              "new_in_window": false,
+              "order_value": -164481.68003090005,
+              "rank": 67
+            },
+            {
+              "dimension": "VOLVO",
+              "value": 140252.70875160024,
+              "current_value": 140252.70875160024,
+              "previous_value": 399979.3320226998,
+              "difference": -259726.62327109958,
+              "difference_pct": -64.93501100610854,
+              "new_in_window": false,
+              "order_value": -259726.62327109958,
+              "rank": 68
+            },
+            {
+              "dimension": "VOLKSWAGEN",
+              "value": 156514.85,
+              "current_value": 156514.85,
+              "previous_value": 445901.5463374999,
+              "difference": -289386.6963374999,
+              "difference_pct": -64.89923587716491,
+              "new_in_window": false,
+              "order_value": -289386.6963374999,
+              "rank": 69
+            },
+            {
+              "dimension": "AMERICAN PILATES BY BRUNA BRAGA",
+              "value": 0,
+              "current_value": 0,
+              "previous_value": 459000.0,
+              "difference": -459000.0,
+              "difference_pct": -100.0,
+              "new_in_window": false,
+              "order_value": -459000.0,
+              "rank": 70
+            },
+            {
+              "dimension": "WORLD GYM",
+              "value": 773423.0,
+              "current_value": 773423.0,
+              "previous_value": 1601398.0,
+              "difference": -827975.0,
+              "difference_pct": -51.70326177502407,
+              "new_in_window": false,
+              "order_value": -827975.0,
+              "rank": 71
+            },
+            {
+              "dimension": "SMART FIT",
+              "value": 3210535.9571994,
+              "current_value": 3210535.9571994,
+              "previous_value": 4085456.8659885996,
+              "difference": -874920.9087891998,
+              "difference_pct": -21.41549739694746,
+              "new_in_window": false,
+              "order_value": -874920.9087891998,
+              "rank": 72
+            },
+            {
+              "dimension": "GLADIATOR MUAY THAI",
+              "value": 629385.0,
+              "current_value": 629385.0,
+              "previous_value": 1601053.0,
+              "difference": -971668.0,
+              "difference_pct": -60.68930884861401,
+              "new_in_window": false,
+              "order_value": -971668.0,
+              "rank": 73
+            }
+          ],
+          "ranked_entities": 73,
+          "excluded_entities": [],
+          "capability": "rank_change",
+          "criterion": "absolute",
+          "direction": "desc",
+          "period_a": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "period_b": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "period_c": null,
+          "comparison_equivalent": true,
+          "evidence": [
+            {
+              "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+              "query_parameters": {
+                "start_date": "2026-07-01",
+                "end_date": "2026-07-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "040cc239-a748-4427-a346-9352271da418",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T23:58:18.549827+00:00",
+              "duration_ms": 1010.01,
+              "rows": 57
+            },
+            {
+              "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+              "query_parameters": {
+                "start_date": "2026-06-01",
+                "end_date": "2026-06-30"
+              },
+              "bytes_processed": 0,
+              "job_id": "c86fcdb8-3c7a-4c41-becd-dceb3cdc7d29",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T23:58:20.011806+00:00",
+              "duration_ms": 886.95,
+              "rows": 66
+            }
+          ],
+          "requested_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Orden por cambio absoluto.",
+            "Ausencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "040cc239-a748-4427-a346-9352271da418",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T23:58:18.549827+00:00",
+            "duration_ms": 1010.01,
+            "rows": 57
+          },
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2026-06-01",
+              "end_date": "2026-06-30"
+            },
+            "bytes_processed": 0,
+            "job_id": "c86fcdb8-3c7a-4c41-becd-dceb3cdc7d29",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T23:58:20.011806+00:00",
+            "duration_ms": 886.95,
+            "rows": 66
+          }
+        ],
+        "latency_ms": 2967.27
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking_change",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+          "arguments": {
+            "dimension": "marca",
+            "criterio": "absolute",
+            "orden": "desc",
+            "aceleracion": false,
+            "limite": 100
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {},
+        "period": {
+          "kind": "current_month"
+        },
+        "comparison_period": {
+          "kind": "previous_period"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 100
+        }
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 100
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 8990.48,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7728,
+      "output_tokens": 257,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1998.83
+        },
+        {
+          "stage": "coverage_resolution",
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          }
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking_change",
+          "scope": {
+            "intent": "ranking_change",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {},
+            "period": {
+              "kind": "current_month"
+            },
+            "comparison_period": {
+              "kind": "previous_period"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 100
+            }
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "ranking_change",
+          "requested_scope": {
+            "intent": "ranking_change",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {},
+            "period": {
+              "kind": "current_month"
+            },
+            "comparison_period": {
+              "kind": "previous_period"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 100
+            }
+          },
+          "inherited_scope": {},
+          "scope_mutations": {
+            "filters": {
+              "before": null,
+              "after": {}
+            },
+            "requested_period": {
+              "before": null,
+              "after": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              }
+            },
+            "comparison_period": {
+              "before": null,
+              "after": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              }
+            },
+            "dimensions": {
+              "before": null,
+              "after": [
+                "marca"
+              ]
+            },
+            "intent": {
+              "before": null,
+              "after": "ranking_change"
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2026-07-01",
+              "end": "2026-07-31"
+            },
+            "comparison_period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "intent": "ranking_change",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 100
+            },
+            "operation": "new_analysis",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "requirements": {
+            "capability": "rank_change",
+            "dimension": "marca",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 100
+            },
+            "requires_reference": true,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "rank_change"
+          ],
+          "tools": [
+            "ranking_cambio_bicomp"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "sufficiency",
+          "requirements": {
+            "capability": "rank_change",
+            "dimension": "marca",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 100
+            },
+            "requires_reference": true,
+            "requires_series": false
+          },
+          "sufficient": true,
+          "successful_evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {}
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2026-07-01",
+              "end": "2026-07-31"
+            },
+            "last_entities": {},
+            "last_filters": {},
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 100
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "absolute",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 100
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 100
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 100
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 100
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "absolute",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 100
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Ordena las marcas por cuánto aumentaron, no por su tamaño.",
+              "scope": {
+                "intent": "ranking_change",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "filters": {},
+                "period": {
+                  "kind": "current_month"
+                },
+                "comparison_period": {
+                  "kind": "previous_period"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 100
+                }
+              },
+              "status": "planned_evidence_complete"
+            }
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 3,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7728,
+        "output_tokens": 257,
+        "cache_hits": 0,
+        "total_latency_ms": 8990.48
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  }
+}

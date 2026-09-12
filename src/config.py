@@ -30,6 +30,23 @@ class Settings:
     response_validation_retries: int = 1
 
     query_cache_ttl_seconds: int = 300
+    llm_plan_max_tokens: int = 2200
+    llm_timeout_seconds: int = 60
+    bigquery_timeout_seconds: int = 45
+    llm_reasoning_effort: str | None = "none"
+    plan_semantic_review: bool = False
+    history_max_messages: int = 12
+    history_max_chars: int = 16000
+    vision_models: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        for name in ("max_agent_steps", "llm_max_tokens", "llm_final_max_tokens", "llm_plan_max_tokens",
+                     "llm_timeout_seconds", "bigquery_timeout_seconds", "bigquery_max_bytes_billed",
+                     "history_max_messages", "history_max_chars"):
+            if getattr(self, name) <= 0:
+                raise ValueError(f"{name} debe ser positivo.")
+        if self.query_cache_ttl_seconds < 0 or not 0 <= self.response_validation_retries <= 1:
+            raise ValueError("TTL debe ser no negativo y se permite como máximo una reparación final.")
 
     @classmethod
     def from_env(
@@ -52,7 +69,7 @@ class Settings:
             ),
             llm_base_url=os.getenv(
                 "LLM_BASE_URL",
-                "https://integrate.api.nvidia.com/v1",
+                "https://openrouter.ai/api/v1" if os.getenv("OPENROUTER_API_KEY") and not os.getenv("NVIDIA_API_KEY") else "https://integrate.api.nvidia.com/v1",
             ),
             gcp_project_id=os.getenv(
                 "GCP_PROJECT_ID",
@@ -100,6 +117,14 @@ class Settings:
                     "300",
                 )
             ),
+            llm_plan_max_tokens=int(os.getenv("LLM_PLAN_MAX_TOKENS", "2200")),
+            llm_timeout_seconds=int(os.getenv("LLM_TIMEOUT_SECONDS", "60")),
+            bigquery_timeout_seconds=int(os.getenv("BIGQUERY_TIMEOUT_SECONDS", "45")),
+            llm_reasoning_effort=os.getenv("LLM_REASONING_EFFORT", "none") or None,
+            vision_models=tuple(v.strip() for v in os.getenv("LLM_VISION_MODELS", "").split(",") if v.strip()),
+            plan_semantic_review=os.getenv("PLAN_SEMANTIC_REVIEW", "false").lower() == "true",
+            history_max_messages=int(os.getenv("HISTORY_MAX_MESSAGES", "12")),
+            history_max_chars=int(os.getenv("HISTORY_MAX_CHARS", "16000")),
         )
 
     def validate_bigquery(self) -> None:

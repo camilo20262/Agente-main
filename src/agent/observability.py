@@ -13,6 +13,9 @@ class ConversationMetrics:
     total_latency_ms: float = 0
     errors: list[str] = field(default_factory=list)
     cache_hits: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    events: list[dict[str, Any]] = field(default_factory=list)
 
     def as_dict(self) -> dict[str, Any]:
         return asdict(self)

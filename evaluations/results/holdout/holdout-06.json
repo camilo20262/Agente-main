@@ -1,0 +1,248 @@
+{
+  "id": "holdout-06",
+  "family": "coverage",
+  "question": "¿Cuál es la cobertura temporal real disponible en la fuente?",
+  "elapsed_s": 6.76,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Rango de fechas disponible**\n\nCobertura disponible: 2019-01-01 a 2026-07-31.\n\nIndica el periodo efectivo para el cual se dispone de datos de inv_neta en la fuente.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "obtener_cobertura_bicomp",
+        "arguments": {},
+        "result": {
+          "success": true,
+          "source": "bigquery",
+          "start": "2019-01-01",
+          "end": "2026-07-31",
+          "row_count": 776552,
+          "evidence": {
+            "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+            "query_parameters": {},
+            "bytes_processed": 0,
+            "job_id": "b63c2d0e-d36a-4bea-ac53-d9f833740980",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:40:09.964004+00:00",
+            "duration_ms": 1346.44,
+            "rows": 1
+          },
+          "domain": "bicomp",
+          "period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "schema": {
+            "pais_id": "INTEGER",
+            "cliente_id": "INTEGER",
+            "competencia_id": "INTEGER",
+            "pais": "STRING",
+            "anio": "INTEGER",
+            "anio_pais": "STRING",
+            "mes": "INTEGER",
+            "fecha": "DATE",
+            "semana": "INTEGER",
+            "sector": "STRING",
+            "subsector": "STRING",
+            "categoria": "STRING",
+            "anunciante": "STRING",
+            "anunciante_agrupado": "STRING",
+            "holding": "STRING",
+            "central": "STRING",
+            "agencia": "STRING",
+            "marca": "STRING",
+            "marca_agrupada": "STRING",
+            "producto": "STRING",
+            "referencia": "STRING",
+            "prod_ref": "STRING",
+            "medio": "STRING",
+            "medio_agrupado": "STRING",
+            "vehiculo": "STRING",
+            "soporte": "STRING",
+            "franja": "STRING",
+            "genero": "STRING",
+            "region": "STRING",
+            "ciudad": "STRING",
+            "cubrimiento": "STRING",
+            "periodicidad": "STRING",
+            "tipo_cobranding": "STRING",
+            "corte": "INTEGER",
+            "pos": "INTEGER",
+            "de": "INTEGER",
+            "tipo_aviso": "STRING",
+            "hora_pagina": "STRING",
+            "evento_circula": "STRING",
+            "cadena_editorial": "STRING",
+            "color": "STRING",
+            "cms": "FLOAT",
+            "col": "INTEGER",
+            "cxc": "FLOAT",
+            "total_duracion": "FLOAT",
+            "total_insercion": "INTEGER",
+            "impacto": "INTEGER",
+            "inv_bruta": "FLOAT",
+            "inv_neta": "FLOAT",
+            "inv_bruta_usd": "FLOAT",
+            "inv_neta_usd": "FLOAT",
+            "trm": "FLOAT",
+            "tipo_pauta": "STRING",
+            "formato": "STRING",
+            "dispositivo": "STRING",
+            "soldby": "STRING",
+            "advertisement": "STRING",
+            "target1": "FLOAT",
+            "target2": "FLOAT",
+            "target3": "FLOAT",
+            "target4": "FLOAT",
+            "target5": "FLOAT",
+            "target6": "FLOAT",
+            "target7": "FLOAT",
+            "target8": "FLOAT",
+            "target9": "FLOAT",
+            "target10": "FLOAT",
+            "segmento1": "STRING",
+            "segmento2": "STRING",
+            "segmento3": "STRING",
+            "segmento4": "STRING",
+            "segmento5": "STRING",
+            "segmento6": "STRING",
+            "segmento7": "STRING",
+            "duracion_video": "FLOAT"
+          }
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": null,
+        "row_count": 776552,
+        "step": 1,
+        "purpose": "Obtener el rango de fechas, número de filas y esquema real disponible en la fuente BICOMP para determinar la cobertura temporal efectiva.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+            "query_parameters": {},
+            "bytes_processed": 0,
+            "job_id": "b63c2d0e-d36a-4bea-ac53-d9f833740980",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:40:09.964004+00:00",
+            "duration_ms": 1346.44,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 3235.76
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "coverage",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "obtener_cobertura_bicomp",
+          "purpose": "Obtener el rango de fechas, número de filas y esquema real disponible en la fuente BICOMP para determinar la cobertura temporal efectiva.",
+          "arguments": {}
+        }
+      ],
+      "scope": {
+        "intent": "coverage",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": null,
+        "filters": {},
+        "period": {
+          "kind": "all"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la cobertura temporal real disponible en la fuente?"
+      ],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "coverage",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 6761.74,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7202,
+      "output_tokens": 226,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1509.1
+        },
+        {
+          "stage": "plan",
+          "intent": "coverage",
+          "scope": {
+            "intent": "coverage",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "all"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "obtener_cobertura_bicomp",
+          "purpose": "Obtener el rango de fechas, número de filas y esquema real disponible en la fuente BICOMP para determinar la cobertura temporal efectiva.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 1999.5
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Rango de fechas disponible**\n\nCobertura disponible: 2019-01-01 a 2026-07-31.\n\nIndica el periodo efectivo para el cual se dispone de datos de inv_neta en la fuente."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7202,
+        "output_tokens": 226,
+        "cache_hits": 0,
+        "total_latency_ms": 6761.74
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "coverage",
+  "actual_intent": "coverage"
+}

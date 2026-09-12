@@ -1,0 +1,1067 @@
+{
+  "id": "paraphrase-3-04",
+  "question": "¿Y el mínimo por semana de ese mismo año?",
+  "elapsed_s": 8.2,
+  "memory_before": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "Toyota"
+      ]
+    },
+    "last_filters": {
+      "marca": "Toyota"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {},
+        "operation": "discover_extreme",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "extremos_temporales_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+            "arguments": {
+              "granularidad": "week",
+              "extremo": "max"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-03-25",
+          "end": "2024-03-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "shift_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Consultar el periodo relativo al extremo calculado.",
+            "arguments": {}
+          }
+        ]
+      }
+    ],
+    "last_peak": {
+      "period": "2023-01-01",
+      "value": 872.7532827999999,
+      "source_rows": 8,
+      "rank": 12,
+      "share_of_total_pct": 0.021515368002339795,
+      "is_peak": false,
+      "total": 4056418.1040505003,
+      "granularity": "month"
+    },
+    "last_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "min"
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "min"
+        }
+      }
+    ],
+    "last_request": {
+      "question": "En todo 2023, identifica el valle mensual de Toyota.",
+      "scope": {
+        "intent": "temporal_extrema",
+        "operation": "discover_extreme",
+        "scope_mode": "replace",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2023
+        },
+        "dimensions": [],
+        "analysis": {}
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "Toyota"
+      }
+    ]
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "Toyota"
+      ]
+    },
+    "last_filters": {
+      "marca": "Toyota"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {},
+        "operation": "discover_extreme",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "extremos_temporales_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+            "arguments": {
+              "granularidad": "week",
+              "extremo": "max"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-03-25",
+          "end": "2024-03-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "shift_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Consultar el periodo relativo al extremo calculado.",
+            "arguments": {}
+          }
+        ]
+      }
+    ],
+    "last_peak": {
+      "period": "2023-01-01",
+      "value": 872.7532827999999,
+      "source_rows": 8,
+      "rank": 12,
+      "share_of_total_pct": 0.021515368002339795,
+      "is_peak": false,
+      "total": 4056418.1040505003,
+      "granularity": "month"
+    },
+    "last_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "min"
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {},
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "month",
+          "extremo": "min"
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿Y el mínimo por semana de ese mismo año?",
+      "status": "controlled_error"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "Toyota"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "temporal_extrema",
+      "operation": "discover_extreme",
+      "scope_mode": "inherit",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "period": {
+        "kind": "inherit"
+      },
+      "dimensions": [],
+      "analysis": {
+        "extreme": "min",
+        "granularity": "week"
+      },
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+          "arguments": {
+            "granularidad": "week",
+            "extremo": "min"
+          }
+        }
+      ]
+    },
+    {
+      "intent": "temporal_extrema",
+      "operation": "discover_extreme",
+      "scope_mode": "inherit",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "period": {
+        "kind": "inherit"
+      },
+      "dimensions": [],
+      "analysis": {
+        "extreme": "min",
+        "granularity": "week"
+      },
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+          "arguments": {
+            "granularidad": "week",
+            "extremo": "min"
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "clarification",
+    "domains": [
+      "none"
+    ],
+    "steps": [],
+    "scope": {},
+    "analysis_questions": [],
+    "answer": "No recibí una pregunta.",
+    "budget": 0,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {},
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {}
+    }
+  },
+  "inherited_scope": {
+    "metric": "inv_neta",
+    "filters": {
+      "marca": "Toyota"
+    },
+    "requested_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "comparison_period": {},
+    "dimensions": [],
+    "intent": "temporal_extrema",
+    "analysis": {},
+    "operation": "discover_extreme",
+    "observed_period": {},
+    "available_period": {
+      "start": "2019-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 5,
+      "total_tool_calls": 3,
+      "bigquery_bytes_processed": 59853345,
+      "bigquery_queries": 3,
+      "total_latency_ms": 23903.2,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 46485,
+      "output_tokens": 1045,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 4080.1
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "El extremo de ese alcance ya está calculado. Si pide el periodo anterior al extremo, usa intent=lookup, operation=shift_period, period={kind:previous_period,anchor:peak}. Si pide repetir la misma consulta, declara continue_analysis. No redescubras el mismo extremo para un seguimiento temporal.",
+          "rejected_plan": {
+            "intent": "temporal_extrema",
+            "operation": "discover_extreme",
+            "scope_mode": "inherit",
+            "filters": {
+              "marca": "Toyota"
+            },
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [],
+            "analysis": {
+              "extreme": "min",
+              "granularity": "week"
+            },
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "week",
+                  "extremo": "min"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 4081.19
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "El extremo de ese alcance ya está calculado. Si pide el periodo anterior al extremo, usa intent=lookup, operation=shift_period, period={kind:previous_period,anchor:peak}. Si pide repetir la misma consulta, declara continue_analysis. No redescubras el mismo extremo para un seguimiento temporal.",
+          "rejected_plan": {
+            "intent": "temporal_extrema",
+            "operation": "discover_extreme",
+            "scope_mode": "inherit",
+            "filters": {
+              "marca": "Toyota"
+            },
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [],
+            "analysis": {
+              "extreme": "min",
+              "granularity": "week"
+            },
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "week",
+                  "extremo": "min"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "El extremo de ese alcance ya está calculado. Si pide el periodo anterior al extremo, usa intent=lookup, operation=shift_period, period={kind:previous_period,anchor:peak}. Si pide repetir la misma consulta, declara continue_analysis. No redescubras el mismo extremo para un seguimiento temporal."
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "Toyota"
+              ]
+            },
+            "last_filters": {
+              "marca": "Toyota"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "temporal_extrema",
+                "analysis": {},
+                "operation": "discover_extreme",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "extremos_temporales_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                    "arguments": {
+                      "granularidad": "week",
+                      "extremo": "max"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "requested_period": {
+                  "start": "2024-03-25",
+                  "end": "2024-03-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "shift_period",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Consultar el periodo relativo al extremo calculado.",
+                    "arguments": {}
+                  }
+                ]
+              }
+            ],
+            "last_peak": {
+              "period": "2023-01-01",
+              "value": 872.7532827999999,
+              "source_rows": 8,
+              "rank": 12,
+              "share_of_total_pct": 0.021515368002339795,
+              "is_peak": false,
+              "total": 4056418.1040505003,
+              "granularity": "month"
+            },
+            "last_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "min"
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "min"
+                }
+              }
+            ],
+            "last_request": {
+              "question": "En todo 2023, identifica el valle mensual de Toyota.",
+              "scope": {
+                "intent": "temporal_extrema",
+                "operation": "discover_extreme",
+                "scope_mode": "replace",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2023
+                },
+                "dimensions": [],
+                "analysis": {}
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "Toyota"
+              }
+            ]
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "Toyota"
+              ]
+            },
+            "last_filters": {
+              "marca": "Toyota"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "temporal_extrema",
+                "analysis": {},
+                "operation": "discover_extreme",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "extremos_temporales_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                    "arguments": {
+                      "granularidad": "week",
+                      "extremo": "max"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "requested_period": {
+                  "start": "2024-03-25",
+                  "end": "2024-03-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "shift_period",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Consultar el periodo relativo al extremo calculado.",
+                    "arguments": {}
+                  }
+                ]
+              }
+            ],
+            "last_peak": {
+              "period": "2023-01-01",
+              "value": 872.7532827999999,
+              "source_rows": 8,
+              "rank": 12,
+              "share_of_total_pct": 0.021515368002339795,
+              "is_peak": false,
+              "total": 4056418.1040505003,
+              "granularity": "month"
+            },
+            "last_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "min"
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {},
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "month",
+                  "extremo": "min"
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿Y el mínimo por semana de ese mismo año?",
+              "status": "controlled_error"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "Toyota"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 19730,
+        "output_tokens": 334,
+        "cache_hits": 0,
+        "total_latency_ms": 8196.92
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "id": "independent-23",
+  "question": "¿Cuántas inserciones tuvo BMW en 2025?",
+  "family": "lookup",
+  "expected_no_data": false,
+  "elapsed_s": 4.45,
+  "result": {
+    "answer": "BMW: Volumen de inserciones publicitarias de 94.050.182,00. Entre 2025-01-01 y 2025-12-31.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inserciones_bicomp",
+        "arguments": {
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "anunciante": "BMW"
+          }
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "total_insercion",
+          "aggregation": "sum",
+          "filters": {
+            "anunciante": "BMW"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-01"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "count",
+          "metric_label": "Volumen de inserciones publicitarias",
+          "success": true,
+          "value": 94050182,
+          "row_count": 460,
+          "valid_values": 460,
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`anunciante` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 22131313,
+            "job_id": "19914183-489c-41e1-9522-4a69f88457c5",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:28:43.030809+00:00",
+            "duration_ms": 1182.99,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "total_insercion",
+        "filters": {
+          "anunciante": "BMW"
+        },
+        "row_count": 460,
+        "step": 1,
+        "purpose": "Obtener el total real de inserciones para BMW en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`anunciante` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 22131313,
+            "job_id": "19914183-489c-41e1-9522-4a69f88457c5",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:28:43.030809+00:00",
+            "duration_ms": 1182.99,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 2737.8
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "lookup",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inserciones_bicomp",
+          "purpose": "Obtener el total real de inserciones para BMW en 2025.",
+          "arguments": {
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "anunciante": "BMW"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "lookup",
+        "scope_mode": "replace",
+        "metric": "total_insercion",
+        "filters": {
+          "anunciante": "BMW"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "total_insercion",
+        "filters": {
+          "anunciante": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 22131313,
+      "bigquery_queries": 1,
+      "total_latency_ms": 4448.05,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 6384,
+      "output_tokens": 195,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1697.33
+        },
+        {
+          "stage": "plan",
+          "intent": "lookup",
+          "scope": {
+            "intent": "lookup",
+            "scope_mode": "replace",
+            "metric": "total_insercion",
+            "filters": {
+              "anunciante": "BMW"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inserciones_bicomp",
+          "purpose": "Obtener el total real de inserciones para BMW en 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 22131313,
+        "input_tokens": 6384,
+        "output_tokens": 195,
+        "cache_hits": 0,
+        "total_latency_ms": 4448.05
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "lookup",
+  "actual_intent": "lookup"
+}

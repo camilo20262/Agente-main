@@ -1,0 +1,89 @@
+{
+  "id": "independent-13",
+  "question": "¿Qué medios explican el cambio de la inversión de Volvo en 2026 frente a 2025?",
+  "family": "diagnostic",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 9.79,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 9786.86,
+      "errors": [
+        "run:ValueError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 13356,
+      "output_tokens": 1026,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3837.79
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 5914.5
+        },
+        {
+          "stage": "error",
+          "type": "ValueError",
+          "detail": "Los periodos de la herramienta cambian la orientación o alcance de comparación."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 13356,
+        "output_tokens": 1026,
+        "cache_hits": 0,
+        "total_latency_ms": 9786.86
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "clarification"
+}

@@ -7,7 +7,9 @@ from src.data.bigquery_repository import BigQueryRepository
 
 
 def repository():
-    return BigQueryRepository(Settings(), client=object())
+    repo = BigQueryRepository(Settings(), client=object())
+    repo._coverage_cache.put("coverage", {}, {"success": True, "start": "2020-01-01", "end": "2030-12-31"})
+    return repo
 
 
 def test_compare_periods_calculates_all_differences(monkeypatch):
@@ -94,5 +96,5 @@ def test_top_n_ranking_still_limits_in_sql(monkeypatch):
 
     monkeypatch.setattr(repo, "_execute_bicomp", execute)
     repo.analizar_medios(metric="inv_neta", filters=None, start_date=None, end_date=None, limit=1)
-    assert "ORDER BY value DESC LIMIT @limit" in specs[0].sql
+    assert "ORDER BY value DESC" in specs[0].sql and "LIMIT @limit" in specs[0].sql
     assert ("limit", "INT64", 1) in specs[0].parameters

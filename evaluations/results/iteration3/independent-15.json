@@ -1,0 +1,234 @@
+{
+  "id": "independent-15",
+  "question": "Encuentra los principales hallazgos de inversión de este año.",
+  "family": "open_analysis",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 7.22,
+  "result": {
+    "answer": "Análisis parcial: no pude resolver los argumentos de una consulta.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-09-10",
+          "agregacion": "sum",
+          "filtros": {}
+        },
+        "result": {
+          "success": false,
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "La profundización sale del periodo solicitado."
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {},
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener la inversión neta total acumulada desde el inicio del año hasta la fecha de corte.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 0.06
+      },
+      {
+        "id": "e2",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-07-31",
+          "filtros": {},
+          "agregacion": "total"
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'consultar_inversion_publicitaria': agregacion: 'total' is not one of ['sum']"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {},
+        "row_count": null,
+        "step": 2,
+        "purpose": "Obtener la inversión neta total en el periodo solicitado para establecer el baseline del análisis.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 4.87
+      }
+    ],
+    "steps": 2,
+    "plan": {
+      "intent": "open_analysis",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total acumulada desde el inicio del año hasta la fecha de corte.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-09-10",
+            "agregacion": "sum",
+            "filtros": {}
+          }
+        },
+        {
+          "tool": "analizar_medios",
+          "purpose": "Distribuir la inversión neta por medio para identificar los canales con mayor participación.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-09-10",
+            "agregacion": "sum",
+            "filtros": {},
+            "limite": 10
+          }
+        },
+        {
+          "tool": "ranking_anunciantes",
+          "purpose": "Identificar los principales anunciantes por inversión neta acumulada este año.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-09-10",
+            "agregacion": "sum",
+            "filtros": {},
+            "limite": 10
+          }
+        }
+      ],
+      "scope": {
+        "intent": "open_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "ytd"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión neta total acumulada este año?",
+        "¿Cómo se distribuye la inversión por medio?",
+        "¿Cuáles son los principales anunciantes por inversión este año?"
+      ],
+      "answer": "",
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 7218.75,
+      "errors": [
+        "arguments",
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 10392,
+      "output_tokens": 596,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2627.63
+        },
+        {
+          "stage": "plan",
+          "intent": "open_analysis",
+          "scope": {
+            "intent": "open_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "ytd"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "coverage_resolution",
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total acumulada desde el inicio del año hasta la fecha de corte.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 2243.95
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "Se necesita obtener la inversión neta para el periodo solicitado (2026-01-01 a 2026-07-31) para identificar los principales hallazgos de inversión."
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total en el periodo solicitado para establecer el baseline del análisis.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "arguments",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 10392,
+        "output_tokens": 596,
+        "cache_hits": 0,
+        "total_latency_ms": 7218.75
+      },
+      "stop_reason": "arguments"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "open_analysis",
+  "actual_intent": "open_analysis"
+}

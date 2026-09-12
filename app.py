@@ -14,6 +14,8 @@ from agent import (
     build_agent_service,
 )
 from src.visualization import render_plotly
+from src.agent.attachments import image_data_url, document_context
+from src.config import get_settings
 
 st.set_page_config(
     page_title="WPP Media Intelligence",
@@ -519,31 +521,16 @@ st.markdown("""
 
 load_dotenv()
 
-api_key_nvidia = os.getenv("NVIDIA_API_KEY") or os.getenv("OPENROUTER_API_KEY")
-configured_model = os.getenv("NVIDIA_MODEL") or os.getenv("OPENROUTER_MODEL", "nvidia/nemotron-3-super-120b-a12b")
-default_nvidia_models = [
-    "nvidia/nemotron-3-super-120b-a12b",
-    "nvidia/nemotron-3.5-lightning-30b-a3b",
-    "deepseek-ai/deepseek-v4-flash-0731",
-    "nvidia/nemotron-3-ultra-550b-a55b",
-]
+settings = get_settings()
+configured_model = settings.openrouter_model
 configured_models = [item.strip() for item in os.getenv("NVIDIA_MODELS", "").split(",") if item.strip()]
-available_models = list(dict.fromkeys([configured_model, *(configured_models or default_nvidia_models)]))
-model_labels = {
-    "nvidia/nemotron-3-super-120b-a12b": "Nemotron 3 Super — recomendado",
-    "nvidia/nemotron-3.5-lightning-30b-a3b": "Nemotron 3.5 Lightning — rápido",
-    "deepseek-ai/deepseek-v4-flash-0731": "DeepSeek V4 Flash — razonamiento",
-    "nvidia/nemotron-3-ultra-550b-a55b": "Nemotron 3 Ultra — máxima capacidad (lento)",
-}
-
-if not api_key_nvidia:
-    st.error("⚠ No se encontró NVIDIA_API_KEY.")
+available_models = list(dict.fromkeys([configured_model, *configured_models]))
+model_labels = {}
+if not settings.openrouter_api_key:
+    st.error("No se encontró la API key del proveedor configurado.")
     st.stop()
-
-client = OpenAI(
-    base_url=os.getenv("LLM_BASE_URL", "https://integrate.api.nvidia.com/v1"),
-    api_key=api_key_nvidia
-)
+client = OpenAI(base_url=settings.llm_base_url, api_key=settings.openrouter_api_key,
+                timeout=settings.llm_timeout_seconds, max_retries=0)
 
 # =========================================================
 # SYSTEM PROMPT
@@ -554,29 +541,7 @@ client = OpenAI(
 # agregan las reglas específicas de esta interfaz
 # (análisis de capturas de Power BI y PDFs de contexto).
 
-SYSTEM_PROMPT = AGENT_SYSTEM_PROMPT + """
-
-=========================================================
-REGLAS ADICIONALES DE ESTA INTERFAZ
-=========================================================
-
-1. El usuario puede adjuntar capturas de pantalla de
-   dashboards de Power BI. Si se adjunta una imagen,
-   descríbela y analízala con base en lo que se ve.
-
-2. Los números visibles EN LA IMAGEN son válidos para
-   comentar esa imagen, pero si la tabla BICOMP puede
-   responder la pregunta, usa siempre la herramienta BICOMP
-   correspondiente. Si existe una discrepancia, señálala.
-
-3. El usuario puede adjuntar un PDF como contexto adicional
-   (aparecerá como un mensaje de sistema con su contenido).
-   Úsalo solo como contexto de negocio, nunca como fuente
-   primaria de cifras disponibles en BigQuery.
-
-4. No inventes qué hay en una imagen que no puedas ver
-   claramente; si no es legible, dilo.
-"""
+SYSTEM_PROMPT = AGENT_SYSTEM_PROMPT
 
 # =========================================================
 # FUNCIONES AUXILIARES
@@ -592,15 +557,7 @@ def extraer_texto_pdf(archivo_pdf):
 
 
 def imagen_a_base64(imagen_file):
-    # Soporta UploadedFile y BytesIO/PIL
-    if isinstance(imagen_file, Image.Image):
-        buf = io.BytesIO()
-        imagen_file.save(buf, format="PNG")
-        return base64.b64encode(buf.getvalue()).decode('utf-8')
-    elif isinstance(imagen_file, io.BytesIO):
-        return base64.b64encode(imagen_file.getvalue()).decode('utf-8')
-    else:
-        return base64.b64encode(imagen_file.getvalue()).decode('utf-8')
+    return image_data_url(imagen_file).split(',', 1)[1]
 
 
 def obtener_imagen_portapapeles():
@@ -625,7 +582,8 @@ def responder(mensajes, modelo, temperatura):
     """
 
     result = st.session_state.agent_service.run(
-        list(mensajes), model=modelo, temperature=temperatura
+        list(mensajes), model=modelo, temperature=temperatura,
+        attachments=[st.session_state.pdf_contexto] if st.session_state.get("pdf_contexto") else []
     )
     consultas = [
         {
@@ -642,6 +600,8 @@ def responder(mensajes, modelo, temperatura):
             "filters": item.get("filters"),
             "row_count": item.get("row_count"),
             "queries": item.get("queries", []),
+            "cache_hit": item.get("cache_hit"), "purpose": item.get("purpose"),
+            "step": item.get("step"), "historical": item.get("historical", False),
         }
         for item in result.evidence
     ]
@@ -651,6 +611,17 @@ def responder(mensajes, modelo, temperatura):
 # =========================================================
 # ESTADO
 # =========================================================
+
+if "image_upload_generation" not in st.session_state:
+    st.session_state.image_upload_generation = 0
+if "clipboard_images" not in st.session_state:
+    st.session_state.clipboard_images = []
+if "upload_generation" not in st.session_state:
+    st.session_state.upload_generation = 0
+if "pdf_contexto" not in st.session_state:
+    st.session_state.pdf_contexto = None
+if "pdf_hash" not in st.session_state:
+    st.session_state.pdf_hash = None
 
 if "mensajes" not in st.session_state:
     st.session_state.mensajes = [
@@ -692,12 +663,16 @@ with st.sidebar:
             {"role": "system", "content": SYSTEM_PROMPT}
         ]
         st.session_state.imagenes_cargadas = []
+        st.session_state.clipboard_images = []
         st.session_state.consultas_por_turno = {}
         st.session_state.graficas_por_turno = {}
         st.session_state.metricas_agente = {}
         st.session_state.planes_por_turno = {}
         st.session_state.agent_service = build_agent_service(client)
         st.session_state.pdf_contexto_nombre = None
+        st.session_state.pdf_contexto = None
+        st.session_state.pdf_hash = None
+        st.session_state.upload_generation += 1
         st.rerun()
 
     st.divider()
@@ -708,22 +683,24 @@ with st.sidebar:
     archivos_imagen = st.file_uploader(
         "Capturas de Power BI",
         type=["png", "jpg", "jpeg", "webp"],
-        accept_multiple_files=True
+        accept_multiple_files=True,
+        key=f"images-{st.session_state.upload_generation}-{st.session_state.image_upload_generation}"
     )
 
+    st.session_state.imagenes_cargadas = list(archivos_imagen or []) + st.session_state.clipboard_images
     if archivos_imagen:
-        st.session_state.imagenes_cargadas = archivos_imagen
         st.success(f"{len(archivos_imagen)} gráfica(s) conectada(s)", icon="✅")
 
-    st.caption("También puedes pegar una captura desde el portapapeles.")
-    if st.button("Pegar captura", icon="📋", use_container_width=True):
-        img_clip = obtener_imagen_portapapeles()
-        if img_clip:
-            st.session_state.imagenes_cargadas = [img_clip]
-            st.success("✅ Captura pegada! Ahora escribe tu pregunta abajo")
-            st.rerun()
-        else:
-            st.error("No hay imagen en el portapapeles. Haz Windows+Shift+S y luego pega.")
+    # A remote Streamlit server cannot read the user's browser clipboard.
+    if os.getenv("ENABLE_LOCAL_CLIPBOARD") == "1":
+        st.caption("Portapapeles del equipo que ejecuta la aplicación (modo local).")
+        if st.button("Pegar captura local", icon="📋", use_container_width=True):
+            img_clip = obtener_imagen_portapapeles()
+            if img_clip:
+                st.session_state.clipboard_images = [img_clip]
+                st.session_state.imagenes_cargadas = list(archivos_imagen or []) + [img_clip]
+            else:
+                st.info("No hay una imagen disponible en el portapapeles local.")
 
     if st.session_state.imagenes_cargadas:
         st.caption("ARCHIVOS ACTIVOS")
@@ -744,23 +721,27 @@ with st.sidebar:
 
         if st.button("🗑 Quitar imágenes", use_container_width=True):
             st.session_state.imagenes_cargadas = []
+            st.session_state.clipboard_images = []
+            st.session_state.image_upload_generation += 1
             st.rerun()
 
     st.divider()
     st.subheader("Documento de contexto")
-    archivo_pdf = st.file_uploader("PDF opcional", type=["pdf"])
+    archivo_pdf = st.file_uploader("PDF opcional", type=["pdf"], key=f"pdf-{st.session_state.upload_generation}")
     if archivo_pdf:
-        if st.session_state.pdf_contexto_nombre != archivo_pdf.name:
+        import hashlib
+        digest = hashlib.sha256(archivo_pdf.getvalue()).hexdigest()
+        if st.session_state.pdf_hash != digest:
             texto_pdf = extraer_texto_pdf(archivo_pdf)
-            if texto_pdf:
-                st.session_state.mensajes.append({
-                    "role": "system",
-                    "content": f"Contexto extra del PDF {archivo_pdf.name}: {texto_pdf[:6000]}"
-                })
-                st.session_state.pdf_contexto_nombre = archivo_pdf.name
-
-        if st.session_state.pdf_contexto_nombre == archivo_pdf.name:
-            st.success(f"{archivo_pdf.name}", icon="📄")
+            st.session_state.pdf_contexto = document_context(archivo_pdf.name, archivo_pdf.getvalue(), texto_pdf) if texto_pdf else None
+            st.session_state.pdf_hash = digest
+        if st.session_state.pdf_contexto:
+            st.success(archivo_pdf.name, icon="📄")
+            if st.session_state.pdf_contexto["truncated"]:
+                st.caption("Se utilizará un extracto del documento por su extensión.")
+    else:
+        st.session_state.pdf_contexto = None
+        st.session_state.pdf_hash = None
 
 # =========================================================
 # HEADER
@@ -780,7 +761,7 @@ with estado_col:
     st.markdown("""
         <div class="workspace-status">
             <span class="workspace-dot"></span>
-            <strong>Dataset conectado</strong>
+            <strong>Fuente BICOMP configurada</strong>
             <span>· BICOMP y evidencia activa</span>
         </div>
     """, unsafe_allow_html=True)
@@ -792,7 +773,7 @@ with ajustes_col:
             available_models,
             index=0,
             format_func=lambda model_id: model_labels.get(model_id, model_id),
-            help="Modelos NVIDIA verificados con llamadas de herramientas para este agente.",
+            help="Modelo usado para interpretar y redactar. La disponibilidad depende del proveedor.",
         )
 
         temperatura = st.slider(
@@ -872,12 +853,14 @@ for indice, mensaje in enumerate(st.session_state.mensajes):
             for part in mensaje["content"]:
                 if part["type"] == "text":
                     st.markdown(part["text"])
+                elif part["type"] == "image_url":
+                    st.image(part["image_url"]["url"], width=300)
         else:
             st.markdown(mensaje["content"])
 
         if mensaje["role"] == "assistant":
-            for chart_spec in st.session_state.graficas_por_turno.get(indice, []):
-                st.plotly_chart(render_plotly(chart_spec), use_container_width=True)
+            for chart_index, chart_spec in enumerate(st.session_state.graficas_por_turno.get(indice, [])):
+                st.plotly_chart(render_plotly(chart_spec), use_container_width=True, key=f"chart-{indice}-{chart_index}")
 
         # Panel de transparencia: qué consultas reales respaldan
         # esta respuesta puntual del asistente.
@@ -892,6 +875,7 @@ for indice, mensaje in enumerate(st.session_state.mensajes):
                         st.caption(f"Dominio: {c['resultado'].get('domain', c.get('source'))} · Métrica: {c.get('metric') or 'n/a'} · Filas: {c.get('row_count')}")
                         st.markdown("**Argumentos**")
                         st.json(c["argumentos"])
+                        st.caption(f"Consulta: {c.get('step')} · Caché: {bool(c.get('cache_hit'))} · {c.get('purpose') or ''}")
                         if c.get("bytes_processed") is not None:
                             st.caption(f"Bytes: {c['bytes_processed']:,} · Duración: {c.get('duration_ms')} ms")
                         if c.get("sql"):
@@ -922,7 +906,7 @@ pregunta = pregunta_sugerida or pregunta_escrita
 
 st.markdown(
     '<div class="privacy-note"><span class="ready-dot"></span>'
-    'Listo · Dataset real conectado · Trazabilidad disponible</div>',
+    'Listo · Conexión verificada al consultar · Trazabilidad disponible</div>',
     unsafe_allow_html=True
 )
 
@@ -962,8 +946,8 @@ if pregunta:
 
                 st.markdown(respuesta)
 
-                for chart_spec in graficas:
-                    st.plotly_chart(render_plotly(chart_spec), use_container_width=True)
+                for chart_index, chart_spec in enumerate(graficas):
+                    st.plotly_chart(render_plotly(chart_spec), use_container_width=True, key=f"chart-{len(st.session_state.mensajes)}-{chart_index}")
 
                 if consultas and mostrar_consultas:
                     with st.expander("🔍 Ver evidencia del análisis"):
@@ -971,6 +955,7 @@ if pregunta:
                             st.markdown(f"**Herramienta:** `{c['herramienta']}`")
                             st.caption(f"Dominio: {c['resultado'].get('domain', c.get('source'))} · Métrica: {c.get('metric') or 'n/a'} · Filas: {c.get('row_count')}")
                             st.json(c["argumentos"])
+                            st.caption(f"Consulta: {c.get('step')} · Caché: {bool(c.get('cache_hit'))} · {c.get('purpose') or ''}")
                             if c.get("bytes_processed") is not None:
                                 st.caption(f"Bytes: {c['bytes_processed']:,} · Duración: {c.get('duration_ms')} ms")
                             if c.get("sql"):
@@ -990,7 +975,7 @@ if pregunta:
                     {"role": "assistant", "content": respuesta}
                 )
 
-                if consultas:
+                if consultas or graficas or plan:
                     indice_nuevo_mensaje = len(st.session_state.mensajes) - 1
                     st.session_state.consultas_por_turno[indice_nuevo_mensaje] = consultas
                     st.session_state.graficas_por_turno[indice_nuevo_mensaje] = graficas

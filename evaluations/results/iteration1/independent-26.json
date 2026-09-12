@@ -1,0 +1,375 @@
+{
+  "id": "independent-26",
+  "question": "Muestra las cinco categorías con mayor inversión neta USD por region en 2025.",
+  "family": "ranking",
+  "expected_no_data": false,
+  "elapsed_s": 22.43,
+  "result": {
+    "answer": "### Resumen ejecutivo\nEn 2025, las cinco categorías con mayor inversión neta USD a nivel nacional fueron TARJETAS DE CREDITO Y DEBITO, MULTIPRODUCTO, YOGURT,KUMIS, OTROS LACTEOS y VEHICULOS ELECTRICOS E HIBRIDOS, representando conjuntamente el 59.14% del total.\n\n### Hallazgos principales\n**TARJETAS DE CREDITO Y DEBITO**\n- Evidencia: 9,420,718.37 USD (14.79% del total)\n- Driver: no identificado\n- Interpretación: Categoría líder en inversión neta USD durante 2025.\n\n**MULTIPRODUCTO**\n- Evidencia: 8,002,257.33 USD (12.56% del total)\n- Driver: no identificado\n- Interpretación: Segunda categoría con mayor inversión neta USD en 2025.\n\n**YOGURT,KUMIS**\n- Evidencia: 6,798,002.26 USD (10.67% del total)\n- Driver: no identificado\n- Interpretación: Tercera posición en inversión neta USD para el año 2025.\n\n**OTROS LACTEOS**\n- Evidencia: 6,730,535.92 USD (10.57% del total)\n- Driver: no identificado\n- Interpretación: Cuarta categoría por inversión neta USD en 2025.\n\n**VEHICULOS ELECTRICOS E HIBRIDOS**\n- Evidencia: 6,717,420.05 USD (10.55% del total)\n- Driver: no identificado\n- Interpretación: Quinta categoría con mayor inversión neta USD en 2025.\n\n### Advertencias\nLos datos corresponden a la inversión neta USD a nivel nacional (sin desglose por región), ya que la evidencia proporcionada no incluye la dimensión 'region' en el agrupamiento. El análisis refleja el ranking nacional de categorías, no por región como se solicitó originalmente. La cobertura temporal es completa para 2025 (no parcial), pero no garantiza completitud diaria. No se pueden calcular shares ni promedios adicionales más allá de los proporcionados en la evidencia.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "categoria",
+          "metrica": "inv_neta_usd",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum",
+          "limite": 5,
+          "filtros": {}
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta_usd",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta expresada en dólares",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "categoria",
+          "composition": {
+            "denominator_known": true,
+            "total": 63698280.14122961,
+            "shown_share_pct": 59.13650077673132,
+            "top3_share_pct": 38.02453991679529
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0
+          },
+          "rows": [
+            {
+              "dimension": "TARJETAS DE CREDITO Y DEBITO",
+              "value": 9420718.368139854,
+              "source_rows": 7360,
+              "rank": 1,
+              "share_pct": 14.789596119789364,
+              "total": 63698280.14122961,
+              "concentration_hhi": 956.5923007460686,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "MULTIPRODUCTO",
+              "value": 8002257.3268377185,
+              "source_rows": 7511,
+              "rank": 2,
+              "share_pct": 12.562752572118733,
+              "total": 63698280.14122961,
+              "concentration_hhi": 956.5923007460686,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "YOGURT,KUMIS",
+              "value": 6798002.263636369,
+              "source_rows": 5714,
+              "rank": 3,
+              "share_pct": 10.672191224887195,
+              "total": 63698280.14122961,
+              "concentration_hhi": 956.5923007460686,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "OTROS LACTEOS",
+              "value": 6730535.922727272,
+              "source_rows": 4274,
+              "rank": 4,
+              "share_pct": 10.56627574214651,
+              "total": 63698280.14122961,
+              "concentration_hhi": 956.5923007460686,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 6717420.049141525,
+              "source_rows": 18091,
+              "rank": 5,
+              "share_pct": 10.545685117789516,
+              "total": 63698280.14122961,
+              "concentration_hhi": 956.5923007460686,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 877.71
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension,\n                SUM(`inv_neta_usd`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 0,
+            "job_id": "fd543e29-f199-419f-9e1b-d389dbeecb94",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T18:54:59.477734+00:00",
+            "duration_ms": 877.71,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de categorías por inversión neta USD desglosado por región para 2025, limitando a las top 5 por región.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension,\n                SUM(`inv_neta_usd`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 0,
+            "job_id": "fd543e29-f199-419f-9e1b-d389dbeecb94",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T18:54:59.477734+00:00",
+            "duration_ms": 877.71,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 1188.5
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD desglosado por región para 2025, limitando a las top 5 por región.",
+          "arguments": {
+            "dimension": "categoria",
+            "metrica": "inv_neta_usd",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum",
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "scope_mode": "replace",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "region",
+          "categoria"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son las cinco categorías con mayor inversión neta USD en cada región durante 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "region",
+          "categoria"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por categoria — Inversión publicitaria neta expresada en dólares · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": "TARJETAS DE CREDITO Y DEBITO",
+            "value": 9420718.368139854,
+            "source_rows": 7360,
+            "rank": 1,
+            "share_pct": 14.789596119789364,
+            "total": 63698280.14122961,
+            "concentration_hhi": 956.5923007460686,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "MULTIPRODUCTO",
+            "value": 8002257.3268377185,
+            "source_rows": 7511,
+            "rank": 2,
+            "share_pct": 12.562752572118733,
+            "total": 63698280.14122961,
+            "concentration_hhi": 956.5923007460686,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "YOGURT,KUMIS",
+            "value": 6798002.263636369,
+            "source_rows": 5714,
+            "rank": 3,
+            "share_pct": 10.672191224887195,
+            "total": 63698280.14122961,
+            "concentration_hhi": 956.5923007460686,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "OTROS LACTEOS",
+            "value": 6730535.922727272,
+            "source_rows": 4274,
+            "rank": 4,
+            "share_pct": 10.56627574214651,
+            "total": 63698280.14122961,
+            "concentration_hhi": 956.5923007460686,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+            "value": 6717420.049141525,
+            "source_rows": 18091,
+            "rank": 5,
+            "share_pct": 10.545685117789516,
+            "total": 63698280.14122961,
+            "concentration_hhi": 956.5923007460686,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 3,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 22427.81,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 9236,
+      "output_tokens": 1246,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2023.41
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "scope_mode": "replace",
+            "metric": "inv_neta_usd",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "region",
+              "categoria"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD desglosado por región para 2025, limitando a las top 5 por región.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 6152.96
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [
+            "cifra_no_respaldada:6.7"
+          ]
+        },
+        {
+          "stage": "repair",
+          "finish_reason": "stop",
+          "latency_ms": 13055.03
+        },
+        {
+          "stage": "validation",
+          "attempt": 1,
+          "issues": []
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 9236,
+        "output_tokens": 1246,
+        "cache_hits": 0,
+        "total_latency_ms": 22427.81
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

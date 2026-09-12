@@ -1,0 +1,137 @@
+{
+  "id": "paraphrase-6-01",
+  "question": "Clasifica los anunciantes por inversión en televisión en 2024.",
+  "elapsed_s": 60.63,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {},
+    "last_request": {
+      "question": "Clasifica los anunciantes por inversión en televisión en 2024.",
+      "status": "controlled_error"
+    }
+  },
+  "raw_planner_outputs": [],
+  "compiled_transition": {
+    "intent": "clarification",
+    "domains": [
+      "none"
+    ],
+    "steps": [],
+    "scope": {},
+    "analysis_questions": [],
+    "answer": "No recibí una pregunta.",
+    "budget": 0,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {},
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {}
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 60625.26,
+      "errors": [
+        "planning:InternalServerError",
+        "planning:APITimeoutError",
+        "run:APITimeoutError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "events": [
+        {
+          "stage": "error",
+          "type": "APITimeoutError",
+          "detail": "Request timed out."
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {}
+          },
+          "after": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {},
+            "last_request": {
+              "question": "Clasifica los anunciantes por inversión en televisión en 2024.",
+              "status": "controlled_error"
+            }
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_hits": 0,
+        "total_latency_ms": 60625.26
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  }
+}

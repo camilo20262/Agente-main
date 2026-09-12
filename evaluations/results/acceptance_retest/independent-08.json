@@ -1,0 +1,366 @@
+{
+  "id": "independent-08",
+  "question": "¿Cómo se distribuyó la inversión por formato en 2025?",
+  "family": "composition",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 14.06,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), formato=DISPLAY: 4.672.878,01 (1,01 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), formato=VIDEO: 673.026,26 (0,15 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), formato=TEXT: 3.998,21 (0,00 % del universo consultado).\n\n### Advertencias\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31): valores sin información en formato representan 98,85 %; valores informados, 1,15 %. Las etiquetas ausentes no son categorías de negocio.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "formato",
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum",
+          "filtros": {}
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "formato",
+          "composition": {
+            "denominator_known": true,
+            "total": 463938228.0684287,
+            "shown_share_pct": 100.0,
+            "top3_share_pct": 99.85407012723054
+          },
+          "data_quality": {
+            "unknown_share_pct": 98.84685025902742,
+            "unknown_value": 458588325.5931848,
+            "known_value": 5349902.475243866,
+            "known_share_pct": 1.1531497409725806
+          },
+          "rows": [
+            {
+              "dimension": null,
+              "value": 311212596.9712288,
+              "source_rows": 100989,
+              "rank": 1,
+              "share_pct": 67.08061076728654,
+              "total": 463938228.0684287,
+              "concentration_hhi": 5509.937849710877,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "N/A",
+              "value": 147375728.62195602,
+              "source_rows": 39881,
+              "rank": 2,
+              "share_pct": 31.766239491740873,
+              "total": 463938228.0684287,
+              "concentration_hhi": 5509.937849710877,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "DISPLAY",
+              "value": 4672878.009294801,
+              "source_rows": 3809,
+              "rank": 3,
+              "share_pct": 1.007219868203138,
+              "total": 463938228.0684287,
+              "concentration_hhi": 5509.937849710877,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "VIDEO",
+              "value": 673026.2575818002,
+              "source_rows": 924,
+              "rank": 4,
+              "share_pct": 0.14506807520128134,
+              "total": 463938228.0684287,
+              "concentration_hhi": 5509.937849710877,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "TEXT",
+              "value": 3998.2083672999997,
+              "source_rows": 112,
+              "rank": 5,
+              "share_pct": 0.0008617975681689854,
+              "total": 463938228.0684287,
+              "concentration_hhi": 5509.937849710877,
+              "unknown_value": 458588325.5931848
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 13304677,
+            "duration_ms": 1227.87
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'DESCONOCIDO', 'N/A', 'N/D', 'NA', 'ND', 'NONE', 'NULL', 'SIN INFORMACION', 'SIN INFORMACIÓN', 'UNKNOWN'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 13304677,
+            "job_id": "b03992ec-244c-495b-81bf-00c07ef078d1",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T17:20:51.596335+00:00",
+            "duration_ms": 1227.87,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de inversión neta por formato en 2025 para entender la composición del gasto publicitario.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'DESCONOCIDO', 'N/A', 'N/D', 'NA', 'ND', 'NONE', 'NULL', 'SIN INFORMACION', 'SIN INFORMACIÓN', 'UNKNOWN'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 13304677,
+            "job_id": "b03992ec-244c-495b-81bf-00c07ef078d1",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T17:20:51.596335+00:00",
+            "duration_ms": 1227.87,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 3265.99
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "composition",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de inversión neta por formato en 2025 para entender la composición del gasto publicitario.",
+          "arguments": {
+            "dimension": "formato",
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "composition",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "formato"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuál es la distribución de la inversión neta por formato en 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por formato — Inversión publicitaria neta · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": null,
+            "value": 311212596.9712288,
+            "source_rows": 100989,
+            "rank": 1,
+            "share_pct": 67.08061076728654,
+            "total": 463938228.0684287,
+            "concentration_hhi": 5509.937849710877,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "N/A",
+            "value": 147375728.62195602,
+            "source_rows": 39881,
+            "rank": 2,
+            "share_pct": 31.766239491740873,
+            "total": 463938228.0684287,
+            "concentration_hhi": 5509.937849710877,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "DISPLAY",
+            "value": 4672878.009294801,
+            "source_rows": 3809,
+            "rank": 3,
+            "share_pct": 1.007219868203138,
+            "total": 463938228.0684287,
+            "concentration_hhi": 5509.937849710877,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "VIDEO",
+            "value": 673026.2575818002,
+            "source_rows": 924,
+            "rank": 4,
+            "share_pct": 0.14506807520128134,
+            "total": 463938228.0684287,
+            "concentration_hhi": 5509.937849710877,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "TEXT",
+            "value": 3998.2083672999997,
+            "source_rows": 112,
+            "rank": 5,
+            "share_pct": 0.0008617975681689854,
+            "total": 463938228.0684287,
+            "concentration_hhi": 5509.937849710877,
+            "unknown_value": 458588325.5931848
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 13304677,
+      "bigquery_queries": 1,
+      "total_latency_ms": 14056.78,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7699,
+      "output_tokens": 393,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3912.71
+        },
+        {
+          "stage": "plan",
+          "intent": "composition",
+          "scope": {
+            "intent": "composition",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "formato"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de inversión neta por formato en 2025 para entender la composición del gasto publicitario.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 6867.47
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), formato=DISPLAY: 4.672.878,01 (1,01 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), formato=VIDEO: 673.026,26 (0,15 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), formato=TEXT: 3.998,21 (0,00 % del universo consultado).\n\n### Advertencias\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31): valores sin información en formato representan 98,85 %; valores informados, 1,15 %. Las etiquetas ausentes no son categorías de negocio."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 13304677,
+        "input_tokens": 7699,
+        "output_tokens": 393,
+        "cache_hits": 0,
+        "total_latency_ms": 14056.78
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "composition",
+  "actual_intent": "composition"
+}

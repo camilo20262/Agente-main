@@ -1,0 +1,369 @@
+{
+  "id": "independent-26",
+  "question": "Muestra las cinco categorías con mayor inversión neta USD por region en 2025.",
+  "family": "ranking",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 14.67,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**TARJETAS DE CREDITO Y DEBITO lidera la inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=TARJETAS DE CREDITO Y DEBITO: 9.420.718,37 (14,79 % del universo consultado).\n\n**MULTIPRODUCTO ocupa el segundo lugar en inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=MULTIPRODUCTO: 8.002.257,33 (12,56 % del universo consultado).\n\nSe posiciona como la segunda categoría con mayor inversión neta en el periodo.\n\n**YOGURT,KUMIS registra la tercera mayor inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=YOGURT,KUMIS: 6.798.002,26 (10,67 % del universo consultado).\n\n**OTROS LACTEOS muestra la cuarta mayor inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=OTROS LACTEOS: 6.730.535,92 (10,57 % del universo consultado).\n\nSu inversión neta es cercana a la de YOGURT,KUMIS, reflejando un comportamiento similar en el segmento lácteo.\n\n**VEHICULOS ELECTRICOS E HIBRIDOS cierra el top cinco de inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 6.717.420,05 (10,55 % del universo consultado).",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "categoria",
+          "metrica": "inv_neta_usd",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {},
+          "limite": 5
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta_usd",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta expresada en dólares",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "categoria",
+          "composition": {
+            "denominator_known": true,
+            "total": 63698280.1412296,
+            "shown_share_pct": 59.136500776731324,
+            "top3_share_pct": 38.0245399167953
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "unknown_value": 0.0,
+            "known_value": 63698280.1412296,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "TARJETAS DE CREDITO Y DEBITO",
+              "value": 9420718.368139854,
+              "source_rows": 7360,
+              "rank": 1,
+              "share_pct": 14.789596119789367,
+              "total": 63698280.1412296,
+              "concentration_hhi": 956.592300746069,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "MULTIPRODUCTO",
+              "value": 8002257.3268377185,
+              "source_rows": 7511,
+              "rank": 2,
+              "share_pct": 12.562752572118734,
+              "total": 63698280.1412296,
+              "concentration_hhi": 956.592300746069,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "YOGURT,KUMIS",
+              "value": 6798002.263636369,
+              "source_rows": 5714,
+              "rank": 3,
+              "share_pct": 10.672191224887197,
+              "total": 63698280.1412296,
+              "concentration_hhi": 956.592300746069,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "OTROS LACTEOS",
+              "value": 6730535.922727272,
+              "source_rows": 4274,
+              "rank": 4,
+              "share_pct": 10.566275742146512,
+              "total": 63698280.1412296,
+              "concentration_hhi": 956.592300746069,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 6717420.049141525,
+              "source_rows": 18091,
+              "rank": 5,
+              "share_pct": 10.545685117789517,
+              "total": 63698280.1412296,
+              "concentration_hhi": 956.592300746069,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 991.85
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension,\n                SUM(`inv_neta_usd`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 0,
+            "job_id": "8280a3d4-397a-4112-a4b1-2b937fa3dccf",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:29:06.478376+00:00",
+            "duration_ms": 991.85,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada región para 2025, limitado a las top 5 por región.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension,\n                SUM(`inv_neta_usd`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 0,
+            "job_id": "8280a3d4-397a-4112-a4b1-2b937fa3dccf",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:29:06.478376+00:00",
+            "duration_ms": 991.85,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 2720.02
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada región para 2025, limitado a las top 5 por región.",
+          "arguments": {
+            "dimension": "categoria",
+            "metrica": "inv_neta_usd",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {},
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "region",
+          "categoria"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son las cinco categorías con mayor inversión neta USD en cada región durante 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "region",
+          "categoria"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por categoria — Inversión publicitaria neta expresada en dólares · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": "TARJETAS DE CREDITO Y DEBITO",
+            "value": 9420718.368139854,
+            "source_rows": 7360,
+            "rank": 1,
+            "share_pct": 14.789596119789367,
+            "total": 63698280.1412296,
+            "concentration_hhi": 956.592300746069,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "MULTIPRODUCTO",
+            "value": 8002257.3268377185,
+            "source_rows": 7511,
+            "rank": 2,
+            "share_pct": 12.562752572118734,
+            "total": 63698280.1412296,
+            "concentration_hhi": 956.592300746069,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "YOGURT,KUMIS",
+            "value": 6798002.263636369,
+            "source_rows": 5714,
+            "rank": 3,
+            "share_pct": 10.672191224887197,
+            "total": 63698280.1412296,
+            "concentration_hhi": 956.592300746069,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "OTROS LACTEOS",
+            "value": 6730535.922727272,
+            "source_rows": 4274,
+            "rank": 4,
+            "share_pct": 10.566275742146512,
+            "total": 63698280.1412296,
+            "concentration_hhi": 956.592300746069,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+            "value": 6717420.049141525,
+            "source_rows": 18091,
+            "rank": 5,
+            "share_pct": 10.545685117789517,
+            "total": 63698280.1412296,
+            "concentration_hhi": 956.592300746069,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 14673.73,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7476,
+      "output_tokens": 618,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 4009.34
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta_usd",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "region",
+              "categoria"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada región para 2025, limitado a las top 5 por región.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 7923.28
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**TARJETAS DE CREDITO Y DEBITO lidera la inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=TARJETAS DE CREDITO Y DEBITO: 9.420.718,37 (14,79 % del universo consultado).\n\n**MULTIPRODUCTO ocupa el segundo lugar en inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=MULTIPRODUCTO: 8.002.257,33 (12,56 % del universo consultado).\n\nSe posiciona como la segunda categoría con mayor inversión neta en el periodo.\n\n**YOGURT,KUMIS registra la tercera mayor inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=YOGURT,KUMIS: 6.798.002,26 (10,67 % del universo consultado).\n\n**OTROS LACTEOS muestra la cuarta mayor inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=OTROS LACTEOS: 6.730.535,92 (10,57 % del universo consultado).\n\nSu inversión neta es cercana a la de YOGURT,KUMIS, reflejando un comportamiento similar en el segmento lácteo.\n\n**VEHICULOS ELECTRICOS E HIBRIDOS cierra el top cinco de inversión neta USD**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 6.717.420,05 (10,55 % del universo consultado)."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7476,
+        "output_tokens": 618,
+        "cache_hits": 0,
+        "total_latency_ms": 14673.73
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

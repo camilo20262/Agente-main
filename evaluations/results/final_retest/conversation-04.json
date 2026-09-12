@@ -1,0 +1,161 @@
+{
+  "id": "conversation-04",
+  "question": "¿En qué medios?",
+  "family": "diagnostic",
+  "elapsed_s": 5.14,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 11,
+      "total_tool_calls": 8,
+      "bigquery_bytes_processed": 54507260,
+      "bigquery_queries": 9,
+      "total_latency_ms": 47879.69,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 66997,
+      "output_tokens": 3016,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3708.73
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "La operación breakdown conserva el objetivo analítico: intent debe ser diagnostic. Ajusta también los pasos, sin reducir la profundidad del seguimiento.",
+          "rejected_plan": {
+            "intent": "composition",
+            "operation": "breakdown",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [
+              "medio"
+            ],
+            "analysis_questions": [
+              "¿Cuál es la distribución de la inversión neta por medio para Volvo en el periodo solicitado?"
+            ],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el ranking de inversión neta por medio para Volvo en el periodo heredado.",
+                "arguments": {
+                  "dimension": "medio",
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "filtros": {
+                    "marca": "VOLVO"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1404.38
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "La operación breakdown conserva el objetivo analítico: intent debe ser diagnostic. Ajusta también los pasos, sin reducir la profundidad del seguimiento.",
+          "rejected_plan": {
+            "intent": "composition",
+            "operation": "breakdown",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [
+              "medio"
+            ],
+            "analysis_questions": [
+              "¿Cuál es la distribución de la inversión neta por medio para Volvo en el periodo solicitado?"
+            ],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el ranking de inversión neta por medio para Volvo en el periodo heredado.",
+                "arguments": {
+                  "dimension": "medio",
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "filtros": {
+                    "marca": "VOLVO"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "La operación breakdown conserva el objetivo analítico: intent debe ser diagnostic. Ajusta también los pasos, sin reducir la profundidad del seguimiento."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 15310,
+        "output_tokens": 434,
+        "cache_hits": 0,
+        "total_latency_ms": 5144.330000000002
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "lost_followup_entity",
+    "mix_instead_of_variation_drivers",
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "clarification"
+}

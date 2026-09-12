@@ -1,0 +1,399 @@
+{
+  "started_at": "2026-09-11T18:00:17.912669+00:00",
+  "round": "baseline",
+  "cases": 12,
+  "passed": 4,
+  "semantic_review_observed": false,
+  "records": [
+    {
+      "id": "original-01",
+      "question": "¿Quién está creciendo más?",
+      "passed": false,
+      "issues": [
+        "growth_requires_comparative_ranking",
+        "intent",
+        "partial_or_no_evidence",
+        "scope:comparison_period",
+        "scope:dimensions",
+        "scope:requested_period"
+      ],
+      "intent": "clarification",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 1,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "original-02",
+      "question": "¿Y el anterior?",
+      "passed": false,
+      "issues": [
+        "growth_requires_comparative_ranking",
+        "intent",
+        "scope:comparison_period",
+        "scope:dimensions",
+        "scope:requested_period"
+      ],
+      "intent": "open_analysis",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "observed_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "La evidencia ya responde la pregunta: el periodo anterior al observado (2019-01-01 a 2026-07-31) no existe dentro del rango disponible, por lo que no hay datos de un 'anterior' que analizar.",
+      "tools": 3,
+      "queries": 2,
+      "answer": "### Resumen ejecutivo\n\n**Acumulado y variabilidad de la inversión neta**\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31): acumulado observado 1.949.854.776,02; promedio por periodo observado 21.426.975,56; coeficiente de variación 70,04 %.\n\nEl acumulado observado muestra una inversión total significativa, pero el alto coeficiente de variación indica fluctuaciones importantes a lo largo del periodo.\n\n**Participación de las marcas líderes**\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31), marca=CHEVROLET: 231.259.777,96 (11,86 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31), marca=RENAULT: 198.615.323,97 (10,19 % del universo consultado).\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31): señal atípica en 2024-05-01, valor 58.087.015,40, puntuación robusta 4,98; umbral 3,50 en valor absoluto.\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31): señal atípica en 2024-06-01, valor 66.151.776,12, puntuación robusta 5,91; umbral 3,50 en valor absoluto.\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31): señal atípica en 2024-08-01, valor 48.068.905,85, puntuación robusta 3,81; umbral 3,50 en valor absoluto."
+    },
+    {
+      "id": "original-03",
+      "question": "¿Qué dimensión explica mejor la variación sin que yo te diga cuál revisar?",
+      "passed": false,
+      "issues": [
+        "diagnostic_requires_candidates",
+        "intent",
+        "scope:comparison_period",
+        "scope:requested_period"
+      ],
+      "intent": "diagnostic",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "diagnostic",
+        "observed_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "diagnostic_evidence_complete",
+      "tools": 3,
+      "queries": 0,
+      "answer": "### Resumen ejecutivo\n\nLa variación de la inversión publicitaria neta se explica principalmente por la dimensión marca, con diferencias significativas entre las principales marcas.\n\n**Distribución de inversión por marca**\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31), marca=CHEVROLET: 231.259.777,96 (11,86 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31), marca=RENAULT: 198.615.323,97 (10,19 % del universo consultado).\n\nInversión publicitaria neta, alcance consultado (2019-01-01 a 2026-07-31), marca=NISSAN: 114.433.345,52 (5,87 % del universo consultado)."
+    },
+    {
+      "id": "original-04",
+      "question": "¿Cuánto invirtió BMW en 2025?",
+      "passed": true,
+      "issues": [],
+      "intent": "lookup",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "BMW: Inversión publicitaria neta de 1.595.350,10. Entre 2025-01-01 y 2025-12-31."
+    },
+    {
+      "id": "original-05",
+      "question": "¿Cuánto invirtió BMW en digital durante 2025?",
+      "passed": false,
+      "issues": [
+        "intent",
+        "partial_or_no_evidence",
+        "scope:filters",
+        "scope:requested_period"
+      ],
+      "intent": "clarification",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 0,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "original-06",
+      "question": "¿Cuál fue el mes de mayor inversión de BMW en 2025?",
+      "passed": false,
+      "issues": [
+        "intent",
+        "partial_or_no_evidence",
+        "peak_requires_series",
+        "scope:filters",
+        "scope:requested_period"
+      ],
+      "intent": "clarification",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 0,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "original-07",
+      "question": "¿Cómo se distribuyó BMW por medios en 2025?",
+      "passed": true,
+      "issues": [],
+      "intent": "composition",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**Distribución por medio**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=DIGITAL: 775.378,83 (48,60 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV SUSCRIPCION: 364.720,17 (22,86 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PRENSA: 304.616,25 (19,09 % del universo consultado).\n\n**Cobertura de datos**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): valores sin información en medio representan 0,00 %; valores informados, 100,00 %. Las etiquetas ausentes no son categorías de negocio."
+    },
+    {
+      "id": "original-08",
+      "question": "¿Cuáles fueron los 5 vehículos con mayor inversión de BMW en 2025?",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "vehiculo"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**FACEBOOK.COM lidera la inversión**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=FACEBOOK.COM: 376.707,89 (23,61 % del universo consultado).\n\nRepresenta la mayor participación en la inversión neta de BMW durante el periodo analizado.\n\n**INSTAGRAM.COM ocupa el segundo lugar**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=INSTAGRAM.COM: 293.912,11 (18,42 % del universo consultado).\n\n**STAR CHANNEL se posiciona tercero**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=STAR CHANNEL: 183.888,65 (11,53 % del universo consultado).\n\nTiene la tercera mayor inversión neta de BMW en el periodo considerado.\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=EL TIEMPO: 183.387,00 (11,50 % del universo consultado).\n\n**EL COLOMBIANO completa el top cinco**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=EL COLOMBIANO: 121.229,25 (7,60 % del universo consultado)."
+    },
+    {
+      "id": "original-09",
+      "question": "¿Qué marcas lideraron la inversión en digital en 2025?",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**CROSSFIT lideró la inversión en digital**\n\nInversión publicitaria neta, medio: DIGITAL (2025-01-01 a 2025-12-31), marca=CROSSFIT: 13.768.818,00 (19,20 % del universo consultado).\n\n**SMART FIT ocupó el segundo lugar**\n\nInversión publicitaria neta, medio: DIGITAL (2025-01-01 a 2025-12-31), marca=SMART FIT: 6.498.296,76 (9,06 % del universo consultado).\n\n**FITNESS 24 SEVEN completó el top tres**\n\nInversión publicitaria neta, medio: DIGITAL (2025-01-01 a 2025-12-31), marca=FITNESS 24 SEVEN: 5.887.293,77 (8,21 % del universo consultado)."
+    },
+    {
+      "id": "original-10",
+      "question": "Top 10 anunciantes en televisión durante 2025.",
+      "passed": false,
+      "issues": [
+        "evidence_dimension",
+        "partial_or_no_evidence",
+        "ranking_too_short",
+        "scope:filters"
+      ],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio": "TELEVISION"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "no_data",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Análisis parcial: no encontré datos numéricos para el alcance solicitado.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "original-11",
+      "question": "¿y en 2026?",
+      "passed": false,
+      "issues": [
+        "evidence_dimension",
+        "scope:dimensions",
+        "scope:filters"
+      ],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, medio: DIGITAL (2026-01-01 a 2026-07-31), marca=SMART FIT: 7.424.073,80 (24,92 % del universo consultado).\n\n**FITNESS 24 SEVEN y RICH FIT TIPS siguen en el ranking**\n\nInversión publicitaria neta, medio: DIGITAL (2026-01-01 a 2026-07-31), marca=FITNESS 24 SEVEN: 3.595.392,35 (12,07 % del universo consultado).\n\nInversión publicitaria neta, medio: DIGITAL (2026-01-01 a 2026-07-31), marca=RICH FIT TIPS: 3.361.320,00 (11,28 % del universo consultado).\n\nFITNESS 24 SEVEN y RICH FIT TIPS ocupan el segundo y tercer lugar respectivamente en inversión publicitaria neta en medio DIGITAL durante el mismo periodo.\n\n### Advertencias\n\nCobertura parcial: acumulado disponible hasta 2026-07-31; no es un total anual completo.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+    },
+    {
+      "id": "original-12",
+      "question": "¿Qué porcentaje conjunto representan BMW y Volvo?",
+      "passed": false,
+      "issues": [
+        "intent",
+        "scope:filters"
+      ],
+      "intent": "lookup",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "lookup",
+        "observed_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "el alcance consultado: Inversión publicitaria neta de 1.801.197,53. Entre 2026-01-01 y 2026-07-31.\n\nParticipación calculada: 0,87 %.\n\nCorresponde al acumulado disponible, con cobertura parcial del periodo solicitado.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+    }
+  ],
+  "source_fingerprint": "d3a269f8931f32306312abf52b410c0f845c3062e00d2f81ca89a1446ae3c701"
+}

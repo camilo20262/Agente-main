@@ -1,0 +1,474 @@
+{
+  "started_at": "2026-09-11T23:49:24.510541+00:00",
+  "round": "additional2",
+  "cases": 12,
+  "passed": 4,
+  "semantic_review_observed": false,
+  "records": [
+    {
+      "id": "additional-01",
+      "question": "Analiza BMW en 2025.",
+      "passed": true,
+      "issues": [],
+      "intent": "open_analysis",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "La evidencia disponible ya responde al alcance de la solicitud: se tiene la inversión neta total de BMW en 2025 (1,595,350.10), su distribución por medio (DIGITAL 48.6%, TV SUSCRIPCION 22.9%, PRENSA 19.1%) y por formato (con limitaciones de datos conocidos), así como la serie temporal mensual que muestra un pico en noviembre (30.7% del total). No se requiere una consulta adicional para cumplir con el análisis abierto solicitado.",
+      "tools": 4,
+      "queries": 4,
+      "answer": "### Resumen ejecutivo\n\n**Distribución por medio**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=DIGITAL: 775.378,83 (48,60 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV SUSCRIPCION: 364.720,17 (22,86 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PRENSA: 304.616,25 (19,09 % del universo consultado).\n\n**Concentración mensual y variabilidad**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): acumulado observado 1.595.350,10; promedio por periodo observado 132.945,84; coeficiente de variación 102,68 %.\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): 2025-11-01 registra 489.740,95 y representa 30,70 % del acumulado consultado.\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): 2025-04-01 registra 9.215,22 y representa 0,58 % del acumulado consultado.\n\n**Señal atípica en noviembre**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): 2025-11-01 registra 489.740,95 y representa 30,70 % del acumulado consultado.\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): 2025-11-01 registra 489.740,95 y representa 30,70 % del acumulado consultado; es el máximo observado.\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): en 2025-11-01, el cambio frente a la observación anterior es 333.856,82 (214,17 %).\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=RADIO: 92.307,00 (5,79 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV PAGA: 35.205,30 (2,21 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PUBLICIDAD EXTERIOR: 23.122,55 (1,45 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), formato=DISPLAY: 10.006,87 (0,63 % del universo consultado).\n\n### Hipótesis\n\nEl pico de inversión en noviembre podría estar relacionado con lanzamientos de modelos o campañas de fin de año. Validación: Revisar calendario de lanzamientos de productos y campañas de marketing de BMW en Q4 2025.\n\n### Advertencias\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): valores sin información en formato representan 99,37 %; valores informados, 0,63 %. Las etiquetas ausentes no son categorías de negocio."
+    },
+    {
+      "id": "additional-02",
+      "question": "Solo digital.",
+      "passed": false,
+      "issues": [
+        "changed_inherited:dimensions",
+        "intent"
+      ],
+      "intent": "composition",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**Participación del formato DISPLAY**\n\nInversión publicitaria neta, marca: BMW, medio: DIGITAL (2025-01-01 a 2025-12-31), formato=DISPLAY: 10.006,87 (1,29 % del universo consultado).\n\nEl formato DISPLAY representa una proporción minoritaria de la inversión neta en medio DIGITAL para BMW en el periodo observado.\n\n**Ausencia de información en formato**\n\nInversión publicitaria neta, marca: BMW, medio: DIGITAL (2025-01-01 a 2025-12-31): valores sin información en formato representan 98,71 %; valores informados, 1,29 %. Las etiquetas ausentes no son categorías de negocio."
+    },
+    {
+      "id": "additional-03",
+      "question": "Ahora por medios.",
+      "passed": true,
+      "issues": [],
+      "intent": "composition",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 0,
+      "answer": "### Resumen ejecutivo\n\n**Digital lidera la inversión**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=DIGITAL: 775.378,83 (48,60 % del universo consultado).\n\n**TV suscripción y prensa siguen en importancia**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV SUSCRIPCION: 364.720,17 (22,86 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PRENSA: 304.616,25 (19,09 % del universo consultado).\n\n**Otros medios tienen participación menor**\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=RADIO: 92.307,00 (5,79 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV PAGA: 35.205,30 (2,21 % del universo consultado).\n\nInversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PUBLICIDAD EXTERIOR: 23.122,55 (1,45 % del universo consultado)."
+    },
+    {
+      "id": "additional-04",
+      "question": "¿Cuál fue el mes más fuerte?",
+      "passed": true,
+      "issues": [],
+      "intent": "temporal_extrema",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "extreme": "max",
+          "granularity": "month"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, marca: BMW (2025-01-01 a 2025-12-31): máximo observado en 2025-11-01, 489.740,95; granularidad month. Se evaluaron 12 periodos observados.\n\nExtremo entre periodos observados; periodos sin filas no se imputan como cero."
+    },
+    {
+      "id": "additional-05",
+      "question": "¿Y el anterior?",
+      "passed": false,
+      "issues": [
+        "intent",
+        "partial_or_no_evidence",
+        "scope:filters",
+        "scope:requested_period"
+      ],
+      "intent": "clarification",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {}
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 0,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "additional-06",
+      "question": "¿Qué explica el cambio?",
+      "passed": false,
+      "issues": [
+        "scope:comparison_period",
+        "scope:requested_period"
+      ],
+      "intent": "diagnostic_search",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {},
+        "operation": "explain_difference",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 6,
+      "answer": "### Resumen ejecutivo\n\n**Contribución de DIGITAL al cambio neto**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=DIGITAL: 775.378,83 en 2025-01-01 a 2025-12-31 frente a 162.976,08 en 2024-01-01 a 2024-12-31; contribución a la diferencia 612.402,75 (65,08 % de la diferencia neta).\n\n**Contribución de PRENSA al cambio neto**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PRENSA: 304.616,25 en 2025-01-01 a 2025-12-31 frente a 33.930,75 en 2024-01-01 a 2024-12-31; contribución a la diferencia 270.685,50 (28,77 % de la diferencia neta).\n\nEl medio PRENSA es el segundo mayor contribuyente al aumento de la inversión neta de BMW en el mismo periodo.\n\n**Otras contribuciones al cambio neto**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV SUSCRIPCION: 364.720,17 en 2025-01-01 a 2025-12-31 frente a 261.582,60 en 2024-01-01 a 2024-12-31; contribución a la diferencia 103.137,57 (10,96 % de la diferencia neta).\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV PAGA: 35.205,30 en 2025-01-01 a 2025-12-31 frente a 0,00 en 2024-01-01 a 2024-12-31; contribución a la diferencia 35.205,30 (3,74 % de la diferencia neta).\n\nTV SUSCRIPCION y TV PAGA también aportaron positivamente al cambio neto, mientras que RADIO tuvo un efecto negativo.\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+    },
+    {
+      "id": "additional-07",
+      "question": "Ahora Volvo.",
+      "passed": false,
+      "issues": [
+        "scope:comparison_period",
+        "scope:requested_period"
+      ],
+      "intent": "diagnostic_search",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {},
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 6,
+      "answer": "### Resumen ejecutivo\n\n**Crecimiento de la inversión neta de Volvo**\n\ninv_neta, marca: VOLVO (2025-01-01 a 2025-12-31): 2025-01-01 a 2025-12-31 registra 9.662.059,42; 2024-01-01 a 2024-12-31, 4.715.347,54. Diferencia de 4.946.711,88; variación de 104,91 % sobre 2024-01-01 a 2024-12-31.\n\n**Dominio del medio PRENSA en el cambio de inversión**\n\ninv_neta, marca: VOLVO (2025-01-01 a 2025-12-31), medio=PRENSA: 5.591.218,15 en 2025-01-01 a 2025-12-31 frente a 679.159,00 en 2024-01-01 a 2024-12-31; contribución a la diferencia 4.912.059,15 (99,30 % de la diferencia neta).\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+    },
+    {
+      "id": "additional-08",
+      "question": "¿Y ambas juntas?",
+      "passed": false,
+      "issues": [
+        "scope:requested_period"
+      ],
+      "intent": "joint_share",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "BMW"
+            },
+            {
+              "dimension": "marca",
+              "value": "Volvo"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), marca=BMW, Volvo: valor conjunto 11.257.409,52 de un total de 463.938.228,07; participación conjunta 2,43 %."
+    },
+    {
+      "id": "additional-09",
+      "question": "Top anunciantes en televisión.",
+      "passed": false,
+      "issues": [
+        "scope:requested_period"
+      ],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**ALPINA lidera la inversión en TV**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=ALPINA: 13.223.741,26 (9,45 % del universo consultado).\n\n**LA SERENISIMA INT y ALQUERIA siguen en el ranking**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=LA SERENISIMA INT: 10.183.279,50 (7,28 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=ALQUERIA: 10.094.388,36 (7,22 % del universo consultado).\n\nLA SERENISIMA INT y ALQUERIA ocuparon el segundo y tercer lugar respectivamente, con inversiones cercanas entre sí y porcentajes similares del total.\n\n**SOFASA S.A. y DANONE INT completan el top cinco**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=SOFASA S.A.: 9.737.172,38 (6,96 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=DANONE INT: 9.589.928,40 (6,86 % del universo consultado).\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=DINISSAN: 9.480.948,78 (6,78 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=VOLKSWAGEN INT: 8.047.509,85 (5,75 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=POSTOBON: 6.639.146,34 (4,75 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=GM COLMOTORES: 6.156.260,39 (4,40 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2025-01-01 a 2025-12-31), anunciante=PEPSI COL+KFC: 4.933.349,91 (3,53 % del universo consultado)."
+    },
+    {
+      "id": "additional-10",
+      "question": "¿Y en 2026?",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=DANONE INT: 4.181.350,60 (11,35 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=ALPINA: 3.676.449,60 (9,98 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=GM COLMOTORES: 2.440.634,02 (6,62 % del universo consultado).\n\nDANONE INT, ALPINA y GM COLMOTORES concentran las mayores participaciones en el universo consultado de inversión publicitaria neta en TV ABIERTA y TV CABLE durante el periodo observado.\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=DINISSAN: 1.928.123,93 (5,23 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=SMART FIT: 1.851.197,60 (5,02 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=LA SERENISIMA INT: 1.763.174,70 (4,78 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=SABANA FITNESS CENTER: 1.560.100,00 (4,23 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=PORSCHE COLOMBIA SAS: 1.540.116,14 (4,18 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=DERCO SA: 1.489.197,26 (4,04 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2026-01-01 a 2026-07-31), anunciante=IRCC S.A+POSTOBON: 1.207.027,80 (3,28 % del universo consultado).\n\n### Advertencias\n\nCobertura parcial: acumulado disponible hasta 2026-07-31; no es un total anual completo.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+    },
+    {
+      "id": "additional-11",
+      "question": "Vuelve a BMW.",
+      "passed": false,
+      "issues": [
+        "scope:comparison_period",
+        "scope:requested_period"
+      ],
+      "intent": "diagnostic_search",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {},
+        "operation": "restore_scope",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 0,
+      "answer": "### Resumen ejecutivo\n\n**Crecimiento total de inversión neta de BMW**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31): 2025-01-01 a 2025-12-31 registra 1.595.350,10; 2024-01-01 a 2024-12-31, 654.368,63. Diferencia de 940.981,47; variación de 143,80 % sobre 2024-01-01 a 2024-12-31.\n\n**Contribución del medio DIGITAL al crecimiento**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=DIGITAL: 775.378,83 en 2025-01-01 a 2025-12-31 frente a 162.976,08 en 2024-01-01 a 2024-12-31; contribución a la diferencia 612.402,75 (65,08 % de la diferencia neta).\n\n**Contribución del medio PRENSA al crecimiento**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=PRENSA: 304.616,25 en 2025-01-01 a 2025-12-31 frente a 33.930,75 en 2024-01-01 a 2024-12-31; contribución a la diferencia 270.685,50 (28,77 % de la diferencia neta).\n\n**Contribución del medio TV SUSCRIPCION al crecimiento**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=TV SUSCRIPCION: 364.720,17 en 2025-01-01 a 2025-12-31 frente a 261.582,60 en 2024-01-01 a 2024-12-31; contribución a la diferencia 103.137,57 (10,96 % de la diferencia neta).\n\nTV SUSCRIPCION tuvo un impacto positivo y notable en el crecimiento de la inversión neta de BMW, aunque menor que DIGITAL y PRENSA.\n\n**Impacto negativo del medio RADIO**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), medio=RADIO: 92.307,00 en 2025-01-01 a 2025-12-31 frente a 180.118,20 en 2024-01-01 a 2024-12-31; contribución a la diferencia -87.811,20 (-9,33 % de la diferencia neta).\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+    },
+    {
+      "id": "additional-12",
+      "question": "¿Cómo se distribuye por vehículos?",
+      "passed": false,
+      "issues": [
+        "scope:comparison_period",
+        "scope:requested_period"
+      ],
+      "intent": "diagnostic",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "dimensions": [
+          "vehiculo"
+        ],
+        "intent": "diagnostic",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "diagnostic_evidence_complete",
+      "tools": 1,
+      "queries": 2,
+      "answer": "### Resumen ejecutivo\n\n**Distribución por vehículo**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=FACEBOOK.COM: 376.707,89 en 2025-01-01 a 2025-12-31 frente a 71.238,52 en 2024-01-01 a 2024-12-31; contribución a la diferencia 305.469,38 (32,46 % de la diferencia neta).\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=INSTAGRAM.COM: 293.912,11 en 2025-01-01 a 2025-12-31 frente a 39.861,16 en 2024-01-01 a 2024-12-31; contribución a la diferencia 254.050,95 (27,00 % de la diferencia neta).\n\n**Medios**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=STAR CHANNEL: 183.888,65 en 2025-01-01 a 2025-12-31 frente a 0,00 en 2024-01-01 a 2024-12-31; contribución a la diferencia 183.888,65 (19,54 % de la diferencia neta).\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=EL TIEMPO: 183.387,00 en 2025-01-01 a 2025-12-31 frente a 0,00 en 2024-01-01 a 2024-12-31; contribución a la diferencia 183.387,00 (19,49 % de la diferencia neta).\n\n**Otros**\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=EL COLOMBIANO: 121.229,25 en 2025-01-01 a 2025-12-31 frente a 33.930,75 en 2024-01-01 a 2024-12-31; contribución a la diferencia 87.298,50 (9,28 % de la diferencia neta).\n\ninv_neta, marca: BMW (2025-01-01 a 2025-12-31), vehiculo=DISCOVERY CHANNEL: 0,00 en 2025-01-01 a 2025-12-31 frente a 87.086,40 en 2024-01-01 a 2024-12-31; contribución a la diferencia -87.086,40 (-9,25 % de la diferencia neta).\n\nEL COLOMBIANO contribuye positivamente mientras que DISCOVERY CHANNEL muestra una disminución respecto al año anterior.\n\n### Advertencias\n\nContribuciones contables de una dimensión; no demuestran causas de negocio."
+    }
+  ],
+  "source_fingerprint": "de48b07cf9ba79f82604e44fc15fcb8e791c654b4a32c1a97e3cc4ddb9514872"
+}

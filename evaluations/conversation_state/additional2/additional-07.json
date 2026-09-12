@@ -1,0 +1,2179 @@
+{
+  "id": "additional-07",
+  "question": "Ahora Volvo.",
+  "elapsed_s": 20.54,
+  "memory_before": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "BMW"
+      ]
+    },
+    "last_filters": {
+      "marca": "BMW"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "explain_difference",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener la inversión neta total de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              }
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "formato"
+            }
+          },
+          {
+            "tool": "serie_temporal_bicomp",
+            "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "granularidad": "month"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW",
+                "medio": "DIGITAL"
+              },
+              "dimension": "formato"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "extreme": "max",
+          "granularity": "month"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "extremos_temporales_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+            "arguments": {
+              "granularidad": "month",
+              "extremo": "max"
+            }
+          }
+        ]
+      }
+    ],
+    "last_peak": {
+      "period": "2025-11-01",
+      "value": 489740.9467873,
+      "source_rows": 142,
+      "rank": 1,
+      "share_of_total_pct": 30.698023303731258,
+      "is_peak": true,
+      "total": 1595350.1042778,
+      "change_from_previous_observation": {
+        "difference": 333856.8228748999,
+        "difference_pct": 214.16986829429305,
+        "ratio_a_over_b": 3.1416986829429305
+      },
+      "granularity": "month"
+    },
+    "last_strategy": [
+      {
+        "tool": "diagnosticar_dimensiones_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+        "arguments": {
+          "limite": 5
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "explain_difference",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "explain_difference",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-27"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "BMW"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "explain_difference",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-27"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "diagnosticar_dimensiones_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+        "arguments": {
+          "limite": 5
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿Qué explica el cambio?",
+      "scope": {
+        "intent": "diagnostic_search",
+        "operation": "explain_difference",
+        "scope_mode": "inherit",
+        "filters": {
+          "marca": "BMW"
+        },
+        "period": {
+          "kind": "inherit"
+        },
+        "comparison_period": {
+          "kind": "previous_period",
+          "anchor": "focus"
+        },
+        "dimensions": [],
+        "analysis": {}
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "BMW"
+      }
+    ]
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "Volvo"
+      ]
+    },
+    "last_filters": {
+      "marca": "Volvo"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "change_entity",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener la inversión neta total de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              }
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          },
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "formato"
+            }
+          },
+          {
+            "tool": "serie_temporal_bicomp",
+            "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "granularidad": "month"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "DIGITAL"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW",
+                "medio": "DIGITAL"
+              },
+              "dimension": "formato"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "extreme": "max",
+          "granularity": "month"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "extremos_temporales_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+            "arguments": {
+              "granularidad": "month",
+              "extremo": "max"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {},
+        "operation": "explain_difference",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "diagnosticar_dimensiones_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+            "arguments": {
+              "limite": 5
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "diagnosticar_dimensiones_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+        "arguments": {
+          "limite": 5
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "change_entity",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "change_entity",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "change_entity",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "diagnosticar_dimensiones_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+        "arguments": {
+          "limite": 5
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Ahora Volvo.",
+      "scope": {
+        "intent": "diagnostic_search",
+        "operation": "change_entity",
+        "scope_mode": "inherit",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "period": {
+          "kind": "inherit"
+        },
+        "dimensions": [],
+        "analysis": {},
+        "comparison_period": {
+          "kind": "range",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "BMW"
+      },
+      {
+        "dimension": "marca",
+        "value": "Volvo"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "open_analysis",
+      "operation": "change_entity",
+      "scope_mode": "replace",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "period": {
+        "kind": "inherit"
+      },
+      "dimensions": [],
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Volvo en 2025",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            }
+          }
+        },
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Desglosar la inversión de Volvo en 2025 por medio",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "dimension": "medio"
+          }
+        },
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Desglosar la inversión de Volvo en 2025 por formato",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "dimension": "formato"
+          }
+        },
+        {
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Mostrar la tendencia mensual de la inversión de Volvo en 2025",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "granularidad": "month"
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "diagnostic_search",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "diagnosticar_dimensiones_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+        "arguments": {
+          "limite": 5
+        }
+      }
+    ],
+    "scope": {
+      "intent": "diagnostic_search",
+      "operation": "change_entity",
+      "scope_mode": "inherit",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "period": {
+        "kind": "inherit"
+      },
+      "dimensions": [],
+      "analysis": {},
+      "comparison_period": {
+        "kind": "range",
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      }
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Volvo"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "dimensions": [],
+      "intent": "diagnostic_search",
+      "analysis": {},
+      "operation": "change_entity",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {
+    "metric": "inv_neta",
+    "filters": {
+      "marca": "BMW"
+    },
+    "requested_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "comparison_period": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "dimensions": [],
+    "intent": "diagnostic_search",
+    "analysis": {},
+    "operation": "explain_difference",
+    "observed_period": {},
+    "available_period": {
+      "start": "2019-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Crecimiento de la inversión neta de Volvo**\n\ninv_neta, marca: VOLVO (2025-01-01 a 2025-12-31): 2025-01-01 a 2025-12-31 registra 9.662.059,42; 2024-01-01 a 2024-12-31, 4.715.347,54. Diferencia de 4.946.711,88; variación de 104,91 % sobre 2024-01-01 a 2024-12-31.\n\n**Dominio del medio PRENSA en el cambio de inversión**\n\ninv_neta, marca: VOLVO (2025-01-01 a 2025-12-31), medio=PRENSA: 5.591.218,15 en 2025-01-01 a 2025-12-31 frente a 679.159,00 en 2024-01-01 a 2024-12-31; contribución a la diferencia 4.912.059,15 (99,30 % de la diferencia neta).\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "diagnosticar_dimensiones_bicomp",
+        "arguments": {
+          "limite": 5,
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "periodo_a": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "periodo_b": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          }
+        },
+        "result": {
+          "success": true,
+          "value_a": 9662059.420332702,
+          "value_b": 4715347.542677698,
+          "current_value": 9662059.420332702,
+          "previous_value": 4715347.542677698,
+          "difference": 4946711.877655004,
+          "difference_pct": 104.90662316792714,
+          "ratio_a_over_b": 2.049066231679271,
+          "change": 4946711.877655004,
+          "change_pct": 104.90662316792714,
+          "drivers": [
+            {
+              "dimension": "medio",
+              "value": "PRENSA",
+              "current_value": 5591218.15,
+              "previous_value": 679159.0,
+              "difference": 4912059.15,
+              "difference_pct": 723.2561373698943,
+              "contribution": 4912059.15,
+              "contribution_pct": 99.29947956315112,
+              "current_share_pct": 57.86776821340924,
+              "previous_share_pct": 14.403158915712222,
+              "mix_change_pp": 43.464609297697024
+            },
+            {
+              "dimension": "medio",
+              "value": "TV NAL",
+              "current_value": 396793.25999999966,
+              "previous_value": 1281120.5999999975,
+              "difference": -884327.3399999979,
+              "difference_pct": -69.02764189413546,
+              "contribution": -884327.3399999979,
+              "contribution_pct": -17.877073940664086,
+              "current_share_pct": 4.106715170525587,
+              "previous_share_pct": 27.169165971433134,
+              "mix_change_pp": -23.06245080090755
+            },
+            {
+              "dimension": "medio",
+              "value": "TELEVISION NACIONAL",
+              "current_value": 467605.5841224,
+              "previous_value": 203576.7,
+              "difference": 264028.88412239996,
+              "difference_pct": 129.69504079906983,
+              "contribution": 264028.88412239996,
+              "contribution_pct": 5.3374623518110225,
+              "current_share_pct": 4.839605758772062,
+              "previous_share_pct": 4.317321218796,
+              "mix_change_pp": 0.5222845399760621
+            },
+            {
+              "dimension": "medio",
+              "value": "PUBLICIDAD EXTERIOR",
+              "current_value": 179543.46706120003,
+              "previous_value": 0,
+              "difference": 179543.46706120003,
+              "difference_pct": null,
+              "contribution": 179543.46706120003,
+              "contribution_pct": 3.6295517406668303,
+              "current_share_pct": 1.858231866007482,
+              "previous_share_pct": 0.0,
+              "mix_change_pp": 1.858231866007482
+            },
+            {
+              "dimension": "medio",
+              "value": "DIGITAL",
+              "current_value": 1815611.9267819002,
+              "previous_value": 1650683.6426776997,
+              "difference": 164928.28410420055,
+              "difference_pct": 9.991513809191071,
+              "contribution": 164928.28410420055,
+              "contribution_pct": 3.3340992599388066,
+              "current_share_pct": 18.79114842702325,
+              "previous_share_pct": 35.00661674961775,
+              "mix_change_pp": -16.2154683225945
+            }
+          ],
+          "drivers_total": 10,
+          "source": "bigquery",
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "dimension": "medio",
+          "period_a": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "period_b": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "current_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "previous_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "requested_period_a": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period_b": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "comparison_equivalent": true,
+          "evidence": [
+            [
+              {
+                "sql": "SELECT UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+                "query_parameters": {
+                  "filter_0": "VOLVO",
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 0,
+                "job_id": "a6d18e23-4442-4b48-8839-c7bd6d0bccb5",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T23:50:37.204053+00:00",
+                "duration_ms": 971.23,
+                "rows": 10
+              },
+              {
+                "sql": "SELECT UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+                "query_parameters": {
+                  "filter_0": "VOLVO",
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31"
+                },
+                "bytes_processed": 0,
+                "job_id": "de1d4394-b714-4d63-9def-e522fa122298",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T23:50:38.626041+00:00",
+                "duration_ms": 1075.38,
+                "rows": 8
+              }
+            ],
+            [
+              {
+                "sql": "SELECT UPPER(TRIM(CAST(`region` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+                "query_parameters": {
+                  "filter_0": "VOLVO",
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 0,
+                "job_id": "6dede7ae-7edc-4de5-9033-161ce6c65ee7",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T23:50:39.959374+00:00",
+                "duration_ms": 968.85,
+                "rows": 9
+              },
+              {
+                "sql": "SELECT UPPER(TRIM(CAST(`region` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+                "query_parameters": {
+                  "filter_0": "VOLVO",
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31"
+                },
+                "bytes_processed": 0,
+                "job_id": "a19f5acc-daf1-4736-b713-ad4eed87fdc1",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T23:50:41.662215+00:00",
+                "duration_ms": 1221.67,
+                "rows": 8
+              }
+            ],
+            [
+              {
+                "sql": "SELECT UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+                "query_parameters": {
+                  "filter_0": "VOLVO",
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 0,
+                "job_id": "b406a0b9-379c-4090-9621-a05a9e4a201d",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T23:50:42.935207+00:00",
+                "duration_ms": 914.95,
+                "rows": 5
+              },
+              {
+                "sql": "SELECT UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+                "query_parameters": {
+                  "filter_0": "VOLVO",
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31"
+                },
+                "bytes_processed": 0,
+                "job_id": "3014e7f1-6c9a-41ec-bdf7-7651632cb308",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T23:50:44.282646+00:00",
+                "duration_ms": 913.04,
+                "rows": 5
+              }
+            ]
+          ],
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Criterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+          ],
+          "capability": "dimension_search",
+          "candidate_evaluations": [
+            {
+              "dimension": "medio",
+              "eligible": true,
+              "score_pct": 89.70022511001893,
+              "known_change_pct": 100.0,
+              "categories": 10,
+              "absolute_change": 6756298.9576550005
+            },
+            {
+              "dimension": "region",
+              "eligible": true,
+              "score_pct": 35.08109798246969,
+              "known_change_pct": 35.45979412651524,
+              "categories": 9,
+              "absolute_change": 7740596.3754608
+            },
+            {
+              "dimension": "formato",
+              "eligible": true,
+              "score_pct": 2.49885669823363,
+              "known_change_pct": 2.49885669823363,
+              "categories": 5,
+              "absolute_change": 4946711.877655006
+            }
+          ],
+          "selected_dimension": "medio"
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 8525.76
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "diagnostic_search",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "diagnosticar_dimensiones_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+          "arguments": {
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "diagnostic_search",
+        "operation": "change_entity",
+        "scope_mode": "inherit",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "period": {
+          "kind": "inherit"
+        },
+        "dimensions": [],
+        "analysis": {},
+        "comparison_period": {
+          "kind": "range",
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        }
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {},
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "bar",
+        "title": "Contribuciones por dimensión — inv_neta · marca: VOLVO · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "driver": "PRENSA",
+            "partition": "medio",
+            "contribution": 4912059.15
+          },
+          {
+            "driver": "TV NAL",
+            "partition": "medio",
+            "contribution": -884327.3399999979
+          },
+          {
+            "driver": "TELEVISION NACIONAL",
+            "partition": "medio",
+            "contribution": 264028.88412239996
+          },
+          {
+            "driver": "PUBLICIDAD EXTERIOR",
+            "partition": "medio",
+            "contribution": 179543.46706120003
+          },
+          {
+            "driver": "DIGITAL",
+            "partition": "medio",
+            "contribution": 164928.28410420055
+          }
+        ],
+        "x": "driver",
+        "y": "contribution",
+        "facet_col": "partition"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 14,
+      "total_tool_calls": 8,
+      "bigquery_bytes_processed": 20830960,
+      "bigquery_queries": 18,
+      "total_latency_ms": 81609.01,
+      "errors": [],
+      "cache_hits": 1,
+      "input_tokens": 113665,
+      "output_tokens": 4067,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 10134.47
+        },
+        {
+          "stage": "plan",
+          "intent": "diagnostic_search",
+          "scope": {
+            "intent": "diagnostic_search",
+            "operation": "change_entity",
+            "scope_mode": "inherit",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [],
+            "analysis": {},
+            "comparison_period": {
+              "kind": "range",
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            }
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "diagnostic_search",
+          "requested_scope": {
+            "intent": "diagnostic_search",
+            "operation": "change_entity",
+            "scope_mode": "inherit",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "inherit"
+            },
+            "dimensions": [],
+            "analysis": {},
+            "comparison_period": {
+              "kind": "range",
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            }
+          },
+          "inherited_scope": {
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "requested_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "comparison_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "dimensions": [],
+            "intent": "diagnostic_search",
+            "analysis": {},
+            "operation": "explain_difference",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "scope_mutations": {
+            "filters": {
+              "before": {
+                "marca": "BMW"
+              },
+              "after": {
+                "marca": "Volvo"
+              }
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "requested_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "comparison_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "dimensions": [],
+            "intent": "diagnostic_search",
+            "analysis": {},
+            "operation": "change_entity",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "requirements": {
+            "capability": "dimension_search",
+            "dimension": null,
+            "analysis": {},
+            "requires_reference": true,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "dimension_search"
+          ],
+          "tools": [
+            "diagnosticar_dimensiones_bicomp"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "diagnosticar_dimensiones_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 1858.77
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Crecimiento de la inversión neta de Volvo**\n\ninv_neta, marca: VOLVO (2025-01-01 a 2025-12-31): 2025-01-01 a 2025-12-31 registra 9.662.059,42; 2024-01-01 a 2024-12-31, 4.715.347,54. Diferencia de 4.946.711,88; variación de 104,91 % sobre 2024-01-01 a 2024-12-31.\n\n**Dominio del medio PRENSA en el cambio de inversión**\n\ninv_neta, marca: VOLVO (2025-01-01 a 2025-12-31), medio=PRENSA: 5.591.218,15 en 2025-01-01 a 2025-12-31 frente a 679.159,00 en 2024-01-01 a 2024-12-31; contribución a la diferencia 4.912.059,15 (99,30 % de la diferencia neta).\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "BMW"
+              ]
+            },
+            "last_filters": {
+              "marca": "BMW"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "explain_difference",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "open_analysis",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener la inversión neta total de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      }
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "formato"
+                    }
+                  },
+                  {
+                    "tool": "serie_temporal_bicomp",
+                    "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "granularidad": "month"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW",
+                  "medio": "DIGITAL"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "formato"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW",
+                        "medio": "DIGITAL"
+                      },
+                      "dimension": "formato"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "medio"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "temporal_extrema",
+                "analysis": {
+                  "extreme": "max",
+                  "granularity": "month"
+                },
+                "operation": "discover_extreme",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "extremos_temporales_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                    "arguments": {
+                      "granularidad": "month",
+                      "extremo": "max"
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_peak": {
+              "period": "2025-11-01",
+              "value": 489740.9467873,
+              "source_rows": 142,
+              "rank": 1,
+              "share_of_total_pct": 30.698023303731258,
+              "is_peak": true,
+              "total": 1595350.1042778,
+              "change_from_previous_observation": {
+                "difference": 333856.8228748999,
+                "difference_pct": 214.16986829429305,
+                "ratio_a_over_b": 3.1416986829429305
+              },
+              "granularity": "month"
+            },
+            "last_strategy": [
+              {
+                "tool": "diagnosticar_dimensiones_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                "arguments": {
+                  "limite": 5
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "explain_difference",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "explain_difference",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-27"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "BMW"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "explain_difference",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-27"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "diagnosticar_dimensiones_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                "arguments": {
+                  "limite": 5
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿Qué explica el cambio?",
+              "scope": {
+                "intent": "diagnostic_search",
+                "operation": "explain_difference",
+                "scope_mode": "inherit",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "period": {
+                  "kind": "inherit"
+                },
+                "comparison_period": {
+                  "kind": "previous_period",
+                  "anchor": "focus"
+                },
+                "dimensions": [],
+                "analysis": {}
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "BMW"
+              }
+            ]
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "Volvo"
+              ]
+            },
+            "last_filters": {
+              "marca": "Volvo"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Volvo"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "change_entity",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "open_analysis",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener la inversión neta total de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      }
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  },
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión de BMW en 2025 por formato",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "formato"
+                    }
+                  },
+                  {
+                    "tool": "serie_temporal_bicomp",
+                    "purpose": "Mostrar la tendencia mensual de la inversión de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "granularidad": "month"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW",
+                  "medio": "DIGITAL"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "formato"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el desglose de la inversión neta de BMW en 2025 por formato dentro del medio digital",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW",
+                        "medio": "DIGITAL"
+                      },
+                      "dimension": "formato"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "medio"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión neta de BMW en 2025 por medio",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "temporal_extrema",
+                "analysis": {
+                  "extreme": "max",
+                  "granularity": "month"
+                },
+                "operation": "discover_extreme",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "extremos_temporales_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                    "arguments": {
+                      "granularidad": "month",
+                      "extremo": "max"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "dimensions": [],
+                "intent": "diagnostic_search",
+                "analysis": {},
+                "operation": "explain_difference",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "diagnosticar_dimensiones_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                    "arguments": {
+                      "limite": 5
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "diagnosticar_dimensiones_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                "arguments": {
+                  "limite": 5
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Volvo"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "change_entity",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Volvo"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "change_entity",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Volvo"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "dimensions": [],
+              "intent": "diagnostic_search",
+              "analysis": {},
+              "operation": "change_entity",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "diagnosticar_dimensiones_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                "arguments": {
+                  "limite": 5
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Ahora Volvo.",
+              "scope": {
+                "intent": "diagnostic_search",
+                "operation": "change_entity",
+                "scope_mode": "inherit",
+                "filters": {
+                  "marca": "Volvo"
+                },
+                "period": {
+                  "kind": "inherit"
+                },
+                "dimensions": [],
+                "analysis": {},
+                "comparison_period": {
+                  "kind": "range",
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                }
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "BMW"
+              },
+              {
+                "dimension": "marca",
+                "value": "Volvo"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 6,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 15995,
+        "output_tokens": 820,
+        "cache_hits": 0,
+        "total_latency_ms": 20542.869999999995
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  }
+}

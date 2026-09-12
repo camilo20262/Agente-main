@@ -1,0 +1,131 @@
+{
+  "id": "conversation-07",
+  "question": "¿Qué explica la diferencia?",
+  "family": "diagnostic",
+  "elapsed_s": 3.95,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "diagnostic",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "explicar_diferencia_entidades_bicomp",
+          "purpose": "Desglosar la diferencia de inversión neta entre Volvo y BMW por medio para identificar qué canales contribuyen más a la brecha.",
+          "arguments": {
+            "dimension_entidad": "marca",
+            "dimension": "medio",
+            "valor_a": "Volvo",
+            "valor_b": "BMW",
+            "metrica": "inv_neta",
+            "limite": 10
+          }
+        }
+      ],
+      "scope": {
+        "intent": "diagnostic",
+        "scope_mode": "inherit",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "inherit"
+        },
+        "comparison_period": {
+          "kind": "inherit"
+        },
+        "dimensions": [
+          "medio"
+        ]
+      },
+      "analysis_questions": [
+        "¿Qué medios explican la diferencia de inversión neta entre Volvo y BMW en el periodo disponible?"
+      ],
+      "answer": "",
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 15,
+      "total_tool_calls": 9,
+      "bigquery_bytes_processed": 19951115,
+      "bigquery_queries": 12,
+      "total_latency_ms": 77712.54000000001,
+      "errors": [
+        "run:ValueError"
+      ],
+      "cache_hits": 1,
+      "input_tokens": 82226,
+      "output_tokens": 3775,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3927.65
+        },
+        {
+          "stage": "plan",
+          "intent": "diagnostic",
+          "scope": {
+            "intent": "diagnostic",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "inherit"
+            },
+            "comparison_period": {
+              "kind": "inherit"
+            },
+            "dimensions": [
+              "medio"
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "ValueError",
+          "detail": "La comparación requiere un periodo actual explícito y otro distinto; corrige period y comparison_period en el plan completo."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 8802,
+        "output_tokens": 229,
+        "cache_hits": 0,
+        "total_latency_ms": 3945.5800000000017
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "missing_entity_difference_drivers",
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "diagnostic"
+}

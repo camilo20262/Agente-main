@@ -1,0 +1,88 @@
+{
+  "id": "conversation-06",
+  "question": "Compara ambos.",
+  "family": "comparison",
+  "elapsed_s": 7.87,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 17,
+      "total_tool_calls": 10,
+      "bigquery_bytes_processed": 53823698,
+      "bigquery_queries": 11,
+      "total_latency_ms": 77069.86,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 1,
+      "input_tokens": 93512,
+      "output_tokens": 4661,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 5037.0
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2802.96
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "None is not of type 'string'\n\nFailed validating 'type' in schema['properties']['answer']:\n    {'type': 'string'}\n\nOn instance['answer']:\n    None"
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 18095,
+        "output_tokens": 568,
+        "cache_hits": 0,
+        "total_latency_ms": 7871.580000000002
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "wrong_entity_pair",
+    "partial_or_fallback"
+  ],
+  "expected_family": "comparison",
+  "actual_intent": "clarification"
+}

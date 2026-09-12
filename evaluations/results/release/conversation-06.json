@@ -1,0 +1,196 @@
+{
+  "id": "conversation-06",
+  "question": "Compara ambos.",
+  "family": "comparison",
+  "elapsed_s": 24.2,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 18,
+      "total_tool_calls": 11,
+      "bigquery_bytes_processed": 24314407,
+      "bigquery_queries": 14,
+      "total_latency_ms": 152069.49,
+      "errors": [
+        "run:ValueError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 102309,
+      "output_tokens": 5393,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 12017.79
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "Faltan periodos explícitos para comparar.",
+          "rejected_plan": {
+            "intent": "diagnostic",
+            "operation": "compare_entities",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "remove_filters": [
+              "marca"
+            ],
+            "period": {
+              "kind": "inherit"
+            },
+            "comparison_period": {
+              "kind": "inherit"
+            },
+            "dimensions": [
+              "medio"
+            ],
+            "analysis_questions": [
+              "¿Cuál es la diferencia de inversión neta entre Volvo y BMW en el periodo comparado?",
+              "¿Qué medios explican la diferencia entre ambas marcas?",
+              "¿Cuál es la contribución de cada medio a la diferencia total?"
+            ],
+            "steps": [
+              {
+                "tool": "comparar_entidades_bicomp",
+                "purpose": "Obtener la diferencia neta de inversión entre Volvo y BMW en los periodos equivalentes (2025-01-01 a 2025-07-31 vs 2026-01-01 a 2026-07-31).",
+                "arguments": {
+                  "dimension": "marca",
+                  "valor_a": "Volvo",
+                  "valor_b": "BMW",
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-07-31"
+                }
+              },
+              {
+                "tool": "analizar_drivers_bicomp",
+                "purpose": "Desglosar la diferencia de inversión neta entre Volvo y BMW por medio para identificar qué canales impulsan la variación.",
+                "arguments": {
+                  "dimension": "medio",
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-07-31",
+                  "limite": 10
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 12154.94
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "Faltan periodos explícitos para comparar.",
+          "rejected_plan": {
+            "intent": "diagnostic",
+            "operation": "compare_entities",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "remove_filters": [
+              "marca"
+            ],
+            "period": {
+              "kind": "inherit"
+            },
+            "comparison_period": {
+              "kind": "inherit"
+            },
+            "dimensions": [
+              "medio"
+            ],
+            "analysis_questions": [
+              "¿Cuál es la diferencia de inversión neta entre Volvo y BMW en el periodo comparado?",
+              "¿Qué medios explican la diferencia entre ambas marcas?",
+              "¿Cuál es la contribución de cada medio a la diferencia total?"
+            ],
+            "steps": [
+              {
+                "tool": "comparar_entidades_bicomp",
+                "purpose": "Obtener la diferencia neta de inversión entre Volvo y BMW en los periodos equivalentes (2025-01-01 a 2025-07-31 vs 2026-01-01 a 2026-07-31).",
+                "arguments": {
+                  "dimension": "marca",
+                  "valor_a": "Volvo",
+                  "valor_b": "BMW",
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-07-31"
+                }
+              },
+              {
+                "tool": "analizar_drivers_bicomp",
+                "purpose": "Desglosar la diferencia de inversión neta entre Volvo y BMW por medio para identificar qué canales impulsan la variación.",
+                "arguments": {
+                  "dimension": "medio",
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-07-31",
+                  "limite": 10
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "ValueError",
+          "detail": "Faltan periodos explícitos para comparar."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 18724,
+        "output_tokens": 880,
+        "cache_hits": 0,
+        "total_latency_ms": 24202.679999999993
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "wrong_entity_pair",
+    "partial_or_fallback"
+  ],
+  "expected_family": "comparison",
+  "actual_intent": "clarification"
+}

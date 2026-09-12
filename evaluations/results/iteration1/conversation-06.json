@@ -1,0 +1,130 @@
+{
+  "id": "conversation-06",
+  "question": "Compara ambos.",
+  "family": "comparison",
+  "elapsed_s": 2.33,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_marcas",
+          "purpose": "Obtener la inversión publicitaria neta de Volvo y BMW en el periodo solicitado (2026-01-01 a 2026-12-31) mediante cálculo real de BICOMP.",
+          "arguments": {
+            "marca_a": "Volvo",
+            "marca_b": "BMW",
+            "metrica": "inv_neta",
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "agregacion": "sum",
+            "filtros": {}
+          }
+        }
+      ],
+      "scope": {
+        "intent": "comparison",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "remove_filters": [
+          "marca"
+        ],
+        "period": {
+          "inherit": true
+        },
+        "comparison_period": null,
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión publicitaria neta de Volvo en el periodo solicitado?",
+        "¿Cuál es la inversión publicitaria neta de BMW en el mismo periodo?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 12,
+      "total_tool_calls": 8,
+      "bigquery_bytes_processed": 196657238,
+      "bigquery_queries": 9,
+      "total_latency_ms": 90071.14000000001,
+      "errors": [
+        "run:KeyError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 65819,
+      "output_tokens": 3894,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2325.07
+        },
+        {
+          "stage": "plan",
+          "intent": "comparison",
+          "scope": {
+            "intent": "comparison",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "remove_filters": [
+              "marca"
+            ],
+            "period": {
+              "inherit": true
+            },
+            "comparison_period": null,
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "error",
+          "type": "KeyError",
+          "detail": "'start'"
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7202,
+        "output_tokens": 280,
+        "cache_hits": 0,
+        "total_latency_ms": 2333.8800000000047
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "comparison",
+  "actual_intent": "comparison"
+}

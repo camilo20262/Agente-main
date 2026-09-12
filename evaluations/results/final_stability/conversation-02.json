@@ -1,0 +1,1333 @@
+{
+  "id": "conversation-02",
+  "question": "¿Y en 2026?",
+  "family": "open_analysis",
+  "elapsed_s": 45.05,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): 1.490.266,32.\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31), medio=DIGITAL: 718.152,76 (48,19 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31), medio=TV NAL: 264.357,60 (17,74 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31), medio=TELEVISION NACIONAL: 162.257,76 (10,89 % del universo consultado).\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): 2026-06-01 registra 399.979,33 y representa 26,84 % del acumulado consultado.\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): 2026-06-01 registra 399.979,33 y representa 26,84 % del acumulado consultado; es el máximo observado.\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): en 2026-06-01, el cambio frente a la observación anterior es 243.710,81 (155,96 %).\n\n### Advertencias\n\nCobertura parcial: acumulado disponible hasta 2026-07-31; no es un total anual completo.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "agregacion": "sum"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "requested_period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": true,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Periodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "value": 1490266.315567202,
+          "row_count": 5720,
+          "valid_values": 5720,
+          "evidence": {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d6c83619-0214-4ad5-bc7f-86ce7b110d20",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:42.119111+00:00",
+            "duration_ms": 2113.02,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 5720,
+        "step": 1,
+        "purpose": "Obtener la inversión neta total de Volvo en 2026.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d6c83619-0214-4ad5-bc7f-86ce7b110d20",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:42.119111+00:00",
+            "duration_ms": 2113.02,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 2471.92
+      },
+      {
+        "id": "e2",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "agregacion": "sum",
+          "dimension": "medio",
+          "limite": 10
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "requested_period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": true,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Periodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "medio",
+          "composition": {
+            "denominator_known": true,
+            "total": 1490266.3155672017,
+            "shown_share_pct": 99.99999999999999,
+            "top3_share_pct": 76.81634507933556
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "unknown_value": 0.0,
+            "known_value": 1490266.3155672017,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "DIGITAL",
+              "value": 718152.7555672015,
+              "source_rows": 5405,
+              "rank": 1,
+              "share_pct": 48.189558340374184,
+              "total": 1490266.3155672017,
+              "concentration_hhi": 2945.7528757724276,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV NAL",
+              "value": 264357.6,
+              "source_rows": 59,
+              "rank": 2,
+              "share_pct": 17.738950229132996,
+              "total": 1490266.3155672017,
+              "concentration_hhi": 2945.7528757724276,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TELEVISION NACIONAL",
+              "value": 162257.75999999998,
+              "source_rows": 24,
+              "rank": 3,
+              "share_pct": 10.887836509828379,
+              "total": 1490266.3155672017,
+              "concentration_hhi": 2945.7528757724276,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "RADIO",
+              "value": 148185.1,
+              "source_rows": 89,
+              "rank": 4,
+              "share_pct": 9.943531464951628,
+              "total": 1490266.3155672017,
+              "concentration_hhi": 2945.7528757724276,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "OOH",
+              "value": 119143.65000000002,
+              "source_rows": 63,
+              "rank": 5,
+              "share_pct": 7.994789169924534,
+              "total": 1490266.3155672017,
+              "concentration_hhi": 2945.7528757724276,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PUBLICIDAD EXTERIOR",
+              "value": 78169.45,
+              "source_rows": 80,
+              "rank": 6,
+              "share_pct": 5.2453342857882665,
+              "total": 1490266.3155672017,
+              "concentration_hhi": 2945.7528757724276,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 6,
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 1613.35
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "38b1d029-ac5a-4a87-adf3-2b994e652a78",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:44.115966+00:00",
+            "duration_ms": 1613.35,
+            "rows": 6
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 6,
+        "step": 2,
+        "purpose": "Desglosar la inversión neta de Volvo en 2026 por medio para entender la distribución por canal.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "38b1d029-ac5a-4a87-adf3-2b994e652a78",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:44.115966+00:00",
+            "duration_ms": 1613.35,
+            "rows": 6
+          }
+        ],
+        "latency_ms": 1996.71
+      },
+      {
+        "id": "e3",
+        "tool": "serie_temporal_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "agregacion": "sum",
+          "granularidad": "month"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "requested_period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": true,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Periodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "granularity": "month",
+          "rows": [
+            {
+              "period": "2026-01-01",
+              "value": 124777.77170749997,
+              "source_rows": 844,
+              "rank": 7,
+              "share_of_total_pct": 8.372850570671934,
+              "is_peak": false,
+              "total": 1490266.3155672005
+            },
+            {
+              "period": "2026-02-01",
+              "value": 204028.2089907,
+              "source_rows": 643,
+              "rank": 3,
+              "share_of_total_pct": 13.690721373719445,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 79250.43728320002,
+                "difference_pct": 63.5132653826968,
+                "ratio_a_over_b": 1.635132653826968
+              }
+            },
+            {
+              "period": "2026-03-01",
+              "value": 336189.1470064001,
+              "source_rows": 1246,
+              "rank": 2,
+              "share_of_total_pct": 22.558997911621276,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 132160.9380157001,
+                "difference_pct": 64.77581637827555,
+                "ratio_a_over_b": 1.6477581637827554
+              }
+            },
+            {
+              "period": "2026-04-01",
+              "value": 128770.62730130012,
+              "source_rows": 574,
+              "rank": 6,
+              "share_of_total_pct": 8.640779567797557,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": -207418.51970509999,
+                "difference_pct": -61.69697075353575,
+                "ratio_a_over_b": 0.3830302924646425
+              }
+            },
+            {
+              "period": "2026-05-01",
+              "value": 156268.51978700023,
+              "source_rows": 818,
+              "rank": 4,
+              "share_of_total_pct": 10.48594591145435,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 27497.89248570011,
+                "difference_pct": 21.3541652021,
+                "ratio_a_over_b": 1.213541652021
+              }
+            },
+            {
+              "period": "2026-06-01",
+              "value": 399979.3320226998,
+              "source_rows": 812,
+              "rank": 1,
+              "share_of_total_pct": 26.839453314118977,
+              "is_peak": true,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 243710.8122356996,
+                "difference_pct": 155.9564348391387,
+                "ratio_a_over_b": 2.5595643483913872
+              }
+            },
+            {
+              "period": "2026-07-01",
+              "value": 140252.70875160024,
+              "source_rows": 783,
+              "rank": 5,
+              "share_of_total_pct": 9.411251350616455,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": -259726.62327109958,
+                "difference_pct": -64.93501100610854,
+                "ratio_a_over_b": 0.3506498899389145
+              }
+            }
+          ],
+          "row_count": 7,
+          "peak": {
+            "period": "2026-06-01",
+            "value": 399979.3320226998,
+            "share_of_total_pct": 26.839453314118977,
+            "rank": 1
+          },
+          "statistics": {
+            "observations": 7,
+            "total": 1490266.3155672005,
+            "mean": 212895.1879381715,
+            "median": 156268.51978700023,
+            "stddev": 102543.1133718913,
+            "coefficient_variation_pct": 48.16600805541534,
+            "slope_per_observed_period": 9228.801070603593,
+            "peak": {
+              "period": "2026-06-01",
+              "value": 399979.3320226998,
+              "source_rows": 812,
+              "rank": 1,
+              "share_of_total_pct": 26.839453314118977,
+              "is_peak": true,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 243710.8122356996,
+                "difference_pct": 155.9564348391387,
+                "ratio_a_over_b": 2.5595643483913872
+              }
+            },
+            "minimum": {
+              "period": "2026-01-01",
+              "value": 124777.77170749997,
+              "source_rows": 844,
+              "rank": 7,
+              "share_of_total_pct": 8.372850570671934,
+              "is_peak": false,
+              "total": 1490266.3155672005
+            },
+            "first_to_last": {
+              "difference": 15474.937044100268,
+              "difference_pct": 12.401998234409985,
+              "ratio_a_over_b": 1.1240199823441
+            },
+            "last_acceleration": -503437.43550679914,
+            "anomaly_method": "MAD robust z",
+            "anomaly_threshold": 3.5,
+            "minimum_observations": 6,
+            "anomaly_testable": true,
+            "anomalies": [
+              {
+                "period": "2026-03-01",
+                "value": 336189.1470064001,
+                "source_rows": 1246,
+                "rank": 2,
+                "share_of_total_pct": 22.558997911621276,
+                "is_peak": false,
+                "total": 1490266.3155672005,
+                "change_from_previous_observation": {
+                  "difference": 132160.9380157001,
+                  "difference_pct": 64.77581637827555,
+                  "ratio_a_over_b": 1.6477581637827554
+                },
+                "robust_z_score": 3.853659448377958
+              },
+              {
+                "period": "2026-06-01",
+                "value": 399979.3320226998,
+                "source_rows": 812,
+                "rank": 1,
+                "share_of_total_pct": 26.839453314118977,
+                "is_peak": true,
+                "total": 1490266.3155672005,
+                "change_from_previous_observation": {
+                  "difference": 243710.8122356996,
+                  "difference_pct": 155.9564348391387,
+                  "ratio_a_over_b": 2.5595643483913872
+                },
+                "robust_z_score": 5.219959983235895
+              }
+            ],
+            "limitations": [
+              "Picos descriptivos no demuestran causalidad ni estacionalidad."
+            ]
+          },
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 1022.29
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "5f9884c6-13c5-48e1-bedf-74ab47d88c4f",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:45.587514+00:00",
+            "duration_ms": 1022.29,
+            "rows": 7
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 7,
+        "step": 3,
+        "purpose": "Analizar la tendencia mensual de la inversión neta de Volvo en 2026 para identificar patrones estacionales o cambios a lo largo del año.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "5f9884c6-13c5-48e1-bedf-74ab47d88c4f",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:45.587514+00:00",
+            "duration_ms": 1022.29,
+            "rows": 7
+          }
+        ],
+        "latency_ms": 1471.42
+      },
+      {
+        "id": "e4",
+        "tool": "analizar_anomalias_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "agregacion": "sum",
+          "granularidad": "month"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "requested_period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": true,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Periodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "granularity": "month",
+          "rows": [
+            {
+              "period": "2026-01-01",
+              "value": 124777.77170749997,
+              "source_rows": 844,
+              "rank": 7,
+              "share_of_total_pct": 8.372850570671934,
+              "is_peak": false,
+              "total": 1490266.3155672005
+            },
+            {
+              "period": "2026-02-01",
+              "value": 204028.2089907,
+              "source_rows": 643,
+              "rank": 3,
+              "share_of_total_pct": 13.690721373719445,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 79250.43728320002,
+                "difference_pct": 63.5132653826968,
+                "ratio_a_over_b": 1.635132653826968
+              }
+            },
+            {
+              "period": "2026-03-01",
+              "value": 336189.1470064001,
+              "source_rows": 1246,
+              "rank": 2,
+              "share_of_total_pct": 22.558997911621276,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 132160.9380157001,
+                "difference_pct": 64.77581637827555,
+                "ratio_a_over_b": 1.6477581637827554
+              }
+            },
+            {
+              "period": "2026-04-01",
+              "value": 128770.62730130012,
+              "source_rows": 574,
+              "rank": 6,
+              "share_of_total_pct": 8.640779567797557,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": -207418.51970509999,
+                "difference_pct": -61.69697075353575,
+                "ratio_a_over_b": 0.3830302924646425
+              }
+            },
+            {
+              "period": "2026-05-01",
+              "value": 156268.51978700023,
+              "source_rows": 818,
+              "rank": 4,
+              "share_of_total_pct": 10.48594591145435,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 27497.89248570011,
+                "difference_pct": 21.3541652021,
+                "ratio_a_over_b": 1.213541652021
+              }
+            },
+            {
+              "period": "2026-06-01",
+              "value": 399979.3320226998,
+              "source_rows": 812,
+              "rank": 1,
+              "share_of_total_pct": 26.839453314118977,
+              "is_peak": true,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 243710.8122356996,
+                "difference_pct": 155.9564348391387,
+                "ratio_a_over_b": 2.5595643483913872
+              }
+            },
+            {
+              "period": "2026-07-01",
+              "value": 140252.70875160024,
+              "source_rows": 783,
+              "rank": 5,
+              "share_of_total_pct": 9.411251350616455,
+              "is_peak": false,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": -259726.62327109958,
+                "difference_pct": -64.93501100610854,
+                "ratio_a_over_b": 0.3506498899389145
+              }
+            }
+          ],
+          "row_count": 7,
+          "peak": {
+            "period": "2026-06-01",
+            "value": 399979.3320226998,
+            "share_of_total_pct": 26.839453314118977,
+            "rank": 1
+          },
+          "statistics": {
+            "observations": 7,
+            "total": 1490266.3155672005,
+            "mean": 212895.1879381715,
+            "median": 156268.51978700023,
+            "stddev": 102543.1133718913,
+            "coefficient_variation_pct": 48.16600805541534,
+            "slope_per_observed_period": 9228.801070603593,
+            "peak": {
+              "period": "2026-06-01",
+              "value": 399979.3320226998,
+              "source_rows": 812,
+              "rank": 1,
+              "share_of_total_pct": 26.839453314118977,
+              "is_peak": true,
+              "total": 1490266.3155672005,
+              "change_from_previous_observation": {
+                "difference": 243710.8122356996,
+                "difference_pct": 155.9564348391387,
+                "ratio_a_over_b": 2.5595643483913872
+              }
+            },
+            "minimum": {
+              "period": "2026-01-01",
+              "value": 124777.77170749997,
+              "source_rows": 844,
+              "rank": 7,
+              "share_of_total_pct": 8.372850570671934,
+              "is_peak": false,
+              "total": 1490266.3155672005
+            },
+            "first_to_last": {
+              "difference": 15474.937044100268,
+              "difference_pct": 12.401998234409985,
+              "ratio_a_over_b": 1.1240199823441
+            },
+            "last_acceleration": -503437.43550679914,
+            "anomaly_method": "MAD robust z",
+            "anomaly_threshold": 3.5,
+            "minimum_observations": 6,
+            "anomaly_testable": true,
+            "anomalies": [
+              {
+                "period": "2026-03-01",
+                "value": 336189.1470064001,
+                "source_rows": 1246,
+                "rank": 2,
+                "share_of_total_pct": 22.558997911621276,
+                "is_peak": false,
+                "total": 1490266.3155672005,
+                "change_from_previous_observation": {
+                  "difference": 132160.9380157001,
+                  "difference_pct": 64.77581637827555,
+                  "ratio_a_over_b": 1.6477581637827554
+                },
+                "robust_z_score": 3.853659448377958
+              },
+              {
+                "period": "2026-06-01",
+                "value": 399979.3320226998,
+                "source_rows": 812,
+                "rank": 1,
+                "share_of_total_pct": 26.839453314118977,
+                "is_peak": true,
+                "total": 1490266.3155672005,
+                "change_from_previous_observation": {
+                  "difference": 243710.8122356996,
+                  "difference_pct": 155.9564348391387,
+                  "ratio_a_over_b": 2.5595643483913872
+                },
+                "robust_z_score": 5.219959983235895
+              }
+            ],
+            "limitations": [
+              "Picos descriptivos no demuestran causalidad ni estacionalidad."
+            ]
+          },
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 1156.03
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "6e7af3f5-c92d-447d-ae57-19f1ceeb86c9",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:47.269609+00:00",
+            "duration_ms": 1156.03,
+            "rows": 7
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 7,
+        "step": 4,
+        "purpose": "Detectar señales atípicas en la inversión neta de Volvo en 2026 mediante análisis de anomalías MAD.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "6e7af3f5-c92d-447d-ae57-19f1ceeb86c9",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:41:47.269609+00:00",
+            "duration_ms": 1156.03,
+            "rows": 7
+          }
+        ],
+        "latency_ms": 1682.2
+      }
+    ],
+    "steps": 4,
+    "plan": {
+      "intent": "open_analysis",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Volvo en 2026.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "agregacion": "sum"
+          }
+        },
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Desglosar la inversión neta de Volvo en 2026 por medio para entender la distribución por canal.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "agregacion": "sum",
+            "dimension": "medio",
+            "limite": 10
+          }
+        },
+        {
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Analizar la tendencia mensual de la inversión neta de Volvo en 2026 para identificar patrones estacionales o cambios a lo largo del año.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "agregacion": "sum",
+            "granularidad": "month"
+          }
+        },
+        {
+          "tool": "analizar_anomalias_bicomp",
+          "purpose": "Detectar señales atípicas en la inversión neta de Volvo en 2026 mediante análisis de anomalías MAD.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "agregacion": "sum",
+            "granularidad": "month"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "open_analysis",
+        "operation": "change_period",
+        "scope_mode": "inherit",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "remove_filters": [],
+        "period": {
+          "kind": "year",
+          "year": 2026
+        },
+        "comparison_period": {
+          "kind": "previous_year"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión neta de Volvo en 2026?",
+        "¿Cómo varía respecto a 2025?",
+        "¿Cuál es la distribución por medio en 2026?",
+        "¿Cuál es la concentración temporal en 2026?",
+        "¿Se detectan señales atípicas en 2026?"
+      ],
+      "answer": "",
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "dimensions": [],
+        "intent": "open_analysis",
+        "observed_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por medio — Inversión publicitaria neta · marca: VOLVO · 2026-01-01 a 2026-07-31 · acumulado disponible",
+        "data": [
+          {
+            "dimension": "DIGITAL",
+            "value": 718152.7555672015,
+            "source_rows": 5405,
+            "rank": 1,
+            "share_pct": 48.189558340374184,
+            "total": 1490266.3155672017,
+            "concentration_hhi": 2945.7528757724276,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV NAL",
+            "value": 264357.6,
+            "source_rows": 59,
+            "rank": 2,
+            "share_pct": 17.738950229132996,
+            "total": 1490266.3155672017,
+            "concentration_hhi": 2945.7528757724276,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TELEVISION NACIONAL",
+            "value": 162257.75999999998,
+            "source_rows": 24,
+            "rank": 3,
+            "share_pct": 10.887836509828379,
+            "total": 1490266.3155672017,
+            "concentration_hhi": 2945.7528757724276,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "RADIO",
+            "value": 148185.1,
+            "source_rows": 89,
+            "rank": 4,
+            "share_pct": 9.943531464951628,
+            "total": 1490266.3155672017,
+            "concentration_hhi": 2945.7528757724276,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "OOH",
+            "value": 119143.65000000002,
+            "source_rows": 63,
+            "rank": 5,
+            "share_pct": 7.994789169924534,
+            "total": 1490266.3155672017,
+            "concentration_hhi": 2945.7528757724276,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PUBLICIDAD EXTERIOR",
+            "value": 78169.45,
+            "source_rows": 80,
+            "rank": 6,
+            "share_pct": 5.2453342857882665,
+            "total": 1490266.3155672017,
+            "concentration_hhi": 2945.7528757724276,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      },
+      {
+        "type": "line",
+        "title": "Evolución de Inversión publicitaria neta · marca: VOLVO · 2026-01-01 a 2026-07-31 · acumulado disponible",
+        "data": [
+          {
+            "period": "2026-01-01",
+            "value": 124777.77170749997,
+            "source_rows": 844,
+            "rank": 7,
+            "share_of_total_pct": 8.372850570671934,
+            "is_peak": false,
+            "total": 1490266.3155672005
+          },
+          {
+            "period": "2026-02-01",
+            "value": 204028.2089907,
+            "source_rows": 643,
+            "rank": 3,
+            "share_of_total_pct": 13.690721373719445,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 79250.43728320002,
+              "difference_pct": 63.5132653826968,
+              "ratio_a_over_b": 1.635132653826968
+            }
+          },
+          {
+            "period": "2026-03-01",
+            "value": 336189.1470064001,
+            "source_rows": 1246,
+            "rank": 2,
+            "share_of_total_pct": 22.558997911621276,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 132160.9380157001,
+              "difference_pct": 64.77581637827555,
+              "ratio_a_over_b": 1.6477581637827554
+            }
+          },
+          {
+            "period": "2026-04-01",
+            "value": 128770.62730130012,
+            "source_rows": 574,
+            "rank": 6,
+            "share_of_total_pct": 8.640779567797557,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": -207418.51970509999,
+              "difference_pct": -61.69697075353575,
+              "ratio_a_over_b": 0.3830302924646425
+            }
+          },
+          {
+            "period": "2026-05-01",
+            "value": 156268.51978700023,
+            "source_rows": 818,
+            "rank": 4,
+            "share_of_total_pct": 10.48594591145435,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 27497.89248570011,
+              "difference_pct": 21.3541652021,
+              "ratio_a_over_b": 1.213541652021
+            }
+          },
+          {
+            "period": "2026-06-01",
+            "value": 399979.3320226998,
+            "source_rows": 812,
+            "rank": 1,
+            "share_of_total_pct": 26.839453314118977,
+            "is_peak": true,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 243710.8122356996,
+              "difference_pct": 155.9564348391387,
+              "ratio_a_over_b": 2.5595643483913872
+            }
+          },
+          {
+            "period": "2026-07-01",
+            "value": 140252.70875160024,
+            "source_rows": 783,
+            "rank": 5,
+            "share_of_total_pct": 9.411251350616455,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": -259726.62327109958,
+              "difference_pct": -64.93501100610854,
+              "ratio_a_over_b": 0.3506498899389145
+            }
+          }
+        ],
+        "x": "period",
+        "y": "value"
+      },
+      {
+        "type": "line",
+        "title": "Evolución de Inversión publicitaria neta · marca: VOLVO · 2026-01-01 a 2026-07-31 · acumulado disponible",
+        "data": [
+          {
+            "period": "2026-01-01",
+            "value": 124777.77170749997,
+            "source_rows": 844,
+            "rank": 7,
+            "share_of_total_pct": 8.372850570671934,
+            "is_peak": false,
+            "total": 1490266.3155672005
+          },
+          {
+            "period": "2026-02-01",
+            "value": 204028.2089907,
+            "source_rows": 643,
+            "rank": 3,
+            "share_of_total_pct": 13.690721373719445,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 79250.43728320002,
+              "difference_pct": 63.5132653826968,
+              "ratio_a_over_b": 1.635132653826968
+            }
+          },
+          {
+            "period": "2026-03-01",
+            "value": 336189.1470064001,
+            "source_rows": 1246,
+            "rank": 2,
+            "share_of_total_pct": 22.558997911621276,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 132160.9380157001,
+              "difference_pct": 64.77581637827555,
+              "ratio_a_over_b": 1.6477581637827554
+            }
+          },
+          {
+            "period": "2026-04-01",
+            "value": 128770.62730130012,
+            "source_rows": 574,
+            "rank": 6,
+            "share_of_total_pct": 8.640779567797557,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": -207418.51970509999,
+              "difference_pct": -61.69697075353575,
+              "ratio_a_over_b": 0.3830302924646425
+            }
+          },
+          {
+            "period": "2026-05-01",
+            "value": 156268.51978700023,
+            "source_rows": 818,
+            "rank": 4,
+            "share_of_total_pct": 10.48594591145435,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 27497.89248570011,
+              "difference_pct": 21.3541652021,
+              "ratio_a_over_b": 1.213541652021
+            }
+          },
+          {
+            "period": "2026-06-01",
+            "value": 399979.3320226998,
+            "source_rows": 812,
+            "rank": 1,
+            "share_of_total_pct": 26.839453314118977,
+            "is_peak": true,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": 243710.8122356996,
+              "difference_pct": 155.9564348391387,
+              "ratio_a_over_b": 2.5595643483913872
+            }
+          },
+          {
+            "period": "2026-07-01",
+            "value": 140252.70875160024,
+            "source_rows": 783,
+            "rank": 5,
+            "share_of_total_pct": 9.411251350616455,
+            "is_peak": false,
+            "total": 1490266.3155672005,
+            "change_from_previous_observation": {
+              "difference": -259726.62327109958,
+              "difference_pct": -64.93501100610854,
+              "ratio_a_over_b": 0.3506498899389145
+            }
+          }
+        ],
+        "x": "period",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 8,
+      "total_tool_calls": 9,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 8,
+      "total_latency_ms": 91907.57,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 58843,
+      "output_tokens": 2787,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 12524.1
+        },
+        {
+          "stage": "plan",
+          "intent": "open_analysis",
+          "scope": {
+            "intent": "open_analysis",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "comparison_period": {
+              "kind": "previous_year"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Volvo en 2026.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Desglosar la inversión neta de Volvo en 2026 por medio para entender la distribución por canal.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Analizar la tendencia mensual de la inversión neta de Volvo en 2026 para identificar patrones estacionales o cambios a lo largo del año.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "analizar_anomalias_bicomp",
+          "purpose": "Detectar señales atípicas en la inversión neta de Volvo en 2026 mediante análisis de anomalías MAD.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "deepening",
+          "finish_reason": "stop",
+          "latency_ms": 21940.49
+        },
+        {
+          "stage": "research_decision",
+          "stop": true,
+          "reason": "La evidencia disponible cubre el periodo solicitado (2026-01-01 a 2026-12-31) pero está truncada al 2026-07-31 debido a límites de la tabla. No se dispone de datos para agosto-diciembre 2026. No se puede inferir el total anual sin asumir comportamientos no observados. La pregunta sobre 2026 requiere el año completo, pero solo hay datos parciales (enero-julio). No se puede responder con certeza."
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 2929.42
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): 1.490.266,32.\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31), medio=DIGITAL: 718.152,76 (48,19 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31), medio=TV NAL: 264.357,60 (17,74 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31), medio=TELEVISION NACIONAL: 162.257,76 (10,89 % del universo consultado).\n\n**Hallazgo**\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): 2026-06-01 registra 399.979,33 y representa 26,84 % del acumulado consultado.\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): 2026-06-01 registra 399.979,33 y representa 26,84 % del acumulado consultado; es el máximo observado.\n\nInversión publicitaria neta, marca: VOLVO (2026-01-01 a 2026-07-31): en 2026-06-01, el cambio frente a la observación anterior es 243.710,81 (155,96 %).\n\n### Advertencias\n\nCobertura parcial: acumulado disponible hasta 2026-07-31; no es un total anual completo.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+        },
+        {
+          "stage": "stop",
+          "reason": "La evidencia disponible cubre el periodo solicitado (2026-01-01 a 2026-12-31) pero está truncada al 2026-07-31 debido a límites de la tabla. No se dispone de datos para agosto-diciembre 2026. No se puede inferir el total anual sin asumir comportamientos no observados. La pregunta sobre 2026 requiere el año completo, pero solo hay datos parciales (enero-julio). No se puede responder con certeza.",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 4,
+        "bigquery_queries": 4,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 21571,
+        "output_tokens": 1277,
+        "cache_hits": 0,
+        "total_latency_ms": 45053.76000000001
+      },
+      "stop_reason": "La evidencia disponible cubre el periodo solicitado (2026-01-01 a 2026-12-31) pero está truncada al 2026-07-31 debido a límites de la tabla. No se dispone de datos para agosto-diciembre 2026. No se puede inferir el total anual sin asumir comportamientos no observados. La pregunta sobre 2026 requiere el año completo, pero solo hay datos parciales (enero-julio). No se puede responder con certeza."
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "open_analysis",
+  "actual_intent": "open_analysis"
+}

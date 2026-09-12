@@ -1,0 +1,179 @@
+{
+  "id": "conversation-03",
+  "question": "¿Ha bajado?",
+  "family": "period_comparison",
+  "elapsed_s": 7.89,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 10,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 76448.75,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 57055,
+      "output_tokens": 2991,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 5762.31
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "La comparación de seguimiento cambia el periodo foco sin una fecha explícita del usuario. Conserva period=inherit y usa comparison_period para la referencia; no inviertas A/B. Si el usuario pidió una fecha relativa, exprésala simbólicamente, no inventes un año literal.",
+          "rejected_plan": {
+            "intent": "period_comparison",
+            "operation": "compare_periods",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "comparison_period": {
+              "kind": "previous_year"
+            },
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la variación porcentual de la inversión neta de Volvo entre 2026 y 2025?"
+            ],
+            "steps": [
+              {
+                "tool": "comparar_periodos_bicomp",
+                "purpose": "Comparar la inversión neta de Volvo en 2026 vs 2025 para determinar si ha bajado",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "periodo_a": {
+                    "start": "2026-01-01",
+                    "end": "2026-12-31"
+                  },
+                  "periodo_b": {
+                    "start": "2025-01-01",
+                    "end": "2025-12-31"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2100.04
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "La comparación de seguimiento cambia el periodo foco sin una fecha explícita del usuario. Conserva period=inherit y usa comparison_period para la referencia; no inviertas A/B. Si el usuario pidió una fecha relativa, exprésala simbólicamente, no inventes un año literal.",
+          "rejected_plan": {
+            "intent": "period_comparison",
+            "operation": "compare_periods",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "comparison_period": {
+              "kind": "previous_year"
+            },
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la variación porcentual de la inversión neta de Volvo entre 2026 y 2025?"
+            ],
+            "steps": [
+              {
+                "tool": "comparar_periodos_bicomp",
+                "purpose": "Comparar la inversión neta de Volvo en 2026 vs 2025 para determinar si ha bajado",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "periodo_a": {
+                    "start": "2026-01-01",
+                    "end": "2026-12-31"
+                  },
+                  "periodo_b": {
+                    "start": "2025-01-01",
+                    "end": "2025-12-31"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "La comparación de seguimiento cambia el periodo foco sin una fecha explícita del usuario. Conserva period=inherit y usa comparison_period para la referencia; no inviertas A/B. Si el usuario pidió una fecha relativa, exprésala simbólicamente, no inventes un año literal."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 15009,
+        "output_tokens": 634,
+        "cache_hits": 0,
+        "total_latency_ms": 7891.690000000002
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "lost_followup_entity",
+    "reversed_or_lost_followup_periods",
+    "partial_or_fallback"
+  ],
+  "expected_family": "period_comparison",
+  "actual_intent": "clarification"
+}

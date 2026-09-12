@@ -1,0 +1,106 @@
+{
+  "method": "Independent grouped SQL, without agent or LLM",
+  "reference": {
+    "success": true,
+    "source": "bigquery",
+    "rows": [
+      {
+        "marca": "BMW",
+        "full_previous": 1595350.1042778,
+        "comparable_previous": 338108.4869813,
+        "comparable_current": 310931.2106315,
+        "insertions_previous": 94051104
+      },
+      {
+        "marca": "VOLVO",
+        "full_previous": 9662059.420332698,
+        "comparable_previous": 1426721.8082343026,
+        "comparable_current": 1490266.3155672017,
+        "insertions_previous": 220034948
+      }
+    ],
+    "row_count": 2,
+    "evidence": {
+      "sql": "SELECT UPPER(TRIM(marca)) AS marca,\nSUM(IF(fecha BETWEEN @previous_start AND @previous_end, inv_neta, 0)) AS full_previous,\nSUM(IF(fecha BETWEEN @previous_start AND @previous_cut, inv_neta, 0)) AS comparable_previous,\nSUM(IF(fecha BETWEEN @current_start AND @current_cut, inv_neta, 0)) AS comparable_current,\nSUM(IF(fecha BETWEEN @previous_start AND @previous_end, total_insercion, 0)) AS insertions_previous\nFROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\nWHERE UPPER(TRIM(marca)) IN UNNEST(@brands) AND fecha BETWEEN @previous_start AND @current_cut\nGROUP BY marca",
+      "query_parameters": {
+        "brands": "['BMW', 'VOLVO']",
+        "previous_start": "2025-01-01",
+        "previous_end": "2025-12-31",
+        "previous_cut": "2025-07-31",
+        "current_start": "2026-01-01",
+        "current_cut": "2026-07-31"
+      },
+      "bytes_processed": 26163531,
+      "job_id": "e873ff74-2895-4e8c-9d94-cae23556f255",
+      "cache_hit": false,
+      "executed_at": "2026-09-11T12:34:44.015426+00:00",
+      "duration_ms": 1295.54,
+      "rows": 2
+    }
+  },
+  "checks": [
+    {
+      "case": "independent-01",
+      "field": "value",
+      "actual": 1595350.1042778003,
+      "expected": 1595350.1042778,
+      "passed": true
+    },
+    {
+      "case": "independent-11",
+      "field": "value_a",
+      "actual": 1490266.315567202,
+      "expected": 1490266.3155672017,
+      "passed": true
+    },
+    {
+      "case": "independent-11",
+      "field": "value_b",
+      "actual": 1426721.8082343028,
+      "expected": 1426721.8082343026,
+      "passed": true
+    },
+    {
+      "case": "independent-11",
+      "field": "difference_pct",
+      "actual": 4.453882106949862,
+      "expected": 4.453882106949863,
+      "passed": true
+    },
+    {
+      "case": "independent-12",
+      "field": "value_a",
+      "actual": 310931.2106315,
+      "expected": 310931.2106315,
+      "passed": true
+    },
+    {
+      "case": "independent-12",
+      "field": "value_b",
+      "actual": 338108.4869813,
+      "expected": 338108.4869813,
+      "passed": true
+    },
+    {
+      "case": "independent-12",
+      "field": "difference_pct",
+      "actual": -8.038034357683282,
+      "expected": -8.038034357683282,
+      "passed": true
+    },
+    {
+      "case": "independent-23",
+      "field": "value",
+      "actual": 94051104,
+      "expected": 94051104,
+      "passed": true
+    },
+    {
+      "case": "independent-24",
+      "field": "value",
+      "actual": 0.016962587746740327,
+      "expected": 0.016962587746740327,
+      "passed": true
+    }
+  ]
+}

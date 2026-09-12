@@ -1,0 +1,1013 @@
+{
+  "id": "original-01",
+  "question": "¿Quién está creciendo más?",
+  "elapsed_s": 13.64,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2026-07-01",
+      "end": "2026-07-31"
+    },
+    "last_entities": {},
+    "last_filters": {},
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 10
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 10
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿Quién está creciendo más?",
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {},
+        "period": {
+          "kind": "current_month"
+        },
+        "comparison_period": {
+          "kind": "previous_period"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        }
+      },
+      "status": "planned_evidence_complete"
+    }
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "ranking_change",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {},
+      "period": {
+        "kind": "current_month"
+      },
+      "comparison_period": {
+        "kind": "previous_period"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      },
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Identificar las marcas con mayor crecimiento absoluto en inversión neta entre el mes actual y el periodo anterior",
+          "arguments": {
+            "dimension": "marca",
+            "metrica": "inv_neta",
+            "criterio": "absolute",
+            "orden": "desc",
+            "limite": 10
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "ranking_change",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 10
+        }
+      }
+    ],
+    "scope": {
+      "intent": "ranking_change",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {},
+      "period": {
+        "kind": "current_month"
+      },
+      "comparison_period": {
+        "kind": "previous_period"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      }
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "Criterio: cambio absoluto, orden desc; foco 2026-07-01 a 2026-07-31, referencia 2026-06-01 a 2026-06-30.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RICH FIT TIPS: actual 1.067.799,00, referencia 0,00; cambio absoluto 1.067.799,00; cambio porcentual Sin información (base no positiva).\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=9ROUND: actual 1.672.613,00, referencia 630.000,00; cambio absoluto 1.042.613,00; cambio porcentual 165,49 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=SUZUKI: actual 682.158,94, referencia 111.191,69; cambio absoluto 570.967,25; cambio porcentual 513,50 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=360 FITNESS: actual 3.931.987,00, referencia 3.574.920,00; cambio absoluto 357.067,00; cambio porcentual 9,99 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=GOLDS GYM: actual 442.461,00, referencia 145.998,00; cambio absoluto 296.463,00; cambio porcentual 203,06 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=NISSAN: actual 252.124,65, referencia 4.588,40; cambio absoluto 247.536,25; cambio porcentual 5.394,83 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=FUNCTIONAL ROOM: actual 1.560.345,00, referencia 1.348.270,00; cambio absoluto 212.075,00; cambio porcentual 15,73 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RENAULT: actual 334.236,89, referencia 184.955,57; cambio absoluto 149.281,32; cambio porcentual 80,71 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=JEEP: actual 177.126,26, referencia 93.152,66; cambio absoluto 83.973,60; cambio porcentual 90,15 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=KIA: actual 137.250,21, referencia 71.531,08; cambio absoluto 65.719,13; cambio porcentual 91,87 %.\n\nOrden por cambio absoluto.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_cambio_bicomp",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 10,
+          "metrica": "inv_neta",
+          "filtros": {},
+          "periodo_a": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "periodo_b": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          }
+        },
+        "result": {
+          "success": true,
+          "error_type": null,
+          "source": "bigquery",
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "filters": {},
+          "dimension": "marca",
+          "rows": [
+            {
+              "dimension": "RICH FIT TIPS",
+              "value": 1067799.0,
+              "current_value": 1067799.0,
+              "previous_value": 0,
+              "difference": 1067799.0,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 1067799.0,
+              "rank": 1
+            },
+            {
+              "dimension": "9ROUND",
+              "value": 1672613.0,
+              "current_value": 1672613.0,
+              "previous_value": 630000.0,
+              "difference": 1042613.0,
+              "difference_pct": 165.49412698412698,
+              "new_in_window": false,
+              "order_value": 1042613.0,
+              "rank": 2
+            },
+            {
+              "dimension": "SUZUKI",
+              "value": 682158.9351497997,
+              "current_value": 682158.9351497997,
+              "previous_value": 111191.68702009991,
+              "difference": 570967.2481296997,
+              "difference_pct": 513.4981430999308,
+              "new_in_window": false,
+              "order_value": 570967.2481296997,
+              "rank": 3
+            },
+            {
+              "dimension": "360 FITNESS",
+              "value": 3931987.0,
+              "current_value": 3931987.0,
+              "previous_value": 3574920.0,
+              "difference": 357067.0,
+              "difference_pct": 9.988111622078257,
+              "new_in_window": false,
+              "order_value": 357067.0,
+              "rank": 4
+            },
+            {
+              "dimension": "GOLDS GYM",
+              "value": 442461.0,
+              "current_value": 442461.0,
+              "previous_value": 145998.0,
+              "difference": 296463.0,
+              "difference_pct": 203.05963095384868,
+              "new_in_window": false,
+              "order_value": 296463.0,
+              "rank": 5
+            },
+            {
+              "dimension": "NISSAN",
+              "value": 252124.65,
+              "current_value": 252124.65,
+              "previous_value": 4588.400000000001,
+              "difference": 247536.25,
+              "difference_pct": 5394.827172870717,
+              "new_in_window": false,
+              "order_value": 247536.25,
+              "rank": 6
+            },
+            {
+              "dimension": "FUNCTIONAL ROOM",
+              "value": 1560345.0,
+              "current_value": 1560345.0,
+              "previous_value": 1348270.0,
+              "difference": 212075.0,
+              "difference_pct": 15.72941621485311,
+              "new_in_window": false,
+              "order_value": 212075.0,
+              "rank": 7
+            },
+            {
+              "dimension": "RENAULT",
+              "value": 334236.8868996994,
+              "current_value": 334236.8868996994,
+              "previous_value": 184955.56842140012,
+              "difference": 149281.31847829928,
+              "difference_pct": 80.71198923742531,
+              "new_in_window": false,
+              "order_value": 149281.31847829928,
+              "rank": 8
+            },
+            {
+              "dimension": "JEEP",
+              "value": 177126.25550619993,
+              "current_value": 177126.25550619993,
+              "previous_value": 93152.65971440004,
+              "difference": 83973.59579179989,
+              "difference_pct": 90.14621380565777,
+              "new_in_window": false,
+              "order_value": 83973.59579179989,
+              "rank": 9
+            },
+            {
+              "dimension": "KIA",
+              "value": 137250.20855580008,
+              "current_value": 137250.20855580008,
+              "previous_value": 71531.07876049998,
+              "difference": 65719.1297953001,
+              "difference_pct": 91.87493175566468,
+              "new_in_window": false,
+              "order_value": 65719.1297953001,
+              "rank": 10
+            }
+          ],
+          "ranked_entities": 73,
+          "excluded_entities": [],
+          "capability": "rank_change",
+          "criterion": "absolute",
+          "direction": "desc",
+          "period_a": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "period_b": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "period_c": null,
+          "comparison_equivalent": true,
+          "evidence": [
+            {
+              "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+              "query_parameters": {
+                "start_date": "2026-07-01",
+                "end_date": "2026-07-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "897094b9-64bc-4db8-b720-5a65bc2e637b",
+              "cache_hit": true,
+              "executed_at": "2026-09-12T10:32:32.494120+00:00",
+              "duration_ms": 1070.31,
+              "rows": 57
+            },
+            {
+              "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+              "query_parameters": {
+                "start_date": "2026-06-01",
+                "end_date": "2026-06-30"
+              },
+              "bytes_processed": 0,
+              "job_id": "7253d3cf-fd3a-4c58-931b-1fd4dac0f079",
+              "cache_hit": true,
+              "executed_at": "2026-09-12T10:32:34.154738+00:00",
+              "duration_ms": 1093.63,
+              "rows": 66
+            }
+          ],
+          "requested_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Orden por cambio absoluto.",
+            "Ausencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "897094b9-64bc-4db8-b720-5a65bc2e637b",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T10:32:32.494120+00:00",
+            "duration_ms": 1070.31,
+            "rows": 57
+          },
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2026-06-01",
+              "end_date": "2026-06-30"
+            },
+            "bytes_processed": 0,
+            "job_id": "7253d3cf-fd3a-4c58-931b-1fd4dac0f079",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T10:32:34.154738+00:00",
+            "duration_ms": 1093.63,
+            "rows": 66
+          }
+        ],
+        "latency_ms": 3241.55
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking_change",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+          "arguments": {
+            "dimension": "marca",
+            "criterio": "absolute",
+            "orden": "desc",
+            "aceleracion": false,
+            "limite": 10
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {},
+        "period": {
+          "kind": "current_month"
+        },
+        "comparison_period": {
+          "kind": "previous_period"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        }
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 13635.93,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7698,
+      "output_tokens": 215,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 7098.67
+        },
+        {
+          "stage": "coverage_resolution",
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          }
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking_change",
+          "scope": {
+            "intent": "ranking_change",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {},
+            "period": {
+              "kind": "current_month"
+            },
+            "comparison_period": {
+              "kind": "previous_period"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 10
+            }
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "ranking_change",
+          "requested_scope": {
+            "intent": "ranking_change",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {},
+            "period": {
+              "kind": "current_month"
+            },
+            "comparison_period": {
+              "kind": "previous_period"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 10
+            }
+          },
+          "inherited_scope": {},
+          "scope_mutations": {
+            "filters": {
+              "before": null,
+              "after": {}
+            },
+            "requested_period": {
+              "before": null,
+              "after": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              }
+            },
+            "comparison_period": {
+              "before": null,
+              "after": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              }
+            },
+            "dimensions": {
+              "before": null,
+              "after": [
+                "marca"
+              ]
+            },
+            "intent": {
+              "before": null,
+              "after": "ranking_change"
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2026-07-01",
+              "end": "2026-07-31"
+            },
+            "comparison_period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "intent": "ranking_change",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 10
+            },
+            "operation": "new_analysis",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "requirements": {
+            "capability": "rank_change",
+            "dimension": "marca",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 10
+            },
+            "requires_reference": true,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "rank_change"
+          ],
+          "tools": [
+            "ranking_cambio_bicomp"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "sufficiency",
+          "requirements": {
+            "capability": "rank_change",
+            "dimension": "marca",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 10
+            },
+            "requires_reference": true,
+            "requires_series": false
+          },
+          "sufficient": true,
+          "successful_evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {}
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2026-07-01",
+              "end": "2026-07-31"
+            },
+            "last_entities": {},
+            "last_filters": {},
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "absolute",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 10
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "absolute",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 10
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿Quién está creciendo más?",
+              "scope": {
+                "intent": "ranking_change",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "filters": {},
+                "period": {
+                  "kind": "current_month"
+                },
+                "comparison_period": {
+                  "kind": "previous_period"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 10
+                }
+              },
+              "status": "planned_evidence_complete"
+            }
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 3,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7698,
+        "output_tokens": 215,
+        "cache_hits": 0,
+        "total_latency_ms": 13635.93
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "expected": {
+    "intent": "ranking_change",
+    "filters": {},
+    "requested_period": {
+      "start": "2026-07-01",
+      "end": "2026-07-31"
+    },
+    "dimensions": [
+      "marca"
+    ],
+    "comparison_period": {
+      "start": "2026-06-01",
+      "end": "2026-06-30"
+    },
+    "metric": "inv_neta",
+    "capability": "rank_change"
+  },
+  "assessment": {
+    "passed": true,
+    "issues": []
+  }
+}

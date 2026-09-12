@@ -1,0 +1,1203 @@
+{
+  "started_at": "2026-09-12T16:30:52.947600+00:00",
+  "round": "release_paraphrases",
+  "cases": 30,
+  "passed": 23,
+  "semantic_review_observed": true,
+  "records": [
+    {
+      "id": "paraphrase-1-01",
+      "question": "Ordena las marcas por cuánto aumentaron, no por su tamaño.",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking_change",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 100
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 3,
+      "answer": "Criterio: cambio absoluto, orden desc; foco 2026-07-01 a 2026-07-31, referencia 2026-06-01 a 2026-06-30.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RICH FIT TIPS: actual 1.067.799,00, referencia 0,00; cambio absoluto 1.067.799,00; cambio porcentual Sin información (base no positiva).\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=9ROUND: actual 1.672.613,00, referencia 630.000,00; cambio absoluto 1.042.613,00; cambio porcentual 165,49 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=SUZUKI: actual 682.158,94, referencia 111.191,69; cambio absoluto 570.967,25; cambio porcentual 513,50 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=360 FITNESS: actual 3.931.987,00, referencia 3.574.920,00; cambio absoluto 357.067,00; cambio porcentual 9,99 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=GOLDS GYM: actual 442.461,00, referencia 145.998,00; cambio absoluto 296.463,00; cambio porcentual 203,06 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=NISSAN: actual 252.124,65, referencia 4.588,40; cambio absoluto 247.536,25; cambio porcentual 5.394,83 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=FUNCTIONAL ROOM: actual 1.560.345,00, referencia 1.348.270,00; cambio absoluto 212.075,00; cambio porcentual 15,73 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RENAULT: actual 334.236,89, referencia 184.955,57; cambio absoluto 149.281,32; cambio porcentual 80,71 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=JEEP: actual 177.126,26, referencia 93.152,66; cambio absoluto 83.973,60; cambio porcentual 90,15 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=KIA: actual 137.250,21, referencia 71.531,08; cambio absoluto 65.719,13; cambio porcentual 91,87 %.\n\nOrden por cambio absoluto.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+    },
+    {
+      "id": "paraphrase-1-02",
+      "question": "Hazlo ahora en términos porcentuales.",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking_change",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "percent",
+          "direction": "desc",
+          "limit": 100
+        },
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 2,
+      "answer": "Criterio: cambio porcentual, orden desc; foco 2026-07-01 a 2026-07-31, referencia 2026-06-01 a 2026-06-30.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=BYD: actual 26.303,79, referencia 212,93; cambio absoluto 26.090,85; cambio porcentual 12.252,97 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=NISSAN: actual 252.124,65, referencia 4.588,40; cambio absoluto 247.536,25; cambio porcentual 5.394,83 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=SUZUKI: actual 682.158,94, referencia 111.191,69; cambio absoluto 570.967,25; cambio porcentual 513,50 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=GOLDS GYM: actual 442.461,00, referencia 145.998,00; cambio absoluto 296.463,00; cambio porcentual 203,06 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=9ROUND: actual 1.672.613,00, referencia 630.000,00; cambio absoluto 1.042.613,00; cambio porcentual 165,49 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=FIN GYM: actual 30.459,00, referencia 13.739,00; cambio absoluto 16.720,00; cambio porcentual 121,70 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=KIA: actual 137.250,21, referencia 71.531,08; cambio absoluto 65.719,13; cambio porcentual 91,87 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=JEEP: actual 177.126,26, referencia 93.152,66; cambio absoluto 83.973,60; cambio porcentual 90,15 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RENAULT: actual 334.236,89, referencia 184.955,57; cambio absoluto 149.281,32; cambio porcentual 80,71 %.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=ZEEKR: actual 24.038,49, referencia 16.259,47; cambio absoluto 7.779,01; cambio porcentual 47,84 %.\n\nOrden por cambio porcentual; bases cero o negativas excluidas.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+    },
+    {
+      "id": "paraphrase-1-03",
+      "question": "Retrocede una ventana de comparación.",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking_change",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "comparison_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "percent",
+          "direction": "desc",
+          "limit": 100
+        },
+        "operation": "shift_period",
+        "observed_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 2,
+      "answer": "Criterio: cambio porcentual, orden desc; foco 2026-06-01 a 2026-06-30, referencia 2026-05-01 a 2026-05-31.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=D RAIZ: actual 4.113,20, referencia 158,20; cambio absoluto 3.955,00; cambio porcentual 2.500,00 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=MAZDA: actual 222.252,37, referencia 11.348,89; cambio absoluto 210.903,48; cambio porcentual 1.858,36 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=CUPRA: actual 137.292,94, referencia 19.964,80; cambio absoluto 117.328,14; cambio porcentual 587,68 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=HYUNDAI: actual 776.639,72, referencia 123.763,83; cambio absoluto 652.875,89; cambio porcentual 527,52 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=ENJOY PILATES: actual 9.255,40, referencia 1.663,20; cambio absoluto 7.592,20; cambio porcentual 456,48 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=MG: actual 105.973,10, referencia 24.661,35; cambio absoluto 81.311,75; cambio porcentual 329,71 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=ZEEKR: actual 16.259,47, referencia 6.331,56; cambio absoluto 9.927,91; cambio porcentual 156,80 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=VOLVO: actual 399.979,33, referencia 156.268,52; cambio absoluto 243.710,81; cambio porcentual 155,96 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=BYD: actual 212,93, referencia 96,85; cambio absoluto 116,08; cambio porcentual 119,85 %.\n\ninv_neta, alcance consultado (2026-06-01 a 2026-06-30), marca=CHERY: actual 32.667,56, referencia 16.577,73; cambio absoluto 16.089,83; cambio porcentual 97,06 %.\n\nOrden por cambio porcentual; bases cero o negativas excluidas.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+    },
+    {
+      "id": "paraphrase-1-04",
+      "question": "Muéstrame el intervalo previo a ese.",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking_change",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "comparison_period": {
+          "start": "2026-04-01",
+          "end": "2026-04-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "percent",
+          "direction": "desc",
+          "limit": 100
+        },
+        "operation": "shift_period",
+        "observed_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 2,
+      "answer": "Criterio: cambio porcentual, orden desc; foco 2026-05-01 a 2026-05-31, referencia 2026-04-01 a 2026-04-30.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=JMEV: actual 61.336,70, referencia 10.243,35; cambio absoluto 51.093,35; cambio porcentual 498,80 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=CHANGAN: actual 8.818,24, referencia 1.475,13; cambio absoluto 7.343,11; cambio porcentual 497,79 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=TOYOTA: actual 113.227,28, referencia 20.645,32; cambio absoluto 92.581,96; cambio porcentual 448,44 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=SPA CARMEN ALVARADO: actual 11.184,25, referencia 2.425,50; cambio absoluto 8.758,75; cambio porcentual 361,11 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=KIA: actual 169.399,11, referencia 49.573,39; cambio absoluto 119.825,72; cambio porcentual 241,71 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=SMART FIT: actual 3.197.032,31, referencia 1.057.470,67; cambio absoluto 2.139.561,64; cambio porcentual 202,33 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=ARENA TREK: actual 582.000,00, referencia 210.000,00; cambio absoluto 372.000,00; cambio porcentual 177,14 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=FIN GYM: actual 64.847,00, referencia 31.506,00; cambio absoluto 33.341,00; cambio porcentual 105,82 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=RICH FIT TIPS: actual 1.136.227,00, referencia 564.585,00; cambio absoluto 571.642,00; cambio porcentual 101,25 %.\n\ninv_neta, alcance consultado (2026-05-01 a 2026-05-31), marca=YISETH GONZALEZ: actual 1.447,60, referencia 858,55; cambio absoluto 589,05; cambio porcentual 68,61 %.\n\nOrden por cambio porcentual; bases cero o negativas excluidas.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+    },
+    {
+      "id": "paraphrase-1-05",
+      "question": "¿En cuáles marcas se está acelerando más el aumento?",
+      "passed": false,
+      "issues": [
+        "analysis:change_basis",
+        "growth_requires_comparative_ranking",
+        "intent",
+        "partial_or_no_evidence",
+        "scope:comparison_period",
+        "scope:dimensions",
+        "scope:requested_period"
+      ],
+      "intent": "clarification",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {}
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 0,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "paraphrase-2-01",
+      "question": "Revisa la inversión de Renault en 2024 con sus tendencias y distribución.",
+      "passed": true,
+      "issues": [],
+      "intent": "open_analysis",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Renault"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "arguments",
+      "tools": 5,
+      "queries": 3,
+      "answer": "### Resumen ejecutivo\n\n**Inversión total y variabilidad**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31): acumulado observado 17.411.662,38; promedio por periodo observado 1.450.971,86; coeficiente de variación 39,82 %.\n\n**Pico de inversión en septiembre**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31): 2024-09-01 registra 2.340.529,81 y representa 13,44 % del acumulado consultado.\n\n**Caída abrupta en diciembre**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31): en 2024-12-01, el cambio frente a la observación anterior es -839.666,77 (-60,86 %).\n\n**Distribución por medio**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TV SUSCRIPCION: 3.627.486,60 (20,83 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=RADIO: 3.411.864,20 (19,60 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TELEVISION NACIONAL: 2.856.360,40 (16,40 % del universo consultado).\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TV PAGA: 2.563.778,00 (14,72 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=DIGITAL: 1.844.795,28 (10,60 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TV NAL: 1.291.152,00 (7,42 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=PRENSA: 1.124.289,10 (6,46 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=REVISTA: 451.586,00 (2,59 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=OOH: 61.031,70 (0,35 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=REVISTAS DE PRENSA: 57.894,00 (0,33 % del universo consultado)."
+    },
+    {
+      "id": "paraphrase-2-02",
+      "question": "Acota ese estudio a radio.",
+      "passed": true,
+      "issues": [],
+      "intent": "open_analysis",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Renault",
+          "medio": "RADIO"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "open_analysis",
+        "analysis": {},
+        "operation": "filter_scope",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "evidence_sufficient_after_correction_review",
+      "tools": 3,
+      "queries": 4,
+      "answer": "### Resumen ejecutivo\n\n**Concentración de inversión en septiembre**\n\nInversión publicitaria neta, marca: RENAULT, medio: RADIO (2024-01-01 a 2024-12-31): 2024-09-01 registra 758.306,40 y representa 22,23 % del acumulado consultado.\n\n**Variación significativa en noviembre y diciembre**\n\nInversión publicitaria neta, marca: RENAULT, medio: RADIO (2024-01-01 a 2024-12-31): en 2024-11-01, el cambio frente a la observación anterior es 119.959,60 (241,61 %).\n\nInversión publicitaria neta, marca: RENAULT, medio: RADIO (2024-01-01 a 2024-12-31): en 2024-12-01, el cambio frente a la observación anterior es -25.009,60 (-14,75 %).\n\n**Baja inversión en enero**\n\nInversión publicitaria neta, marca: RENAULT, medio: RADIO (2024-01-01 a 2024-12-31): 2024-01-01 registra 1.040,40 y representa 0,03 % del acumulado consultado.\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, marca: RENAULT, medio: RADIO (2024-01-01 a 2024-12-31), medio=RADIO: 3.411.864,20 (100,00 % del universo consultado)."
+    },
+    {
+      "id": "paraphrase-2-03",
+      "question": "Despliega la composición entre todos los medios.",
+      "passed": true,
+      "issues": [],
+      "intent": "composition",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Renault"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "restore_scope",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 0,
+      "answer": "### Resumen ejecutivo\n\n**Medios líderes en inversión**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TV SUSCRIPCION: 3.627.486,60 (20,83 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=RADIO: 3.411.864,20 (19,60 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TELEVISION NACIONAL: 2.856.360,40 (16,40 % del universo consultado).\n\n**Participación de TV PAGA y DIGITAL**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TV PAGA: 2.563.778,00 (14,72 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=DIGITAL: 1.844.795,28 (10,60 % del universo consultado).\n\n**Participación residual de otros medios**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=TV NAL: 1.291.152,00 (7,42 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=PRENSA: 1.124.289,10 (6,46 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=REVISTA: 451.586,00 (2,59 % del universo consultado).\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=OOH: 61.031,70 (0,35 % del universo consultado).\n\nInversión publicitaria neta, marca: RENAULT (2024-01-01 a 2024-12-31), medio=REVISTAS DE PRENSA: 57.894,00 (0,33 % del universo consultado)."
+    },
+    {
+      "id": "paraphrase-2-04",
+      "question": "Quiero los formatos, pero únicamente dentro de radio.",
+      "passed": true,
+      "issues": [],
+      "intent": "composition",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Renault",
+          "medio": "RADIO"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\nNo hay información disponible sobre formatos para Renault en radio durante el periodo solicitado.\n\n**Ausencia de datos de formato**\n\nInversión publicitaria neta, marca: RENAULT, medio: RADIO (2024-01-01 a 2024-12-31): valores sin información en formato representan 100,00 %; valores informados, 0,00 %. Las etiquetas ausentes no son categorías de negocio.\n\nToda la inversión neta registrada carece de desglose por formato, lo que impide cualquier análisis de composición."
+    },
+    {
+      "id": "paraphrase-2-05",
+      "question": "Cambia la marca del estudio por Ford.",
+      "passed": true,
+      "issues": [],
+      "intent": "composition",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Ford",
+          "medio": "RADIO"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**Ausencia de desglose por formato en inversión neta de Ford en radio**\n\nInversión publicitaria neta, marca: FORD, medio: RADIO (2024-01-01 a 2024-12-31): valores sin información en formato representan 100,00 %; valores informados, 0,00 %. Las etiquetas ausentes no son categorías de negocio."
+    },
+    {
+      "id": "paraphrase-3-01",
+      "question": "Para Toyota durante 2024, localiza la semana con más inversión.",
+      "passed": true,
+      "issues": [],
+      "intent": "temporal_extrema",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "week",
+          "extreme": "max"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, marca: TOYOTA (2024-01-01 a 2024-12-31): máximo observado en 2024-04-01, 1.233.020,52; granularidad week. Se evaluaron 12 periodos observados.\n\nExtremo entre periodos observados; periodos sin filas no se imputan como cero."
+    },
+    {
+      "id": "paraphrase-3-02",
+      "question": "Consulta la semana inmediatamente previa a ese máximo.",
+      "passed": false,
+      "issues": [
+        "partial_or_no_evidence"
+      ],
+      "intent": "lookup",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-03-25",
+          "end": "2024-03-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {
+          "granularity": "week",
+          "extreme": "max"
+        },
+        "operation": "shift_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "no_data",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Análisis parcial: no encontré datos numéricos para el alcance solicitado.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "paraphrase-3-03",
+      "question": "En todo 2023, identifica el valle mensual de Toyota.",
+      "passed": true,
+      "issues": [],
+      "intent": "temporal_extrema",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "month",
+          "extreme": "min"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, marca: TOYOTA (2023-01-01 a 2023-12-31): mínimo observado en 2023-01-01, 872,75; granularidad month. Se evaluaron 12 periodos observados.\n\nExtremo entre periodos observados; periodos sin filas no se imputan como cero."
+    },
+    {
+      "id": "paraphrase-3-04",
+      "question": "¿Y el mínimo por semana de ese mismo año?",
+      "passed": true,
+      "issues": [],
+      "intent": "temporal_extrema",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "week",
+          "extreme": "min"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, marca: TOYOTA (2023-01-01 a 2023-12-31): mínimo observado en 2022-12-26, 872,75; granularidad week. Se evaluaron 12 periodos observados.\n\nExtremo entre periodos observados; periodos sin filas no se imputan como cero."
+    },
+    {
+      "id": "paraphrase-3-05",
+      "question": "Ubica ahora el mes de mayor inversión de Ford en 2024.",
+      "passed": true,
+      "issues": [],
+      "intent": "temporal_extrema",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Ford"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "month",
+          "extreme": "max"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, marca: FORD (2024-01-01 a 2024-12-31): máximo observado en 2024-06-01, 1.051.624,81; granularidad month. Se evaluaron 12 periodos observados.\n\nExtremo entre periodos observados; periodos sin filas no se imputan como cero."
+    },
+    {
+      "id": "paraphrase-4-01",
+      "question": "Contrasta la inversión de Renault de 2024 frente a 2023.",
+      "passed": true,
+      "issues": [],
+      "intent": "period_comparison",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Renault"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "dimensions": [],
+        "intent": "period_comparison",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {}
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 3,
+      "answer": "### Resumen ejecutivo\n\n**Variación anual de inversión neta**\n\ninv_neta, marca: RENAULT: 2024-01-01 a 2024-12-31 registra 17.411.662,38; 2023-01-01 a 2023-12-31, 27.556.032,37. Diferencia de -10.144.370,00; variación de -36,81 % sobre 2023-01-01 a 2023-12-31."
+    },
+    {
+      "id": "paraphrase-4-02",
+      "question": "Explora qué eje permite entender mejor esa diferencia.",
+      "passed": false,
+      "issues": [
+        "diagnostic_requires_candidates",
+        "partial_or_no_evidence"
+      ],
+      "intent": "diagnostic_search",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Renault"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {
+          "candidate_dimensions": [
+            "medio",
+            "vehiculo",
+            "formato"
+          ]
+        },
+        "operation": "explain_difference",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 0,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "paraphrase-4-03",
+      "question": "Aplica la misma investigación a Toyota.",
+      "passed": true,
+      "issues": [],
+      "intent": "diagnostic_search",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {
+          "candidate_dimensions": [
+            "medio",
+            "vehiculo",
+            "formato"
+          ]
+        },
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 6,
+      "answer": "### Resumen ejecutivo\n\n**Concentración del cambio por medio**\n\nmedio: concentración del cambio absoluto en categorías informadas principales 74,62 %; cambio con etiqueta informada 100,00 %.\n\n**Variación de la inversión neta**\n\ninv_neta, marca: TOYOTA (2024-01-01 a 2024-12-31): 2024-01-01 a 2024-12-31 registra 4.001.784,42; 2023-01-01 a 2023-12-31, 4.056.418,10. Diferencia de -54.633,68; variación de -1,35 % sobre 2023-01-01 a 2023-12-31.\n\n**Contribución de PRENSA al cambio**\n\ninv_neta, marca: TOYOTA (2024-01-01 a 2024-12-31), medio=PRENSA: 1.965.953,00 en 2024-01-01 a 2024-12-31 frente a 1.040.791,70 en 2023-01-01 a 2023-12-31; contribución a la diferencia 925.161,30 (-1.693,39 % de la diferencia neta).\n\n**Contribución de RADIO al cambio**\n\ninv_neta, marca: TOYOTA (2024-01-01 a 2024-12-31), medio=RADIO: 446.845,80 en 2024-01-01 a 2024-12-31 frente a 1.173.931,80 en 2023-01-01 a 2023-12-31; contribución a la diferencia -727.086,00 (1.330,84 % de la diferencia neta).\n\n**Contribución de DIGITAL al cambio**\n\ninv_neta, marca: TOYOTA (2024-01-01 a 2024-12-31), medio=DIGITAL: 1.026.730,02 en 2024-01-01 a 2024-12-31 frente a 597.494,40 en 2023-01-01 a 2023-12-31; contribución a la diferencia 429.235,62 (-785,66 % de la diferencia neta).\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+    },
+    {
+      "id": "paraphrase-4-04",
+      "question": "Haz ese diagnóstico para 2023 respecto a 2022.",
+      "passed": true,
+      "issues": [],
+      "intent": "diagnostic_search",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {
+          "candidate_dimensions": [
+            "medio",
+            "vehiculo",
+            "formato"
+          ]
+        },
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 6,
+      "answer": "### Resumen ejecutivo\n\n**Crecimiento total de inversión neta**\n\ninv_neta, marca: TOYOTA (2023-01-01 a 2023-12-31): 2023-01-01 a 2023-12-31 registra 4.056.418,10; 2022-01-01 a 2022-12-31, 1.903.818,90. Diferencia de 2.152.599,20; variación de 113,07 % sobre 2022-01-01 a 2022-12-31.\n\n**Contribución de RADIO al crecimiento**\n\ninv_neta, marca: TOYOTA (2023-01-01 a 2023-12-31), medio=RADIO: 1.173.931,80 en 2023-01-01 a 2023-12-31 frente a 187.540,80 en 2022-01-01 a 2022-12-31; contribución a la diferencia 986.391,00 (45,82 % de la diferencia neta).\n\n**Contribución de DIGITAL al crecimiento**\n\ninv_neta, marca: TOYOTA (2023-01-01 a 2023-12-31), medio=DIGITAL: 597.494,40 en 2023-01-01 a 2023-12-31 frente a 0,00 en 2022-01-01 a 2022-12-31; contribución a la diferencia 597.494,40 (27,76 % de la diferencia neta).\n\n**Contribución de PRENSA al crecimiento**\n\ninv_neta, marca: TOYOTA (2023-01-01 a 2023-12-31), medio=PRENSA: 1.040.791,70 en 2023-01-01 a 2023-12-31 frente a 779.228,45 en 2022-01-01 a 2022-12-31; contribución a la diferencia 261.563,25 (12,15 % de la diferencia neta).\n\n### Advertencias\n\nDimensión seleccionada entre las evaluadas: medio. El criterio mide concentración del cambio observado, no causalidad.\n\nCriterio: concentración del cambio absoluto en las tres categorías informadas principales, penalizada por datos ausentes. Mayor puntuación indica un desglose más concentrado entre las dimensiones evaluadas; no demuestra causalidad ni superioridad estadística."
+    },
+    {
+      "id": "paraphrase-4-05",
+      "question": "Separa las contribuciones por medio.",
+      "passed": false,
+      "issues": [
+        "comparison_requires_reference",
+        "evidence_dimension",
+        "partial_or_no_evidence",
+        "scope:comparison_period"
+      ],
+      "intent": "diagnostic",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "diagnostic",
+        "analysis": {},
+        "operation": "explain_difference",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "controlled_error",
+      "tools": 0,
+      "queries": 0,
+      "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones."
+    },
+    {
+      "id": "paraphrase-5-01",
+      "question": "Dame el total de inversión de Ford durante 2024.",
+      "passed": true,
+      "issues": [],
+      "intent": "lookup",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Ford"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "FORD: Inversión publicitaria neta de 6.139.113,93. Entre 2024-01-01 y 2024-12-31."
+    },
+    {
+      "id": "paraphrase-5-02",
+      "question": "Repite el cálculo para Toyota.",
+      "passed": true,
+      "issues": [],
+      "intent": "lookup",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "change_entity",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "TOYOTA: Inversión publicitaria neta de 4.001.784,42. Entre 2024-01-01 y 2024-12-31."
+    },
+    {
+      "id": "paraphrase-5-03",
+      "question": "¿Qué cuota del mercado reúnen las dos marcas anteriores?",
+      "passed": true,
+      "issues": [],
+      "intent": "joint_share",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 2,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, alcance consultado (2024-01-01 a 2024-12-31), marca=FORD, TOYOTA: valor conjunto 10.140.898,35 de un total de 544.109.526,45; participación conjunta 1,86 %."
+    },
+    {
+      "id": "paraphrase-5-04",
+      "question": "Añade Renault a ese conjunto y calcula su participación agregada.",
+      "passed": true,
+      "issues": [],
+      "intent": "joint_share",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "explicit",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, alcance consultado (2024-01-01 a 2024-12-31), marca=FORD, TOYOTA, RENAULT: valor conjunto 27.552.560,73 de un total de 544.109.526,45; participación conjunta 5,06 %."
+    },
+    {
+      "id": "paraphrase-5-05",
+      "question": "Conserva las tres y llévalo al año 2023.",
+      "passed": true,
+      "issues": [],
+      "intent": "joint_share",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "explicit",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "operation": "change_period",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "Inversión publicitaria neta, alcance consultado (2023-01-01 a 2023-12-31), marca=FORD, TOYOTA, RENAULT: valor conjunto 42.918.042,45 de un total de 144.695.132,19; participación conjunta 29,66 %."
+    },
+    {
+      "id": "paraphrase-6-01",
+      "question": "Clasifica los anunciantes por inversión en televisión en 2024.",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 3,
+      "answer": "### Resumen ejecutivo\n\n**9ROUND lidera la inversión en TV**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=9ROUND: 17.485.622,00 (9,48 % del universo consultado).\n\n**ALPINA ocupa el segundo lugar**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=ALPINA: 17.481.364,50 (9,47 % del universo consultado).\n\n**ALQUERIA se posiciona en tercer lugar**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=ALQUERIA: 15.473.970,40 (8,39 % del universo consultado).\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=GM COLMOTORES: 10.946.527,85 (5,93 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=SOFASA S.A.: 10.421.678,25 (5,65 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=VOLKSWAGEN INT: 8.364.874,20 (4,53 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=360 FITNESS: 7.279.587,00 (3,94 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=PEPSI COL+KFC: 7.202.862,60 (3,90 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=POSTOBON: 6.240.604,80 (3,38 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2024-01-01 a 2024-12-31), anunciante=DINISSAN: 6.177.019,20 (3,35 % del universo consultado)."
+    },
+    {
+      "id": "paraphrase-6-02",
+      "question": "¿Cómo queda ese listado en el año previo?",
+      "passed": true,
+      "issues": [],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "change_period",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**GM COLMOTORES lidera la inversión**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=GM COLMOTORES: 9.740.772,00 (17,66 % del universo consultado).\n\n**SOFASA S.A. ocupa el segundo lugar**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=SOFASA S.A.: 8.787.737,25 (15,93 % del universo consultado).\n\n**DINISSAN se ubica en tercer lugar**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=DINISSAN: 6.329.807,15 (11,47 % del universo consultado).\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=RENAULT INT: 5.537.068,20 (10,04 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=VOLKSWAGEN INT: 5.303.349,60 (9,61 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=FORD: 2.258.743,55 (4,09 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=PORSCHE COLOMBIA SAS: 1.481.183,75 (2,69 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=MG MOTORS INT: 1.285.390,80 (2,33 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=NISSAN INT: 1.211.589,60 (2,20 % del universo consultado).\n\n### Advertencias\n\nInversión publicitaria neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31): valores sin información en anunciante representan 11,77 %; valores informados, 88,23 %. Las etiquetas ausentes no son categorías de negocio."
+    },
+    {
+      "id": "paraphrase-6-03",
+      "question": "¿Qué anunciantes sufrieron la mayor reducción en 2024 frente a 2023?",
+      "passed": false,
+      "issues": [
+        "scope:comparison_period",
+        "scope:filters",
+        "scope:requested_period"
+      ],
+      "intent": "ranking_change",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "asc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 2,
+      "answer": "Criterio: cambio absoluto, orden asc; foco 2023-01-01 a 2023-12-31, referencia 2022-01-01 a 2022-12-31.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=GM COLMOTORES: actual 9.740.772,00, referencia 21.733.551,50; cambio absoluto -11.992.779,50; cambio porcentual -55,18 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=DERCO SA: actual 713.572,45, referencia 4.920.220,40; cambio absoluto -4.206.647,95; cambio porcentual -85,50 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=SOFASA S.A.: actual 8.787.737,25, referencia 12.215.093,30; cambio absoluto -3.427.356,05; cambio porcentual -28,06 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=HYUNDAI MOTOR INT: actual 280.791,60, referencia 1.967.896,20; cambio absoluto -1.687.104,60; cambio porcentual -85,73 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=GENERAL MOTORS INT: actual 312.121,20, referencia 1.401.418,80; cambio absoluto -1.089.297,60; cambio porcentual -77,73 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=KIA MOTORS: actual 774.078,30, referencia 1.853.605,35; cambio absoluto -1.079.527,05; cambio porcentual -58,24 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=COLITALIA AUTOS SA: actual 0,00, referencia 920.525,70; cambio absoluto -920.525,70; cambio porcentual -100,00 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=MG MOTORS INT: actual 1.285.390,80, referencia 1.940.044,80; cambio absoluto -654.654,00; cambio porcentual -33,74 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=AMBACAR INT: actual 0,00, referencia 606.266,40; cambio absoluto -606.266,40; cambio porcentual -100,00 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), anunciante=PORSCHE COLOMBIA SAS: actual 1.481.183,75, referencia 2.087.078,45; cambio absoluto -605.894,70; cambio porcentual -29,03 %.\n\nOrden por cambio absoluto.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+    },
+    {
+      "id": "paraphrase-6-04",
+      "question": "Muestra las marcas que más incrementaron porcentualmente en 2023 frente a 2022.",
+      "passed": false,
+      "issues": [
+        "scope:filters"
+      ],
+      "intent": "ranking_change",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "percent",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 2,
+      "answer": "Criterio: cambio porcentual, orden desc; foco 2023-01-01 a 2023-12-31, referencia 2022-01-01 a 2022-12-31.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=RAM: actual 39.660,60, referencia 5.773,80; cambio absoluto 33.886,80; cambio porcentual 586,91 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=PEUGEOT: actual 661.436,35, referencia 183.135,60; cambio absoluto 478.300,75; cambio porcentual 261,17 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=MAZDA: actual 445.613,90, referencia 228.247,10; cambio absoluto 217.366,80; cambio porcentual 95,23 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=HONDA: actual 62.150,40, referencia 35.697,60; cambio absoluto 26.452,80; cambio porcentual 74,10 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=FORD: actual 2.552.489,15, referencia 1.633.604,55; cambio absoluto 918.884,60; cambio porcentual 56,25 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=CITROEN: actual 495.426,75, referencia 341.974,80; cambio absoluto 153.451,95; cambio porcentual 44,87 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=RENAULT: actual 17.003.838,65, referencia 12.632.095,70; cambio absoluto 4.371.742,95; cambio porcentual 34,61 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=VOLVO: actual 79.669,80, referencia 64.772,60; cambio absoluto 14.897,20; cambio porcentual 23,00 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=VOLKSWAGEN: actual 7.002.445,60, referencia 5.994.883,65; cambio absoluto 1.007.561,95; cambio porcentual 16,81 %.\n\ninv_neta, medio_agrupado: ['TV ABIERTA', 'TV CABLE'] (2023-01-01 a 2023-12-31), marca=NISSAN: actual 8.000.227,30, referencia 7.029.861,75; cambio absoluto 970.365,55; cambio porcentual 13,80 %.\n\nOrden por cambio porcentual; bases cero o negativas excluidas.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+    },
+    {
+      "id": "paraphrase-6-05",
+      "question": "Ahora ordena las empresas por volumen de inversión en prensa en 2024.",
+      "passed": false,
+      "issues": [
+        "scope:filters"
+      ],
+      "intent": "ranking",
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "REVISTAS"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      },
+      "stop_reason": "planned_evidence_complete",
+      "tools": 1,
+      "queries": 1,
+      "answer": "### Resumen ejecutivo\n\n**DINISSAN ocupa el primer lugar**\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=DINISSAN: 688.617,35 (19,35 % del universo consultado).\n\nDINISSAN registra la mayor inversión neta en prensa (revistas) durante el periodo solicitado.\n\n**SOFASA S.A. ocupa el segundo lugar**\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=SOFASA S.A.: 509.480,00 (14,32 % del universo consultado).\n\nSOFASA S.A. muestra la segunda mayor inversión neta en prensa (revistas) durante el periodo solicitado.\n\n**GM COLMOTORES ocupa el tercer lugar**\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=GM COLMOTORES: 473.067,00 (13,30 % del universo consultado).\n\nGM COLMOTORES presenta la tercera mayor inversión neta en prensa (revistas) durante el periodo solicitado.\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=BCO DAVIVIENDA: 346.203,20 (9,73 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=ATC: 328.953,35 (9,25 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=MAZDA COLOMBIA SAS: 227.865,05 (6,40 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=KIA MOTORS: 96.715,10 (2,72 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=NEOCORP SAS: 74.306,00 (2,09 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=CREDENCIAL: 58.035,60 (1,63 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: ['REVISTAS'] (2024-01-01 a 2024-12-31), anunciante=COLWAGEN SA: 51.275,25 (1,44 % del universo consultado)."
+    }
+  ],
+  "source_fingerprint": null
+}

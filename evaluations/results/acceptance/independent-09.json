@@ -1,0 +1,292 @@
+{
+  "id": "independent-09",
+  "question": "Compara Volvo con BMW en 2025.",
+  "family": "comparison",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 15.33,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Volvo lidera en inversión neta**\n\ninv_neta, alcance consultado (2025-01-01 a 2025-12-31): Volvo registra 9.662.059,42; BMW, 1.595.350,10. Diferencia de 8.066.709,32; variación de 505,64 % sobre BMW.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "comparar_entidades_bicomp",
+        "arguments": {
+          "dimension": "marca",
+          "valor_a": "Volvo",
+          "valor_b": "BMW",
+          "agregacion": "sum",
+          "metrica": "inv_neta",
+          "filtros": {},
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31"
+        },
+        "result": {
+          "success": true,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "clarification_options": {},
+          "dimension": "marca",
+          "value_a_label": "Volvo",
+          "value_b_label": "BMW",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "coverage_a": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "coverage_b": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "warnings": [],
+          "value_a": 9662059.420332698,
+          "value_b": 1595350.1042778005,
+          "difference": 8066709.316054897,
+          "difference_pct": 505.6388120967728,
+          "ratio_a_over_b": 6.056388120967728,
+          "row_count": 3232,
+          "evidence": [
+            {
+              "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+              "query_parameters": {
+                "filter_0": "VOLVO",
+                "start_date": "2025-01-01",
+                "end_date": "2025-12-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "fd8a3896-f09e-4487-9fb1-3f13f5c884f9",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:46:29.901576+00:00",
+              "duration_ms": 936.74,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "filter_0": "BMW",
+                "start_date": "2025-01-01",
+                "end_date": "2025-12-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "38c20570-fe26-496b-a815-26e029d4ba2b",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:46:31.312420+00:00",
+              "duration_ms": 981.48,
+              "rows": 1
+            }
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 3232,
+        "step": 1,
+        "purpose": "Comparar la inversión neta entre Volvo y BMW en 2025",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "fd8a3896-f09e-4487-9fb1-3f13f5c884f9",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:46:29.901576+00:00",
+            "duration_ms": 936.74,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "38c20570-fe26-496b-a815-26e029d4ba2b",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:46:31.312420+00:00",
+            "duration_ms": 981.48,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 4266.73
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_entidades_bicomp",
+          "purpose": "Comparar la inversión neta entre Volvo y BMW en 2025",
+          "arguments": {
+            "dimension": "marca",
+            "valor_a": "Volvo",
+            "valor_b": "BMW",
+            "agregacion": "sum"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "comparison",
+        "operation": "compare_entities",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "comparison_period": null,
+        "dimensions": [
+          "marca"
+        ],
+        "remove_filters": [
+          "marca"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión neta de Volvo en 2025?",
+        "¿Cuál es la inversión neta de BMW en 2025?",
+        "¿Cuál es la diferencia absoluta y relativa entre ambas?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "comparison",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "comparison",
+        "title": "Comparación de entidades — inv_neta · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "label": "Volvo",
+            "value": 9662059.420332698
+          },
+          {
+            "label": "BMW",
+            "value": 1595350.1042778005
+          }
+        ],
+        "x": "label",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 2,
+      "total_latency_ms": 15332.64,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7300,
+      "output_tokens": 399,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 9223.86
+        },
+        {
+          "stage": "plan",
+          "intent": "comparison",
+          "scope": {
+            "intent": "comparison",
+            "operation": "compare_entities",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "comparison_period": null,
+            "dimensions": [
+              "marca"
+            ],
+            "remove_filters": [
+              "marca"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_entidades_bicomp",
+          "purpose": "Comparar la inversión neta entre Volvo y BMW en 2025",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 1821.51
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Volvo lidera en inversión neta**\n\ninv_neta, alcance consultado (2025-01-01 a 2025-12-31): Volvo registra 9.662.059,42; BMW, 1.595.350,10. Diferencia de 8.066.709,32; variación de 505,64 % sobre BMW."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 2,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7300,
+        "output_tokens": 399,
+        "cache_hits": 0,
+        "total_latency_ms": 15332.64
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "comparison",
+  "actual_intent": "comparison"
+}

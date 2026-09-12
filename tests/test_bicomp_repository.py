@@ -12,7 +12,7 @@ class FakeRow(dict):
 class FakeJob:
     total_bytes_processed = 128
     def __init__(self, rows=None): self._rows = rows or []
-    def result(self): return self._rows
+    def result(self, timeout=None): return self._rows
 
 
 class FakeClient:
@@ -51,7 +51,7 @@ def test_investment_filters_are_query_parameters():
     result = BigQueryRepository(settings(), client=client).consultar_inversion(metric="inv_neta", filters={"marca": "Volvo"}, start_date="2026-01-01")
     sql, config, _ = client.queries[-1]
     assert "Volvo" not in sql
-    assert "UPPER(CAST(`marca` AS STRING))" in sql
+    assert "UPPER(TRIM(CAST(`marca` AS STRING)))" in sql
     assert "@filter_0" in sql and "@start_date" in sql
     assert {p.name for p in config.query_parameters} == {"filter_0", "start_date"}
     assert result["value"] == 1250
@@ -119,8 +119,9 @@ def test_generic_and_specialized_brand_rankings_are_equivalent(monkeypatch):
     generic = repo.ranking(dimension="marca", **arguments)
     assert len(specs) == 2
     assert specs[0] == specs[1]  # Identical SQL and parameter names/types/values.
-    assert "`marca` AS dimension" in specs[0].sql
-    assert "GROUP BY dimension ORDER BY value DESC LIMIT @limit" in specs[0].sql
+    assert "UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension" in specs[0].sql
+    assert "GROUP BY dimension" in specs[0].sql
+    assert "ORDER BY value DESC" in specs[0].sql and "LIMIT @limit" in specs[0].sql
     assert ("limit", "INT64", 5) in specs[0].parameters
     assert generic == specialized
     assert generic["dimension"] == "marca"

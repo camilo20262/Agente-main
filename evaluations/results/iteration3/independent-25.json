@@ -1,0 +1,365 @@
+{
+  "id": "independent-25",
+  "question": "Muestra las cinco categorías con mayor inversión neta USD por ciudad en 2025.",
+  "family": "ranking",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 5.82,
+  "result": {
+    "answer": "La evidencia proporcionada muestra el ranking de categorías por inversión neta USD a nivel nacional para 2025, pero no incluye datos desagregados por ciudad. Por lo tanto, no es posible identificar las cinco categorías con mayor inversión neta USD por ciudad en 2025 con la información disponible. Para responder a la pregunta, se requeriría un análisis que agrupe la inversión neta por ambas dimensiones: ciudad y categoría, lo cual no está presente en la evidencia suministrada. Sin este desglose, cualquier afirmación sobre categorías por ciudad sería especulativa y no respaldada por los datos. Se recomienda solicitar un nuevo análisis que incluya la dimensión de ciudad en la agregación para obtener el ranking solicitado.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "categoria",
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {},
+          "limite": 5
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "categoria",
+          "composition": {
+            "denominator_known": true,
+            "total": 463938228.06842893,
+            "shown_share_pct": 69.4427096708754,
+            "top3_share_pct": 54.801546149575294
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "DEPORTES Y ENTRETENIMIENTO",
+              "value": 160101898.0,
+              "source_rows": 21243,
+              "rank": 1,
+              "share_pct": 34.50931359258148,
+              "total": 463938228.06842893,
+              "concentration_hhi": 1650.0864641577296,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 55348905.92044225,
+              "source_rows": 18091,
+              "rank": 2,
+              "share_pct": 11.930231779106276,
+              "total": 463938228.06842893,
+              "concentration_hhi": 1650.0864641577296,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TARJETAS DE CREDITO Y DEBITO",
+              "value": 38794518.239999704,
+              "source_rows": 7360,
+              "rank": 3,
+              "share_pct": 8.362000777887541,
+              "total": 463938228.06842893,
+              "concentration_hhi": 1650.0864641577296,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "MULTIPRODUCTO",
+              "value": 37056999.38202603,
+              "source_rows": 7511,
+              "rank": 4,
+              "share_pct": 7.987485647886787,
+              "total": 463938228.06842893,
+              "concentration_hhi": 1650.0864641577296,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "AUTOMOCIÓN - AUTOMÓVILES",
+              "value": 30868955.227294914,
+              "source_rows": 43270,
+              "rank": 5,
+              "share_pct": 6.6536778734133275,
+              "total": 463938228.06842893,
+              "concentration_hhi": 1650.0864641577296,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 28113215,
+            "duration_ms": 1132.86
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 28113215,
+            "job_id": "d2ed994a-7234-4626-9efa-b6445120147d",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:33:42.674116+00:00",
+            "duration_ms": 1132.86,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada ciudad para 2025, limitado a las top 5 por ciudad.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 28113215,
+            "job_id": "d2ed994a-7234-4626-9efa-b6445120147d",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:33:42.674116+00:00",
+            "duration_ms": 1132.86,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 2519.86
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada ciudad para 2025, limitado a las top 5 por ciudad.",
+          "arguments": {
+            "dimension": "categoria",
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {},
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "ciudad",
+          "categoria"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son las cinco categorías con mayor inversión neta USD por ciudad en 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "ciudad",
+          "categoria"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por categoria — Inversión publicitaria neta · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": "DEPORTES Y ENTRETENIMIENTO",
+            "value": 160101898.0,
+            "source_rows": 21243,
+            "rank": 1,
+            "share_pct": 34.50931359258148,
+            "total": 463938228.06842893,
+            "concentration_hhi": 1650.0864641577296,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+            "value": 55348905.92044225,
+            "source_rows": 18091,
+            "rank": 2,
+            "share_pct": 11.930231779106276,
+            "total": 463938228.06842893,
+            "concentration_hhi": 1650.0864641577296,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TARJETAS DE CREDITO Y DEBITO",
+            "value": 38794518.239999704,
+            "source_rows": 7360,
+            "rank": 3,
+            "share_pct": 8.362000777887541,
+            "total": 463938228.06842893,
+            "concentration_hhi": 1650.0864641577296,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "MULTIPRODUCTO",
+            "value": 37056999.38202603,
+            "source_rows": 7511,
+            "rank": 4,
+            "share_pct": 7.987485647886787,
+            "total": 463938228.06842893,
+            "concentration_hhi": 1650.0864641577296,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "AUTOMOCIÓN - AUTOMÓVILES",
+            "value": 30868955.227294914,
+            "source_rows": 43270,
+            "rank": 5,
+            "share_pct": 6.6536778734133275,
+            "total": 463938228.06842893,
+            "concentration_hhi": 1650.0864641577296,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 28113215,
+      "bigquery_queries": 1,
+      "total_latency_ms": 5818.53,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 8546,
+      "output_tokens": 392,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2049.99
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "ciudad",
+              "categoria"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de categorías por inversión neta USD dentro de cada ciudad para 2025, limitado a las top 5 por ciudad.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 1229.87
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "La evidencia proporcionada muestra el ranking de categorías por inversión neta USD a nivel nacional para 2025, pero no incluye datos desagregados por ciudad. Por lo tanto, no es posible identificar las cinco categorías con mayor inversión neta USD por ciudad en 2025 con la información disponible. Para responder a la pregunta, se requeriría un análisis que agrupe la inversión neta por ambas dimensiones: ciudad y categoría, lo cual no está presente en la evidencia suministrada. Sin este desglose, cualquier afirmación sobre categorías por ciudad sería especulativa y no respaldada por los datos. Se recomienda solicitar un nuevo análisis que incluya la dimensión de ciudad en la agregación para obtener el ranking solicitado."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 28113215,
+        "input_tokens": 8546,
+        "output_tokens": 392,
+        "cache_hits": 0,
+        "total_latency_ms": 5818.53
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

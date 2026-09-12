@@ -1,0 +1,541 @@
+{
+  "id": "independent-21",
+  "question": "Analiza la calidad de la dimensión formato para Volvo en 2025: no interpretes NULL ni N/A como formatos reales.",
+  "family": "composition",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 21.3,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Predominio de formato sin información**\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31): valores sin información en formato representan 91,57 %; valores informados, 8,43 %. Las etiquetas ausentes no son categorías de negocio.\n\n**Distribución residual de formatos conocidos**\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31), formato=DISPLAY: 785.276,64 (8,13 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31), formato=VIDEO: 29.157,85 (0,30 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31), formato=TEXT: 226,55 (0,00 % del universo consultado).\n\nLos formatos identificados (DISPLAY, VIDEO, TEXT) representan una minoría de la inversión, con DISPLAY siendo el más relevante dentro del grupo informado.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "formato",
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "VOLVO"
+          }
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "formato",
+          "composition": {
+            "denominator_known": true,
+            "total": 9662059.420332707,
+            "shown_share_pct": 100.0,
+            "top3_share_pct": 99.69587849232573
+          },
+          "data_quality": {
+            "unknown_share_pct": 91.56845345496491,
+            "unknown_value": 8847398.383098409,
+            "known_value": 814661.0372342989,
+            "known_share_pct": 8.431546545035081
+          },
+          "rows": [
+            {
+              "dimension": null,
+              "value": 5842110.243098399,
+              "source_rows": 1287,
+              "rank": 1,
+              "share_pct": 60.464441263984995,
+              "total": 9662059.420332707,
+              "concentration_hhi": 4689.5543441949485,
+              "unknown_value": 8847398.383098409
+            },
+            {
+              "dimension": "N/A",
+              "value": 3005288.140000009,
+              "source_rows": 691,
+              "rank": 2,
+              "share_pct": 31.10401219097992,
+              "total": 9662059.420332707,
+              "concentration_hhi": 4689.5543441949485,
+              "unknown_value": 8847398.383098409
+            },
+            {
+              "dimension": "DISPLAY",
+              "value": 785276.6364528004,
+              "source_rows": 379,
+              "rank": 3,
+              "share_pct": 8.127425037360823,
+              "total": 9662059.420332707,
+              "concentration_hhi": 4689.5543441949485,
+              "unknown_value": 8847398.383098409
+            },
+            {
+              "dimension": "VIDEO",
+              "value": 29157.8504799,
+              "source_rows": 27,
+              "rank": 4,
+              "share_pct": 0.30177676633348594,
+              "total": 9662059.420332707,
+              "concentration_hhi": 4689.5543441949485,
+              "unknown_value": 8847398.383098409
+            },
+            {
+              "dimension": "TEXT",
+              "value": 226.5503016,
+              "source_rows": 4,
+              "rank": 5,
+              "share_pct": 0.0023447413407875614,
+              "total": 9662059.420332707,
+              "concentration_hhi": 4689.5543441949485,
+              "unknown_value": 8847398.383098409
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 20830960,
+            "duration_ms": 1180.85
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 20830960,
+            "job_id": "e37ed06e-4b77-4f02-92bf-443b1bab043b",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:48:22.329040+00:00",
+            "duration_ms": 1180.85,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener el ranking de inversión neta por formato para Volvo en 2025, incluyendo valores NULL y N/A para evaluar su presencia.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 20830960,
+            "job_id": "e37ed06e-4b77-4f02-92bf-443b1bab043b",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:48:22.329040+00:00",
+            "duration_ms": 1180.85,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 2900.69
+      },
+      {
+        "id": "e2",
+        "tool": "obtener_valores_dimension_bicomp",
+        "arguments": {
+          "dimension": "formato",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "limite": 1000
+        },
+        "result": {
+          "success": true,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "dimension": "formato",
+          "values": [
+            null,
+            "DISPLAY",
+            "N/A",
+            "TEXT",
+            "VIDEO"
+          ],
+          "row_count": 5,
+          "evidence": {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`formato` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "1000"
+            },
+            "bytes_processed": 0,
+            "job_id": "f2033cd6-1885-4ef1-97f9-0f9c3c64ab24",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:48:24.079367+00:00",
+            "duration_ms": 1033.19,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 5,
+        "step": 2,
+        "purpose": "Listar todos los valores distintos de formato para Volvo en 2025 para identificar patrones de codificación, valores atípicos o no estándar.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`formato` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "1000"
+            },
+            "bytes_processed": 0,
+            "job_id": "f2033cd6-1885-4ef1-97f9-0f9c3c64ab24",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:48:24.079367+00:00",
+            "duration_ms": 1033.19,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 1749.59
+      },
+      {
+        "id": "e3",
+        "tool": "serie_temporal_bicomp",
+        "arguments": {
+          "dimension": "formato",
+          "metrica": "inv_neta",
+          "granularidad": "month",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "VOLVO"
+          }
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'serie_temporal_bicomp': arguments: Additional properties are not allowed ('dimension' was unexpected)"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": null,
+        "step": 3,
+        "purpose": "Analizar la evolución mensual de la proporción de inversión con formato NULL/N/A vs. válido para detectar tendencias de mejora o deterioro en la calidad del dato.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 8.43
+      }
+    ],
+    "steps": 3,
+    "plan": {
+      "intent": "diagnostic",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de inversión neta por formato para Volvo en 2025, incluyendo valores NULL y N/A para evaluar su presencia.",
+          "arguments": {
+            "dimension": "formato",
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            }
+          }
+        },
+        {
+          "tool": "obtener_valores_dimension_bicomp",
+          "purpose": "Listar todos los valores distintos de formato para Volvo en 2025 para identificar patrones de codificación, valores atípicos o no estándar.",
+          "arguments": {
+            "dimension": "formato",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "limite": 1000
+          }
+        },
+        {
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Analizar la evolución mensual de la proporción de inversión con formato NULL/N/A vs. válido para detectar tendencias de mejora o deterioro en la calidad del dato.",
+          "arguments": {
+            "dimension": "formato",
+            "metrica": "inv_neta",
+            "granularidad": "month",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "diagnostic",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "formato"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuál es la distribución de la inversión neta por formato para Volvo en 2025?",
+        "¿Qué proporción de registros tiene formato NULL o N/A y cómo afecta la calidad de la dimensión?",
+        "¿Existen formatos no estándar o valores atípicos que indiquen problemas de codificación?",
+        "¿Cuál es el porcentaje de inversión asociada a formatos válidos vs. no válidos?",
+        "¿Hay variación temporal en la calidad del formato a lo largo de 2025?"
+      ],
+      "answer": null,
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "diagnostic",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por formato — Inversión publicitaria neta · marca: VOLVO · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": null,
+            "value": 5842110.243098399,
+            "source_rows": 1287,
+            "rank": 1,
+            "share_pct": 60.464441263984995,
+            "total": 9662059.420332707,
+            "concentration_hhi": 4689.5543441949485,
+            "unknown_value": 8847398.383098409
+          },
+          {
+            "dimension": "N/A",
+            "value": 3005288.140000009,
+            "source_rows": 691,
+            "rank": 2,
+            "share_pct": 31.10401219097992,
+            "total": 9662059.420332707,
+            "concentration_hhi": 4689.5543441949485,
+            "unknown_value": 8847398.383098409
+          },
+          {
+            "dimension": "DISPLAY",
+            "value": 785276.6364528004,
+            "source_rows": 379,
+            "rank": 3,
+            "share_pct": 8.127425037360823,
+            "total": 9662059.420332707,
+            "concentration_hhi": 4689.5543441949485,
+            "unknown_value": 8847398.383098409
+          },
+          {
+            "dimension": "VIDEO",
+            "value": 29157.8504799,
+            "source_rows": 27,
+            "rank": 4,
+            "share_pct": 0.30177676633348594,
+            "total": 9662059.420332707,
+            "concentration_hhi": 4689.5543441949485,
+            "unknown_value": 8847398.383098409
+          },
+          {
+            "dimension": "TEXT",
+            "value": 226.5503016,
+            "source_rows": 4,
+            "rank": 5,
+            "share_pct": 0.0023447413407875614,
+            "total": 9662059.420332707,
+            "concentration_hhi": 4689.5543441949485,
+            "unknown_value": 8847398.383098409
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 3,
+      "total_tool_calls": 3,
+      "bigquery_bytes_processed": 20830960,
+      "bigquery_queries": 2,
+      "total_latency_ms": 21298.21,
+      "errors": [
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 12311,
+      "output_tokens": 925,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 7001.78
+        },
+        {
+          "stage": "plan",
+          "intent": "diagnostic",
+          "scope": {
+            "intent": "diagnostic",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "formato"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de inversión neta por formato para Volvo en 2025, incluyendo valores NULL y N/A para evaluar su presencia.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "obtener_valores_dimension_bicomp",
+          "purpose": "Listar todos los valores distintos de formato para Volvo en 2025 para identificar patrones de codificación, valores atípicos o no estándar.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Analizar la evolución mensual de la proporción de inversión con formato NULL/N/A vs. válido para detectar tendencias de mejora o deterioro en la calidad del dato.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 1287.93
+        },
+        {
+          "stage": "research_decision",
+          "stop": true,
+          "reason": "La evidencia ya responde la pregunta: el 91.57% de la inversión neta de Volvo en formato durante 2025 corresponde a valores NULL o N/A, que no son formatos reales según el alcance. Solo el 8.43% tiene formato conocido (DISPLAY, VIDEO, TEXT), lo que indica una calidad muy pobre de la dimensión formato para el análisis solicitado."
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 8339.81
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Predominio de formato sin información**\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31): valores sin información en formato representan 91,57 %; valores informados, 8,43 %. Las etiquetas ausentes no son categorías de negocio.\n\n**Distribución residual de formatos conocidos**\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31), formato=DISPLAY: 785.276,64 (8,13 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31), formato=VIDEO: 29.157,85 (0,30 % del universo consultado).\n\nInversión publicitaria neta, marca: VOLVO (2025-01-01 a 2025-12-31), formato=TEXT: 226,55 (0,00 % del universo consultado).\n\nLos formatos identificados (DISPLAY, VIDEO, TEXT) representan una minoría de la inversión, con DISPLAY siendo el más relevante dentro del grupo informado."
+        },
+        {
+          "stage": "stop",
+          "reason": "arguments",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 3,
+        "bigquery_queries": 2,
+        "bigquery_bytes_processed": 20830960,
+        "input_tokens": 12311,
+        "output_tokens": 925,
+        "cache_hits": 0,
+        "total_latency_ms": 21298.21
+      },
+      "stop_reason": "arguments"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "partial_or_fallback"
+  ],
+  "expected_family": "composition",
+  "actual_intent": "diagnostic"
+}

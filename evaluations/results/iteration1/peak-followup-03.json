@@ -1,0 +1,392 @@
+{
+  "id": "peak-followup-03",
+  "question": "¿Y por medios?",
+  "family": "composition",
+  "elapsed_s": 8.21,
+  "result": {
+    "answer": "### Resumen ejecutivo\nLa inversión publicitaria neta de BMW en 2025 se concentra principalmente en tres medios: DIGITAL (48.6%), TV SUSCRIPCION (22.9%) y PRENSA (19.1%), que juntos representan el 90.6% del total.\n\n### Hallazgos principales\n**DIGITAL lidera la inversión**\n- Evidencia: 775,378.83 (48.6% del total de 1,595,350.10)\n- Driver: no identificado\n- Interpretación: Es el medio con mayor participación, casi la mitad de la inversión neta de BMW en el periodo.\n\n**TV SUSCRIPCION ocupa el segundo lugar**\n- Evidencia: 364,720.17 (22.9% del total)\n- Driver: no identificado\n- Interpretación: Representa más de una quinta parte de la inversión, posicionándose como el segundo medio más importante.\n\n**PRENSA completa el top 3**\n- Evidencia: 304,616.25 (19.1% del total)\n- Driver: no identificado\n- Interpretación: Aporta cerca de una quinta parte del total, manteniendo una participación significativa junto a los dos primeros medios.\n\n### Advertencias\nLos datos corresponden al periodo observado (2025-01-01 a 2025-12-27) y se asumen como efectivos para el periodo solicitado (2025-01-01 a 2025-12-31), aunque no se certifica la completitud diaria dentro de dicho rango. No se dispone de información sobre medios no listados en la evidencia, por lo que la composición se basa únicamente en los seis medios reportados.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "analizar_medios",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "BMW"
+          }
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "BMW"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-27"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "medio",
+          "composition": {
+            "denominator_known": true,
+            "total": 1595350.1042778,
+            "shown_share_pct": 100.0,
+            "top3_share_pct": 90.55788133300115
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0
+          },
+          "rows": [
+            {
+              "dimension": "DIGITAL",
+              "value": 775378.8341566002,
+              "source_rows": 460,
+              "rank": 1,
+              "share_pct": 48.60242476416215,
+              "total": 1595350.1042778,
+              "concentration_hhi": 3289.870903718731,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV SUSCRIPCION",
+              "value": 364720.1701212,
+              "source_rows": 230,
+              "rank": 2,
+              "share_pct": 22.861450232349178,
+              "total": 1595350.1042778,
+              "concentration_hhi": 3289.870903718731,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PRENSA",
+              "value": 304616.25,
+              "source_rows": 4,
+              "rank": 3,
+              "share_pct": 19.094006336489812,
+              "total": 1595350.1042778,
+              "concentration_hhi": 3289.870903718731,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "RADIO",
+              "value": 92307.0,
+              "source_rows": 105,
+              "rank": 4,
+              "share_pct": 5.786002693232437,
+              "total": 1595350.1042778,
+              "concentration_hhi": 3289.870903718731,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV PAGA",
+              "value": 35205.29999999998,
+              "source_rows": 40,
+              "rank": 5,
+              "share_pct": 2.206744457257367,
+              "total": 1595350.1042778,
+              "concentration_hhi": 3289.870903718731,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PUBLICIDAD EXTERIOR",
+              "value": 23122.55,
+              "source_rows": 5,
+              "rank": 6,
+              "share_pct": 1.4493715165090586,
+              "total": 1595350.1042778,
+              "concentration_hhi": 3289.870903718731,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 6,
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 816.95
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "54f1f8dc-8147-41f6-b306-f7f0790bf45e",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T18:56:22.953058+00:00",
+            "duration_ms": 816.95,
+            "rows": 6
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "row_count": 6,
+        "step": 1,
+        "purpose": "Obtener la distribución de la inversión publicitaria neta de BMW en 2025 por medio para responder a la solicitud de desglose por medios.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "54f1f8dc-8147-41f6-b306-f7f0790bf45e",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T18:56:22.953058+00:00",
+            "duration_ms": 816.95,
+            "rows": 6
+          }
+        ],
+        "latency_ms": 1180.68
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "composition",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "analizar_medios",
+          "purpose": "Obtener la distribución de la inversión publicitaria neta de BMW en 2025 por medio para responder a la solicitud de desglose por medios.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "BMW"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "composition",
+        "scope_mode": "inherit",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "remove_filters": [],
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "medio"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuál es la distribución de la inversión publicitaria neta de BMW en 2025 por medio?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por medio — Inversión publicitaria neta · marca: BMW · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": "DIGITAL",
+            "value": 775378.8341566002,
+            "source_rows": 460,
+            "rank": 1,
+            "share_pct": 48.60242476416215,
+            "total": 1595350.1042778,
+            "concentration_hhi": 3289.870903718731,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV SUSCRIPCION",
+            "value": 364720.1701212,
+            "source_rows": 230,
+            "rank": 2,
+            "share_pct": 22.861450232349178,
+            "total": 1595350.1042778,
+            "concentration_hhi": 3289.870903718731,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PRENSA",
+            "value": 304616.25,
+            "source_rows": 4,
+            "rank": 3,
+            "share_pct": 19.094006336489812,
+            "total": 1595350.1042778,
+            "concentration_hhi": 3289.870903718731,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "RADIO",
+            "value": 92307.0,
+            "source_rows": 105,
+            "rank": 4,
+            "share_pct": 5.786002693232437,
+            "total": 1595350.1042778,
+            "concentration_hhi": 3289.870903718731,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV PAGA",
+            "value": 35205.29999999998,
+            "source_rows": 40,
+            "rank": 5,
+            "share_pct": 2.206744457257367,
+            "total": 1595350.1042778,
+            "concentration_hhi": 3289.870903718731,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PUBLICIDAD EXTERIOR",
+            "value": 23122.55,
+            "source_rows": 5,
+            "rank": 6,
+            "share_pct": 1.4493715165090586,
+            "total": 1595350.1042778,
+            "concentration_hhi": 3289.870903718731,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 5,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 4,
+      "total_latency_ms": 46726.57,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 25646,
+      "output_tokens": 1951,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2304.6
+        },
+        {
+          "stage": "plan",
+          "intent": "composition",
+          "scope": {
+            "intent": "composition",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "medio"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "analizar_medios",
+          "purpose": "Obtener la distribución de la inversión publicitaria neta de BMW en 2025 por medio para responder a la solicitud de desglose por medios.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 4715.25
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": []
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7689,
+        "output_tokens": 664,
+        "cache_hits": 0,
+        "total_latency_ms": 8210.43
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "composition",
+  "actual_intent": "composition"
+}

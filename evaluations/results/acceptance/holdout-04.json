@@ -1,0 +1,245 @@
+{
+  "id": "holdout-04",
+  "family": "composition",
+  "question": "¿Qué porcentaje conjunto de la inversión neta corresponde a RADIO y PRENSA en 2025?",
+  "expected_metric": "inv_neta",
+  "expected_percentage": true,
+  "elapsed_s": 10.47,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Participación conjunta de RADIO y PRENSA**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), medio=RADIO, PRENSA: valor conjunto 203.667.354,06 de un total de 463.938.228,07; participación conjunta 43,90 %.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_participacion_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "dimension": "medio",
+          "valores": [
+            "RADIO",
+            "PRENSA"
+          ],
+          "filtros": {},
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31"
+        },
+        "result": {
+          "success": true,
+          "source": "bigquery",
+          "row_count": 17,
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 21107338,
+            "job_id": "f10ab266-540e-4bc5-ab94-98f04111126c",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:50:26.991629+00:00",
+            "duration_ms": 1073.28,
+            "rows": 17
+          },
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "dimension": "medio",
+          "values": [
+            "RADIO",
+            "PRENSA"
+          ],
+          "value": 203667354.06294325,
+          "total": 463938228.0684297,
+          "share_pct": 43.89967063307032,
+          "denominator_scope": {}
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 17,
+        "step": 1,
+        "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 21107338,
+            "job_id": "f10ab266-540e-4bc5-ab94-98f04111126c",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:50:26.991629+00:00",
+            "duration_ms": 1073.28,
+            "rows": 17
+          }
+        ],
+        "latency_ms": 3219.57
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "composition",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "dimension": "medio",
+            "valores": [
+              "RADIO",
+              "PRENSA"
+            ]
+          }
+        }
+      ],
+      "scope": {
+        "intent": "composition",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "medio"
+        ]
+      },
+      "analysis_questions": [
+        "¿Qué porcentaje conjunto de la inversión neta corresponde a RADIO y PRENSA en 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 21107338,
+      "bigquery_queries": 1,
+      "total_latency_ms": 10473.07,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7390,
+      "output_tokens": 314,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2081.85
+        },
+        {
+          "stage": "plan",
+          "intent": "composition",
+          "scope": {
+            "intent": "composition",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "medio"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 5155.67
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Participación conjunta de RADIO y PRENSA**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31), medio=RADIO, PRENSA: valor conjunto 203.667.354,06 de un total de 463.938.228,07; participación conjunta 43,90 %."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 21107338,
+        "input_tokens": 7390,
+        "output_tokens": 314,
+        "cache_hits": 0,
+        "total_latency_ms": 10473.07
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "composition",
+  "actual_intent": "composition"
+}

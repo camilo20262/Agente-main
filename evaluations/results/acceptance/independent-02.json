@@ -1,0 +1,216 @@
+{
+  "id": "independent-02",
+  "question": "¿Cuánto invirtió Volvo?",
+  "family": "lookup",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 5.18,
+  "result": {
+    "answer": "VOLVO: Inversión publicitaria neta de 23.384.408,87. Entre 2019-01-01 y 2026-07-31.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "VOLVO"
+          }
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {},
+          "requested_period": {},
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "value": 23384408.867687725,
+          "row_count": 10170,
+          "valid_values": 10170,
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "VOLVO"
+            },
+            "bytes_processed": 0,
+            "job_id": "99a9f037-81df-4eb1-943c-67b15cb50ec0",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:45:45.589592+00:00",
+            "duration_ms": 1024.7,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 10170,
+        "step": 1,
+        "purpose": "Obtener la inversión neta total de Volvo sin filtros adicionales ni desglose.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "VOLVO"
+            },
+            "bytes_processed": 0,
+            "job_id": "99a9f037-81df-4eb1-943c-67b15cb50ec0",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:45:45.589592+00:00",
+            "duration_ms": 1024.7,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 3316.08
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "lookup",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Volvo sin filtros adicionales ni desglose.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "marca": "Volvo"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "lookup",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "remove_filters": [],
+        "period": {
+          "kind": "all"
+        },
+        "comparison_period": null,
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión neta total de Volvo en todo el historial disponible?"
+      ],
+      "answer": null,
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 5180.23,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 6037,
+      "output_tokens": 203,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1852.57
+        },
+        {
+          "stage": "plan",
+          "intent": "lookup",
+          "scope": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "all"
+            },
+            "comparison_period": null,
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Volvo sin filtros adicionales ni desglose.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 6037,
+        "output_tokens": 203,
+        "cache_hits": 0,
+        "total_latency_ms": 5180.23
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "lookup",
+  "actual_intent": "lookup"
+}

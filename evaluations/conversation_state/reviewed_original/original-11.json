@@ -1,0 +1,2910 @@
+{
+  "id": "original-11",
+  "question": "¿y en 2026?",
+  "elapsed_s": 16.92,
+  "memory_before": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "last_entities": {},
+    "last_filters": {
+      "medio_agrupado": "TV ABIERTA"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "marca",
+              "criterio": "absolute",
+              "orden": "desc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "comparison_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "shift_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "marca",
+              "criterio": "absolute",
+              "orden": "desc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "comparison_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {
+          "candidate_dimensions": [
+            "medio",
+            "vehiculo",
+            "formato"
+          ]
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "diagnosticar_dimensiones_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+            "arguments": {
+              "limite": 5,
+              "dimensiones": [
+                "medio",
+                "vehiculo",
+                "formato"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener la inversión neta de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "digital"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "filter_scope",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Repetir esta perspectiva del análisis previo en el alcance actualizado.",
+            "arguments": {}
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "month",
+          "extreme": "max"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "extremos_temporales_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+            "arguments": {
+              "granularidad": "month",
+              "extremo": "max"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión neta de BMW por medio en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio",
+              "limite": 100
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "vehiculo"
+        ],
+        "intent": "ranking",
+        "analysis": {
+          "limit": 5
+        },
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Ranking de vehículos por inversión neta de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "vehiculo",
+              "limite": 5
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio": "digital"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking",
+        "analysis": {
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el ranking de marcas por inversión neta en digital en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "medio": "digital"
+              },
+              "dimension": "marca",
+              "limite": 10
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2025",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "dimension": "anunciante",
+          "limite": 10
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2025",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "dimension": "anunciante",
+          "limite": 10
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Top 10 anunciantes en televisión durante 2025.",
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {
+          "medio_agrupado": "TV ABIERTA"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "analysis": {}
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "BMW"
+      }
+    ]
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2026-01-01",
+      "end": "2026-12-31"
+    },
+    "last_entities": {},
+    "last_filters": {
+      "medio_agrupado": "TV ABIERTA"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "change_period",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "marca",
+              "criterio": "absolute",
+              "orden": "desc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "comparison_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "shift_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "marca",
+              "criterio": "absolute",
+              "orden": "desc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "comparison_period": {
+          "start": "2026-05-01",
+          "end": "2026-05-31"
+        },
+        "dimensions": [],
+        "intent": "diagnostic_search",
+        "analysis": {
+          "candidate_dimensions": [
+            "medio",
+            "vehiculo",
+            "formato"
+          ]
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "diagnosticar_dimensiones_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+            "arguments": {
+              "limite": 5,
+              "dimensiones": [
+                "medio",
+                "vehiculo",
+                "formato"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener la inversión neta de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW",
+          "medio": "digital"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "filter_scope",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Repetir esta perspectiva del análisis previo en el alcance actualizado.",
+            "arguments": {}
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "month",
+          "extreme": "max"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "extremos_temporales_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+            "arguments": {
+              "granularidad": "month",
+              "extremo": "max"
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio"
+        ],
+        "intent": "composition",
+        "analysis": {},
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Desglosar la inversión neta de BMW por medio en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "medio",
+              "limite": 100
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "vehiculo"
+        ],
+        "intent": "ranking",
+        "analysis": {
+          "limit": 5
+        },
+        "operation": "breakdown",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Ranking de vehículos por inversión neta de BMW en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "BMW"
+              },
+              "dimension": "vehiculo",
+              "limite": 5
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio": "digital"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking",
+        "analysis": {
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el ranking de marcas por inversión neta en digital en 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "medio": "digital"
+              },
+              "dimension": "marca",
+              "limite": 10
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": "TV ABIERTA"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2025",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "dimension": "anunciante",
+              "limite": 10
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "filtros": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "dimension": "anunciante",
+          "limite": 10
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "change_period",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "change_period",
+      "observed_period": {
+        "start": "2026-01-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "change_period",
+      "observed_period": {
+        "start": "2026-01-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "filtros": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "dimension": "anunciante",
+          "limite": 10
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿y en 2026?",
+      "scope": {
+        "intent": "ranking",
+        "operation": "change_period",
+        "scope_mode": "inherit",
+        "filters": {
+          "medio_agrupado": "TV ABIERTA"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2026
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "analysis": {}
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "BMW"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "ranking",
+      "operation": "change_period",
+      "scope_mode": "inherit",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2026
+      },
+      "dimensions": [
+        "anunciante"
+      ],
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "filtros": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "dimension": "anunciante",
+            "limite": 10
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "ranking",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "filtros": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "dimension": "anunciante",
+          "limite": 10
+        }
+      }
+    ],
+    "scope": {
+      "intent": "ranking",
+      "operation": "change_period",
+      "scope_mode": "inherit",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2026
+      },
+      "dimensions": [
+        "anunciante"
+      ],
+      "analysis": {}
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 2,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": "TV ABIERTA"
+      },
+      "requested_period": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "change_period",
+      "observed_period": {
+        "start": "2026-01-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {
+    "metric": "inv_neta",
+    "filters": {
+      "medio_agrupado": "TV ABIERTA"
+    },
+    "requested_period": {
+      "start": "2025-01-01",
+      "end": "2025-12-31"
+    },
+    "comparison_period": {},
+    "dimensions": [
+      "anunciante"
+    ],
+    "intent": "ranking",
+    "analysis": {},
+    "operation": "new_analysis",
+    "observed_period": {},
+    "available_period": {
+      "start": "2019-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=ALPINA: 3.676.449,60 (15,66 % del universo consultado).\n\n**SABANA FITNESS CENTER y DERCO SA ocupan el segundo y tercer lugar en inversión**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=SABANA FITNESS CENTER: 1.560.100,00 (6,65 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=DERCO SA: 1.484.262,61 (6,32 % del universo consultado).\n\nEstos dos anunciantes siguen a ALPINA en el ranking de inversión publicitaria neta en TV ABIERTA para el mismo periodo.\n\n**GM COLMOTORES y PORSCHE COLOMBIA SAS completan el top cinco**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=GM COLMOTORES: 1.434.830,62 (6,11 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=PORSCHE COLOMBIA SAS: 1.223.330,79 (5,21 % del universo consultado).\n\nEstos anunciantes muestran niveles significativos de inversión, aunque menores que los tres primeros.\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=IRCC S.A+POSTOBON: 1.207.027,80 (5,14 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=GRUPO AVAL: 1.165.031,15 (4,96 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=BODYTECH GYM: 1.161.770,45 (4,95 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=DINISSAN: 971.841,33 (4,14 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=ALQUERIA: 823.068,00 (3,51 % del universo consultado).\n\n### Advertencias\n\nCobertura parcial: acumulado disponible hasta 2026-07-31; no es un total anual completo.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2026-01-01",
+          "fecha_fin": "2026-12-31",
+          "filtros": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "dimension": "anunciante",
+          "limite": 10
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "medio_agrupado": "TV ABIERTA"
+          },
+          "period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "requested_period": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": true,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Periodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "anunciante",
+          "composition": {
+            "denominator_known": true,
+            "total": 23475371.28,
+            "shown_share_pct": 62.65167087061296,
+            "top3_share_pct": 28.62920517779347
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "unknown_value": 0.0,
+            "known_value": 23475371.28,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "ALPINA",
+              "value": 3676449.6000000015,
+              "source_rows": 358,
+              "rank": 1,
+              "share_pct": 15.660879464480193,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "SABANA FITNESS CENTER",
+              "value": 1560100.0,
+              "source_rows": 3,
+              "rank": 2,
+              "share_pct": 6.645688289194974,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "DERCO SA",
+              "value": 1484262.6100000003,
+              "source_rows": 253,
+              "rank": 3,
+              "share_pct": 6.322637424118305,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "GM COLMOTORES",
+              "value": 1434830.6199999996,
+              "source_rows": 239,
+              "rank": 4,
+              "share_pct": 6.1120678471331065,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PORSCHE COLOMBIA SAS",
+              "value": 1223330.7900000012,
+              "source_rows": 203,
+              "rank": 5,
+              "share_pct": 5.211124354153351,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "IRCC S.A+POSTOBON",
+              "value": 1207027.7999999998,
+              "source_rows": 39,
+              "rank": 6,
+              "share_pct": 5.141677145819352,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "GRUPO AVAL",
+              "value": 1165031.1500000006,
+              "source_rows": 88,
+              "rank": 7,
+              "share_pct": 4.962780507725373,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "BODYTECH GYM",
+              "value": 1161770.4499999997,
+              "source_rows": 31,
+              "rank": 8,
+              "share_pct": 4.948890631560651,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "DINISSAN",
+              "value": 971841.33,
+              "source_rows": 57,
+              "rank": 9,
+              "share_pct": 4.139833693825182,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "ALQUERIA",
+              "value": 823067.9999999999,
+              "source_rows": 78,
+              "rank": 10,
+              "share_pct": 3.5060915126024788,
+              "total": 23475371.28,
+              "concentration_hhi": 572.5072977209031,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 10,
+          "query_metadata": {
+            "bytes_processed": 28960006,
+            "duration_ms": 1672.33
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`anunciante` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'DESCONOCIDO', 'N/A', 'N/D', 'NA', 'ND', 'NONE', 'NULL', 'SIN INFORMACION', 'SIN INFORMACIÓN', 'UNKNOWN'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "TV ABIERTA",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 28960006,
+            "job_id": "e9b17ece-8e8c-4493-82e0-3fc15b34e83e",
+            "cache_hit": false,
+            "executed_at": "2026-09-12T10:54:43.313071+00:00",
+            "duration_ms": 1672.33,
+            "rows": 10
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": "TV ABIERTA"
+        },
+        "row_count": 10,
+        "step": 1,
+        "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`anunciante` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'DESCONOCIDO', 'N/A', 'N/D', 'NA', 'ND', 'NONE', 'NULL', 'SIN INFORMACION', 'SIN INFORMACIÓN', 'UNKNOWN'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "TV ABIERTA",
+              "start_date": "2026-01-01",
+              "end_date": "2026-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 28960006,
+            "job_id": "e9b17ece-8e8c-4493-82e0-3fc15b34e83e",
+            "cache_hit": false,
+            "executed_at": "2026-09-12T10:54:43.313071+00:00",
+            "duration_ms": 1672.33,
+            "rows": 10
+          }
+        ],
+        "latency_ms": 2137.01
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2026-01-01",
+            "fecha_fin": "2026-12-31",
+            "filtros": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "dimension": "anunciante",
+            "limite": 10
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "change_period",
+        "scope_mode": "inherit",
+        "filters": {
+          "medio_agrupado": "TV ABIERTA"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2026
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "analysis": {}
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": "TV ABIERTA"
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "change_period",
+        "observed_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por anunciante — Inversión publicitaria neta · medio_agrupado: TV ABIERTA · 2026-01-01 a 2026-07-31 · acumulado disponible",
+        "data": [
+          {
+            "dimension": "ALPINA",
+            "value": 3676449.6000000015,
+            "source_rows": 358,
+            "rank": 1,
+            "share_pct": 15.660879464480193,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "SABANA FITNESS CENTER",
+            "value": 1560100.0,
+            "source_rows": 3,
+            "rank": 2,
+            "share_pct": 6.645688289194974,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "DERCO SA",
+            "value": 1484262.6100000003,
+            "source_rows": 253,
+            "rank": 3,
+            "share_pct": 6.322637424118305,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "GM COLMOTORES",
+            "value": 1434830.6199999996,
+            "source_rows": 239,
+            "rank": 4,
+            "share_pct": 6.1120678471331065,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PORSCHE COLOMBIA SAS",
+            "value": 1223330.7900000012,
+            "source_rows": 203,
+            "rank": 5,
+            "share_pct": 5.211124354153351,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "IRCC S.A+POSTOBON",
+            "value": 1207027.7999999998,
+            "source_rows": 39,
+            "rank": 6,
+            "share_pct": 5.141677145819352,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "GRUPO AVAL",
+            "value": 1165031.1500000006,
+            "source_rows": 88,
+            "rank": 7,
+            "share_pct": 4.962780507725373,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "BODYTECH GYM",
+            "value": 1161770.4499999997,
+            "source_rows": 31,
+            "rank": 8,
+            "share_pct": 4.948890631560651,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "DINISSAN",
+            "value": 971841.33,
+            "source_rows": 57,
+            "rank": 9,
+            "share_pct": 4.139833693825182,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "ALQUERIA",
+            "value": 823067.9999999999,
+            "source_rows": 78,
+            "rank": 10,
+            "share_pct": 3.5060915126024788,
+            "total": 23475371.28,
+            "concentration_hhi": 572.5072977209031,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 32,
+      "total_tool_calls": 11,
+      "bigquery_bytes_processed": 104771276,
+      "bigquery_queries": 21,
+      "total_latency_ms": 150757.78,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 165746,
+      "output_tokens": 5619,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2113.37
+        },
+        {
+          "stage": "request_review",
+          "finish_reason": "stop",
+          "latency_ms": 1062.89
+        },
+        {
+          "stage": "semantic_review",
+          "proposal": {
+            "intent": "ranking",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "dimensions": [
+              "anunciante"
+            ],
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "filtros": {
+                    "medio_agrupado": "TV ABIERTA"
+                  },
+                  "dimension": "anunciante",
+                  "limite": 10
+                }
+              }
+            ]
+          },
+          "valid": true,
+          "reason": "El usuario pregunta por 2026 manteniendo el mismo foco (TV ABIERTA, anunciante, ranking). La propuesta usa change_period con año 2026 y hereda filtros y dimensiones, lo cual es correcto.",
+          "corrections": {}
+        },
+        {
+          "stage": "catalog_validation",
+          "dimension": "medio",
+          "values": [
+            "CABLE",
+            "DIGITAL",
+            "OOH",
+            "PRENSA",
+            "PUBLICIDAD EXTERIOR",
+            "RADIO",
+            "REVISTA",
+            "REVISTAS DE PRENSA",
+            "TELEVISION NACIONAL",
+            "TELEVISION REGIONAL",
+            "TV ABIERTA",
+            "TV NAL",
+            "TV PAGA",
+            "TV PAGADA",
+            "TV REG",
+            "TV SUSCRIPCION",
+            "VIA PUBLICA"
+          ],
+          "evidence": {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`medio` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "limit": "1000"
+            },
+            "bytes_processed": 0,
+            "job_id": "75ba66ab-b688-4bba-bde1-e625554bfdc5",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T10:53:30.560002+00:00",
+            "duration_ms": 1038.06,
+            "rows": 17
+          }
+        },
+        {
+          "stage": "catalog_validation",
+          "dimension": "medio_agrupado",
+          "values": [
+            "DIARIOS",
+            "DIGITAL",
+            "OOH",
+            "RADIO",
+            "REVISTAS",
+            "TV ABIERTA",
+            "TV CABLE"
+          ],
+          "evidence": {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "limit": "1000"
+            },
+            "bytes_processed": 0,
+            "job_id": "3aa78c59-e8a7-408d-9cc5-57f88db0f27b",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T10:53:32.696232+00:00",
+            "duration_ms": 1223.87,
+            "rows": 7
+          }
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "dimensions": [
+              "anunciante"
+            ],
+            "analysis": {}
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "ranking",
+          "requested_scope": {
+            "intent": "ranking",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "dimensions": [
+              "anunciante"
+            ],
+            "analysis": {}
+          },
+          "inherited_scope": {
+            "metric": "inv_neta",
+            "filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "requested_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "anunciante"
+            ],
+            "intent": "ranking",
+            "analysis": {},
+            "operation": "new_analysis",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "scope_mutations": {
+            "requested_period": {
+              "before": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "after": {
+                "start": "2026-01-01",
+                "end": "2026-12-31"
+              }
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "requested_period": {
+              "start": "2026-01-01",
+              "end": "2026-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "anunciante"
+            ],
+            "intent": "ranking",
+            "analysis": {},
+            "operation": "change_period",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "requirements": {
+            "capability": "ranking",
+            "dimension": "anunciante",
+            "analysis": {},
+            "requires_reference": false,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "ranking"
+          ],
+          "tools": [
+            "ranking_por_dimension"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "sufficiency",
+          "requirements": {
+            "capability": "ranking",
+            "dimension": "anunciante",
+            "analysis": {},
+            "requires_reference": false,
+            "requires_series": false
+          },
+          "sufficient": true,
+          "successful_evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 11560.88
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=ALPINA: 3.676.449,60 (15,66 % del universo consultado).\n\n**SABANA FITNESS CENTER y DERCO SA ocupan el segundo y tercer lugar en inversión**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=SABANA FITNESS CENTER: 1.560.100,00 (6,65 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=DERCO SA: 1.484.262,61 (6,32 % del universo consultado).\n\nEstos dos anunciantes siguen a ALPINA en el ranking de inversión publicitaria neta en TV ABIERTA para el mismo periodo.\n\n**GM COLMOTORES y PORSCHE COLOMBIA SAS completan el top cinco**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=GM COLMOTORES: 1.434.830,62 (6,11 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=PORSCHE COLOMBIA SAS: 1.223.330,79 (5,21 % del universo consultado).\n\nEstos anunciantes muestran niveles significativos de inversión, aunque menores que los tres primeros.\n\n**Otros resultados del desglose solicitado**\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=IRCC S.A+POSTOBON: 1.207.027,80 (5,14 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=GRUPO AVAL: 1.165.031,15 (4,96 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=BODYTECH GYM: 1.161.770,45 (4,95 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=DINISSAN: 971.841,33 (4,14 % del universo consultado).\n\nInversión publicitaria neta, medio_agrupado: TV ABIERTA (2026-01-01 a 2026-07-31), anunciante=ALQUERIA: 823.068,00 (3,51 % del universo consultado).\n\n### Advertencias\n\nCobertura parcial: acumulado disponible hasta 2026-07-31; no es un total anual completo.\n\nPeriodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo."
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "last_entities": {},
+            "last_filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2026-07-01",
+                  "end": "2026-07-31"
+                },
+                "comparison_period": {
+                  "start": "2026-06-01",
+                  "end": "2026-06-30"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "criterio": "absolute",
+                      "orden": "desc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2026-06-01",
+                  "end": "2026-06-30"
+                },
+                "comparison_period": {
+                  "start": "2026-05-01",
+                  "end": "2026-05-31"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 10
+                },
+                "operation": "shift_period",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "criterio": "absolute",
+                      "orden": "desc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2026-06-01",
+                  "end": "2026-06-30"
+                },
+                "comparison_period": {
+                  "start": "2026-05-01",
+                  "end": "2026-05-31"
+                },
+                "dimensions": [],
+                "intent": "diagnostic_search",
+                "analysis": {
+                  "candidate_dimensions": [
+                    "medio",
+                    "vehiculo",
+                    "formato"
+                  ]
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "diagnosticar_dimensiones_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                    "arguments": {
+                      "limite": 5,
+                      "dimensiones": [
+                        "medio",
+                        "vehiculo",
+                        "formato"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener la inversión neta de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW",
+                  "medio": "digital"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "filter_scope",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Repetir esta perspectiva del análisis previo en el alcance actualizado.",
+                    "arguments": {}
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "temporal_extrema",
+                "analysis": {
+                  "granularity": "month",
+                  "extreme": "max"
+                },
+                "operation": "discover_extreme",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "extremos_temporales_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                    "arguments": {
+                      "granularidad": "month",
+                      "extremo": "max"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "medio"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión neta de BMW por medio en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio",
+                      "limite": 100
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "vehiculo"
+                ],
+                "intent": "ranking",
+                "analysis": {
+                  "limit": 5
+                },
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Ranking de vehículos por inversión neta de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "vehiculo",
+                      "limite": 5
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio": "digital"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking",
+                "analysis": {
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el ranking de marcas por inversión neta en digital en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "medio": "digital"
+                      },
+                      "dimension": "marca",
+                      "limite": 10
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2025",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-12-31",
+                  "filtros": {
+                    "medio_agrupado": "TV ABIERTA"
+                  },
+                  "dimension": "anunciante",
+                  "limite": 10
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2025",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-12-31",
+                  "filtros": {
+                    "medio_agrupado": "TV ABIERTA"
+                  },
+                  "dimension": "anunciante",
+                  "limite": 10
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Top 10 anunciantes en televisión durante 2025.",
+              "scope": {
+                "intent": "ranking",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "filters": {
+                  "medio_agrupado": "TV ABIERTA"
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2025
+                },
+                "dimensions": [
+                  "anunciante"
+                ],
+                "analysis": {}
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "BMW"
+              }
+            ]
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2026-01-01",
+              "end": "2026-12-31"
+            },
+            "last_entities": {},
+            "last_filters": {
+              "medio_agrupado": "TV ABIERTA"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2026-01-01",
+                "end": "2026-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "change_period",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2026-07-01",
+                  "end": "2026-07-31"
+                },
+                "comparison_period": {
+                  "start": "2026-06-01",
+                  "end": "2026-06-30"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "criterio": "absolute",
+                      "orden": "desc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2026-06-01",
+                  "end": "2026-06-30"
+                },
+                "comparison_period": {
+                  "start": "2026-05-01",
+                  "end": "2026-05-31"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 10
+                },
+                "operation": "shift_period",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "criterio": "absolute",
+                      "orden": "desc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2026-06-01",
+                  "end": "2026-06-30"
+                },
+                "comparison_period": {
+                  "start": "2026-05-01",
+                  "end": "2026-05-31"
+                },
+                "dimensions": [],
+                "intent": "diagnostic_search",
+                "analysis": {
+                  "candidate_dimensions": [
+                    "medio",
+                    "vehiculo",
+                    "formato"
+                  ]
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "diagnosticar_dimensiones_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad dimension_search.",
+                    "arguments": {
+                      "limite": 5,
+                      "dimensiones": [
+                        "medio",
+                        "vehiculo",
+                        "formato"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener la inversión neta de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW",
+                  "medio": "digital"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "filter_scope",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Repetir esta perspectiva del análisis previo en el alcance actualizado.",
+                    "arguments": {}
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "temporal_extrema",
+                "analysis": {
+                  "granularity": "month",
+                  "extreme": "max"
+                },
+                "operation": "discover_extreme",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "extremos_temporales_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                    "arguments": {
+                      "granularidad": "month",
+                      "extremo": "max"
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "medio"
+                ],
+                "intent": "composition",
+                "analysis": {},
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Desglosar la inversión neta de BMW por medio en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "medio",
+                      "limite": 100
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "BMW"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "vehiculo"
+                ],
+                "intent": "ranking",
+                "analysis": {
+                  "limit": 5
+                },
+                "operation": "breakdown",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Ranking de vehículos por inversión neta de BMW en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "marca": "BMW"
+                      },
+                      "dimension": "vehiculo",
+                      "limite": 5
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio": "digital"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking",
+                "analysis": {
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el ranking de marcas por inversión neta en digital en 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "medio": "digital"
+                      },
+                      "dimension": "marca",
+                      "limite": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": "TV ABIERTA"
+                },
+                "requested_period": {
+                  "start": "2025-01-01",
+                  "end": "2025-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2025",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "fecha_inicio": "2025-01-01",
+                      "fecha_fin": "2025-12-31",
+                      "filtros": {
+                        "medio_agrupado": "TV ABIERTA"
+                      },
+                      "dimension": "anunciante",
+                      "limite": 10
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "filtros": {
+                    "medio_agrupado": "TV ABIERTA"
+                  },
+                  "dimension": "anunciante",
+                  "limite": 10
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2026-01-01",
+                "end": "2026-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "change_period",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2026-01-01",
+                "end": "2026-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "change_period",
+              "observed_period": {
+                "start": "2026-01-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": "TV ABIERTA"
+              },
+              "requested_period": {
+                "start": "2026-01-01",
+                "end": "2026-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "change_period",
+              "observed_period": {
+                "start": "2026-01-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el top 10 de anunciantes por inversión neta en televisión durante 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "filtros": {
+                    "medio_agrupado": "TV ABIERTA"
+                  },
+                  "dimension": "anunciante",
+                  "limite": 10
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿y en 2026?",
+              "scope": {
+                "intent": "ranking",
+                "operation": "change_period",
+                "scope_mode": "inherit",
+                "filters": {
+                  "medio_agrupado": "TV ABIERTA"
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2026
+                },
+                "dimensions": [
+                  "anunciante"
+                ],
+                "analysis": {}
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "BMW"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 28960006,
+        "input_tokens": 17425,
+        "output_tokens": 599,
+        "cache_hits": 0,
+        "total_latency_ms": 16914.820000000007
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "expected": {
+    "intent": "ranking",
+    "filters": {
+      "medio_agrupado": [
+        "TV ABIERTA",
+        "TV CABLE"
+      ]
+    },
+    "requested_period": {
+      "start": "2026-01-01",
+      "end": "2026-12-31"
+    },
+    "dimensions": [
+      "anunciante"
+    ],
+    "comparison_period": {},
+    "metric": "inv_neta",
+    "dimension": "anunciante",
+    "min_rows": 10
+  },
+  "assessment": {
+    "passed": false,
+    "issues": [
+      "scope:filters"
+    ]
+  }
+}

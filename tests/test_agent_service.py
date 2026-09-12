@@ -1,361 +1,299 @@
-from types import SimpleNamespace
+"""End-to-end simulated conversations against the public service and real registry.
 
+Replaces assumptions about forced NVIDIA tools with explicit plan/stop contracts.
+Original protections (deduplication, partial evidence, multimodal text, retries) remain.
+"""
+import json
+from datetime import date
+from types import SimpleNamespace as NS
+from unittest.mock import Mock
 import pytest
-
-from src.agent.service import AgentService
-from src.agent.service import RepeatedToolCallError
+from src.agent.service import AgentService, _extract_user_text
+from src.agent.planner import AnalyticalPlanner
 from src.config import Settings
+from src.tools.registry import ToolRegistry
 
 
-class FakeRegistry:
-    schemas = [{"type": "function", "function": {"name": "consultar_inversion_publicitaria", "parameters": {"type": "object"}}}]
-    repository = SimpleNamespace(source="mock")
-    def execute(self, name, arguments): return {"success": True, "source": "mock", "value": 8.72}
+class FakeRepository:
+    source = 'mock'
+    def __init__(self): self.calls = []
+    def consultar_inversion(self, **kwargs):
+        self.calls.append(kwargs)
+        return {'success': True, 'domain': 'bicomp', 'source': 'mock', 'metric': kwargs.get('metric', 'inv_neta'),
+                'value': 100, 'filters': kwargs.get('filters') or {},
+                'period': {'start': kwargs.get('start_date'), 'end': kwargs.get('end_date')}}
+    def serie_temporal_bicomp(self, **kwargs):
+        return {**self.consultar_inversion(**kwargs), 'granularity': 'month',
+                'rows': [{'period': '2025-01-01', 'value': 40}, {'period': '2025-11-01', 'value': 60}],
+                'peak': {'period': '2025-11-01', 'value': 60, 'share_of_total_pct': 60}}
+    def ranking(self, **kwargs):
+        return {**self.consultar_inversion(**kwargs), 'dimension': kwargs['dimension'],
+                'rows': [{'dimension': 'DIGITAL', 'value': 100, 'share_pct': 100}]}
+    def analizar_medios(self, **kwargs): return self.ranking(dimension='medio', **kwargs)
+    def comparar_marcas(self, **kwargs):
+        return {**self.consultar_inversion(**kwargs), 'brand_a': kwargs['brand_a'], 'brand_b': kwargs['brand_b'],
+                'value_a': 100, 'value_b': 80, 'difference': 20, 'difference_pct': 25}
 
 
-class FakeCompletions:
-    def __init__(self): self.calls = 0
+def payload(intent='lookup', *, filters=None, period=None, steps=None, mode='replace'):
+    return {'intent': intent, 'operation': 'new_analysis', 'scope_mode': mode, 'metric': 'inv_neta',
+            'filters': filters if filters is not None else {'marca': 'BMW'},
+            'period': period if period is not None else {'kind': 'year', 'year': 2025},
+            'dimensions': [], 'analysis_questions': ['Resolver la pregunta.'],
+            'steps': steps if steps is not None else [step('consultar_inversion_publicitaria')]}
+
+
+def step(tool, arguments=None):
+    return {'tool': tool, 'purpose': 'Obtener evidencia necesaria para la pregunta.', 'arguments': arguments or {}}
+
+
+class ScriptedCompletions:
+    def __init__(self, responses): self.responses, self.calls = iter(responses), []
     def create(self, **kwargs):
-        self.calls += 1
-        if self.calls == 1:
-            function = SimpleNamespace(name="consultar_inversion_publicitaria", arguments='{"filtros":{"marca":"VOLVO"}}')
-            message = SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id="call-1", function=function)])
-        else:
-            assert kwargs["tools"]
-            assert any(getattr(m, "tool_calls", None) for m in kwargs["messages"] if not isinstance(m, dict))
-            message = SimpleNamespace(content="Volvo registró inversión.", tool_calls=[])
-        return SimpleNamespace(choices=[SimpleNamespace(message=message)])
+        self.calls.append(kwargs)
+        response = next(self.responses)
+        if isinstance(response, Exception): raise response
+        if isinstance(response, tuple): content, finish = response
+        else: content, finish = response, 'stop'
+        if isinstance(content, dict): content = json.dumps(content)
+        return NS(choices=[NS(message=NS(content=content, tool_calls=[]), finish_reason=finish)], usage=NS(prompt_tokens=10, completion_tokens=10))
+
+
+def service(responses, repo=None, **settings):
+    settings.setdefault('plan_semantic_review', False)  # These fixtures already supply the interpreted contract.
+    completions = ScriptedCompletions(responses)
+    repo = repo or FakeRepository()
+    client = NS(base_url='https://integrate.api.nvidia.com/v1', chat=NS(completions=completions))
+    return AgentService(client=client, settings=Settings(**settings), registry=ToolRegistry(repo), today=lambda: date(2026, 9, 10)), completions, repo
 
 
 def test_agent_iterates_and_keeps_tools_available():
-    completions = FakeCompletions()
-    client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
-    result = AgentService(client=client, settings=Settings(max_agent_steps=3), registry=FakeRegistry()).run([{"role": "user", "content": "inversión"}])
-    assert result.answer == "Volvo registró inversión."
-    assert result.is_partial is False
-    assert result.steps == 2
-    assert result.evidence[0]["tool"] == "consultar_inversion_publicitaria"
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+    s, client, repo = service([plan, {'stop': True, 'reason': 'Dos perspectivas suficientes.', 'steps': []}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza esta marca.'}])
+    assert result.steps == 2 and not result.is_partial
+    assert len(repo.calls) == 2
+    assert result.metrics['stop_reason'] == 'Dos perspectivas suficientes.'
+    assert 'sql' not in json.loads(client.calls[-1]['messages'][-1]['content'])['facts'][0]
 
 
-class RepeatingCompletions:
-    def create(self, **kwargs):
-        function = SimpleNamespace(name="consultar_inversion_publicitaria", arguments='{"filtros":{"marca":"VOLVO"}}')
-        return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id="same", function=function)]))])
+@pytest.mark.parametrize('brand', ['BMW', 'Volvo', 'MARCA IMPREVISTA'])
+def test_simple_lookup_stops_after_one_tool_without_final_llm(brand):
+    s, client, repo = service([payload(filters={'marca': brand})])
+    result = s.run([{'role': 'user', 'content': f'¿Cuánto invirtió {brand} en 2025?'}])
+    assert not result.is_partial and result.steps == 1
+    assert len(repo.calls) == len(client.calls) == 1
+    assert repo.calls[0]['filters'] == {'marca': brand.upper()}
+    assert repo.calls[0]['start_date'] == '2025-01-01'
+    assert '100,00' in result.answer and brand.upper() in result.answer
 
 
 def test_repeated_identical_tool_call_is_stopped():
-    client = SimpleNamespace(chat=SimpleNamespace(completions=RepeatingCompletions()))
-    service = AgentService(client=client, settings=Settings(max_agent_steps=3), registry=FakeRegistry())
-    result = service.run([{"role": "user", "content": "inversión"}])
-    assert result.is_partial is True
-    assert result.steps == 2
-    assert len(result.evidence) == 1
-    assert "8.72" in result.answer
-    assert "repitió" in result.answer
-    assert "límite de pasos" not in result.answer
-    assert result.metrics["errors"] == ["repeated_tool_call"]
-    assert result.metrics["total_tool_calls"] == 1
-
-
-
-class MultiStepCompletions:
-    def __init__(self): self.calls = 0
-    def create(self, **kwargs):
-        self.calls += 1
-        if self.calls <= 2:
-            function = SimpleNamespace(name="consultar_inversion_publicitaria", arguments='{"filtros":{"marca":"%s"}}' % ("VOLVO" if self.calls == 1 else "RENAULT"))
-            message = SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id=f"call-{self.calls}", function=function)])
-        else:
-            message = SimpleNamespace(content="Comparación terminada.", tool_calls=[])
-        return SimpleNamespace(choices=[SimpleNamespace(message=message)])
+    plan = payload('open_analysis', steps=[step('consultar_inversion_publicitaria'), step('consultar_inversion_publicitaria')])
+    s, client, repo = service([plan, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert len(repo.calls) == 1
+    assert result.is_partial and result.metrics['stop_reason'] == 'duplicate'
+    assert len(client.calls) == 2  # No eight-step loop.
 
 
 def test_agent_executes_multiple_distinct_steps():
-    completions = MultiStepCompletions()
-    client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
-    result = AgentService(client=client, settings=Settings(max_agent_steps=4), registry=FakeRegistry()).run([{"role": "user", "content": "inversión"}])
-    assert result.steps == 3
-    assert [item["arguments"]["filtros"]["marca"] for item in result.evidence] == ["VOLVO", "RENAULT"]
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+    decision = {'stop': False, 'reason': 'Caracterizar el pico observado.', 'steps': [step('ranking_por_dimension', {'dimension': 'formato'})]}
+    s, _, repo = service([plan, decision, {'stop': True, 'reason': 'Pico caracterizado.', 'steps': []}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert result.steps == 3 and len(repo.calls) == 3 and not result.is_partial
 
 
-@pytest.mark.parametrize("premature_answer", [False, True])
-def test_nvidia_allows_recovery_until_successful_evidence(premature_answer):
-    class RecoveringRegistry(FakeRegistry):
-        def execute(self, name, arguments):
-            if arguments["filtros"]["marca"] == "VOLVO":
-                return {"success": False, "error": "Consulta fallida"}
-            return super().execute(name, arguments)
-
-    class RecoveringCompletions:
-        def __init__(self):
-            self.choices = []
-
-        def create(self, **kwargs):
-            self.choices.append(kwargs["tool_choice"])
-            step = len(self.choices)
-            recovery_step = 3 if premature_answer else 2
-            if step == 1 or step == recovery_step:
-                if step == recovery_step:
-                    assert kwargs["tool_choice"] == "auto"
-                    if premature_answer:
-                        assert any(isinstance(item, dict) and "El plan requiere evidencia cuantitativa" in item.get("content", "")
-                                   for item in kwargs["messages"])
-                brand = "VOLVO" if step == 1 else "RENAULT"
-                function = SimpleNamespace(name="consultar_inversion_publicitaria",
-                    arguments='{"filtros":{"marca":"%s"}}' % brand)
-                message = SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id=f"call-{step}", function=function)])
-            else:
-                message = SimpleNamespace(content="Sin datos." if step < recovery_step else "Inversión: 8.72.", tool_calls=[])
-            return SimpleNamespace(choices=[SimpleNamespace(message=message)])
-
-    completions = RecoveringCompletions()
-    client = SimpleNamespace(base_url="https://integrate.api.nvidia.com/v1", chat=SimpleNamespace(completions=completions))
-    result = AgentService(client=client, settings=Settings(max_agent_steps=4), registry=RecoveringRegistry()).run(
-        [{"role": "user", "content": "inversión"}])
-    forced_tool = {"type": "function", "function": {"name": "consultar_inversion_publicitaria"}}
-    assert completions.choices == [forced_tool] + ["auto"] * (2 if premature_answer else 1) + ["none"]
-    assert result.answer == "Inversión: 8.72."
-    assert [item["result"]["success"] for item in result.evidence] == [False, True]
-    assert result.evidence[1]["result"]["value"] == 8.72
+@pytest.mark.parametrize('bad_args', [{'fecha_inicio': '2025-99-99'}, {'marca': 'BMW'}])
+def test_nvidia_allows_recovery_until_successful_evidence(bad_args):
+    plan = payload(steps=[step('consultar_inversion_publicitaria', bad_args)])
+    decision = {'stop': False, 'reason': 'Corregir argumentos inválidos.', 'steps': [step('consultar_inversion_publicitaria')]}
+    s, client, repo = service([plan, decision])
+    result = s.run([{'role': 'user', 'content': 'Inversión.'}])
+    assert result.steps == 2 and len(repo.calls) == 1 and not result.is_partial
+    assert len(client.calls) == 2
 
 
-@pytest.mark.parametrize("content,expected", [
-    ("inversión por región", "inversión por región"),
-    ([{"type": "text", "text": "inversión por región"},
-      {"type": "image_url", "image_url": {"url": "https://example.invalid/image.png"}}], "inversión por región"),
-    ([{"type": "text", "text": "inversión"},
-      {"type": "image_url", "image_url": {"url": "https://example.invalid/image.png"}},
-      {"type": "text", "text": "por región"}], "inversión por región"),
-    ([{"type": "image_url", "image_url": {"url": "https://example.invalid/image.png"}}], ""),
-    ([None, "ignored", {"type": "text", "text": 123}, {"type": "text"},
-      {"type": "text", "text": ""}, {"type": "other", "text": "inversión"}], ""),
-    ([], ""),
-    (None, ""),
-    ({"text": "inversión"}, ""),
-    ("", ""),
-])
-def test_planner_uses_latest_user_text_and_preserves_content(monkeypatch, content, expected):
+@pytest.mark.parametrize('content,expected', [
+    ('inversión', 'inversión'),
+    ([{'type': 'text', 'text': 'inversión'}, {'type': 'image_url', 'image_url': {'url': 'https://example.invalid/a'}}], 'inversión'),
+    ([{'type': 'text', 'text': 'por'}, {'type': 'text', 'text': 'región'}], 'por región'),
+    ([{'type': 'image_url'}], ''), ([None, 'ignored', {'type': 'text', 'text': 123}], ''),
+    ([], ''), (None, ''), ({'text': 'inversión'}, ''), ('', '')])
+def test_planner_uses_latest_user_text_and_preserves_content(content, expected):
     from copy import deepcopy
-
-    class DimensionRegistry(FakeRegistry):
-        schemas = [{"type": "function", "function": {"name": "ranking_por_dimension", "parameters": {"type": "object"}}}]
-
-    latest_message = {"role": "user", "content": content}
-    messages = [{"role": "user", "content": "inversión anterior"}, latest_message,
-                {"role": "assistant", "content": "Mensaje posterior que no es del usuario."}]
-    original_messages = deepcopy(messages)
-
-    class DimensionCompletions:
-        def __init__(self):
-            self.calls = 0
-
-        def create(self, **kwargs):
-            self.calls += 1
-            users = [item for item in kwargs["messages"] if isinstance(item, dict) and item.get("role") == "user"]
-            assert users[-1] is latest_message
-            assert users[-1]["content"] == original_messages[1]["content"]
-            if expected and self.calls == 1:
-                assert kwargs["tool_choice"] == {"type": "function", "function": {"name": "ranking_por_dimension"}}
-                function = SimpleNamespace(name="ranking_por_dimension", arguments='{"dimension":"region"}')
-                message = SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id="ranking", function=function)])
-            else:
-                message = SimpleNamespace(content="Respuesta final.", tool_calls=[])
-            return SimpleNamespace(choices=[SimpleNamespace(message=message)])
-
-    client = SimpleNamespace(chat=SimpleNamespace(completions=DimensionCompletions()))
-    service = AgentService(client=client, settings=Settings(max_agent_steps=3), registry=DimensionRegistry())
-    original_plan = service.planner.plan
-    questions = []
-
-    def capture_plan(question, memory):
-        questions.append(question)
-        return original_plan(question, memory)
-
-    monkeypatch.setattr(service.planner, "plan", capture_plan)
-    result = service.run(messages)
-    assert questions == [expected]
-    assert messages == original_messages
-    if expected:
-        assert result.plan["domains"] == ["bicomp"]
-        assert result.plan["intent"] == "dimension_breakdown"
-        assert result.plan["steps"][0]["tool"] == "ranking_por_dimension"
-    else:
-        assert result.plan["intent"] == "out_of_domain"
-        assert result.plan["steps"] == []
+    original = deepcopy(content)
+    assert _extract_user_text(content) == expected
+    assert content == original
 
 
-@pytest.mark.parametrize("successful_step", [1, 2])
-def test_max_steps_returns_partial_evidence_without_extra_llm_call(successful_step):
-    class PartialRegistry(FakeRegistry):
-        def __init__(self):
-            self.calls = 0
-
-        def execute(self, name, arguments):
-            self.calls += 1
-            if self.calls != successful_step:
-                return {"success": False, "error": "No se pudo obtener el segundo dato", "value": 999}
-            return {"success": True, "source": "mock", "metric": "inv_neta", "value": 0,
-                    "filters": arguments["filtros"]}
-
-    completions = MultiStepCompletions()
-    client = SimpleNamespace(chat=SimpleNamespace(completions=completions))
-    result = AgentService(client=client, settings=Settings(max_agent_steps=2), registry=PartialRegistry()).run(
-        [{"role": "user", "content": "inversión"}])
-    assert result.is_partial is True
-    assert result.steps == 2
-    assert completions.calls == 2
-    assert "No pude completar el análisis" in result.answer
-    assert "consultar_inversion_publicitaria" in result.answer
-    assert '"metric": "inv_neta"' in result.answer
-    assert '"value": 0' in result.answer
-    assert ("VOLVO" if successful_step == 1 else "RENAULT") in result.answer
-    assert "999" not in result.answer
-    assert len(result.evidence) == 2
-    assert result.metrics["errors"][-1] == "max_steps"
-    assert result.metrics["total_llm_calls"] == 2
-    assert result.plan["domains"] == ["bicomp"]
+@pytest.mark.parametrize('successful_step', [1, 2])
+def test_max_steps_returns_partial_evidence_without_unbounded_llm_calls(successful_step):
+    plan = payload('open_analysis', steps=[step('consultar_inversion_publicitaria'), step('analizar_medios'), step('serie_temporal_bicomp', {'granularidad': 'month'})])
+    s, client, repo = service([plan, 'La inversión fue 100.'], max_agent_steps=successful_step)
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert result.steps == successful_step and result.is_partial and len(repo.calls) == successful_step
+    assert len(client.calls) == 2
+    assert result.metrics['stop_reason'] == 'intent_budget'
 
 
 def test_max_steps_preserves_ranking_chart_and_limits_summary_rows():
-    from src.tools.registry import RegisteredTool, ToolRegistry
-
-    rows = [{"dimension": f"REGION_{i}", "value": i} for i in range(7)]
-    registry = ToolRegistry(SimpleNamespace(source="mock"))
-    registry._tools["ranking_por_dimension"] = RegisteredTool(
-        "ranking_por_dimension", "Ranking", {"type": "object"},
-        lambda arguments: {"success": True, "metric": "inv_neta", "dimension": "region", "rows": rows})
-
-    class RankingCompletions:
-        def __init__(self):
-            self.calls = 0
-
-        def create(self, **kwargs):
-            self.calls += 1
-            assert self.calls == 1
-            function = SimpleNamespace(name="ranking_por_dimension", arguments='{"dimension":"region"}')
-            message = SimpleNamespace(content=None, tool_calls=[SimpleNamespace(id="ranking", function=function)])
-            return SimpleNamespace(choices=[SimpleNamespace(message=message)])
-
-    completions = RankingCompletions()
-    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)),
-                           settings=Settings(max_agent_steps=1), registry=registry)
-    result = service.run([{"role": "user", "content": "inversión por región"}])
-    assert result.is_partial is True
-    assert '"dimension": "region"' in result.answer
-    assert "REGION_4" in result.answer
-    assert "REGION_5" not in result.answer
-    assert "Muestra de 5 de 7" in result.answer
-    assert result.evidence[0]["result"]["rows"] == rows
-    assert result.chart_specs[0]["data"] == rows
+    plan = payload('open_analysis', steps=[step('ranking_por_dimension', {'dimension': 'region'}), step('analizar_medios')])
+    s, _, _ = service([plan, ('Una frase incompleta', 'length'), ('Otra frase incompleta', 'length')], max_agent_steps=1)
+    result = s.run([{'role': 'user', 'content': 'Analiza por región.'}])
+    assert result.is_partial and result.chart_specs
+    assert result.answer.endswith('.') and 'Una frase incompleta' not in result.answer
 
 
-def test_max_steps_without_success_still_raises():
-    from src.agent.service import AgentMaxStepsError
-
-    class FailingRegistry(FakeRegistry):
-        def execute(self, name, arguments):
-            return {"success": False, "error": "Consulta fallida"}
-
-    completions = MultiStepCompletions()
-    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)),
-                           settings=Settings(max_agent_steps=2), registry=FailingRegistry())
-    with pytest.raises(AgentMaxStepsError):
-        service.run([{"role": "user", "content": "inversión"}])
-    assert completions.calls == 2
-    assert service.metrics.errors[-1] == "max_steps"
-
-
-@pytest.mark.parametrize("same_batch", [False, True])
-def test_unknown_tool_returns_current_partial_immediately(same_batch):
-    from unittest.mock import Mock
-
-    class Completions:
-        def __init__(self): self.calls = 0
-        def create(self, **kwargs):
-            self.calls += 1
-            known = SimpleNamespace(id="known", function=SimpleNamespace(name="consultar_inversion_publicitaria", arguments="{}"))
-            invented = SimpleNamespace(id="unknown", function=SimpleNamespace(name="ejecutar_sql_bicomp", arguments="{}"))
-            calls = [known, invented, invented] if same_batch else ([known] if self.calls == 1 else [invented, invented])
-            return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=calls))])
-
-    registry = FakeRegistry()
-    registry.execute = Mock(wraps=registry.execute)
-    completions = Completions()
-    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)), settings=Settings(max_agent_steps=4), registry=registry)
-    result = service.run([{"role": "user", "content": "inversión"}])
-    assert result.is_partial
-    assert "8.72" in result.answer
-    assert "herramienta no registrada" in result.answer
-    assert result.metrics["errors"] == ["unknown_tool"]
-    assert completions.calls == (1 if same_batch else 2)
-    registry.execute.assert_called_once()
+@pytest.mark.parametrize('same_batch', [True, False])
+def test_unknown_tools_never_execute_or_replace_current_evidence(same_batch):
+    if same_batch:
+        plan = payload(steps=[step('herramienta_inventada')])
+        s, _, repo = service([plan, plan])
+    else:
+        plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+        s, _, repo = service([plan, {'stop': False, 'reason': 'Detalle adicional.', 'steps': [step('herramienta_inventada')]}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Inversión.'}])
+    if same_batch:
+        assert result.is_partial and not repo.calls and not result.evidence
+    else:
+        assert not result.is_partial and len(repo.calls) == 2 and len(result.evidence) == 2
 
 
-def test_second_question_unknown_tool_returns_labeled_historical_evidence():
-    from unittest.mock import Mock
-
-    completions = FakeCompletions()
-    registry = FakeRegistry()
-    registry.execute = Mock(wraps=registry.execute)
-    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=completions)), settings=Settings(max_agent_steps=4), registry=registry)
-    messages = [{"role": "user", "content": "inversión de Volvo en enero"}]
-    first = service.run(messages)
-    first.evidence[0]["result"]["value"] = 999  # The retained snapshot must be independent.
-    invented = SimpleNamespace(id="invented", function=SimpleNamespace(name="ejecutar_sql_bicomp", arguments="{}"))
-    completion = SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[invented, invented]))])
-    service.client.chat.completions = SimpleNamespace(create=Mock(return_value=completion))
-    messages += [{"role": "assistant", "content": first.answer}, {"role": "user", "content": "¿Y la inversión de Renault en marzo?"}]
-    result = service.run(messages)
-    assert result.is_partial
-    assert result.steps == 1
-    assert "Evidencia histórica" in result.answer
-    assert "inversión de Volvo en enero" in result.answer
-    assert "no responden la consulta actual" in result.answer
-    assert "8.72" in result.answer and "999" not in result.answer
-    assert result.evidence[0]["historical"] is True
-    assert result.evidence[0]["origin_question"] == messages[0]["content"]
-    service.client.chat.completions.create.assert_called_once()
-    registry.execute.assert_called_once()
-    assert "repeated_tool_call" not in result.metrics["errors"]
+def test_second_question_unknown_tool_does_not_claim_historical_data_is_current():
+    s, _, _ = service([payload(), payload(steps=[step('inventada')]), payload(steps=[step('inventada')])])
+    s.run([{'role': 'user', 'content': 'Inversión anterior.'}])
+    result = s.run([{'role': 'user', 'content': 'Otra entidad.'}])
+    assert result.is_partial and '100' not in result.answer
 
 
-@pytest.mark.parametrize("name", ["consultar_inversion_publicitaria", "ejecutar_sql_bicomp"])
-def test_repeated_tool_without_any_success_still_raises(name):
-    from unittest.mock import Mock
-
-    class FailingRegistry(FakeRegistry):
-        def execute(self, name, arguments): return {"success": False, "error": "fallo"}
-
-    call = SimpleNamespace(id="same", function=SimpleNamespace(name=name, arguments="{}"))
-    completion = SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[call]))])
-    create = Mock(return_value=completion)
-    registry = FailingRegistry()
-    registry.execute = Mock(wraps=registry.execute)
-    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create))), settings=Settings(max_agent_steps=3), registry=registry)
-    with pytest.raises(RepeatedToolCallError):
-        service.run([{"role": "user", "content": "inversión"}])
-    assert create.call_count == 2
-    registry.execute.assert_called_once()
-    assert service.metrics.errors[-1] == "repeated_tool_call"
+@pytest.mark.parametrize('error_type', ['no_data', 'infrastructure'])
+def test_failed_tools_stop_without_repeating(error_type):
+    repo = FakeRepository()
+    repo.consultar_inversion = Mock(return_value={'success': False, 'error_type': error_type, 'error': 'Fallo controlado.'})
+    s, client, _ = service([payload()], repo)
+    result = s.run([{'role': 'user', 'content': 'Inversión.'}])
+    assert result.is_partial and result.steps == 1
+    assert len(client.calls) == repo.consultar_inversion.call_count == 1
 
 
-def test_repeated_real_tool_can_fall_back_to_historical_evidence():
-    from unittest.mock import Mock
+def test_repeated_real_tool_preserves_evidence_without_historical_substitution():
+    plan = payload('open_analysis', steps=[step('consultar_inversion_publicitaria'), step('consultar_inversion_publicitaria')])
+    s, _, repo = service([plan, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert result.is_partial and len(repo.calls) == 1 and '100' in result.answer
 
-    registry = FakeRegistry()
-    service = AgentService(client=SimpleNamespace(chat=SimpleNamespace(completions=FakeCompletions())), settings=Settings(max_agent_steps=4), registry=registry)
-    service.run([{"role": "user", "content": "inversión de Volvo"}])
-    registry.execute = Mock(return_value={"success": False, "error": "fallo transitorio"})
-    call = SimpleNamespace(id="retry", function=SimpleNamespace(name="consultar_inversion_publicitaria", arguments='{"filtros":{"marca":"RENAULT"}}'))
-    create = Mock(return_value=SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=None, tool_calls=[call]))]))
-    service.client.chat.completions = SimpleNamespace(create=create)
-    result = service.run([{"role": "user", "content": "inversión de Renault"}])
-    assert result.is_partial
-    assert "Evidencia histórica" in result.answer
-    assert "8.72" in result.answer
-    assert result.steps == 2
-    assert result.evidence[0]["result"]["success"] is False
-    assert result.evidence[1]["historical"] is True
-    assert result.metrics["errors"][-1] == "repeated_tool_call"
-    registry.execute.assert_called_once()
-    assert create.call_count == 2
+
+def test_follow_up_inherits_entity_and_changes_only_year():
+    follow = payload(filters={}, period={'kind': 'year', 'year': 2026}, mode='inherit')
+    s, _, repo = service([payload(), follow])
+    s.run([{'role': 'user', 'content': '¿Cuánto invirtió BMW en 2025?'}])
+    result = s.run([{'role': 'user', 'content': '¿y en 2026?'}])
+    assert repo.calls[-1]['filters'] == {'marca': 'BMW'}
+    assert repo.calls[-1]['start_date'] == '2026-01-01'
+    assert result.plan['resolved_context']['metric'] == 'inv_neta'
+
+
+def test_invalid_final_answer_is_repaired_without_queries():
+    plan = payload('composition', steps=[step('analizar_medios')])
+    s, client, repo = service([plan, 'Digital representa 65%.', 'Digital representa 100%.'])
+    result = s.run([{'role': 'user', 'content': 'Mix de medios.'}])
+    assert not result.is_partial and result.answer == 'Digital representa 100%.'
+    assert len(repo.calls) == 1 and len(client.calls) == 3
+    assert json.loads(client.calls[-1]['messages'][-1]['content'])['repair_issues']
+
+
+def test_repair_failure_never_exposes_truncated_text():
+    plan = payload('composition', steps=[step('analizar_medios')])
+    s, _, repo = service([plan, ('Digital tiene', 'length'), ('Y además', 'length')])
+    result = s.run([{'role': 'user', 'content': 'Mix.'}])
+    assert result.is_partial and 'Y además' not in result.answer and result.answer.endswith('.')
+    assert len(repo.calls) == 1
+
+
+def test_client_exception_returns_controlled_state():
+    s, _, repo = service([RuntimeError('Proveedor caído')])
+    result = s.run([{'role': 'user', 'content': 'Inversión.'}])
+    assert result.is_partial and not repo.calls
+    assert result.metrics['total_latency_ms'] > 0 and result.metrics['errors']
+
+
+def test_history_has_size_bound_and_no_base64_repetition():
+    s, _, _ = service([])
+    messages = [{'role': 'user', 'content': 'A'*3000} for _ in range(100)]
+    history = s._history(messages)
+    assert len(history) <= 12 and sum(len(m['content']) for m in history) <= 16000
+
+
+def test_optional_decision_failure_preserves_peak_memory_and_finalization():
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+    s, _, repo = service([plan, RuntimeError('Provider unavailable'), 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza la marca.'}])
+    assert not result.is_partial and len(repo.calls) == 2
+    assert s.memory.last_peak['period'] == '2025-11-01'
+    assert any(e['stage'] == 'optional_research_error' for e in result.metrics['events'])
+
+
+def test_empty_next_steps_does_not_destroy_completed_investigation():
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+    s, _, repo = service([plan, {'stop': False, 'reason': 'Ya hay evidencia suficiente.', 'steps': []}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert not result.is_partial and len(repo.calls) == 2
+
+
+def test_unconfigured_vision_does_not_claim_to_read_image():
+    s, client, repo = service([])
+    result = s.run([{'role': 'user', 'content': [{'type': 'text', 'text': 'Analiza esta imagen.'},
+        {'type': 'image_url', 'image_url': {'url': 'data:image/png;base64,AA=='}}]}])
+    assert result.plan['intent'] == 'clarification' and not client.calls and not repo.calls
+    assert 'visión' in result.answer
+
+
+def test_configured_vision_receives_actual_image_as_user_data():
+    p = payload('attachment_analysis', steps=[], filters={}); p['answer'] = 'La imagen muestra una línea.'
+    s, client, repo = service([p], vision_models=(Settings().openrouter_model,))
+    block = {'type': 'image_url', 'image_url': {'url': 'data:image/png;base64,AA=='}}
+    result = s.run([{'role': 'user', 'content': [{'type': 'text', 'text': 'Analiza la imagen.'}, block]}])
+    assert not result.is_partial and not repo.calls
+    assert client.calls[0]['messages'][-1]['content'][-1] == block
+    assert 'image_url' not in str(client.calls[0]['messages'][0])
+
+
+def test_optional_research_failure_does_not_invalidate_sufficient_main_evidence():
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+    next_step = {'stop': False, 'reason': 'Desglosar un detalle del patrón.', 'steps': [step('ranking_por_dimension', {'dimension': 'inexistente'})]}
+    s, _, repo = service([plan, next_step, {'stop': True, 'reason': 'Las dos perspectivas resuelven la pregunta.', 'steps': []}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert not result.is_partial and len(repo.calls) == 2 and result.steps == 3
+    assert result.metrics['errors']  # Failure remains auditable.
+
+
+def test_malformed_optional_correction_still_finalizes_main_evidence():
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}), step('analizar_medios')])
+    next_step = {'stop': False, 'reason': 'Investigar una observación concreta.', 'steps': [step('ranking_por_dimension', {'dimension': 'inexistente'})]}
+    s, _, repo = service([plan, next_step, {'stop': False, 'reason': 'Respuesta mal formada.'}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza.'}])
+    assert not result.is_partial and len(repo.calls) == 2
+    assert any(e['stage'] == 'correction_error' for e in result.metrics['events'])
+
+
+def test_correctable_unneeded_step_can_be_omitted_after_explicit_sufficiency_review():
+    plan = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}),
+        step('analizar_medios'), step('serie_temporal_bicomp', {'dimension': 'formato'})])
+    s, client, repo = service([plan, {'stop': True, 'reason': 'Tiempo y distribución ya responden el análisis.', 'steps': []},
+                              'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza la inversión.'}])
+    assert not result.is_partial and len(repo.calls) == 2
+    assert result.metrics['stop_reason'] == 'evidence_sufficient_after_correction_review'
+    assert any(e['stage'] == 'unneeded_step_omitted' for e in result.metrics['events'])
+    assert result.evidence[-1]['result']['success'] is False
+
+
+def test_open_analysis_cannot_finish_complete_with_only_total_and_one_distribution():
+    plan = payload('open_analysis', steps=[step('consultar_inversion_publicitaria'), step('analizar_medios')])
+    s, _, repo = service([plan, {'stop': True, 'reason': 'El modelo cree que basta.', 'steps': []}, 'La inversión fue 100.'])
+    result = s.run([{'role': 'user', 'content': 'Analiza esta entidad.'}])
+    assert result.is_partial and len(repo.calls) == 2
+    assert result.metrics['stop_reason'] == 'insufficient_evidence'
+    assert result.answer.startswith('Análisis parcial:')

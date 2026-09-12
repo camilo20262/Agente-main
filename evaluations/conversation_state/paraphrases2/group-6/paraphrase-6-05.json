@@ -1,0 +1,1837 @@
+{
+  "id": "paraphrase-6-05",
+  "question": "Ahora ordena las empresas por volumen de inversión en prensa en 2024.",
+  "elapsed_s": 8.11,
+  "memory_before": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "last_entities": {},
+    "last_filters": {
+      "medio_agrupado": [
+        "TV ABIERTA",
+        "TV CABLE"
+      ]
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "TV ABIERTA",
+          "TV CABLE"
+        ]
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {
+        "start": "2022-01-01",
+        "end": "2022-12-31"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "percent",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Ranking de anunciantes por inversión neta en televisión en 2024",
+            "arguments": {
+              "metrica": "inv_neta",
+              "dimension": "anunciante",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "change_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Ranking de anunciantes por inversión neta en televisión en 2023",
+            "arguments": {
+              "metrica": "inv_neta",
+              "dimension": "anunciante",
+              "fecha_inicio": "2023-01-01",
+              "fecha_fin": "2023-12-31",
+              "filtros": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "asc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "anunciante",
+              "criterio": "absolute",
+              "orden": "asc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "percent",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 10
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "TV ABIERTA",
+          "TV CABLE"
+        ]
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {
+        "start": "2022-01-01",
+        "end": "2022-12-31"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "percent",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "TV ABIERTA",
+          "TV CABLE"
+        ]
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {
+        "start": "2022-01-01",
+        "end": "2022-12-31"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "percent",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "TV ABIERTA",
+          "TV CABLE"
+        ]
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {
+        "start": "2022-01-01",
+        "end": "2022-12-31"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "percent",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "percent",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 10
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Muestra las marcas que más incrementaron porcentualmente en 2023 frente a 2022.",
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "period": {
+          "kind": "year",
+          "year": 2023
+        },
+        "comparison_period": {
+          "kind": "year",
+          "year": 2022
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "percent",
+          "direction": "desc",
+          "limit": 10
+        }
+      },
+      "status": "planned_evidence_complete"
+    }
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "last_entities": {},
+    "last_filters": {
+      "medio_agrupado": [
+        "TV ABIERTA",
+        "TV CABLE"
+      ]
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "PRENSA"
+        ]
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Ranking de anunciantes por inversión neta en televisión en 2024",
+            "arguments": {
+              "metrica": "inv_neta",
+              "dimension": "anunciante",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "change_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_por_dimension",
+            "purpose": "Ranking de anunciantes por inversión neta en televisión en 2023",
+            "arguments": {
+              "metrica": "inv_neta",
+              "dimension": "anunciante",
+              "fecha_inicio": "2023-01-01",
+              "fecha_fin": "2023-12-31",
+              "filtros": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "asc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "anunciante",
+              "criterio": "absolute",
+              "orden": "asc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "percent",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "ranking_cambio_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+            "arguments": {
+              "dimension": "marca",
+              "criterio": "percent",
+              "orden": "desc",
+              "aceleracion": false,
+              "limite": 10
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+        "arguments": {
+          "metrica": "inv_neta",
+          "dimension": "anunciante",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "medio_agrupado": [
+              "PRENSA"
+            ]
+          }
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "PRENSA"
+        ]
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "TV ABIERTA",
+          "TV CABLE"
+        ]
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {
+        "start": "2022-01-01",
+        "end": "2022-12-31"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "percent",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "TV ABIERTA",
+          "TV CABLE"
+        ]
+      },
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {
+        "start": "2022-01-01",
+        "end": "2022-12-31"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "percent",
+        "direction": "desc",
+        "limit": 10
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+        "arguments": {
+          "metrica": "inv_neta",
+          "dimension": "anunciante",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "medio_agrupado": [
+              "PRENSA"
+            ]
+          }
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Ahora ordena las empresas por volumen de inversión en prensa en 2024.",
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {
+          "medio_agrupado": [
+            "PRENSA"
+          ]
+        },
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "analysis": {}
+      },
+      "status": "controlled_error"
+    }
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "ranking",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {
+        "medio_agrupado": [
+          "PRENSA"
+        ]
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [
+        "anunciante"
+      ],
+      "analysis": {},
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+          "arguments": {
+            "metrica": "inv_neta",
+            "dimension": "anunciante",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {
+              "medio_agrupado": [
+                "PRENSA"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "intent": "ranking",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {
+        "medio_agrupado": "PRENSA"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [
+        "anunciante"
+      ],
+      "analysis": {},
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+          "arguments": {
+            "metrica": "inv_neta",
+            "dimension": "anunciante",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {
+              "medio_": "PRENSA"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "ranking",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "ranking_por_dimension",
+        "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+        "arguments": {
+          "metrica": "inv_neta",
+          "dimension": "anunciante",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "medio_agrupado": [
+              "PRENSA"
+            ]
+          }
+        }
+      }
+    ],
+    "scope": {
+      "intent": "ranking",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {
+        "medio_agrupado": [
+          "PRENSA"
+        ]
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [
+        "anunciante"
+      ],
+      "analysis": {}
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 2,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "medio_agrupado": [
+          "PRENSA"
+        ]
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "anunciante"
+      ],
+      "intent": "ranking",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {
+    "metric": "inv_neta",
+    "filters": {
+      "medio_agrupado": [
+        "TV ABIERTA",
+        "TV CABLE"
+      ]
+    },
+    "requested_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "comparison_period": {
+      "start": "2022-01-01",
+      "end": "2022-12-31"
+    },
+    "dimensions": [
+      "marca"
+    ],
+    "intent": "ranking_change",
+    "analysis": {
+      "change_basis": "percent",
+      "direction": "desc",
+      "limit": 10
+    },
+    "operation": "new_analysis",
+    "observed_period": {},
+    "available_period": {
+      "start": "2019-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+          "arguments": {
+            "metrica": "inv_neta",
+            "dimension": "anunciante",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {
+              "medio_agrupado": [
+                "PRENSA"
+              ]
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {
+          "medio_agrupado": [
+            "PRENSA"
+          ]
+        },
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [
+          "anunciante"
+        ],
+        "analysis": {}
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "PRENSA"
+          ]
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "anunciante"
+        ],
+        "intent": "ranking",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 8,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 111479628,
+      "bigquery_queries": 8,
+      "total_latency_ms": 49569.39999999999,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 74001,
+      "output_tokens": 1974,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2447.01
+        },
+        {
+          "stage": "catalog_validation",
+          "dimension": "medio",
+          "values": [
+            "CABLE",
+            "DIGITAL",
+            "OOH",
+            "PRENSA",
+            "PUBLICIDAD EXTERIOR",
+            "RADIO",
+            "REVISTA",
+            "REVISTAS DE PRENSA",
+            "TELEVISION NACIONAL",
+            "TELEVISION REGIONAL",
+            "TV ABIERTA",
+            "TV NAL",
+            "TV PAGA",
+            "TV PAGADA",
+            "TV REG",
+            "TV SUSCRIPCION",
+            "VIA PUBLICA"
+          ],
+          "evidence": {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`medio` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "limit": "1000"
+            },
+            "bytes_processed": 0,
+            "job_id": "a230fb73-2969-4b5f-9d36-6e5ca057a853",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T00:02:24.830222+00:00",
+            "duration_ms": 1159.26,
+            "rows": 17
+          }
+        },
+        {
+          "stage": "catalog_validation",
+          "dimension": "medio_agrupado",
+          "values": [
+            "DIARIOS",
+            "DIGITAL",
+            "OOH",
+            "RADIO",
+            "REVISTAS",
+            "TV ABIERTA",
+            "TV CABLE"
+          ],
+          "evidence": {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "limit": "1000"
+            },
+            "bytes_processed": 0,
+            "job_id": "1b707a10-f241-401f-8a13-fae895163b01",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T00:02:26.356408+00:00",
+            "duration_ms": 1049.83,
+            "rows": 7
+          }
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "Valores inexistentes para medio_agrupado: ['PRENSA']. Corrige la pareja dimensión/valor usando confirmed_filter_catalogs; no inventes etiquetas.",
+          "rejected_plan": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {
+              "medio_agrupado": [
+                "PRENSA"
+              ]
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [
+              "anunciante"
+            ],
+            "analysis": {},
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "dimension": "anunciante",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "medio_agrupado": [
+                      "PRENSA"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 5621.8
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "Filtro fuera del modelo semántico.",
+          "rejected_plan": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {
+              "medio_agrupado": "PRENSA"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [
+              "anunciante"
+            ],
+            "analysis": {},
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "dimension": "anunciante",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "medio_": "PRENSA"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "Filtro fuera del modelo semántico."
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "last_entities": {},
+            "last_filters": {
+              "medio_agrupado": [
+                "TV ABIERTA",
+                "TV CABLE"
+              ]
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {
+                "start": "2022-01-01",
+                "end": "2022-12-31"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "percent",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Ranking de anunciantes por inversión neta en televisión en 2024",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "dimension": "anunciante",
+                      "fecha_inicio": "2024-01-01",
+                      "fecha_fin": "2024-12-31",
+                      "filtros": {
+                        "medio_agrupado": [
+                          "TV ABIERTA",
+                          "TV CABLE"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2023-01-01",
+                  "end": "2023-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking",
+                "analysis": {},
+                "operation": "change_period",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Ranking de anunciantes por inversión neta en televisión en 2023",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "dimension": "anunciante",
+                      "fecha_inicio": "2023-01-01",
+                      "fecha_fin": "2023-12-31",
+                      "filtros": {
+                        "medio_agrupado": [
+                          "TV ABIERTA",
+                          "TV CABLE"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {
+                  "start": "2023-01-01",
+                  "end": "2023-12-31"
+                },
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "asc",
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "anunciante",
+                      "criterio": "absolute",
+                      "orden": "asc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "percent",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 10
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {
+                "start": "2022-01-01",
+                "end": "2022-12-31"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "percent",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {
+                "start": "2022-01-01",
+                "end": "2022-12-31"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "percent",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {
+                "start": "2022-01-01",
+                "end": "2022-12-31"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "percent",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "percent",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 10
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Muestra las marcas que más incrementaron porcentualmente en 2023 frente a 2022.",
+              "scope": {
+                "intent": "ranking_change",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2023
+                },
+                "comparison_period": {
+                  "kind": "year",
+                  "year": 2022
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "analysis": {
+                  "change_basis": "percent",
+                  "direction": "desc",
+                  "limit": 10
+                }
+              },
+              "status": "planned_evidence_complete"
+            }
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "last_entities": {},
+            "last_filters": {
+              "medio_agrupado": [
+                "TV ABIERTA",
+                "TV CABLE"
+              ]
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "PRENSA"
+                ]
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Ranking de anunciantes por inversión neta en televisión en 2024",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "dimension": "anunciante",
+                      "fecha_inicio": "2024-01-01",
+                      "fecha_fin": "2024-12-31",
+                      "filtros": {
+                        "medio_agrupado": [
+                          "TV ABIERTA",
+                          "TV CABLE"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2023-01-01",
+                  "end": "2023-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking",
+                "analysis": {},
+                "operation": "change_period",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_por_dimension",
+                    "purpose": "Ranking de anunciantes por inversión neta en televisión en 2023",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "dimension": "anunciante",
+                      "fecha_inicio": "2023-01-01",
+                      "fecha_fin": "2023-12-31",
+                      "filtros": {
+                        "medio_agrupado": [
+                          "TV ABIERTA",
+                          "TV CABLE"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {
+                  "start": "2023-01-01",
+                  "end": "2023-12-31"
+                },
+                "dimensions": [
+                  "anunciante"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "asc",
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "anunciante",
+                      "criterio": "absolute",
+                      "orden": "asc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "medio_agrupado": [
+                    "TV ABIERTA",
+                    "TV CABLE"
+                  ]
+                },
+                "requested_period": {
+                  "start": "2023-01-01",
+                  "end": "2023-12-31"
+                },
+                "comparison_period": {
+                  "start": "2022-01-01",
+                  "end": "2022-12-31"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "ranking_change",
+                "analysis": {
+                  "change_basis": "percent",
+                  "direction": "desc",
+                  "limit": 10
+                },
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "ranking_cambio_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "criterio": "percent",
+                      "orden": "desc",
+                      "aceleracion": false,
+                      "limite": 10
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "dimension": "anunciante",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "medio_agrupado": [
+                      "PRENSA"
+                    ]
+                  }
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "PRENSA"
+                ]
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "anunciante"
+              ],
+              "intent": "ranking",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {
+                "start": "2022-01-01",
+                "end": "2022-12-31"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "percent",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "medio_agrupado": [
+                  "TV ABIERTA",
+                  "TV CABLE"
+                ]
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {
+                "start": "2022-01-01",
+                "end": "2022-12-31"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "percent",
+                "direction": "desc",
+                "limit": 10
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Ranking de anunciantes por inversión neta en prensa en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "dimension": "anunciante",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "medio_agrupado": [
+                      "PRENSA"
+                    ]
+                  }
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Ahora ordena las empresas por volumen de inversión en prensa en 2024.",
+              "scope": {
+                "intent": "ranking",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "filters": {
+                  "medio_agrupado": [
+                    "PRENSA"
+                  ]
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2024
+                },
+                "dimensions": [
+                  "anunciante"
+                ],
+                "analysis": {}
+              },
+              "status": "controlled_error"
+            }
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 28259,
+        "output_tokens": 453,
+        "cache_hits": 0,
+        "total_latency_ms": 8109.989999999998
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  }
+}

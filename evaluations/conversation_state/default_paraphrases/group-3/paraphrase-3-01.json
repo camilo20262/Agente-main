@@ -1,0 +1,1064 @@
+{
+  "id": "paraphrase-3-01",
+  "question": "Para Toyota durante 2024, localiza la semana con más inversión.",
+  "elapsed_s": 8.67,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "Toyota"
+      ]
+    },
+    "last_filters": {
+      "marca": "Toyota"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {}
+    },
+    "last_peak": {
+      "period": "2024-04-01",
+      "value": 1233020.5176674002,
+      "source_rows": 324,
+      "rank": 1,
+      "share_of_total_pct": 30.81176763055432,
+      "is_peak": true,
+      "total": 4001784.4235742004,
+      "change_from_previous_observation": {
+        "difference": 966463.1356981001,
+        "difference_pct": 362.5722643874892,
+        "ratio_a_over_b": 4.625722643874893
+      },
+      "granularity": "week"
+    },
+    "last_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "week",
+          "extremo": "max"
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {},
+      "available_period": {}
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "week",
+          "extremo": "max"
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Para Toyota durante 2024, localiza la semana con más inversión.",
+      "scope": {
+        "intent": "temporal_extrema",
+        "operation": "discover_extreme",
+        "scope_mode": "replace",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [],
+        "analysis": {
+          "granularity": "week",
+          "extreme": "max"
+        }
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "TOYOTA"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "temporal_extrema",
+      "operation": "discover_extreme",
+      "scope_mode": "replace",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [],
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      },
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Encontrar la semana de 2024 con mayor inversión neta para Toyota",
+          "arguments": {
+            "metrica": "inv_neta",
+            "granularity": "week",
+            "extremo": "max",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {
+              "marca": "Toyota"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "temporal_extrema",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "extremos_temporales_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "arguments": {
+          "granularidad": "week",
+          "extremo": "max"
+        }
+      }
+    ],
+    "scope": {
+      "intent": "temporal_extrema",
+      "operation": "discover_extreme",
+      "scope_mode": "replace",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [],
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      }
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Toyota"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "temporal_extrema",
+      "analysis": {
+        "granularity": "week",
+        "extreme": "max"
+      },
+      "operation": "discover_extreme",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "Inversión publicitaria neta, marca: TOYOTA (2024-01-01 a 2024-12-31): máximo observado en 2024-04-01, 1.233.020,52; granularidad week. Se evaluaron 12 periodos observados.\n\nExtremo entre periodos observados; periodos sin filas no se imputan como cero.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "extremos_temporales_bicomp",
+        "arguments": {
+          "granularidad": "week",
+          "extremo": "max",
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "TOYOTA"
+          },
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "TOYOTA"
+          },
+          "period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "requested_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-01"
+          },
+          "effective_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Extremo entre periodos observados; periodos sin filas no se imputan como cero."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "granularity": "week",
+          "rows": [
+            {
+              "period": "2024-01-01",
+              "value": 152370.29360930002,
+              "source_rows": 110,
+              "rank": 9,
+              "share_of_total_pct": 3.8075587658270265,
+              "is_peak": false,
+              "total": 4001784.4235742004
+            },
+            {
+              "period": "2024-01-29",
+              "value": 70467.7765059,
+              "source_rows": 139,
+              "rank": 11,
+              "share_of_total_pct": 1.7609088608266803,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -81902.51710340002,
+                "difference_pct": -53.75228672421555,
+                "ratio_a_over_b": 0.4624771327578445
+              }
+            },
+            {
+              "period": "2024-02-26",
+              "value": 266557.38196930004,
+              "source_rows": 334,
+              "rank": 7,
+              "share_of_total_pct": 6.660963054357233,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 196089.60546340005,
+                "difference_pct": 278.2684727493598,
+                "ratio_a_over_b": 3.7826847274935975
+              }
+            },
+            {
+              "period": "2024-04-01",
+              "value": 1233020.5176674002,
+              "source_rows": 324,
+              "rank": 1,
+              "share_of_total_pct": 30.81176763055432,
+              "is_peak": true,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 966463.1356981001,
+                "difference_pct": 362.5722643874892,
+                "ratio_a_over_b": 4.625722643874893
+              }
+            },
+            {
+              "period": "2024-04-29",
+              "value": 408279.25495900004,
+              "source_rows": 215,
+              "rank": 3,
+              "share_of_total_pct": 10.20243000981909,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -824741.2627084001,
+                "difference_pct": -66.88787825433973,
+                "ratio_a_over_b": 0.33112121745660267
+              }
+            },
+            {
+              "period": "2024-05-27",
+              "value": 189454.41663310002,
+              "source_rows": 186,
+              "rank": 8,
+              "share_of_total_pct": 4.734248439697021,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -218824.83832590003,
+                "difference_pct": -53.59685452249459,
+                "ratio_a_over_b": 0.46403145477505414
+              }
+            },
+            {
+              "period": "2024-07-01",
+              "value": 79018.56107930001,
+              "source_rows": 223,
+              "rank": 10,
+              "share_of_total_pct": 1.9745831538002852,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -110435.85555380001,
+                "difference_pct": -58.29151809517937,
+                "ratio_a_over_b": 0.4170848190482063
+              }
+            },
+            {
+              "period": "2024-07-29",
+              "value": 67984.6611188,
+              "source_rows": 49,
+              "rank": 12,
+              "share_of_total_pct": 1.6988586571107542,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -11033.899960500014,
+                "difference_pct": -13.963681203238835,
+                "ratio_a_over_b": 0.8603631879676117
+              }
+            },
+            {
+              "period": "2024-08-26",
+              "value": 277452.4208271,
+              "source_rows": 152,
+              "rank": 6,
+              "share_of_total_pct": 6.933217571457607,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 209467.7597083,
+                "difference_pct": 308.11032409540877,
+                "ratio_a_over_b": 4.0811032409540875
+              }
+            },
+            {
+              "period": "2024-09-30",
+              "value": 297221.4238094,
+              "source_rows": 227,
+              "rank": 4,
+              "share_of_total_pct": 7.4272222676087125,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 19769.002982300008,
+                "difference_pct": 7.125186698089564,
+                "ratio_a_over_b": 1.0712518669808957
+              }
+            },
+            {
+              "period": "2024-10-28",
+              "value": 678766.6541976,
+              "source_rows": 306,
+              "rank": 2,
+              "share_of_total_pct": 16.961599685356322,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 381545.23038819997,
+                "difference_pct": 128.3707027232581,
+                "ratio_a_over_b": 2.2837070272325812
+              }
+            },
+            {
+              "period": "2024-11-25",
+              "value": 281191.061198,
+              "source_rows": 119,
+              "rank": 5,
+              "share_of_total_pct": 7.026641903584944,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -397575.5929996,
+                "difference_pct": -58.57323581542049,
+                "ratio_a_over_b": 0.41426764184579506
+              }
+            }
+          ],
+          "row_count": 12,
+          "peak": {
+            "period": "2024-04-01",
+            "value": 1233020.5176674002,
+            "share_of_total_pct": 30.81176763055432,
+            "rank": 1
+          },
+          "statistics": {
+            "observations": 12,
+            "total": 4001784.4235742004,
+            "mean": 333482.03529785003,
+            "median": 272004.9013982,
+            "stddev": 316703.78008889407,
+            "coefficient_variation_pct": 94.96876789960501,
+            "slope_per_observed_period": 4186.036763306988,
+            "peak": {
+              "period": "2024-04-01",
+              "value": 1233020.5176674002,
+              "source_rows": 324,
+              "rank": 1,
+              "share_of_total_pct": 30.81176763055432,
+              "is_peak": true,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 966463.1356981001,
+                "difference_pct": 362.5722643874892,
+                "ratio_a_over_b": 4.625722643874893
+              }
+            },
+            "minimum": {
+              "period": "2024-07-29",
+              "value": 67984.6611188,
+              "source_rows": 49,
+              "rank": 12,
+              "share_of_total_pct": 1.6988586571107542,
+              "is_peak": false,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": -11033.899960500014,
+                "difference_pct": -13.963681203238835,
+                "ratio_a_over_b": 0.8603631879676117
+              }
+            },
+            "first_to_last": {
+              "difference": 128820.76758869996,
+              "difference_pct": 84.54454246771715,
+              "ratio_a_over_b": 1.8454454246771714
+            },
+            "last_acceleration": -779120.8233878,
+            "anomaly_method": "MAD robust z",
+            "anomaly_threshold": 3.5,
+            "minimum_observations": 6,
+            "anomaly_testable": true,
+            "anomalies": [
+              {
+                "period": "2024-04-01",
+                "value": 1233020.5176674002,
+                "source_rows": 324,
+                "rank": 1,
+                "share_of_total_pct": 30.81176763055432,
+                "is_peak": true,
+                "total": 4001784.4235742004,
+                "change_from_previous_observation": {
+                  "difference": 966463.1356981001,
+                  "difference_pct": 362.5722643874892,
+                  "ratio_a_over_b": 4.625722643874893
+                },
+                "robust_z_score": 5.065826373135476
+              }
+            ],
+            "limitations": [
+              "Picos descriptivos no demuestran causalidad ni estacionalidad."
+            ]
+          },
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 859.13
+          },
+          "evidence": {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), WEEK(MONDAY)) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "TOYOTA",
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "b39109dd-b955-428e-b2f5-c806db7dfc86",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T16:40:32.823031+00:00",
+            "duration_ms": 859.13,
+            "rows": 12
+          },
+          "capability": "temporal_extrema",
+          "extreme": "max",
+          "extrema": [
+            {
+              "period": "2024-04-01",
+              "value": 1233020.5176674002,
+              "source_rows": 324,
+              "rank": 1,
+              "share_of_total_pct": 30.81176763055432,
+              "is_peak": true,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 966463.1356981001,
+                "difference_pct": 362.5722643874892,
+                "ratio_a_over_b": 4.625722643874893
+              }
+            }
+          ],
+          "selected_extreme": {
+            "period": "2024-04-01",
+            "value": 1233020.5176674002,
+            "source_rows": 324,
+            "rank": 1,
+            "share_of_total_pct": 30.81176763055432,
+            "is_peak": true,
+            "total": 4001784.4235742004,
+            "change_from_previous_observation": {
+              "difference": 966463.1356981001,
+              "difference_pct": 362.5722643874892,
+              "ratio_a_over_b": 4.625722643874893
+            }
+          },
+          "evaluated_periods": 12
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "TOYOTA"
+        },
+        "row_count": 12,
+        "step": 1,
+        "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), WEEK(MONDAY)) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "TOYOTA",
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "b39109dd-b955-428e-b2f5-c806db7dfc86",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T16:40:32.823031+00:00",
+            "duration_ms": 859.13,
+            "rows": 12
+          }
+        ],
+        "latency_ms": 2742.99
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "temporal_extrema",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+          "arguments": {
+            "granularidad": "week",
+            "extremo": "max"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "temporal_extrema",
+        "operation": "discover_extreme",
+        "scope_mode": "replace",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [],
+        "analysis": {
+          "granularity": "week",
+          "extreme": "max"
+        }
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "week",
+          "extreme": "max"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 8665.26,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7786,
+      "output_tokens": 246,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 5899.39
+        },
+        {
+          "stage": "plan",
+          "intent": "temporal_extrema",
+          "scope": {
+            "intent": "temporal_extrema",
+            "operation": "discover_extreme",
+            "scope_mode": "replace",
+            "filters": {
+              "marca": "Toyota"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [],
+            "analysis": {
+              "granularity": "week",
+              "extreme": "max"
+            }
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "temporal_extrema",
+          "requested_scope": {
+            "intent": "temporal_extrema",
+            "operation": "discover_extreme",
+            "scope_mode": "replace",
+            "filters": {
+              "marca": "Toyota"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [],
+            "analysis": {
+              "granularity": "week",
+              "extreme": "max"
+            }
+          },
+          "inherited_scope": {},
+          "scope_mutations": {
+            "filters": {
+              "before": null,
+              "after": {
+                "marca": "Toyota"
+              }
+            },
+            "requested_period": {
+              "before": null,
+              "after": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              }
+            },
+            "comparison_period": {
+              "before": null,
+              "after": {}
+            },
+            "dimensions": {
+              "before": null,
+              "after": []
+            },
+            "intent": {
+              "before": null,
+              "after": "temporal_extrema"
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Toyota"
+            },
+            "requested_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [],
+            "intent": "temporal_extrema",
+            "analysis": {
+              "granularity": "week",
+              "extreme": "max"
+            },
+            "operation": "discover_extreme",
+            "observed_period": {},
+            "available_period": {}
+          },
+          "requirements": {
+            "capability": "temporal_extrema",
+            "dimension": null,
+            "analysis": {
+              "granularity": "week",
+              "extreme": "max"
+            },
+            "requires_reference": false,
+            "requires_series": true
+          },
+          "selected_capabilities": [
+            "temporal_extrema"
+          ],
+          "tools": [
+            "extremos_temporales_bicomp"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "extremos_temporales_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "sufficiency",
+          "requirements": {
+            "capability": "temporal_extrema",
+            "dimension": null,
+            "analysis": {
+              "granularity": "week",
+              "extreme": "max"
+            },
+            "requires_reference": false,
+            "requires_series": true
+          },
+          "sufficient": true,
+          "successful_evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {}
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "Toyota"
+              ]
+            },
+            "last_filters": {
+              "marca": "Toyota"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "granularity": "week",
+                "extreme": "max"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {}
+            },
+            "last_peak": {
+              "period": "2024-04-01",
+              "value": 1233020.5176674002,
+              "source_rows": 324,
+              "rank": 1,
+              "share_of_total_pct": 30.81176763055432,
+              "is_peak": true,
+              "total": 4001784.4235742004,
+              "change_from_previous_observation": {
+                "difference": 966463.1356981001,
+                "difference_pct": 362.5722643874892,
+                "ratio_a_over_b": 4.625722643874893
+              },
+              "granularity": "week"
+            },
+            "last_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "week",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "granularity": "week",
+                "extreme": "max"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {},
+              "available_period": {}
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "granularity": "week",
+                "extreme": "max"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Toyota"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "temporal_extrema",
+              "analysis": {
+                "granularity": "week",
+                "extreme": "max"
+              },
+              "operation": "discover_extreme",
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "extremos_temporales_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad temporal_extrema.",
+                "arguments": {
+                  "granularidad": "week",
+                  "extremo": "max"
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Para Toyota durante 2024, localiza la semana con más inversión.",
+              "scope": {
+                "intent": "temporal_extrema",
+                "operation": "discover_extreme",
+                "scope_mode": "replace",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2024
+                },
+                "dimensions": [],
+                "analysis": {
+                  "granularity": "week",
+                  "extreme": "max"
+                }
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "TOYOTA"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7786,
+        "output_tokens": 246,
+        "cache_hits": 0,
+        "total_latency_ms": 8665.26
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  }
+}

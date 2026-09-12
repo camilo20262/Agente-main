@@ -7,12 +7,15 @@ from pathlib import Path
 from typing import Any
 
 from src.agent.planner import AnalyticalPlanner
+from evaluations.state_evaluator import assess_state  # Shared semantic conversation evaluator.
 
 
-def evaluate_planner(tool_names: set[str], cases_path: Path | None = None) -> dict[str, Any]:
+def evaluate_planner(tool_names: set[str], cases_path: Path | None = None, *, interpreter=None) -> dict[str, Any]:
     path = cases_path or Path(__file__).with_name("media_intelligence_cases.json")
     cases = json.loads(path.read_text(encoding="utf-8"))
-    planner = AnalyticalPlanner(tool_names)
+    if interpreter is None:
+        raise ValueError("Proporcione un intérprete; para evaluación real use python -m evaluations.benchmark --live.")
+    planner = AnalyticalPlanner(tool_names, interpreter=interpreter)
     correct_domain = correct_tool = evaluated_tools = 0
     failures = []
     for case in cases:
@@ -33,5 +36,5 @@ def evaluate_planner(tool_names: set[str], cases_path: Path | None = None) -> di
         intent_match = case.get("expected_intent", plan.intent) == plan.intent
         if not (domain_match and tool_match and intent_match):
             failures.append({"question": case["question"], "expected_tool": case.get("expected_tool"), "predicted_tool": predicted_tool, "domains": plan.domains, "expected_intent": case.get("expected_intent"), "predicted_intent": plan.intent})
-    return {"cases": len(cases), "domain_accuracy": correct_domain / len(cases),
+    return {"cases": len(cases), "domain_accuracy": correct_domain / len(cases) if cases else 1.0,
             "tool_selection_accuracy": correct_tool / evaluated_tools if evaluated_tools else 1.0, "failures": failures}

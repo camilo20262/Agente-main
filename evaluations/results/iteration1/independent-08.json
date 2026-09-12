@@ -1,0 +1,378 @@
+{
+  "id": "independent-08",
+  "question": "¿Cómo se distribuyó la inversión por formato en 2025?",
+  "family": "composition",
+  "expected_no_data": false,
+  "elapsed_s": 25.11,
+  "result": {
+    "answer": "Análisis parcial: no pude producir una interpretación que superara la validación.\n\nInversión publicitaria neta para el alcance consultado. Entre 2025-01-01 y 2025-12-31.\n\n- None: 311.212.596,97.\n\n- N/A: 147.375.728,62.\n\n- DISPLAY: 4.672.878,01.\n\n- VIDEO: 673.026,26.\n\n- TEXT: 3.998,21.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "dimension": "formato",
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum",
+          "limite": 100,
+          "filtros": {}
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "formato",
+          "composition": {
+            "denominator_known": true,
+            "total": 463938228.06842875,
+            "shown_share_pct": 100.0,
+            "top3_share_pct": 99.85407012723054
+          },
+          "data_quality": {
+            "unknown_share_pct": 98.8468502590274
+          },
+          "rows": [
+            {
+              "dimension": null,
+              "value": 311212596.97122884,
+              "source_rows": 100989,
+              "rank": 1,
+              "share_pct": 67.08061076728656,
+              "total": 463938228.06842875,
+              "concentration_hhi": 5509.937849710878,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "N/A",
+              "value": 147375728.62195602,
+              "source_rows": 39881,
+              "rank": 2,
+              "share_pct": 31.766239491740865,
+              "total": 463938228.06842875,
+              "concentration_hhi": 5509.937849710878,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "DISPLAY",
+              "value": 4672878.009294801,
+              "source_rows": 3809,
+              "rank": 3,
+              "share_pct": 1.007219868203138,
+              "total": 463938228.06842875,
+              "concentration_hhi": 5509.937849710878,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "VIDEO",
+              "value": 673026.2575818002,
+              "source_rows": 924,
+              "rank": 4,
+              "share_pct": 0.14506807520128132,
+              "total": 463938228.06842875,
+              "concentration_hhi": 5509.937849710878,
+              "unknown_value": 458588325.5931848
+            },
+            {
+              "dimension": "TEXT",
+              "value": 3998.2083672999997,
+              "source_rows": 112,
+              "rank": 5,
+              "share_pct": 0.0008617975681689853,
+              "total": 463938228.06842875,
+              "concentration_hhi": 5509.937849710878,
+              "unknown_value": 458588325.5931848
+            }
+          ],
+          "row_count": 5,
+          "query_metadata": {
+            "bytes_processed": 13304677,
+            "duration_ms": 1848.92
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "100"
+            },
+            "bytes_processed": 13304677,
+            "job_id": "27dc646e-c1e7-4958-a840-ff549d774a11",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:51:43.504405+00:00",
+            "duration_ms": 1848.92,
+            "rows": 5
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 5,
+        "step": 1,
+        "purpose": "Obtener la distribución de la inversión neta por formato en 2025, ordenada por participación.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`formato` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "100"
+            },
+            "bytes_processed": 13304677,
+            "job_id": "27dc646e-c1e7-4958-a840-ff549d774a11",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:51:43.504405+00:00",
+            "duration_ms": 1848.92,
+            "rows": 5
+          }
+        ],
+        "latency_ms": 2355.46
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "composition",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener la distribución de la inversión neta por formato en 2025, ordenada por participación.",
+          "arguments": {
+            "dimension": "formato",
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum",
+            "limite": 100
+          }
+        }
+      ],
+      "scope": {
+        "intent": "composition",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "formato"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuál fue la distribución de la inversión neta por formato en 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "composition",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por formato — Inversión publicitaria neta · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": null,
+            "value": 311212596.97122884,
+            "source_rows": 100989,
+            "rank": 1,
+            "share_pct": 67.08061076728656,
+            "total": 463938228.06842875,
+            "concentration_hhi": 5509.937849710878,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "N/A",
+            "value": 147375728.62195602,
+            "source_rows": 39881,
+            "rank": 2,
+            "share_pct": 31.766239491740865,
+            "total": 463938228.06842875,
+            "concentration_hhi": 5509.937849710878,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "DISPLAY",
+            "value": 4672878.009294801,
+            "source_rows": 3809,
+            "rank": 3,
+            "share_pct": 1.007219868203138,
+            "total": 463938228.06842875,
+            "concentration_hhi": 5509.937849710878,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "VIDEO",
+            "value": 673026.2575818002,
+            "source_rows": 924,
+            "rank": 4,
+            "share_pct": 0.14506807520128132,
+            "total": 463938228.06842875,
+            "concentration_hhi": 5509.937849710878,
+            "unknown_value": 458588325.5931848
+          },
+          {
+            "dimension": "TEXT",
+            "value": 3998.2083672999997,
+            "source_rows": 112,
+            "rank": 5,
+            "share_pct": 0.0008617975681689853,
+            "total": 463938228.06842875,
+            "concentration_hhi": 5509.937849710878,
+            "unknown_value": 458588325.5931848
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 3,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 13304677,
+      "bigquery_queries": 1,
+      "total_latency_ms": 25111.76,
+      "errors": [
+        "response_validation:porcentaje_no_respaldado:1.15%"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 9275,
+      "output_tokens": 1428,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3057.34
+        },
+        {
+          "stage": "plan",
+          "intent": "composition",
+          "scope": {
+            "intent": "composition",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "formato"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener la distribución de la inversión neta por formato en 2025, ordenada por participación.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 6289.5
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [
+            "porcentaje_no_respaldado:1.15%"
+          ]
+        },
+        {
+          "stage": "repair",
+          "finish_reason": "stop",
+          "latency_ms": 13395.81
+        },
+        {
+          "stage": "validation",
+          "attempt": 1,
+          "issues": [
+            "porcentaje_no_respaldado:1.15%"
+          ]
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 13304677,
+        "input_tokens": 9275,
+        "output_tokens": 1428,
+        "cache_hits": 0,
+        "total_latency_ms": 25111.76
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "partial_or_fallback"
+  ],
+  "expected_family": "composition",
+  "actual_intent": "composition"
+}

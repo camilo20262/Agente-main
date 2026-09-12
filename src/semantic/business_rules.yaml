@@ -1,5 +1,47 @@
 domain_label: "inversión publicitaria"
+default_entity_dimension: marca
+entity_dimensions: [marca, anunciante, marca_agrupada, anunciante_agrupado]
 bicomp:
   default_aggregation: sum
 comparisons:
   require_compatible_periods: true
+
+# Policies are explicit; labels remain separate in SQL and all outputs.
+change_ranking:
+  default_basis: absolute
+  default_focus: current_month
+  default_reference: previous_period
+ambiguous_entity_terms:
+  cliente: marca
+  empresa: anunciante
+filter_groups:
+  television:
+    dimension: medio_agrupado
+    values: [TV ABIERTA, TV CABLE]
+    description: Televisión agrupa exclusivamente TV ABIERTA y TV CABLE del catálogo medio_agrupado; no modifica etiquetas.
+diagnostic_dimensions:
+  medio: {family: channel}
+  vehiculo: {family: publisher}
+  formato: {family: creative}
+  region: {family: geography}
+  dispositivo: {family: device}
+  marca: {family: entity}
+  anunciante: {family: entity}
+  sector: {family: taxonomy}
+  subsector: {family: taxonomy}
+  categoria: {family: taxonomy}
+  producto: {family: product}
+  soporte: {family: publisher}
+  tipo_pauta: {family: placement}
+  franja: {family: schedule}
+  genero: {family: content}
+  pais: {family: geography}
+  ciudad: {family: geography}
+  agencia: {family: agency}
+  central: {family: agency}
+  holding: {family: agency}
+  medio_agrupado: {family: channel}
+  marca_agrupada: {family: entity}
+  anunciante_agrupado: {family: entity}
+# Validate only small categorical vocabularies; entity catalogues can be unbounded.
+validate_value_dimensions: [medio, medio_agrupado]

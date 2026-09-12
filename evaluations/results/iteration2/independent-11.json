@@ -1,0 +1,242 @@
+{
+  "id": "independent-11",
+  "question": "¿Subió la inversión de Volvo en 2026 frente a 2025? Usa ventanas equivalentes.",
+  "family": "period_comparison",
+  "expected_no_data": false,
+  "elapsed_s": 7.15,
+  "result": {
+    "answer": "Análisis parcial: arguments.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "anunciante": "Volvo"
+          },
+          "periodo_a": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "periodo_b": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          }
+        },
+        "result": {
+          "success": false,
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Los periodos de la herramienta cambian la orientación o alcance de comparación."
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "anunciante": "Volvo"
+        },
+        "row_count": null,
+        "step": 1,
+        "purpose": "Comparar la inversión neta de Volvo entre 2026 y 2025 usando ventanas equivalentes (año completo alineado)",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 0.14
+      },
+      {
+        "id": "e2",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "filtros": {
+            "anunciante": "Volvo"
+          },
+          "metrica": "inv_neta",
+          "periodo_a": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "periodo_b": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          }
+        },
+        "result": {
+          "success": false,
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Los periodos de la herramienta cambian la orientación o alcance de comparación."
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "anunciante": "Volvo"
+        },
+        "row_count": null,
+        "step": 2,
+        "purpose": "Comparar la inversión neta (inv_neta) de Volvo entre el año 2025 y el año 2026 usando ventanas equivalentes (año completo).",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 0.2
+      }
+    ],
+    "steps": 2,
+    "plan": {
+      "intent": "period_comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta de Volvo entre 2026 y 2025 usando ventanas equivalentes (año completo alineado)",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "anunciante": "Volvo"
+            },
+            "periodo_a": {
+              "start": "2026-01-01",
+              "end": "2026-12-31"
+            },
+            "periodo_b": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "period_comparison",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "anunciante": "Volvo"
+        },
+        "period": {
+          "kind": "range",
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {
+          "kind": "inherit"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál fue la inversión neta de Volvo en 2026?",
+        "¿Cuál fue la inversión neta de Volvo en 2025?",
+        "¿Hubo un aumento o disminución porcentual entre ambos años?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "anunciante": "Volvo"
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "dimensions": [],
+        "intent": "period_comparison",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 7153.14,
+      "errors": [
+        "arguments",
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 10312,
+      "output_tokens": 647,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2808.66
+        },
+        {
+          "stage": "plan",
+          "intent": "period_comparison",
+          "scope": {
+            "intent": "period_comparison",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "anunciante": "Volvo"
+            },
+            "period": {
+              "kind": "range",
+              "start": "2026-01-01",
+              "end": "2026-12-31"
+            },
+            "comparison_period": {
+              "kind": "inherit"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta de Volvo entre 2026 y 2025 usando ventanas equivalentes (año completo alineado)",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 4327.63
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "La pregunta requiere comparar la inversión neta de Volvo en 2026 frente a 2025 usando ventanas equivalentes. El intento previo con comparar_periodos_bicomp falló por error de argumentos, probablemente debido a que los periodos solicitados en el scope son idénticos (ambos 2026), lo cual no permite una comparación interanual. Se necesita corregir los periodos para que periodo_a sea 2025 y periodo_b sea 2026, manteniendo la misma longitud y estructura (ventanas equivalentes: año completo)."
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta (inv_neta) de Volvo entre el año 2025 y el año 2026 usando ventanas equivalentes (año completo).",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "arguments",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 10312,
+        "output_tokens": 647,
+        "cache_hits": 0,
+        "total_latency_ms": 7153.14
+      },
+      "stop_reason": "arguments"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "period_comparison",
+  "actual_intent": "period_comparison"
+}

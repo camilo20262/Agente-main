@@ -1,0 +1,342 @@
+{
+  "id": "independent-12",
+  "question": "Compara la inversión YTD de BMW frente al mismo periodo del año anterior.",
+  "family": "period_comparison",
+  "expected_no_data": false,
+  "elapsed_s": 44.55,
+  "result": {
+    "answer": "### Resumen ejecutivo\nLa inversión neta de BMW en el periodo YTD 2025 (enero-julio) fue de 338,108.49, frente a 298,744.01 en el mismo periodo de 2024, lo que representa un aumento absoluto de 39,364.48.\n\n### Hallazgos principales\n**Crecimiento de la inversión neta YTD**\n- Evidencia: value_a = 338108.4869813, value_b = 298744.01146819995, difference = 39364.47551310004\n- Driver: no identificado\n- Interpretación: La inversión neta de BMW mostró un incremento en el periodo comparado, sin atribuir causas específicas no demostradas.\n\n### Advertencias\nNo se calcularon variaciones porcentuales ni se realizaron operaciones de crecimiento, promedio o share, tal como lo prohíbe el alcance. Solo se reportan los valores absolutos y su diferencia directa.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "marca": "BMW"
+          },
+          "periodo_a": {
+            "kind": "ytd"
+          },
+          "periodo_b": {
+            "kind": "previous_year"
+          }
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'comparar_periodos_bicomp': periodo_b: Additional properties are not allowed ('kind' was unexpected)"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "BMW"
+        },
+        "row_count": null,
+        "step": 1,
+        "purpose": "Comparar la inversión neta YTD de BMW entre el periodo actual y el mismo periodo del año anterior, calculando diferencias determinísticas.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 5.48
+      },
+      {
+        "id": "e2",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "filtros": {
+            "marca": "BMW"
+          },
+          "metrica": "inv_neta",
+          "periodo_a": {
+            "start": "2025-01-01",
+            "end": "2025-07-31"
+          },
+          "periodo_b": {
+            "start": "2024-01-01",
+            "end": "2024-07-31"
+          }
+        },
+        "result": {
+          "success": true,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "period_a": {
+            "start": "2025-01-01",
+            "end": "2025-07-31"
+          },
+          "period_b": {
+            "start": "2024-01-01",
+            "end": "2024-07-31"
+          },
+          "requested_period_a": {
+            "start": "2025-01-01",
+            "end": "2025-07-31"
+          },
+          "requested_period_b": {
+            "start": "2024-01-01",
+            "end": "2024-07-31"
+          },
+          "comparison_equivalent": true,
+          "periods_adjusted": false,
+          "warnings": [],
+          "value_a": 338108.4869813,
+          "value_b": 298744.01146819995,
+          "difference": 39364.47551310004,
+          "difference_pct": 13.176657607173567,
+          "ratio_a_over_b": 1.1317665760717357,
+          "filters": {
+            "marca": "BMW"
+          },
+          "row_count": 477,
+          "evidence": [
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "filter_0": "BMW",
+                "start_date": "2025-01-01",
+                "end_date": "2025-07-31"
+              },
+              "bytes_processed": 19951115,
+              "job_id": "f8987b03-295d-43e3-97de-00bf0e15f2ac",
+              "cache_hit": false,
+              "executed_at": "2026-09-10T18:52:19.798817+00:00",
+              "duration_ms": 1390.5,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "filter_0": "BMW",
+                "start_date": "2024-01-01",
+                "end_date": "2024-07-31"
+              },
+              "bytes_processed": 19951115,
+              "job_id": "8e075fca-3fe6-4d7b-9d39-53d06d2dc9a5",
+              "cache_hit": false,
+              "executed_at": "2026-09-10T18:52:21.872727+00:00",
+              "duration_ms": 1604.7,
+              "rows": 1
+            }
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "row_count": 477,
+        "step": 2,
+        "purpose": "Comparar la inversión neta (inv_neta) de BMW entre YTD 2025 y YTD 2024.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-01-01",
+              "end_date": "2025-07-31"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "f8987b03-295d-43e3-97de-00bf0e15f2ac",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:52:19.798817+00:00",
+            "duration_ms": 1390.5,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2024-01-01",
+              "end_date": "2024-07-31"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "8e075fca-3fe6-4d7b-9d39-53d06d2dc9a5",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:52:21.872727+00:00",
+            "duration_ms": 1604.7,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 3901.59
+      }
+    ],
+    "steps": 2,
+    "plan": {
+      "intent": "period_comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta YTD de BMW entre el periodo actual y el mismo periodo del año anterior, calculando diferencias determinísticas.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "marca": "BMW"
+            },
+            "periodo_a": {
+              "kind": "ytd"
+            },
+            "periodo_b": {
+              "kind": "previous_year"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "period_comparison",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "period": null,
+        "comparison_period": {
+          "kind": "previous_year"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión YTD de BMW en el periodo actual?",
+        "¿Cuál fue la inversión YTD de BMW en el mismo periodo del año anterior?",
+        "¿Cuál es la variación absoluta y porcentual entre ambos periodos?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {},
+        "comparison_period": {
+          "start": "2025-01-01",
+          "end": "2025-07-31"
+        },
+        "dimensions": [],
+        "intent": "period_comparison",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "comparison",
+        "title": "Periodos equivalentes — inv_neta · marca: BMW",
+        "data": [
+          {
+            "label": "2025-01-01 a 2025-07-31",
+            "value": 338108.4869813
+          },
+          {
+            "label": "2024-01-01 a 2024-07-31",
+            "value": 298744.01146819995
+          }
+        ],
+        "x": "label",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 3,
+      "total_tool_calls": 2,
+      "bigquery_bytes_processed": 39902230,
+      "bigquery_queries": 2,
+      "total_latency_ms": 44545.61,
+      "errors": [
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 10132,
+      "output_tokens": 846,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 6649.22
+        },
+        {
+          "stage": "plan",
+          "intent": "period_comparison",
+          "scope": {
+            "intent": "period_comparison",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "period": null,
+            "comparison_period": {
+              "kind": "previous_year"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta YTD de BMW entre el periodo actual y el mismo periodo del año anterior, calculando diferencias determinísticas.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 4438.37
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "La herramienta comparar_periodos_bicomp falló por un error de argumentos: se envió una propiedad 'kind' inesperada en periodo_b. Necesito corregir la llamada especificando periodo_a y periodo_b con solo start y end (sin propiedades adicionales). El scope indica que se debe comparar YTD 2025 (2025-01-01 a 2025-07-31) frente al mismo periodo del año anterior (2024-01-01 a 2024-07-31) para la marca BMW y la métrica inv_neta."
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta (inv_neta) de BMW entre YTD 2025 y YTD 2024.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 29541.3
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": []
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 2,
+        "bigquery_queries": 2,
+        "bigquery_bytes_processed": 39902230,
+        "input_tokens": 10132,
+        "output_tokens": 846,
+        "cache_hits": 0,
+        "total_latency_ms": 44545.61
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "period_comparison",
+  "actual_intent": "period_comparison"
+}

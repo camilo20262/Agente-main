@@ -1,0 +1,88 @@
+{
+  "id": "peak-followup-02",
+  "question": "¿Qué pasó en el mes más fuerte?",
+  "family": "diagnostic",
+  "elapsed_s": 5.03,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 7,
+      "total_tool_calls": 5,
+      "bigquery_bytes_processed": 59853345,
+      "bigquery_queries": 5,
+      "total_latency_ms": 47439.07,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 47523,
+      "output_tokens": 2838,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2377.5
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2620.12
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "Additional properties are not allowed ('granularity' was unexpected)\n\nFailed validating 'additionalProperties' in schema['properties']['period']:\n    {'type': ['object', 'null'],\n     'properties': {'kind': {'enum': ['year',\n                                      'month',\n                                      'range',\n                                      'ytd',\n                                      'recent_months',\n                                      'current_month',\n                                      'previous_month',\n                                      'previous_year',\n               "
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 14815,
+        "output_tokens": 715,
+        "cache_hits": 0,
+        "total_latency_ms": 5028.580000000002
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "lost_peak_year",
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "clarification"
+}

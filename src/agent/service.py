@@ -1,125 +1,47 @@
-"""Single iterative LLM/tool orchestration service used by every interface."""
-
+"""Bounded investigation orchestrator shared by Streamlit, CLI and benchmarks."""
 from __future__ import annotations
-
 from copy import deepcopy
-from dataclasses import dataclass
-import json
+from dataclasses import dataclass, replace
+from datetime import datetime
 import time
 from typing import Any
-
+from zoneinfo import ZoneInfo
+from src.agent.analysis_context import AnalysisContext, UnresolvedComparisonError
 from src.agent.cache import QueryResultCache
+from src.agent.execution import ToolExecutor
+from src.agent.finalization import AnswerFinalizer, safe_answer
+from src.agent.llm import LLMGateway
 from src.agent.memory import AnalyticalMemory
 from src.agent.observability import ConversationMetrics
-from src.agent.planner import AnalyticalPlan, AnalyticalPlanner, InvalidToolPlanError
-from src.agent.prompts import FINAL_RESPONSE_PROMPT, SYSTEM_PROMPT
+from src.agent.planner import AnalyticalPlan, AnalyticalPlanner, InvalidToolPlanError, PlanStep, PLAN_SCHEMA, INTENT_BUDGETS
+from src.agent.prompts import SYSTEM_PROMPT, PLANNING_PROMPT, RESEARCH_PROMPT
 from src.agent.response_validator import compact_evidence, validate_answer
-from src.config import Settings
-from src.tools.registry import ToolRegistry
+from src.agent.sufficiency import evidence_sufficient
+from src.agent.requirements import requirements_for
+from src.agent.request_review import review_request
+from src.agent.transitions import SCOPE_ARGS
+from src.semantic import load_semantic_layer
+from src.visualization import build_chart_spec
 
 
 def _extract_user_text(content: Any) -> str:
-    """Extract text for planning without modifying multimodal content."""
     if isinstance(content, str):
         return content
     if isinstance(content, list):
-        return " ".join(
-            block["text"]
-            for block in content
-            if isinstance(block, dict)
-            and block.get("type") == "text"
-            and isinstance(block.get("text"), str)
-            and block["text"]
-        )
-    return ""
+        return ' '.join(b['text'] for b in content if isinstance(b, dict) and b.get('type') == 'text' and isinstance(b.get('text'), str))
+    return ''
 
 
-def _summarize_partial_evidence(
-    evidence: list[dict[str, Any]],
-    *,
-    reason: str = "alcancé el límite de pasos",
-) -> str:
-    """Summarize successful results locally, preserving values and query context."""
-    lines = [
-        f"No pude completar el análisis: {reason}. "
-        "Estos son los resultados parciales obtenidos:"
-    ]
-    fields = (
-        "metric",
-        "dimension",
-        "brand",
-        "brand_a",
-        "brand_b",
-        "filters",
-        "period",
-        "period_a",
-        "period_b",
-        "current_period",
-        "previous_period",
-        "value",
-        "value_a",
-        "value_b",
-        "difference",
-        "difference_pct",
-        "current_value",
-        "previous_value",
-        "change",
-        "change_pct",
-        "start",
-        "end",
-        "row_count",
-    )
-
-    for item in evidence:
-        result = item["result"]
-        if result.get("success") is not True:
-            continue
-
-        details = {
-            key: result[key]
-            for key in fields
-            if key in result and result[key] is not None
-        }
-
-        for key in ("rows", "drivers", "values"):
-            if isinstance(result.get(key), list):
-                details[key] = result[key][:5]
-                if len(result[key]) > 5:
-                    details[f"{key}_nota"] = (
-                        f"Muestra de 5 de {len(result[key])} elementos."
-                    )
-
-        summary = (
-            json.dumps(details, ensure_ascii=False, default=str)
-            if details
-            else "Consulta exitosa sin valores resumibles."
-        )
-
-        if item.get("historical"):
-            lines.append(
-                f"- Evidencia histórica de la pregunta "
-                f"{item['origin_question']!r} — {item['tool']}: {summary}"
-            )
-        else:
-            lines.append(f"- {item['tool']}: {summary}")
-
-    if any(item.get("historical") for item in evidence):
-        lines.insert(
-            1,
-            "No obtuve evidencia exitosa para la pregunta actual. "
-            "Los datos siguientes proceden de una pregunta anterior y "
-            "no responden la consulta actual.",
-        )
-
-    return "\n".join(lines)
+def _summarize_partial_evidence(evidence, *, reason='alcancé el límite de pasos'):
+    return safe_answer(evidence, reason=reason)
 
 
 class AgentMaxStepsError(RuntimeError):
-    """Raised when steps are exhausted without successful evidence."""
+    """Compatibility import; normal execution returns a controlled partial result."""
 
 
 class RepeatedToolCallError(RuntimeError):
-    """Legacy exception kept for compatibility with existing imports/tests."""
+    """Compatibility import; duplicate calls now end without repeating a query."""
 
 
 @dataclass
@@ -134,709 +56,307 @@ class AgentResult:
 
 
 class AgentService:
-    def __init__(
-        self,
-        *,
-        client: Any,
-        settings: Settings,
-        registry: ToolRegistry,
-        system_prompt: str = SYSTEM_PROMPT,
-        memory: AnalyticalMemory | None = None,
-        cache: QueryResultCache | None = None,
-        metrics: ConversationMetrics | None = None,
-    ):
-        self.client = client
-        self.settings = settings
-        self.registry = registry
+    def __init__(self, *, client, settings, registry, system_prompt=SYSTEM_PROMPT,
+                 memory=None, cache=None, metrics=None, planner=None, today=None):
+        self.client, self.settings, self.registry = client, settings, registry
         self.system_prompt = system_prompt
         self.memory = memory or AnalyticalMemory()
         self.cache = cache or QueryResultCache(settings.query_cache_ttl_seconds)
         self.metrics = metrics or ConversationMetrics()
-        self._historical_evidence: list[dict[str, Any]] = []
-        self._historical_charts: list[dict[str, Any]] = []
-
-        self.planner = AnalyticalPlanner(
-            {item["function"]["name"] for item in registry.schemas}
-        )
-
-    def _remember_evidence(
-        self,
-        evidence: list[dict[str, Any]],
-        chart_specs: list[dict[str, Any]],
-        question: str,
-    ) -> None:
-        successful = [
-            item
-            for item in evidence
-            if item["result"].get("success") is True
-            and not item.get("historical")
-        ]
-
-        if successful:
-            self._historical_evidence = deepcopy(successful)
-
-            for item in self._historical_evidence:
-                item.update(
-                    historical=True,
-                    origin_question=question,
-                )
-
-            self._historical_charts = deepcopy(chart_specs)
-
-            for chart in self._historical_charts:
-                chart["title"] = (
-                    f"Histórico ({question}): "
-                    f"{chart.get('title', 'Resultado anterior')}"
-                )
-
-    def _partial_result(
-        self,
-        evidence: list[dict[str, Any]],
-        plan: AnalyticalPlan,
-        chart_specs: list[dict[str, Any]],
-        steps: int,
-        started: float,
-        question: str,
-        *,
-        reason: str = "alcancé el límite de pasos",
-    ) -> AgentResult:
-        self.metrics.total_latency_ms += round(
-            (time.perf_counter() - started) * 1000,
-            2,
-        )
-
-        self._remember_evidence(
-            evidence,
-            chart_specs,
-            question,
-        )
-
-        return AgentResult(
-            answer=_summarize_partial_evidence(
-                evidence,
-                reason=reason,
-            ),
-            evidence=evidence,
-            steps=steps,
-            plan=plan.as_dict(),
-            chart_specs=chart_specs,
-            metrics=self.metrics.as_dict(),
-            is_partial=True,
-        )
-
-    def _generate_final_answer(
-        self,
-        *,
-        question: str,
-        evidence: list[dict[str, Any]],
-        model: str | None,
-        temperature: float,
-        reason: str,
-        repair_issues: list[str] | None = None,
-    ) -> tuple[str | None, str | None]:
-        """Generate a compact, tool-free final narrative."""
-        compact = compact_evidence(evidence)
-
-        user_payload = (
-            "PREGUNTA ORIGINAL:\n"
-            f"{question}\n\n"
-            "EVIDENCIA COMPACTA CALCULADA POR BIGQUERY/PYTHON:\n"
-            + json.dumps(
-                compact,
-                ensure_ascii=False,
-                default=str,
-            )
-            + "\n\n"
-            f"MOTIVO DE CIERRE: {reason}"
-        )
-
-        if repair_issues:
-            user_payload += (
-                "\n\nLA RESPUESTA ANTERIOR NO PASÓ LA VALIDACIÓN. "
-                "Reescríbela completa desde cero y corrige específicamente "
-                "estos problemas:\n- "
-                + "\n- ".join(repair_issues)
-                + "\nNo menciones el proceso de validación al usuario."
-            )
-
-        self.metrics.total_llm_calls += 1
-
-        completion = self.client.chat.completions.create(
-            model=model or self.settings.openrouter_model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": FINAL_RESPONSE_PROMPT,
-                },
-                {
-                    "role": "user",
-                    "content": user_payload,
-                },
-            ],
-            temperature=temperature,
-            max_tokens=self.settings.llm_final_max_tokens,
-        )
-
-        choice = completion.choices[0]
-        message = choice.message
-        finish_reason = getattr(
-            choice,
-            "finish_reason",
-            None,
-        )
-
-        return message.content, finish_reason
-
-    def _finalize_answer(
-        self,
-        *,
-        question: str,
-        evidence: list[dict[str, Any]],
-        model: str | None,
-        temperature: float,
-        reason: str,
-    ) -> tuple[str, tuple[str, ...]]:
-        """Generate, validate and optionally repair the final narrative."""
-        answer, finish_reason = self._generate_final_answer(
-            question=question,
-            evidence=evidence,
-            model=model,
-            temperature=temperature,
-            reason=reason,
-        )
-
-        answer = answer or "No fue posible producir una respuesta."
-
-        validation = validate_answer(
-            answer,
-            evidence,
-            finish_reason=finish_reason,
-        )
-
-        retries = max(
-            0,
-            self.settings.response_validation_retries,
-        )
-
-        for _ in range(retries):
-            if validation.valid:
-                break
-
-            self.metrics.errors.extend(
-                f"response_validation:{issue}"
-                for issue in validation.issues
-            )
-
-            repaired, repaired_finish_reason = self._generate_final_answer(
-                question=question,
-                evidence=evidence,
-                model=model,
-                temperature=temperature,
-                reason="corrección de la respuesta final",
-                repair_issues=list(validation.issues),
-            )
-
-            if repaired:
-                answer = repaired
-
-            validation = validate_answer(
-                answer,
-                evidence,
-                finish_reason=repaired_finish_reason,
-            )
-
-        if not validation.valid:
-            self.metrics.errors.extend(
-                f"response_validation_unresolved:{issue}"
-                for issue in validation.issues
-            )
-
-        return answer, validation.issues
-
-    def run(
-        self,
-        messages: list[dict[str, Any]],
-        *,
-        model: str | None = None,
-        temperature: float = 0.1,
-    ) -> AgentResult:
-        started = time.perf_counter()
-        conversation = list(messages)
-
-        if not conversation or conversation[0].get("role") != "system":
-            conversation.insert(
-                0,
-                {
-                    "role": "system",
-                    "content": self.system_prompt,
-                },
-            )
-
-        question = next(
-            (
-                _extract_user_text(item.get("content"))
-                for item in reversed(conversation)
-                if isinstance(item, dict)
-                and item.get("role") == "user"
-            ),
-            "",
-        )
-
-        plan: AnalyticalPlan = self.planner.plan(
-            question,
-            self.memory.context(),
-        )
-
-        conversation.append(
-            {
-                "role": "system",
-                "content": (
-                    "PLAN ANALÍTICO INTERNO VALIDADO (no mostrar al usuario): "
-                    + json.dumps(plan.as_dict(), ensure_ascii=False)
-                    + "\nMEMORIA ANALÍTICA RESUMIDA: "
-                    + json.dumps(
-                        self.memory.context(),
-                        ensure_ascii=False,
-                    )
-                ),
-            }
-        )
-
-        evidence: list[dict[str, Any]] = []
-        chart_specs: list[dict[str, Any]] = []
-        calls_seen: set[str] = set()
-
-        registered_tools = {
-            item["function"]["name"]
-            for item in self.registry.schemas
-        }
-
-        for step in range(
-            1,
-            self.settings.max_agent_steps + 1,
-        ):
-            self.metrics.total_llm_calls += 1
-
-            has_successful_evidence = any(
-                item["result"].get("success") is True
-                for item in evidence
-            )
-
-            # La primera herramienta puede seguir viniendo forzada por el planner.
-            # A partir del segundo paso, el modelo decide si necesita otra tool
-            # o si ya tiene suficiente evidencia para responder.
-            tool_choice: Any = "auto"
-
-            if step == 1 and plan.steps:
-                tool_choice = {
-                    "type": "function",
-                    "function": {
-                        "name": plan.steps[0].tool
-                    },
-                }
-
-            completion = self.client.chat.completions.create(
-                model=model or self.settings.openrouter_model,
-                messages=conversation,
-                tools=self.registry.schemas,
-                tool_choice=tool_choice,
-                temperature=temperature,
-                max_tokens=self.settings.llm_max_tokens,
-            )
-
-            choice = completion.choices[0]
-            message = choice.message
-            finish_reason = getattr(choice, "finish_reason", None)
-
-            # Si el modelo ya no pide herramientas, usamos esa decisión como
-            # señal de que terminó la investigación. Si ya hay evidencia,
-            # generamos una narrativa final compacta, validada y con mayor presupuesto.
-            if not message.tool_calls:
-                if plan.steps and not has_successful_evidence:
-                    conversation.append(message)
-                    conversation.append(
-                        {
-                            "role": "system",
-                            "content": (
-                                "El plan requiere evidencia cuantitativa. "
-                                "No respondas todavía: ejecuta una tool "
-                                "registrada apropiada antes de concluir."
-                            ),
-                        }
-                    )
-                    continue
-
-                if has_successful_evidence:
-                    try:
-                        answer, validation_issues = self._finalize_answer(
-                            question=question,
-                            evidence=evidence,
-                            model=model,
-                            temperature=temperature,
-                            reason=(
-                                "el modelo concluyó que ya existe "
-                                "evidencia suficiente"
-                            ),
-                        )
-                    except Exception as exc:
-                        self.metrics.errors.append(
-                            f"final_answer_error: {exc}"
-                        )
-                        answer = (
-                            message.content
-                            or _summarize_partial_evidence(
-                                evidence,
-                                reason="falló la generación final",
-                            )
-                        )
-                        validation_issues = ("final_generation_failed",)
-                else:
-                    answer = (
-                        message.content
-                        or "No fue posible producir una respuesta."
-                    )
-                    validation_issues = ()
-
-                self.metrics.total_latency_ms += round(
-                    (time.perf_counter() - started) * 1000,
-                    2,
-                )
-
-                self._remember_evidence(
-                    evidence,
-                    chart_specs,
-                    question,
-                )
-
-                return AgentResult(
-                    answer=answer,
-                    evidence=evidence,
-                    steps=step,
-                    plan=plan.as_dict(),
-                    chart_specs=chart_specs,
-                    metrics=self.metrics.as_dict(),
-                    is_partial=bool(validation_issues),
-                )
-
-            conversation.append(message)
-
-            for call in message.tool_calls:
-                cache_hit = False
-
-                # Recompute inside the batch: an earlier call may just have succeeded.
-                has_successful_evidence = any(
-                    item["result"].get("success") is True
-                    for item in evidence
-                )
-
-                fallback_evidence = (
-                    evidence
-                    if has_successful_evidence
-                    else evidence + deepcopy(self._historical_evidence)
-                )
-
-                fallback_charts = (
-                    chart_specs
-                    if has_successful_evidence
-                    else deepcopy(self._historical_charts)
-                )
-
-                has_fallback_evidence = (
-                    has_successful_evidence
-                    or bool(self._historical_evidence)
-                )
-
-                if call.function.name not in registered_tools:
-                    self.metrics.errors.append("unknown_tool")
-
-                    if has_fallback_evidence:
-                        return self._partial_result(
-                            fallback_evidence,
-                            plan,
-                            fallback_charts,
-                            step,
-                            started,
-                            question,
-                            reason=(
-                                "el modelo solicitó una herramienta "
-                                "no registrada"
-                            ),
-                        )
-
-                try:
-                    arguments = json.loads(
-                        call.function.arguments or "{}"
-                    )
-
-                    if not isinstance(arguments, dict):
-                        raise ValueError(
-                            "Los argumentos deben ser un objeto JSON."
-                        )
-
-                except (json.JSONDecodeError, ValueError) as exc:
-                    result = {
-                        "success": False,
-                        "error": f"Argumentos inválidos: {exc}",
-                    }
-                    arguments = {}
-
-                else:
-                    call_key = QueryResultCache.key(
-                        call.function.name,
-                        arguments,
-                    )
-
-                    # CAMBIO:
-                    # Una llamada repetida ya no aborta todo el análisis.
-                    # Se devuelve feedback al modelo para que use la evidencia
-                    # existente, cambie de herramienta o finalice.
-                    if call_key in calls_seen:
-                        self.metrics.errors.append(
-                            "repeated_tool_call"
-                        )
-
-                        duplicate_result = {
-                            "success": False,
-                            "source": self.registry.repository.source,
-                            "duplicate": True,
-                            "error": (
-                                "Esta consulta ya fue ejecutada con "
-                                "exactamente los mismos argumentos durante "
-                                "este análisis. No la repitas. Usa la "
-                                "evidencia ya obtenida, selecciona otra "
-                                "herramienta que aporte información nueva "
-                                "o genera la respuesta final."
-                            ),
-                        }
-
-                        conversation.append(
-                            {
-                                "role": "tool",
-                                "tool_call_id": call.id,
-                                "content": json.dumps(
-                                    duplicate_result,
-                                    ensure_ascii=False,
-                                    default=str,
-                                ),
-                            }
-                        )
-
-                        continue
-
-                    calls_seen.add(call_key)
-                    self.metrics.total_tool_calls += 1
-
-                    cached = self.cache.get(
-                        call.function.name,
-                        arguments,
-                    )
-
-                    if cached is not None:
-                        result = cached
-                        cache_hit = True
-                        self.metrics.cache_hits += 1
-
-                    else:
-                        result = self.registry.execute(
-                            call.function.name,
-                            arguments,
-                        )
-                        cache_hit = False
-
-                        # CAMBIO:
-                        # Solo guardamos resultados exitosos.
-                        # Errores de validación/argumentos no contaminan caché.
-                        if result.get("success") is True:
-                            self.cache.put(
-                                call.function.name,
-                                arguments,
-                                result,
-                            )
-
-                    self.memory.update_from_result(
-                        call.function.name,
-                        arguments,
-                        result,
-                    )
-
-                record = {
-                    "tool": call.function.name,
-                    "arguments": arguments,
-                    "source": result.get(
-                        "source",
-                        self.registry.repository.source,
-                    ),
-                    "metric": result.get("metric"),
-                    "filters": result.get("filters"),
-                    "row_count": result.get("row_count"),
-                    "result": result,
-                    "step": step,
-                    "cache_hit": cache_hit,
-                }
-
-                if isinstance(
-                    result.get("evidence"),
-                    dict,
-                ):
-                    record.update(
-                        result["evidence"]
-                    )
-
-                evidence.append(record)
-
-                query_evidence = result.get("evidence")
-                evidences = (
-                    query_evidence
-                    if isinstance(query_evidence, list)
-                    else [query_evidence]
-                )
-
-                record["queries"] = [
-                    item
-                    for item in evidences
-                    if isinstance(item, dict)
-                ]
-
-                for query in (
-                    item
-                    for item in evidences
-                    if isinstance(item, dict)
-                ):
-                    bytes_processed = int(
-                        query.get(
-                            "bytes_processed",
-                            0,
-                        )
-                        or 0
-                    )
-
-                    if not record["cache_hit"]:
-                        self.metrics.bigquery_bytes_processed += (
-                            bytes_processed
-                        )
-
-                    if (
-                        result.get("source") == "bigquery"
-                        and not record["cache_hit"]
-                    ):
-                        self.metrics.bigquery_queries += 1
-
-                if result.get("success") is False:
-                    self.metrics.errors.append(
-                        str(
-                            result.get(
-                                "error",
-                                "tool_error",
-                            )
-                        )
-                    )
-
-                from src.visualization import build_chart_spec
-
-                chart = build_chart_spec(
-                    call.function.name,
-                    result,
-                )
-
-                if chart:
-                    chart_specs.append(chart)
-
-                conversation.append(
-                    {
-                        "role": "tool",
-                        "tool_call_id": call.id,
-                        "content": json.dumps(
-                            result,
-                            ensure_ascii=False,
-                            default=str,
-                        ),
-                    }
-                )
-
-        # Se agotó el presupuesto de investigación.
-        self.metrics.errors.append("max_steps")
-
-        has_successful_evidence = any(
-            item["result"].get("success") is True
-            for item in evidence
-        )
-
-        # CAMBIO:
-        # Si ya existe evidencia útil, no devolvemos inmediatamente
-        # "No pude completar". Forzamos una última llamada SIN herramientas
-        # para que el modelo produzca la narrativa de hallazgos.
-        if has_successful_evidence:
-            conversation.append(
-                {
-                    "role": "system",
-                    "content": (
-                        "Has alcanzado el presupuesto máximo de "
-                        "investigación. No realices más consultas ni "
-                        "solicites herramientas. Genera ahora la respuesta "
-                        "final usando exclusivamente la evidencia obtenida. "
-                        "Prioriza los hallazgos más relevantes, sus drivers, "
-                        "interpretación e hipótesis cuando estén respaldadas. "
-                        "Distingue claramente hechos de hipótesis. "
-                        "No inventes cifras ni completes datos faltantes."
-                    ),
-                }
-            )
-
+        self.gateway = LLMGateway(client, settings, self.metrics)
+        self.planner = planner or AnalyticalPlanner({s['function']['name'] for s in registry.schemas})
+        self.today = today or (lambda: datetime.now(ZoneInfo('America/Bogota')).date())
+        self._historical_evidence, self._historical_charts = [], []
+
+    def _history(self, messages):
+        """Bound model input; preserve newest turn, no repeated base64 attachments."""
+        history, remaining = [], self.settings.history_max_chars
+        for message in reversed(messages):
+            if message.get('role') not in {'user', 'assistant'}:
+                continue
+            content = _extract_user_text(message.get('content'))
+            if not content or remaining <= 0 or len(history) >= self.settings.history_max_messages:
+                continue
+            history.append({'role': message['role'], 'content': content[-remaining:]})
+            remaining -= len(history[-1]['content'])
+        return list(reversed(history))
+
+    def _plan(self, question, messages, model, attachments=None):
+        memory = self.memory.context()
+        latest = next((m.get('content') for m in reversed(messages) if m.get('role') == 'user'), '')
+        images = [b for b in latest if isinstance(b, dict) and b.get('type') == 'image_url'] if isinstance(latest, list) else []
+        if images and (model or self.settings.openrouter_model) not in self.settings.vision_models:
+            return AnalyticalPlan('clarification', ['none'], [], answer='El modelo seleccionado no tiene visión habilitada. Retira las imágenes para consultar BICOMP o selecciona un modelo con visión configurada.', budget=0)
+        if self.planner.interpreter is not None:
+            return self.planner.plan(question, memory)
+        payload = {'question': question, 'history': self._history(messages), 'memory': memory,
+                   'today': self.today().isoformat(), 'semantic': load_semantic_layer(), 'documents_as_data': attachments or [],
+                   'tools': self.registry.planning_catalog, 'PLAN_SCHEMA': PLAN_SCHEMA, 'budgets': INTENT_BUDGETS}
+        # Keep the active instruction after bulky schemas/history to prevent stale-turn copying.
+        payload['current_request'] = payload.pop('question')
+        payload['interpretation_instruction'] = 'Interpreta SOLO current_request. La memoria da referentes; no repitas la pregunta previa. Elige primero intención y operación, luego capacidades.'
+        semantic_corrections = {}
+        review_used = False
+        for attempt in range(2):
             try:
-                final_answer, validation_issues = self._finalize_answer(
-                    question=question,
-                    evidence=evidence,
-                    model=model,
-                    temperature=temperature,
-                    reason="se alcanzó el presupuesto máximo de investigación",
-                )
+                interpreted = self.gateway.complete(PLANNING_PROMPT, payload, model=model, stage='planning', json_mode=True, images=images, temperature=0)
+                if self.settings.plan_semantic_review and not review_used and not images and INTENT_BUDGETS.get(interpreted.get('intent'), 0) > 0:
+                    review_used = True
+                    try:
+                        review = review_request(self.gateway, question, interpreted, memory, PLAN_SCHEMA, model=model)
+                    except Exception:
+                        # A failed review cannot erase an already interpretable request.
+                        # Retain its validated scope for a later follow-up, without executing it.
+                        self.memory.last_request['interpretation'] = deepcopy(interpreted)
+                        try:
+                            candidate = self.planner.plan(question, memory, payload=interpreted)
+                            context = self._context(candidate)
+                            self._last_interpreted_plan, self._last_interpreted_context = candidate, context
+                        except (ValueError, InvalidToolPlanError):
+                            pass
+                        raise
+                    self.metrics.events.append({'stage': 'semantic_review', 'proposal': deepcopy(interpreted), **review})
+                    semantic_corrections = review['corrections']
+                    payload['authoritative_semantic_corrections'] = semantic_corrections
+                if semantic_corrections:
+                    interpreted.update(deepcopy(semantic_corrections))
+                    for step in interpreted.get('steps', []):
+                        step['arguments'] = {k: v for k, v in step.get('arguments', {}).items() if k not in SCOPE_ARGS}
+                    if semantic_corrections.get('intent') == 'lookup' and not any(s.get('tool') == 'calcular_ratio_bicomp' for s in interpreted.get('steps', [])):
+                        interpreted['steps'] = [{'tool': 'consultar_inversion_publicitaria', 'arguments': {}, 'purpose': 'Obtener el total requerido por el contrato revisado.'}]
+                    elif semantic_corrections.get('intent') in {'ranking', 'composition'} and len(interpreted.get('dimensions', [])) == 1:
+                        interpreted['steps'] = [{'tool': 'ranking_por_dimension', 'arguments': {'dimension': interpreted['dimensions'][0], 'limite': interpreted.get('analysis', {}).get('limit', 10)}, 'purpose': 'Obtener la distribución requerida por el contrato revisado.'}]
+                self.memory.last_request['interpretation'] = deepcopy(interpreted)
+                plan = self.planner.plan(question, memory, payload=interpreted)
+                try:
+                    candidate_context = self._context(plan)
+                except UnresolvedComparisonError as exc:
+                    self._last_interpreted_plan, self._last_interpreted_context = plan, exc.requested_context
+                    raise
+                self._last_interpreted_plan, self._last_interpreted_context = plan, candidate_context
+                self._validate_filter_catalogs(plan, payload)
+                schemas = {s['function']['name']: s['function']['parameters']['properties'] for s in self.registry.schemas}
+                period_steps = [s for s in plan.steps if any(k in schemas[s.tool] for k in ('periodo_a', 'periodo_actual'))]
+                if period_steps:
+                    context = self._context(plan)
+                    for step in period_steps:
+                        context.bind(step.arguments, {'periodo_a': {}, 'periodo_b': {}} if 'periodo_a' in schemas[step.tool]
+                                     else {'periodo_actual': {}, 'periodo_anterior': {}})
+                if plan.scope.get('operation') == 'inspect_peak':
+                    context = self._context(plan)
+                    for step in plan.steps:
+                        context.bind(step.arguments, schemas[step.tool])
+                return plan
+            except (ValueError, InvalidToolPlanError) as exc:
+                self.metrics.events.append({'stage': 'plan_validation', 'attempt': attempt,
+                    'issue': str(exc)[:800], 'rejected_plan': locals().get('interpreted')})
+                if attempt:
+                    raise
+                payload['validation_error'] = str(exc)
+                payload['rejected_plan'] = locals().get('interpreted')
+        raise InvalidToolPlanError('No se obtuvo un plan válido.')
 
-                if final_answer:
-                    self.metrics.total_latency_ms += round(
-                        (
-                            time.perf_counter()
-                            - started
-                        )
-                        * 1000,
-                        2,
-                    )
+    def _validate_filter_catalogs(self, plan, payload):
+        """Validate configured small vocabularies against live cached catalogues.
 
-                    self._remember_evidence(
-                        evidence,
-                        chart_specs,
-                        question,
-                    )
+        No fuzzy matching or value rewriting. An invalid dimension/value pair is
+        returned to the interpreter with the exact alternatives in its one repair.
+        """
+        repo = self.registry.repository
+        dimensions = load_semantic_layer()['business_rules'].get('validate_value_dimensions', [])
+        used = set(plan.scope.get('filters', {})) & set(dimensions)
+        if not used or not hasattr(repo, 'catalogo'):
+            return
+        catalogs = {}
+        for dimension in dimensions:
+            before_queries = getattr(repo, 'query_count', 0)
+            before_bytes = getattr(repo, 'bytes_processed', 0)
+            result = repo.catalogo(dimension=dimension, limit=1000)
+            self.metrics.bigquery_queries += getattr(repo, 'query_count', 0) - before_queries
+            self.metrics.bigquery_bytes_processed += getattr(repo, 'bytes_processed', 0) - before_bytes
+            if result.get('success'):
+                catalogs[dimension] = result.get('values', [])
+                self.metrics.events.append({'stage': 'catalog_validation', 'dimension': dimension,
+                    'values': catalogs[dimension], 'evidence': result.get('evidence')})
+        payload['confirmed_filter_catalogs'] = catalogs
+        for dimension in used:
+            if dimension not in catalogs or len(catalogs[dimension]) >= 1000:
+                continue  # A truncated catalogue cannot prove absence.
+            values = plan.scope['filters'][dimension]
+            values = values if isinstance(values, list) else [values]
+            missing = {str(v).strip().upper() for v in values} - {str(v).strip().upper() for v in catalogs[dimension]}
+            if missing:
+                raise ValueError(f'Valores inexistentes para {dimension}: {sorted(missing)}. Corrige la pareja dimensión/valor usando confirmed_filter_catalogs; no inventes etiquetas.')
 
-                    return AgentResult(
-                        answer=final_answer,
-                        evidence=evidence,
-                        steps=self.settings.max_agent_steps,
-                        plan=plan.as_dict(),
-                        chart_specs=chart_specs,
-                        metrics=self.metrics.as_dict(),
-                        is_partial=bool(validation_issues),
-                    )
+    def _context(self, plan):
+        repo = self.registry.repository
+        cached = repo._coverage_cache.get('coverage', {}) if hasattr(repo, '_coverage_cache') else None
+        available = {k: cached[k] for k in ('start', 'end') if cached.get(k)} if cached else None
+        kind = (plan.scope.get('period') or {}).get('kind')
+        if not available and kind in {'ytd', 'recent_months', 'current_month', 'previous_month', 'previous_year'}:
+            before = getattr(repo, 'query_count', 0)
+            before_bytes = getattr(repo, 'bytes_processed', 0)
+            result = repo.obtener_rango_fechas()
+            self.metrics.bigquery_queries += getattr(repo, 'query_count', 0) - before
+            self.metrics.bigquery_bytes_processed += getattr(repo, 'bytes_processed', 0) - before_bytes
+            if not result.get('success'):
+                raise ValueError('No hay cobertura para resolver el periodo relativo.')
+            available = {k: result[k] for k in ('start', 'end')}
+            self.metrics.events.append({'stage': 'coverage_resolution', 'available_period': available})
+        return AnalysisContext.resolve(plan.scope, self.memory.context(), today=self.today(), available=available)
 
-            except Exception as exc:
-                self.metrics.errors.append(
-                    f"final_answer_error: {exc}"
-                )
+    def _next_step(self, question, context, evidence, remaining, model, *, error=None):
+        payload = {'question': question, 'scope': context.as_dict(), 'evidence': compact_evidence(evidence),
+                   'remaining_tool_budget': remaining, 'tools': self.registry.planning_catalog, 'correctable_error': error}
+        decision = self.gateway.complete(RESEARCH_PROMPT, payload, model=model, stage='correction' if error else 'deepening', json_mode=True, temperature=0)
+        self.metrics.events.append({'stage': 'research_decision', 'stop': decision.get('stop'), 'reason': decision.get('reason')})
+        if decision.get('stop') is True or decision.get('steps') == []:
+            return None, decision.get('reason', 'Evidencia suficiente.')
+        steps = decision.get('steps')
+        if not isinstance(steps, list) or len(steps) != 1 or not decision.get('reason'):
+            raise InvalidToolPlanError('Una profundización requiere exactamente una consulta y una justificación.')
+        step = PlanStep(**steps[0])
+        if len(step.purpose) < 8:
+            raise InvalidToolPlanError('La consulta no explica qué evidencia agrega.')
+        self.planner.validate(AnalyticalPlan(context.intent, ['bicomp'], [step]))
+        return step, decision['reason']
 
-            # Fallback únicamente si la última generación de narrativa falla.
-            return self._partial_result(
-                evidence,
-                plan,
-                chart_specs,
-                self.settings.max_agent_steps,
-                started,
-                question,
-                reason=(
-                    "alcancé el límite de pasos y no fue posible "
-                    "generar la narrativa final"
-                ),
-            )
-
-        raise AgentMaxStepsError(
-            f"El agente excedió el máximo de "
-            f"{self.settings.max_agent_steps} pasos."
-        )
+    def run(self, messages, *, model=None, temperature=0.1, attachments=None) -> AgentResult:
+        started = time.perf_counter()
+        before = self.metrics.as_dict()
+        # Keep traces bounded per turn; aggregate counters remain conversation-wide.
+        self.metrics.events = []
+        self.metrics.errors = []
+        question = next((_extract_user_text(m.get('content')) for m in reversed(messages) if m.get('role') == 'user'), '')
+        self._last_interpreted_plan = self._last_interpreted_context = None
+        memory_before = self.memory.context()
+        self.memory.last_request = {'question': question, 'status': 'unresolved'}
+        evidence, charts = [], []
+        plan = AnalyticalPlan('clarification', ['none'], [], answer='No recibí una pregunta.', budget=0)
+        context = AnalysisContext()
+        stop_reason, partial, answer = '', False, ''
+        try:
+            plan = self._plan(question, messages, model, attachments)
+            self.metrics.events.append({'stage': 'plan', 'intent': plan.intent, 'scope': plan.scope})
+            if not plan.steps:
+                answer = plan.answer or 'Falta información para definir el alcance de la consulta.'
+                validation = validate_answer(answer, [], intent=plan.intent)
+                if not validation.valid:
+                    answer = 'No pude producir una respuesta completa. Reformula la pregunta con el alcance que quieres analizar.'
+                    partial = True
+                stop_reason = plan.intent
+            else:
+                context = self._context(plan)
+                inherited = memory_before.get('analysis_context', {})
+                mutations = {k: {'before': inherited.get(k), 'after': v} for k, v in context.as_dict().items()
+                             if k in {'filters', 'requested_period', 'comparison_period', 'dimensions', 'intent'} and inherited.get(k) != v}
+                self.memory.remember_request(context.as_dict(), plan.as_dict()['steps'],
+                    request={'question': question, 'scope': plan.scope, 'status': 'planned'})
+                self.metrics.events.append({'stage': 'request_contract', 'requested_intent': plan.intent,
+                    'requested_scope': plan.scope, 'inherited_scope': inherited, 'scope_mutations': mutations,
+                    'resolved_scope': context.as_dict(), 'requirements': requirements_for(plan.intent, plan.scope),
+                    'selected_capabilities': [requirements_for(plan.intent, plan.scope)['capability']],
+                    'tools': [s.tool for s in plan.steps]})
+                executor = ToolExecutor(self.registry, self.cache, self.metrics)
+                pending = list(plan.steps)
+                optional_steps = set()
+                max_tools = min(plan.budget, self.settings.max_agent_steps)
+                correction_used = False
+                while pending and len(evidence) < self.settings.max_agent_steps:
+                    step = pending.pop(0)
+                    record = executor.execute(step, context, len(evidence) + 1)
+                    evidence.append(record)
+                    result = record['result']
+                    if result.get('success') is not True:
+                        kind = result.get('error_type', 'no_data')
+                        correction_stop = False
+                        if kind in {'arguments', 'schema'} and not correction_used and len(evidence) < self.settings.max_agent_steps:
+                            correction_used = True
+                            try:
+                                corrected, correction_reason = self._next_step(question, context, evidence, 1, model, error=result)
+                                correction_stop = corrected is None and evidence_sufficient(plan.intent, evidence, plan.scope)
+                                if correction_stop:
+                                    self.metrics.events.append({'stage': 'unneeded_step_omitted', 'tool': step.tool,
+                                        'reason': correction_reason, 'original_error': kind})
+                            except Exception as exc:
+                                self.metrics.events.append({'stage': 'correction_error', 'detail': str(exc)[:300]})
+                                corrected = None
+                            if corrected:
+                                if id(step) in optional_steps:
+                                    optional_steps.add(id(corrected))
+                                pending.insert(0, corrected)
+                                max_tools += 1  # One repair attempt; never repeats the underlying query.
+                                continue
+                        stop_reason = kind
+                        partial = not (correction_stop or ((kind == 'duplicate' or id(step) in optional_steps) and evidence_sufficient(plan.intent, evidence, plan.scope)))
+                        if correction_stop:
+                            stop_reason = 'evidence_sufficient_after_correction_review'
+                        break
+                    if result.get('available_period'):
+                        context.available_period = result['available_period']
+                    if result.get('observed_period'):
+                        context.observed_period = result['observed_period']
+                    # Preserve usable context even if optional research/model transport fails.
+                    self.memory.remember_analysis(context.as_dict(), evidence)
+                    self.memory.last_strategy = deepcopy(plan.as_dict()['steps'])
+                    if len(evidence) >= max_tools:
+                        partial = bool(pending)
+                        stop_reason = 'intent_budget' if partial else 'planned_evidence_complete'
+                        break
+                    if not pending and plan.intent in {'open_analysis', 'diagnostic', 'anomaly'}:
+                        if plan.intent == 'diagnostic' and evidence_sufficient(plan.intent, evidence, plan.scope):
+                            stop_reason = 'diagnostic_evidence_complete'
+                            break
+                        try:
+                            next_step, stop_reason = self._next_step(question, context, evidence, max_tools-len(evidence), model)
+                        except Exception as exc:
+                            self.metrics.events.append({'stage': 'optional_research_error', 'detail': str(exc)[:300]})
+                            next_step, stop_reason = None, 'planned_evidence_complete'
+                        if next_step:
+                            optional_steps.add(id(next_step))
+                            pending.append(next_step)
+                    if not pending:
+                        stop_reason = stop_reason or 'planned_evidence_complete'
+                        break
+                if pending and not stop_reason:
+                    stop_reason, partial = 'safety_limit', True
+                sufficient = evidence_sufficient(plan.intent, evidence, plan.scope)
+                self.metrics.events.append({'stage': 'sufficiency', 'requirements': requirements_for(plan.intent, plan.scope),
+                    'sufficient': sufficient, 'successful_evidence_ids': [e.get('id') for e in evidence if e['result'].get('success') is True]})
+                if not partial and not sufficient:
+                    stop_reason, partial = 'insufficient_evidence', True
+                for item in evidence:
+                    try:
+                        chart = build_chart_spec(item['tool'], item['result'])
+                        if chart:
+                            charts.append(chart)
+                    except (KeyError, ValueError, TypeError) as exc:
+                        self.metrics.errors.append(f'chart:{type(exc).__name__}')
+                if any(i['result'].get('success') is True for i in evidence):
+                    answer, final_partial, _ = AnswerFinalizer(self.gateway, self.settings, self.metrics).finalize(
+                        question, context, evidence, model=model, temperature=temperature, partial_reason=stop_reason if partial else None)
+                    partial = partial or final_partial
+                    self.memory.remember_analysis(context.as_dict(), evidence)
+                    self._historical_evidence = deepcopy(evidence)
+                    self._historical_charts = deepcopy(charts)
+                else:
+                    answer, partial = safe_answer(evidence, reason=stop_reason or 'sin datos utilizables'), True
+        except Exception as exc:
+            if not evidence and self._last_interpreted_plan is not None and self._last_interpreted_context is not None:
+                plan, context = self._last_interpreted_plan, self._last_interpreted_context
+                self.memory.remember_request(context.as_dict(), plan.as_dict()['steps'],
+                    request={'question': question, 'scope': plan.scope, 'status': 'validation_failed'})
+            self.metrics.errors.append(f'run:{type(exc).__name__}')
+            self.metrics.events.append({'stage': 'error', 'type': type(exc).__name__, 'detail': str(exc)[:600]})
+            stop_reason, partial = 'controlled_error', True
+            answer = safe_answer(evidence, reason='no pude completar la investigación')
+        self.metrics.total_latency_ms += round((time.perf_counter()-started)*1000, 2)
+        if plan.steps and not partial:
+            self.memory.last_successful_scope = deepcopy(context.as_dict())
+        self.memory.last_request['status'] = stop_reason
+        self.metrics.events.append({'stage': 'memory_transition', 'before': memory_before, 'after': self.memory.context()})
+        self.metrics.events.append({'stage': 'stop', 'reason': stop_reason, 'partial': partial})
+        metrics = self.metrics.as_dict()
+        metrics['turn'] = {k: metrics[k]-before[k] for k in ('total_llm_calls', 'total_tool_calls', 'bigquery_queries', 'bigquery_bytes_processed', 'input_tokens', 'output_tokens', 'cache_hits', 'total_latency_ms')}
+        metrics['stop_reason'] = stop_reason
+        return AgentResult(answer, evidence, len(evidence), {**plan.as_dict(), 'resolved_context': context.as_dict()}, charts, metrics, partial)

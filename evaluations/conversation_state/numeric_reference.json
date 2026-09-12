@@ -1,0 +1,163 @@
+{
+  "executed_at": "2026-09-12T05:14:10.012673+00:00",
+  "checks": {
+    "growth_july": {
+      "success": true,
+      "source": "bigquery",
+      "rows": [
+        {
+          "entity": "RICH FIT TIPS",
+          "current_value": 1067799.0,
+          "previous_value": 0.0,
+          "difference": 1067799.0
+        }
+      ],
+      "row_count": 1,
+      "evidence": {
+        "sql": "SELECT UPPER(TRIM(marca)) AS entity,\n            SUM(IF(DATE(fecha) BETWEEN @a0 AND @a1, inv_neta, 0)) AS current_value,\n            SUM(IF(DATE(fecha) BETWEEN @b0 AND @b1, inv_neta, 0)) AS previous_value,\n            SUM(IF(DATE(fecha) BETWEEN @a0 AND @a1, inv_neta, -inv_neta)) AS difference\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(fecha) BETWEEN @b0 AND @a1\n            GROUP BY entity ORDER BY difference DESC LIMIT 1",
+        "query_parameters": {
+          "a0": "2026-07-01",
+          "a1": "2026-07-31",
+          "b0": "2026-06-01",
+          "b1": "2026-06-30"
+        },
+        "bytes_processed": 19951115,
+        "job_id": "680aa407-1d03-467a-9812-37c7a875efeb",
+        "cache_hit": false,
+        "executed_at": "2026-09-12T05:14:13.632550+00:00",
+        "duration_ms": 1697.37,
+        "rows": 1
+      }
+    },
+    "peak_bmw": {
+      "success": true,
+      "source": "bigquery",
+      "rows": [
+        {
+          "month": "2025-11-01",
+          "value": 489740.9467873
+        }
+      ],
+      "row_count": 1,
+      "evidence": {
+        "sql": "SELECT DATE_TRUNC(DATE(fecha), MONTH) AS month, SUM(inv_neta) AS value\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(marca)) = @entity AND DATE(fecha) BETWEEN @a0 AND @a1\n            GROUP BY month ORDER BY value DESC LIMIT 1",
+        "query_parameters": {
+          "entity": "BMW",
+          "a0": "2025-01-01",
+          "a1": "2025-12-31"
+        },
+        "bytes_processed": 19951115,
+        "job_id": "6ff216b9-ac1a-4cc9-8509-d9e27f1b5deb",
+        "cache_hit": false,
+        "executed_at": "2026-09-12T05:14:15.358002+00:00",
+        "duration_ms": 1256.57,
+        "rows": 1
+      }
+    },
+    "joint_tv": {
+      "success": true,
+      "source": "bigquery",
+      "rows": [
+        {
+          "combined": 528525.21,
+          "universe": 36852874.73000002,
+          "share_pct": 1.4341492051086993
+        }
+      ],
+      "row_count": 1,
+      "evidence": {
+        "sql": "SELECT SUM(IF(UPPER(TRIM(marca)) IN (@one,@two),inv_neta,0)) AS combined,\n            SUM(inv_neta) AS universe,\n            SAFE_DIVIDE(SUM(IF(UPPER(TRIM(marca)) IN (@one,@two),inv_neta,0)),SUM(inv_neta))*100 AS share_pct\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(medio_agrupado)) IN (@open,@cable) AND DATE(fecha) BETWEEN @a0 AND @a1",
+        "query_parameters": {
+          "one": "BMW",
+          "two": "VOLVO",
+          "open": "TV ABIERTA",
+          "cable": "TV CABLE",
+          "a0": "2026-01-01",
+          "a1": "2026-12-31"
+        },
+        "bytes_processed": 26779808,
+        "job_id": "ffbf1b8d-f46a-449c-b247-1e5ef451cf9c",
+        "cache_hit": false,
+        "executed_at": "2026-09-12T05:14:16.997066+00:00",
+        "duration_ms": 1285.42,
+        "rows": 1
+      }
+    },
+    "joint_october": {
+      "success": true,
+      "source": "bigquery",
+      "rows": [
+        {
+          "combined": 633367.4628929002,
+          "universe": 37729909.64622802,
+          "share_pct": 1.6786879927135474
+        }
+      ],
+      "row_count": 1,
+      "evidence": {
+        "sql": "SELECT SUM(IF(UPPER(TRIM(marca)) IN (@one,@two),inv_neta,0)) AS combined,\n            SUM(inv_neta) AS universe,\n            SAFE_DIVIDE(SUM(IF(UPPER(TRIM(marca)) IN (@one,@two),inv_neta,0)),SUM(inv_neta))*100 AS share_pct\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(fecha) BETWEEN @a0 AND @a1",
+        "query_parameters": {
+          "one": "BMW",
+          "two": "VOLVO",
+          "a0": "2025-10-01",
+          "a1": "2025-10-31"
+        },
+        "bytes_processed": 19951115,
+        "job_id": "7785da51-e80c-4564-aa02-0079c3e9eaea",
+        "cache_hit": false,
+        "executed_at": "2026-09-12T05:14:18.651980+00:00",
+        "duration_ms": 1167.29,
+        "rows": 1
+      }
+    },
+    "empty_week_toyota": {
+      "success": true,
+      "source": "bigquery",
+      "rows": [
+        {
+          "source_rows": 0,
+          "value": null
+        }
+      ],
+      "row_count": 1,
+      "evidence": {
+        "sql": "SELECT COUNT(*) AS source_rows, SUM(inv_neta) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n            WHERE UPPER(TRIM(marca))=@entity AND DATE(fecha) BETWEEN @a0 AND @a1",
+        "query_parameters": {
+          "entity": "TOYOTA",
+          "a0": "2024-03-25",
+          "a1": "2024-03-31"
+        },
+        "bytes_processed": 19951115,
+        "job_id": "f451120d-7605-462c-943a-1606486467c7",
+        "cache_hit": false,
+        "executed_at": "2026-09-12T05:14:20.127639+00:00",
+        "duration_ms": 1113.58,
+        "rows": 1
+      }
+    },
+    "bmw_october": {
+      "success": true,
+      "source": "bigquery",
+      "rows": [
+        {
+          "value": 155884.1239124001
+        }
+      ],
+      "row_count": 1,
+      "evidence": {
+        "sql": "SELECT SUM(inv_neta) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n            WHERE UPPER(TRIM(marca))=@entity AND DATE(fecha) BETWEEN @a0 AND @a1",
+        "query_parameters": {
+          "entity": "BMW",
+          "a0": "2025-10-01",
+          "a1": "2025-10-31"
+        },
+        "bytes_processed": 19951115,
+        "job_id": "66eea893-df74-4cd4-b1dc-6b0059563900",
+        "cache_hit": false,
+        "executed_at": "2026-09-12T05:14:21.533589+00:00",
+        "duration_ms": 1072.13,
+        "rows": 1
+      }
+    }
+  }
+}

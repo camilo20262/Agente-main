@@ -1,0 +1,79 @@
+{
+  "id": "independent-20",
+  "question": "¿Cómo interpretarías un pico de inversión?",
+  "family": "out_of_domain",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 0.31,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 308.96,
+      "errors": [
+        "planning:RateLimitError",
+        "run:RateLimitError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "events": [
+        {
+          "stage": "error",
+          "type": "RateLimitError",
+          "detail": "Error code: 429 - {'status': 429, 'title': 'Too Many Requests'}"
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cache_hits": 0,
+        "total_latency_ms": 308.96
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "partial_or_fallback"
+  ],
+  "expected_family": "out_of_domain",
+  "actual_intent": "clarification"
+}

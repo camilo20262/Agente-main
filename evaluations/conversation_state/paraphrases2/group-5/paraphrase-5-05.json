@@ -1,0 +1,2206 @@
+{
+  "id": "paraphrase-5-05",
+  "question": "Conserva las tres y llévalo al año 2023.",
+  "elapsed_s": 9.02,
+  "memory_before": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "last_entities": {},
+    "last_filters": {},
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "joint_entities",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Ford"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener el total de inversión publicitaria neta de Ford en 2024",
+            "arguments": {
+              "metrica": "inv_neta",
+              "agregacion": "sum",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {
+                "marca": "Ford"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "change_entity",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener el total de inversión publicitaria neta de Toyota en 2024",
+            "arguments": {
+              "metrica": "inv_neta",
+              "agregacion": "sum",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {
+                "marca": "Toyota"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 2,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_participacion_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+            "arguments": {
+              "dimension": "marca",
+              "valores": [
+                "FORD",
+                "TOYOTA"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "consultar_participacion_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+        "arguments": {
+          "dimension": "marca",
+          "valores": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ]
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "joint_entities",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "joint_entities",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "joint_entities",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "consultar_participacion_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+        "arguments": {
+          "dimension": "marca",
+          "valores": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ]
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Añade Renault a ese conjunto y calcula su participación agregada.",
+      "scope": {
+        "intent": "joint_share",
+        "operation": "joint_entities",
+        "scope_mode": "inherit",
+        "filters": {},
+        "period": {
+          "kind": "inherit"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "remove_filters": [
+          "marca"
+        ],
+        "comparison_period": null
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "FORD"
+      },
+      {
+        "dimension": "marca",
+        "value": "TOYOTA"
+      },
+      {
+        "dimension": "marca",
+        "value": "RENAULT"
+      }
+    ]
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2023-01-01",
+      "end": "2023-12-31"
+    },
+    "last_entities": {},
+    "last_filters": {},
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "change_period",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "recent_scopes": [
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Ford"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {},
+        "available_period": {},
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener el total de inversión publicitaria neta de Ford en 2024",
+            "arguments": {
+              "metrica": "inv_neta",
+              "agregacion": "sum",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {
+                "marca": "Ford"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "change_entity",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_inversion_publicitaria",
+            "purpose": "Obtener el total de inversión publicitaria neta de Toyota en 2024",
+            "arguments": {
+              "metrica": "inv_neta",
+              "agregacion": "sum",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {
+                "marca": "Toyota"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 2,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_participacion_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+            "arguments": {
+              "dimension": "marca",
+              "valores": [
+                "FORD",
+                "TOYOTA"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        },
+        "strategy": [
+          {
+            "tool": "consultar_participacion_bicomp",
+            "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+            "arguments": {
+              "dimension": "marca",
+              "valores": [
+                "FORD",
+                "TOYOTA",
+                "RENAULT"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "last_strategy": [
+      {
+        "tool": "consultar_participacion_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+        "arguments": {
+          "dimension": "marca",
+          "valores": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ]
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "change_period",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "change_period",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "change_period",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "consultar_participacion_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+        "arguments": {
+          "dimension": "marca",
+          "valores": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ]
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Conserva las tres y llévalo al año 2023.",
+      "scope": {
+        "intent": "joint_share",
+        "operation": "change_period",
+        "scope_mode": "inherit",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2023
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "remove_filters": [
+          "marca"
+        ],
+        "comparison_period": null
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "FORD"
+      },
+      {
+        "dimension": "marca",
+        "value": "TOYOTA"
+      },
+      {
+        "dimension": "marca",
+        "value": "RENAULT"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "joint_share",
+      "operation": "change_period",
+      "scope_mode": "inherit",
+      "filters": {},
+      "period": {
+        "kind": "year",
+        "year": 2023
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "agregacion": "sum",
+            "fecha_inicio": "2023-01-01",
+            "fecha_fin": "2023-12-31",
+            "filtros": {},
+            "dimension": "marca",
+            "valores": [
+              "FORD",
+              "TOYOTA",
+              "RENAULT"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "joint_share",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "consultar_participacion_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+        "arguments": {
+          "dimension": "marca",
+          "valores": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ]
+        }
+      }
+    ],
+    "scope": {
+      "intent": "joint_share",
+      "operation": "change_period",
+      "scope_mode": "inherit",
+      "filters": {},
+      "period": {
+        "kind": "year",
+        "year": 2023
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "remove_filters": [
+        "marca"
+      ],
+      "comparison_period": null
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "joint_share",
+      "analysis": {
+        "entity_reference": "recent",
+        "entity_count": 3,
+        "entity_set": [
+          {
+            "dimension": "marca",
+            "value": "FORD"
+          },
+          {
+            "dimension": "marca",
+            "value": "TOYOTA"
+          },
+          {
+            "dimension": "marca",
+            "value": "RENAULT"
+          }
+        ]
+      },
+      "operation": "change_period",
+      "observed_period": {
+        "start": "2023-01-01",
+        "end": "2023-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {
+    "metric": "inv_neta",
+    "filters": {},
+    "requested_period": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "comparison_period": {},
+    "dimensions": [
+      "marca"
+    ],
+    "intent": "joint_share",
+    "analysis": {
+      "entity_reference": "recent",
+      "entity_count": 3,
+      "entity_set": [
+        {
+          "dimension": "marca",
+          "value": "FORD"
+        },
+        {
+          "dimension": "marca",
+          "value": "TOYOTA"
+        },
+        {
+          "dimension": "marca",
+          "value": "RENAULT"
+        }
+      ]
+    },
+    "operation": "joint_entities",
+    "observed_period": {},
+    "available_period": {
+      "start": "2019-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "result": {
+    "answer": "Inversión publicitaria neta, alcance consultado (2023-01-01 a 2023-12-31), marca=FORD, TOYOTA, RENAULT: valor conjunto 42.918.042,45 de un total de 144.695.132,19; participación conjunta 29,66 %.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_participacion_bicomp",
+        "arguments": {
+          "dimension": "marca",
+          "valores": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ],
+          "metrica": "inv_neta",
+          "filtros": {},
+          "fecha_inicio": "2023-01-01",
+          "fecha_fin": "2023-12-31"
+        },
+        "result": {
+          "success": true,
+          "source": "bigquery",
+          "row_count": 73,
+          "evidence": {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2023-01-01",
+              "end_date": "2023-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "706ecb71-fd98-481e-b340-f495e636b875",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T00:02:14.093538+00:00",
+            "duration_ms": 1422.44,
+            "rows": 73
+          },
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2023-01-01",
+            "end": "2023-12-31"
+          },
+          "requested_period": {
+            "start": "2023-01-01",
+            "end": "2023-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2023-01-01",
+            "end": "2023-12-01"
+          },
+          "effective_period": {
+            "start": "2023-01-01",
+            "end": "2023-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "missing_values": [],
+          "dimension": "marca",
+          "values": [
+            "FORD",
+            "TOYOTA",
+            "RENAULT"
+          ],
+          "value": 42918042.44954479,
+          "total": 144695132.19240838,
+          "share_pct": 29.661013331446778,
+          "denominator_scope": {}
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 73,
+        "step": 1,
+        "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2023-01-01",
+              "end_date": "2023-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "706ecb71-fd98-481e-b340-f495e636b875",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T00:02:14.093538+00:00",
+            "duration_ms": 1422.44,
+            "rows": 73
+          }
+        ],
+        "latency_ms": 1826.82
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "joint_share",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+          "arguments": {
+            "dimension": "marca",
+            "valores": [
+              "FORD",
+              "TOYOTA",
+              "RENAULT"
+            ]
+          }
+        }
+      ],
+      "scope": {
+        "intent": "joint_share",
+        "operation": "change_period",
+        "scope_mode": "inherit",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2023
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "remove_filters": [
+          "marca"
+        ],
+        "comparison_period": null
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 3,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "FORD"
+            },
+            {
+              "dimension": "marca",
+              "value": "TOYOTA"
+            },
+            {
+              "dimension": "marca",
+              "value": "RENAULT"
+            }
+          ]
+        },
+        "operation": "change_period",
+        "observed_period": {
+          "start": "2023-01-01",
+          "end": "2023-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 5,
+      "total_tool_calls": 5,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 5,
+      "total_latency_ms": 30525.619999999995,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 44674,
+      "output_tokens": 1216,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 7168.89
+        },
+        {
+          "stage": "plan",
+          "intent": "joint_share",
+          "scope": {
+            "intent": "joint_share",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2023
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "entity_reference": "recent",
+              "entity_count": 3,
+              "entity_set": [
+                {
+                  "dimension": "marca",
+                  "value": "FORD"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "TOYOTA"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "RENAULT"
+                }
+              ]
+            },
+            "remove_filters": [
+              "marca"
+            ],
+            "comparison_period": null
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "joint_share",
+          "requested_scope": {
+            "intent": "joint_share",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2023
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "entity_reference": "recent",
+              "entity_count": 3,
+              "entity_set": [
+                {
+                  "dimension": "marca",
+                  "value": "FORD"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "TOYOTA"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "RENAULT"
+                }
+              ]
+            },
+            "remove_filters": [
+              "marca"
+            ],
+            "comparison_period": null
+          },
+          "inherited_scope": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "marca"
+            ],
+            "intent": "joint_share",
+            "analysis": {
+              "entity_reference": "recent",
+              "entity_count": 3,
+              "entity_set": [
+                {
+                  "dimension": "marca",
+                  "value": "FORD"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "TOYOTA"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "RENAULT"
+                }
+              ]
+            },
+            "operation": "joint_entities",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "scope_mutations": {
+            "requested_period": {
+              "before": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "after": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              }
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "marca"
+            ],
+            "intent": "joint_share",
+            "analysis": {
+              "entity_reference": "recent",
+              "entity_count": 3,
+              "entity_set": [
+                {
+                  "dimension": "marca",
+                  "value": "FORD"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "TOYOTA"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "RENAULT"
+                }
+              ]
+            },
+            "operation": "change_period",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "requirements": {
+            "capability": "joint_share",
+            "dimension": "marca",
+            "analysis": {
+              "entity_reference": "recent",
+              "entity_count": 3,
+              "entity_set": [
+                {
+                  "dimension": "marca",
+                  "value": "FORD"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "TOYOTA"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "RENAULT"
+                }
+              ]
+            },
+            "requires_reference": false,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "joint_share"
+          ],
+          "tools": [
+            "consultar_participacion_bicomp"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "sufficiency",
+          "requirements": {
+            "capability": "joint_share",
+            "dimension": "marca",
+            "analysis": {
+              "entity_reference": "recent",
+              "entity_count": 3,
+              "entity_set": [
+                {
+                  "dimension": "marca",
+                  "value": "FORD"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "TOYOTA"
+                },
+                {
+                  "dimension": "marca",
+                  "value": "RENAULT"
+                }
+              ]
+            },
+            "requires_reference": false,
+            "requires_series": false
+          },
+          "sufficient": true,
+          "successful_evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "last_entities": {},
+            "last_filters": {},
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "joint_entities",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Ford"
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener el total de inversión publicitaria neta de Ford en 2024",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "agregacion": "sum",
+                      "fecha_inicio": "2024-01-01",
+                      "fecha_fin": "2024-12-31",
+                      "filtros": {
+                        "marca": "Ford"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "change_entity",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener el total de inversión publicitaria neta de Toyota en 2024",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "agregacion": "sum",
+                      "fecha_inicio": "2024-01-01",
+                      "fecha_fin": "2024-12-31",
+                      "filtros": {
+                        "marca": "Toyota"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "joint_share",
+                "analysis": {
+                  "entity_reference": "recent",
+                  "entity_count": 2,
+                  "entity_set": [
+                    {
+                      "dimension": "marca",
+                      "value": "FORD"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "TOYOTA"
+                    }
+                  ]
+                },
+                "operation": "joint_entities",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_participacion_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "valores": [
+                        "FORD",
+                        "TOYOTA"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "consultar_participacion_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                "arguments": {
+                  "dimension": "marca",
+                  "valores": [
+                    "FORD",
+                    "TOYOTA",
+                    "RENAULT"
+                  ]
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "joint_entities",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "joint_entities",
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "joint_entities",
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "consultar_participacion_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                "arguments": {
+                  "dimension": "marca",
+                  "valores": [
+                    "FORD",
+                    "TOYOTA",
+                    "RENAULT"
+                  ]
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Añade Renault a ese conjunto y calcula su participación agregada.",
+              "scope": {
+                "intent": "joint_share",
+                "operation": "joint_entities",
+                "scope_mode": "inherit",
+                "filters": {},
+                "period": {
+                  "kind": "inherit"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "analysis": {
+                  "entity_reference": "recent",
+                  "entity_count": 3,
+                  "entity_set": [
+                    {
+                      "dimension": "marca",
+                      "value": "FORD"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "TOYOTA"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "RENAULT"
+                    }
+                  ]
+                },
+                "remove_filters": [
+                  "marca"
+                ],
+                "comparison_period": null
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "FORD"
+              },
+              {
+                "dimension": "marca",
+                "value": "TOYOTA"
+              },
+              {
+                "dimension": "marca",
+                "value": "RENAULT"
+              }
+            ]
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "last_entities": {},
+            "last_filters": {},
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "change_period",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "recent_scopes": [
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Ford"
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "new_analysis",
+                "observed_period": {},
+                "available_period": {},
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener el total de inversión publicitaria neta de Ford en 2024",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "agregacion": "sum",
+                      "fecha_inicio": "2024-01-01",
+                      "fecha_fin": "2024-12-31",
+                      "filtros": {
+                        "marca": "Ford"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "Toyota"
+                },
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [],
+                "intent": "lookup",
+                "analysis": {},
+                "operation": "change_entity",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_inversion_publicitaria",
+                    "purpose": "Obtener el total de inversión publicitaria neta de Toyota en 2024",
+                    "arguments": {
+                      "metrica": "inv_neta",
+                      "agregacion": "sum",
+                      "fecha_inicio": "2024-01-01",
+                      "fecha_fin": "2024-12-31",
+                      "filtros": {
+                        "marca": "Toyota"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "joint_share",
+                "analysis": {
+                  "entity_reference": "recent",
+                  "entity_count": 2,
+                  "entity_set": [
+                    {
+                      "dimension": "marca",
+                      "value": "FORD"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "TOYOTA"
+                    }
+                  ]
+                },
+                "operation": "joint_entities",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_participacion_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "valores": [
+                        "FORD",
+                        "TOYOTA"
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "metric": "inv_neta",
+                "filters": {},
+                "requested_period": {
+                  "start": "2024-01-01",
+                  "end": "2024-12-31"
+                },
+                "comparison_period": {},
+                "dimensions": [
+                  "marca"
+                ],
+                "intent": "joint_share",
+                "analysis": {
+                  "entity_reference": "recent",
+                  "entity_count": 3,
+                  "entity_set": [
+                    {
+                      "dimension": "marca",
+                      "value": "FORD"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "TOYOTA"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "RENAULT"
+                    }
+                  ]
+                },
+                "operation": "joint_entities",
+                "observed_period": {},
+                "available_period": {
+                  "start": "2019-01-01",
+                  "end": "2026-07-31"
+                },
+                "strategy": [
+                  {
+                    "tool": "consultar_participacion_bicomp",
+                    "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                    "arguments": {
+                      "dimension": "marca",
+                      "valores": [
+                        "FORD",
+                        "TOYOTA",
+                        "RENAULT"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "last_strategy": [
+              {
+                "tool": "consultar_participacion_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                "arguments": {
+                  "dimension": "marca",
+                  "valores": [
+                    "FORD",
+                    "TOYOTA",
+                    "RENAULT"
+                  ]
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "change_period",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "change_period",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "joint_share",
+              "analysis": {
+                "entity_reference": "recent",
+                "entity_count": 3,
+                "entity_set": [
+                  {
+                    "dimension": "marca",
+                    "value": "FORD"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "TOYOTA"
+                  },
+                  {
+                    "dimension": "marca",
+                    "value": "RENAULT"
+                  }
+                ]
+              },
+              "operation": "change_period",
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "consultar_participacion_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad joint_share.",
+                "arguments": {
+                  "dimension": "marca",
+                  "valores": [
+                    "FORD",
+                    "TOYOTA",
+                    "RENAULT"
+                  ]
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Conserva las tres y llévalo al año 2023.",
+              "scope": {
+                "intent": "joint_share",
+                "operation": "change_period",
+                "scope_mode": "inherit",
+                "filters": {},
+                "period": {
+                  "kind": "year",
+                  "year": 2023
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "analysis": {
+                  "entity_reference": "recent",
+                  "entity_count": 3,
+                  "entity_set": [
+                    {
+                      "dimension": "marca",
+                      "value": "FORD"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "TOYOTA"
+                    },
+                    {
+                      "dimension": "marca",
+                      "value": "RENAULT"
+                    }
+                  ]
+                },
+                "remove_filters": [
+                  "marca"
+                ],
+                "comparison_period": null
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "FORD"
+              },
+              {
+                "dimension": "marca",
+                "value": "TOYOTA"
+              },
+              {
+                "dimension": "marca",
+                "value": "RENAULT"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 9918,
+        "output_tokens": 294,
+        "cache_hits": 0,
+        "total_latency_ms": 9015.719999999998
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  }
+}

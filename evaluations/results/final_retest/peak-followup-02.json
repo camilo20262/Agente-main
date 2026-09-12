@@ -1,0 +1,194 @@
+{
+  "id": "peak-followup-02",
+  "question": "¿Qué pasó en el mes más fuerte?",
+  "family": "diagnostic",
+  "expected_peak": "2025-11-01",
+  "elapsed_s": 4.29,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 5,
+      "total_tool_calls": 3,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 28459.93,
+      "errors": [
+        "run:ValueError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 29612,
+      "output_tokens": 1739,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2153.34
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "La profundización sale del periodo solicitado.",
+          "rejected_plan": {
+            "intent": "diagnostic",
+            "operation": "inspect_peak",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "peak"
+            },
+            "dimensions": [
+              "medio"
+            ],
+            "analysis_questions": [
+              "¿Cuál fue la inversión neta en el mes más fuerte?",
+              "¿Cómo se distribuyó esa inversión por medio?",
+              "¿Qué medio tuvo mayor participación en ese mes?"
+            ],
+            "steps": [
+              {
+                "tool": "serie_temporal_bicomp",
+                "purpose": "Obtener la serie mensual de inversión neta para BMW en 2025 y confirmar el mes pico.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "granularidad": "month",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-12-31",
+                  "filtros": {
+                    "marca": "BMW"
+                  }
+                }
+              },
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Desglosar la inversión neta del mes pico (noviembre 2025) por medio para ver la composición.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "dimension": "medio",
+                  "fecha_inicio": "2025-11-01",
+                  "fecha_fin": "2025-11-30",
+                  "filtros": {
+                    "marca": "BMW"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2105.65
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "La profundización sale del periodo solicitado.",
+          "rejected_plan": {
+            "intent": "diagnostic",
+            "operation": "inspect_peak",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "period": {
+              "kind": "peak"
+            },
+            "dimensions": [
+              "medio"
+            ],
+            "analysis_questions": [
+              "¿Cuál fue la inversión neta en el mes más fuerte?",
+              "¿Cómo se distribuyó esa inversión por medio?",
+              "¿Qué medio tuvo mayor participación en ese mes?"
+            ],
+            "steps": [
+              {
+                "tool": "serie_temporal_bicomp",
+                "purpose": "Obtener la serie mensual de inversión neta para BMW en 2025 y confirmar el mes pico.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "granularidad": "month",
+                  "fecha_inicio": "2025-01-01",
+                  "fecha_fin": "2025-12-31",
+                  "filtros": {
+                    "marca": "BMW"
+                  }
+                }
+              },
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Desglosar la inversión neta del mes pico (noviembre 2025) por medio para ver la composición.",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "dimension": "medio",
+                  "fecha_inicio": "2025-11-01",
+                  "fecha_fin": "2025-11-30",
+                  "filtros": {
+                    "marca": "BMW"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "ValueError",
+          "detail": "La profundización sale del periodo solicitado."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 13610,
+        "output_tokens": 757,
+        "cache_hits": 0,
+        "total_latency_ms": 4288.619999999999
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "lost_peak_year",
+    "wrong_peak_month",
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "clarification"
+}

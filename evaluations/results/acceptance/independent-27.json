@@ -1,0 +1,469 @@
+{
+  "id": "independent-27",
+  "question": "Muestra las cinco categorías con mayor inversión neta USD por sector en 2025.",
+  "family": "ranking",
+  "expected_dimensions": [
+    "categoria",
+    "sector"
+  ],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 14.8,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Yogurt,Kumis lidera en Alimentos**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=ALIMENTOS, categoria=YOGURT,KUMIS: 6.798.002,26 (50,25 % del grupo).\n\n**Otros Lacteos sigue de cerca**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=ALIMENTOS, categoria=OTROS LACTEOS: 6.730.535,92 (49,75 % del grupo).\n\n**Automóviles destaca en Automotriz**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=AUTOMOCIÓN - AUTOMÓVILES, categoria=AUTOMOCIÓN - AUTOMÓVILES: 5.131.496,45 (100,00 % del grupo).\n\n**Multiproducto en Automotriz**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=AUTOMOTRIZ, categoria=MULTIPRODUCTO: 8.002.257,33 (31,92 % del grupo).\n\n**Vehículos eléctricos e híbridos en Automotriz**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=AUTOMOTRIZ, categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 6.717.420,05 (26,79 % del grupo).\n\n### Advertencias\n\nParticipaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.\n\nLa respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_segmentado_bicomp",
+        "arguments": {
+          "dimension": "categoria",
+          "dimension_grupo": "sector",
+          "limite": 5,
+          "metrica": "inv_neta_usd",
+          "filtros": {},
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta_usd",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Participaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.",
+            "La respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta expresada en dólares",
+          "success": true,
+          "dimension": "categoria",
+          "segment_dimension": "sector",
+          "dimensions": [
+            "sector",
+            "categoria"
+          ],
+          "rows": [
+            {
+              "segment": "ALIMENTACION - YOGURES Y POSTRES",
+              "dimension": "N/D",
+              "value": 1780.5715860454548,
+              "group_total": 1780.5715860454548,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "ALIMENTOS",
+              "dimension": "YOGURT,KUMIS",
+              "value": 6798002.263636369,
+              "group_total": 13528538.186363641,
+              "rank": 1,
+              "share_pct": 50.2493482295711,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "ALIMENTOS",
+              "dimension": "OTROS LACTEOS",
+              "value": 6730535.922727272,
+              "group_total": 13528538.186363641,
+              "rank": 2,
+              "share_pct": 49.750651770428895,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOCIÓN - AUTOMÓVILES",
+              "dimension": "AUTOMOCIÓN - AUTOMÓVILES",
+              "value": 5131496.451515208,
+              "group_total": 5131496.451515208,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOCIÓN - CAMIONES Y AUTOBUSES",
+              "dimension": "AUTOMOCIÓN - CAMIONES Y AUTOBUSES",
+              "value": 124249.22705395454,
+              "group_total": 124249.22705395454,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOCIÓN - CONCESIONARIAS",
+              "dimension": "AUTOMOCIÓN - CONCESIONARIAS",
+              "value": 16432.92442662041,
+              "group_total": 16432.92442662041,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOCIÓN - VARIOS",
+              "dimension": "AUTOMOCIÓN - VARIOS",
+              "value": 0.3649609067045454,
+              "group_total": 0.3649609067045454,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOTRIZ",
+              "dimension": "MULTIPRODUCTO",
+              "value": 8002257.3268377185,
+              "group_total": 25070200.341244098,
+              "rank": 1,
+              "share_pct": 31.919399198708636,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOTRIZ",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 6717420.049141525,
+              "group_total": 25070200.341244098,
+              "rank": 2,
+              "share_pct": 26.7944410403869,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOTRIZ",
+              "dimension": "UTILITY",
+              "value": 6192055.811332537,
+              "group_total": 25070200.341244098,
+              "rank": 3,
+              "share_pct": 24.69886848548917,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOTRIZ",
+              "dimension": "PICK UP",
+              "value": 1274357.3972292729,
+              "group_total": 25070200.341244098,
+              "rank": 4,
+              "share_pct": 5.0831560174362505,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "AUTOMOTRIZ",
+              "dimension": "SMALL",
+              "value": 1002990.6055007274,
+              "group_total": 25070200.341244098,
+              "rank": 5,
+              "share_pct": 4.000728322264992,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "COMERCIO, TURISMO",
+              "dimension": "P C COMERCIO TURISMO",
+              "value": 3521488.307430809,
+              "group_total": 3521488.307430809,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "DEPORTES",
+              "dimension": "DEPORTES Y ENTRETENIMIENTO",
+              "value": 850599.3200000096,
+              "group_total": 850599.3200000096,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "DEPORTES Y TIEMPO LIBRE - ARTÍCULOS DEPORTIVOS",
+              "dimension": "DEPORTES Y TIEMPO LIBRE - ARTÍCULOS DEPORTIVOS",
+              "value": 284.9507403166771,
+              "group_total": 284.9507403166771,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "DEPORTES Y TIEMPO LIBRE - VARIOS",
+              "dimension": "DEPORTES Y TIEMPO LIBRE - VARIOS",
+              "value": 2291908.9660793454,
+              "group_total": 2291908.9660793454,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "FINANCIERO, SEGUROS",
+              "dimension": "TARJETAS DE CREDITO Y DEBITO",
+              "value": 9420718.368139854,
+              "group_total": 10561991.483729944,
+              "rank": 1,
+              "share_pct": 89.19452721252287,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "FINANCIERO, SEGUROS",
+              "dimension": "P C FINANCIERO Y SEGUROS",
+              "value": 1141273.1155900906,
+              "group_total": 10561991.483729944,
+              "rank": 2,
+              "share_pct": 10.805472787477125,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "FINANZAS - TARJETAS Y CHEQUES",
+              "dimension": "N/D",
+              "value": 882897.180189608,
+              "group_total": 882897.180189608,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            },
+            {
+              "segment": "SALUD Y DEPORTES",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 1716411.8659090905,
+              "group_total": 1716411.8659090905,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 20
+            }
+          ],
+          "ranking_truncated": false,
+          "row_count": 20,
+          "evidence": {
+            "sql": "WITH analytical_result AS (WITH grouped AS (\n            SELECT UPPER(TRIM(CAST(`sector` AS STRING))) AS segment, UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension, SUM(`inv_neta_usd`) AS value,\n                   MIN(DATE(fecha)) AS _observed_start, MAX(DATE(fecha)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY segment, dimension\n        ), scored AS (\n            SELECT *, SUM(value) OVER (PARTITION BY segment) AS group_total,\n                   DENSE_RANK() OVER (PARTITION BY segment ORDER BY value DESC) AS rank,\n                   MIN(_observed_start) OVER () AS _scope_start,\n                   MAX(_observed_end) OVER () AS _scope_end\n            FROM grouped WHERE value IS NOT NULL\n        )\n        SELECT segment, dimension, value, group_total, rank,\n               SAFE_DIVIDE(value, group_total) * 100 AS share_pct,\n               _scope_start AS _observed_start, _scope_end AS _observed_end,\n               COUNT(*) OVER () AS ranked_rows_total\n        FROM scored WHERE rank <= @limit\n        ORDER BY CAST(segment AS STRING), rank, CAST(dimension AS STRING)\n        LIMIT 500), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 42034683,
+            "job_id": "a6de3308-3223-4013-82e1-12f7137b3111",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:48:54.343771+00:00",
+            "duration_ms": 1191.43,
+            "rows": 20
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "row_count": 20,
+        "step": 1,
+        "purpose": "Obtener el top 5 de categorías por inversión neta USD dentro de cada sector en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (WITH grouped AS (\n            SELECT UPPER(TRIM(CAST(`sector` AS STRING))) AS segment, UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension, SUM(`inv_neta_usd`) AS value,\n                   MIN(DATE(fecha)) AS _observed_start, MAX(DATE(fecha)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY segment, dimension\n        ), scored AS (\n            SELECT *, SUM(value) OVER (PARTITION BY segment) AS group_total,\n                   DENSE_RANK() OVER (PARTITION BY segment ORDER BY value DESC) AS rank,\n                   MIN(_observed_start) OVER () AS _scope_start,\n                   MAX(_observed_end) OVER () AS _scope_end\n            FROM grouped WHERE value IS NOT NULL\n        )\n        SELECT segment, dimension, value, group_total, rank,\n               SAFE_DIVIDE(value, group_total) * 100 AS share_pct,\n               _scope_start AS _observed_start, _scope_end AS _observed_end,\n               COUNT(*) OVER () AS ranked_rows_total\n        FROM scored WHERE rank <= @limit\n        ORDER BY CAST(segment AS STRING), rank, CAST(dimension AS STRING)\n        LIMIT 500), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 42034683,
+            "job_id": "a6de3308-3223-4013-82e1-12f7137b3111",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:48:54.343771+00:00",
+            "duration_ms": 1191.43,
+            "rows": 20
+          }
+        ],
+        "latency_ms": 2772.36
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_segmentado_bicomp",
+          "purpose": "Obtener el top 5 de categorías por inversión neta USD dentro de cada sector en 2025.",
+          "arguments": {
+            "dimension": "categoria",
+            "dimension_grupo": "sector",
+            "limite": 5
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "sector",
+          "categoria"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son las cinco categorías con mayor inversión neta USD por sector en 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "sector",
+          "categoria"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 3,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 42034683,
+      "bigquery_queries": 1,
+      "total_latency_ms": 14796.75,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 14695,
+      "output_tokens": 731,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2200.56
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "El ranking omite dimensiones de agrupación explícitas: sector. Conserva todos los ejes solicitados en dimensions y en las herramientas; un ranking global no responde un ranking dentro de grupos.",
+          "rejected_plan": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta_usd",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "categoria"
+            ],
+            "analysis_questions": [
+              "¿Cuáles son las cinco categorías con mayor inversión neta USD en 2025?"
+            ],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el ranking de categorías por inversión neta USD en 2025, limitado a las cinco primeras.",
+                "arguments": {
+                  "dimension": "categoria",
+                  "limite": 5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2567.08
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta_usd",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "sector",
+              "categoria"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_segmentado_bicomp",
+          "purpose": "Obtener el top 5 de categorías por inversión neta USD dentro de cada sector en 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 7218.61
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Yogurt,Kumis lidera en Alimentos**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=ALIMENTOS, categoria=YOGURT,KUMIS: 6.798.002,26 (50,25 % del grupo).\n\n**Otros Lacteos sigue de cerca**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=ALIMENTOS, categoria=OTROS LACTEOS: 6.730.535,92 (49,75 % del grupo).\n\n**Automóviles destaca en Automotriz**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=AUTOMOCIÓN - AUTOMÓVILES, categoria=AUTOMOCIÓN - AUTOMÓVILES: 5.131.496,45 (100,00 % del grupo).\n\n**Multiproducto en Automotriz**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=AUTOMOTRIZ, categoria=MULTIPRODUCTO: 8.002.257,33 (31,92 % del grupo).\n\n**Vehículos eléctricos e híbridos en Automotriz**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), sector=AUTOMOTRIZ, categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 6.717.420,05 (26,79 % del grupo).\n\n### Advertencias\n\nParticipaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.\n\nLa respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 42034683,
+        "input_tokens": 14695,
+        "output_tokens": 731,
+        "cache_hits": 0,
+        "total_latency_ms": 14796.75
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

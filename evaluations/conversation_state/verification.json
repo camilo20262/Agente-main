@@ -1,0 +1,373 @@
+{
+  "verified_at": "2026-09-12T16:46:03.844420+00:00",
+  "checks": [
+    {
+      "command": [
+        "/Users/camilo/Downloads/Agente-main/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "output": "........................................................................ [ 20%]\n........................................................................ [ 41%]\n........................................................................ [ 61%]\n........................................................................ [ 82%]\n...............................................................          [100%]\n=============================== warnings summary ===============================\ntests/test_ui_attachments.py::test_repeated_charts_across_turns_and_new_conversation\n  /Users/camilo/Downloads/Agente-main/.venv/lib/python3.14/site-packages/PyPDF2/__init__.py:21: DeprecationWarning: PyPDF2 is deprecated. Please move to the pypdf library instead.\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n351 passed, 1 warning in 3.50s\n"
+    },
+    {
+      "command": [
+        "/Users/camilo/Downloads/Agente-main/.venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "output": "No broken requirements found.\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "ast_modules": 47,
+  "source_fingerprint": "00a6446f9ff95bcf3eeee7ba5b65dd08b59eb482aa8833135dc5942f272f5a8e",
+  "file_sha256": {
+    "agent.py": "595e4863208a6c733e2899cea8b4109c584c9529b72765ff4678229b9e5f24fc",
+    "app.py": "7658e4d92e2abb8db42e47269d4dc721a7be73d87e63a2ed8bdfde9c4c86e09a",
+    "cli.py": "33a8f39bb49109eef92fe494caa641a2e7801a25080afc0d03b647a6851bb489",
+    "evaluations/benchmark.py": "18dbfda534ecd456a3dd9dbac320940bbf69edf399b836c6170ae7bdbd2a377b",
+    "evaluations/build_state_audit.py": "ba4ff84a14d46ea238614a68d21808a94436d9a03d78f481a4db32a92286960c",
+    "evaluations/conversation_state.py": "1d00c63876ab80d023844ea5e17b69d6c5632cf97612fdee501915450f907f31",
+    "evaluations/evaluator.py": "aebc9e27ea1087ac2e158c5a3aff8e6455ebe184323ecdc47b50f091081bbb4c",
+    "evaluations/report.py": "4e15e21c7501adda99b40b9ed28454bf41037fbab36442a6e01eddd6f976277c",
+    "evaluations/state_evaluator.py": "1eaffaa891c3a9e35c02d4662ed69bc76b47be24ccf50cda92f9cd037e02a3ed",
+    "evaluations/state_expectations.py": "4aa59618ab1c7b0e575c0687d07da0e45cf216a0ec2ac7c07f8ee3f1832fb673",
+    "evaluations/state_numeric_reference.py": "f5135b3fc4293726c706fd0cf15a06abcc1d97a5adac550ce8b35c398556c53f",
+    "evaluations/state_paraphrases.py": "62b20a5c3ca68dcacf3ef48716685c3f8bf297439567e6f47d0a7dd756beec9e",
+    "evaluations/state_report.py": "55887920c3d3d9ec839e934e6731b49cd6a4da59aa6f415bdc3970b9d0e4323f",
+    "evaluations/verify_state.py": "8af12626e0a54a32415e5708df4bf6839842605d42fced265e6378105059dc84",
+    "requirements.txt": "c6fdd117a39b2ed6415dc8bfa5d2029dd51a2e1e84dddd777da60123babbd75d",
+    "src/__init__.py": "5ef2fe943505acfd2c98a4888f1c58a87c3ed06f226b059965ab95df02fec090",
+    "src/agent/__init__.py": "8fb1e3d4d8ebc15200020e0de1c99b2cb1bea86bf02c40cf764f5c81c03dc663",
+    "src/agent/analysis_context.py": "1e24ecf0fd44183d09b1a4f7250929c1a4be59ee22054994efe7c78eb9fd0d32",
+    "src/agent/attachments.py": "fdea5820f3975f512f72474dbba1a44e44ed5df3cd6d462229fa89562bdda396",
+    "src/agent/cache.py": "b80182709088fb2abce9fb3794213b1151a5087440f76f0bfcf0346c0e4c7a4c",
+    "src/agent/execution.py": "20317d2821f061abbcfae44b23ad04c9d39d108c1e795b7f2a6e98ff9cd436c2",
+    "src/agent/facts.py": "df35ea3a91247d7de993c01cc78ddbaf3c2ae513bcbdcc4480862c839e1b0a07",
+    "src/agent/finalization.py": "6c4bca50948c30966762d934a17aee5423f7aadc0aa2c1bd13d52156f83e0595",
+    "src/agent/llm.py": "6559105e0b3baeb24da9ff0cc1cac48c5fa62758ec54d56ee227168faf3e4701",
+    "src/agent/memory.py": "1b31aeb4af5b4c35ad04e3b129dcd3780849427df7273cee872f9caad83a4d99",
+    "src/agent/observability.py": "a412568da405c87658e101556e9fb54f4498408493119d229d64612d65ba42d3",
+    "src/agent/periods.py": "9e5ae52c387352eac76dbeabd43e5e49287e85b7e2f55a354b589e4dfcfcc2a2",
+    "src/agent/planner.py": "fe58951a1676f9a5c3f3a7e74a3eb3322f0141abf3d59f6b318adcb31bbd1bdb",
+    "src/agent/prompts.py": "cd17437e2729ac24b5697c02815b0102c74f6616b6fa3bf9d39d626e2658be86",
+    "src/agent/request_review.py": "6ad0d151e1c5dda457bcf38a462f8f63e246f31e842e291fd6d0d7b4227a1a09",
+    "src/agent/requirements.py": "4de80bf66b6c5e86654da65acdc741350e51a727e32456823a324d54a7a82882",
+    "src/agent/response_validator.py": "07d848ce8d01d609c8b30240943681a8deb43e2f316d83426ea9bec8e34e9812",
+    "src/agent/service.py": "4ba630dccef31c32d7343a24d4b1fd7b7b1e87a7b40eb484240c19de38156e89",
+    "src/agent/sufficiency.py": "f40baf717a3814eaf95afd03225c9e88c8ec4e604ebdf8ab899e80953c7b9a5c",
+    "src/agent/transitions.py": "f5c5e185ad3d5828bb37afa48dfa05232cc910c52d3c9b5a574d0ac2f8a6bbfb",
+    "src/analytics/__init__.py": "08eab3b7f24dc8af16ebc31d0574d8d6c32ac85d60020c4dd9c5e2b2d6ca4349",
+    "src/analytics/calculations.py": "a2c62c4204ee0ca187a6df5cb70318c494d5b3e6848e3a95c83544b4e5e8822e",
+    "src/config.py": "cf78468d75d452cada239275f0d21bd27f23fdf6199a990cd27f6a5b1d9a0ed7",
+    "src/data/__init__.py": "3dd4fb934066399782b786f282d12d81d55656bcbd0069be0b051bc15e2745f3",
+    "src/data/bigquery_repository.py": "fe860b0b48d281bd8b3c4ada6952bbcbc19785a28bfb8f804d813c0d66658595",
+    "src/data/comparative.py": "daf18a61e6994f188a32ac4b6952f845856ea705376335de26aa9a1c1ea2dc90",
+    "src/data/repository.py": "284ba420675b381cef324c1470285323ca65e6554458bede32dccc0f757f4579",
+    "src/data/sql_guard.py": "b2b53863ce06d6211fe36a65fb2edb5c6a769fb20edc7702700c587bf07749c4",
+    "src/semantic/__init__.py": "08e3ac73f67cbf8950b66fcc1ef0b65896ecf61e57491d0eaaebe12fdc113b59",
+    "src/semantic/business_rules.yaml": "02eb2d415431a6a700c96c1a292567601d7f0cf4032c22e2d269e6a88cbdb57f",
+    "src/semantic/dimensions.yaml": "85c081a9d581a8fdbfcd71b7a50af123dba9476f7bdd6330a2cb4c27be8c3ea4",
+    "src/semantic/metrics.yaml": "77aedb6a7b7d68a2d0285ee55d1d6b2ee69198595f77b6c01f1b03beed2a2ea3",
+    "src/semantic/synonyms.yaml": "5b5192aec03962c0f36e0ac06675a45ed29d6671867b24d884d264c5d69ab60c",
+    "src/tools/__init__.py": "7542a3c8e66ed07f3ae1c5e013a8923656ebe7ef0961807bc5650e9ce4e86263",
+    "src/tools/registry.py": "76a6efd978bb71e6128e5c1b047220e10b935fb224fb1e42b33f78fc9eaf2d44",
+    "src/visualization/__init__.py": "22ea6177ea6ef2f874d1ad43528612d7da175a1933b6800c770c0a752a49441b",
+    "src/visualization/charts.py": "814836d90e47d0c5c4d7a21aa58e737b39023a59c03e2d99107163fddfdf940a"
+  },
+  "numeric_checks": [
+    {
+      "name": "growth_july",
+      "passed": true,
+      "conversation_artifact": "evaluations/conversation_state/default_original/original-01.json",
+      "reference_job_id": "680aa407-1d03-467a-9812-37c7a875efeb",
+      "expected": {
+        "entity": "RICH FIT TIPS",
+        "current_value": 1067799.0,
+        "previous_value": 0.0,
+        "difference": 1067799.0
+      },
+      "actual": {
+        "current_value": 1067799.0,
+        "previous_value": 0,
+        "difference": 1067799.0,
+        "entity": "RICH FIT TIPS"
+      },
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 10
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    {
+      "name": "peak_bmw",
+      "passed": true,
+      "conversation_artifact": "evaluations/conversation_state/default_original/original-06.json",
+      "reference_job_id": "6ff216b9-ac1a-4cc9-8509-d9e27f1b5deb",
+      "expected": {
+        "month": "2025-11-01",
+        "value": 489740.9467873
+      },
+      "actual": {
+        "month": "2025-11-01",
+        "value": 489740.9467873
+      },
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "temporal_extrema",
+        "analysis": {
+          "granularity": "month",
+          "extreme": "max"
+        },
+        "operation": "discover_extreme",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-27"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    {
+      "name": "joint_tv",
+      "passed": true,
+      "conversation_artifact": "evaluations/conversation_state/default_original/original-12.json",
+      "reference_job_id": "ffbf1b8d-f46a-449c-b247-1e5ef451cf9c",
+      "expected": {
+        "combined": 528525.21,
+        "universe": 36852874.73000002,
+        "share_pct": 1.4341492051086993
+      },
+      "actual": {
+        "combined": 528525.21,
+        "universe": 36852874.73,
+        "share_pct": 1.4341492051087001
+      },
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "medio_agrupado": [
+            "TV ABIERTA",
+            "TV CABLE"
+          ]
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "BMW"
+            },
+            {
+              "dimension": "marca",
+              "value": "Volvo"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {
+          "start": "2026-01-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    {
+      "name": "joint_october",
+      "passed": true,
+      "conversation_artifact": "evaluations/conversation_state/completion_additional/additional-08.json",
+      "reference_job_id": "7785da51-e80c-4564-aa02-0079c3e9eaea",
+      "expected": {
+        "combined": 633367.4628929002,
+        "universe": 37729909.64622802,
+        "share_pct": 1.6786879927135474
+      },
+      "actual": {
+        "combined": 633367.4628929001,
+        "universe": 37729909.64622799,
+        "share_pct": 1.6786879927135483
+      },
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-10-01",
+          "end": "2025-10-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "joint_share",
+        "analysis": {
+          "entity_reference": "recent",
+          "entity_count": 2,
+          "entity_set": [
+            {
+              "dimension": "marca",
+              "value": "BMW"
+            },
+            {
+              "dimension": "marca",
+              "value": "VOLVO"
+            }
+          ]
+        },
+        "operation": "joint_entities",
+        "observed_period": {
+          "start": "2025-10-01",
+          "end": "2025-10-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    {
+      "name": "bmw_october",
+      "passed": true,
+      "conversation_artifact": "evaluations/conversation_state/completion_additional/additional-05.json",
+      "reference_job_id": "66eea893-df74-4cd4-b1dc-6b0059563900",
+      "expected": {
+        "value": 155884.1239124001
+      },
+      "actual": {
+        "value": 155884.1239124001
+      },
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-10-01",
+          "end": "2025-10-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {
+          "granularity": "month",
+          "extreme": "min"
+        },
+        "operation": "shift_period",
+        "observed_period": {
+          "start": "2025-10-01",
+          "end": "2025-10-30"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    {
+      "name": "empty_week_toyota",
+      "passed": true,
+      "conversation_artifact": "evaluations/conversation_state/default_paraphrases/group-3/paraphrase-3-02.json",
+      "reference_job_id": "f451120d-7605-462c-943a-1606486467c7",
+      "expected": {
+        "source_rows": 0,
+        "value": null
+      },
+      "actual": {
+        "source_rows": 0,
+        "value": null
+      },
+      "scope": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Toyota"
+        },
+        "requested_period": {
+          "start": "2024-03-25",
+          "end": "2024-03-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {
+          "granularity": "week",
+          "extreme": "max"
+        },
+        "operation": "shift_period",
+        "observed_period": {},
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    }
+  ],
+  "scope": "Offline tests plus independent SQL/evidence comparisons; this is not a universal semantic approval."
+}

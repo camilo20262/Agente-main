@@ -1,0 +1,217 @@
+{
+  "id": "holdout-05",
+  "family": "lookup",
+  "question": "Calcula el cociente de inversión bruta sobre inversión neta en 2024.",
+  "elapsed_s": 11.11,
+  "result": {
+    "answer": "el alcance consultado: Inversión publicitaria bruta de 1,82. Entre 2024-01-01 y 2024-12-31.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "calcular_ratio_bicomp",
+        "arguments": {
+          "numerador": "inv_bruta",
+          "denominador": "inv_neta",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {}
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_bruta/inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "requested_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "effective_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria bruta",
+          "numerator": 989947034.5776348,
+          "denominator": 544109526.4489865,
+          "value": 1.8193892708299202,
+          "source_rows": 168924,
+          "success": true,
+          "numerator_metric": "inv_bruta",
+          "denominator_metric": "inv_neta",
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_bruta`) AS numerator, SUM(`inv_neta`) AS denominator, SAFE_DIVIDE(SUM(`inv_bruta`), SUM(`inv_neta`)) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31"
+            },
+            "bytes_processed": 18637248,
+            "job_id": "ed6967bc-2924-431e-a76b-f7803ab9350d",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:40:05.197997+00:00",
+            "duration_ms": 1469.02,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_bruta/inv_neta",
+        "filters": {},
+        "row_count": null,
+        "step": 1,
+        "purpose": "Calcular el cociente de inversión bruta sobre inversión neta en 2024 sin realizar matemática manual.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_bruta`) AS numerator, SUM(`inv_neta`) AS denominator, SAFE_DIVIDE(SUM(`inv_bruta`), SUM(`inv_neta`)) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31"
+            },
+            "bytes_processed": 18637248,
+            "job_id": "ed6967bc-2924-431e-a76b-f7803ab9350d",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:40:05.197997+00:00",
+            "duration_ms": 1469.02,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 3147.04
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "lookup",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "calcular_ratio_bicomp",
+          "purpose": "Calcular el cociente de inversión bruta sobre inversión neta en 2024 sin realizar matemática manual.",
+          "arguments": {
+            "numerador": "inv_bruta",
+            "denominador": "inv_neta",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {}
+          }
+        }
+      ],
+      "scope": {
+        "intent": "lookup",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": null,
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es el cociente de inversión bruta sobre inversión neta en 2024?"
+      ],
+      "answer": null,
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 18637248,
+      "bigquery_queries": 1,
+      "total_latency_ms": 11105.73,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 6059,
+      "output_tokens": 225,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 7928.05
+        },
+        {
+          "stage": "plan",
+          "intent": "lookup",
+          "scope": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "calcular_ratio_bicomp",
+          "purpose": "Calcular el cociente de inversión bruta sobre inversión neta en 2024 sin realizar matemática manual.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 18637248,
+        "input_tokens": 6059,
+        "output_tokens": 225,
+        "cache_hits": 0,
+        "total_latency_ms": 11105.73
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "lookup",
+  "actual_intent": "lookup"
+}

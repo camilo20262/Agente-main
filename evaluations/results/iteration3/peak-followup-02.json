@@ -1,0 +1,432 @@
+{
+  "id": "peak-followup-02",
+  "question": "¿Qué pasó en el mes más fuerte?",
+  "family": "diagnostic",
+  "expected_peak": "2025-11-01",
+  "elapsed_s": 11.89,
+  "result": {
+    "answer": "### Resumen ejecutivo\nEn noviembre de 2025, la inversión publicitaria neta de BMW alcanzó su valor más alto en el periodo observado, con 489,740.95 unidades de moneda local, representando el 100% del total registrado para ese mes.\n\n### Hallazgos principales\n**Valor máximo en el periodo solicitado**\n- Evidencia: inv_neta = 489,740.9467873 para el periodo 2025-11-01 a 2025-11-30, con share_of_total_pct = 100.0 y rank = 1.\n- Interpretación: Este valor constituye el pico observado en el análisis temporal de inv_neta para BMW en el mes de noviembre de 2025, sin otros valores comparativos en el mismo periodo para establecer variaciones relativas.\n\n### Advertencias\n- El análisis se basa en una única observación mensual (noviembre de 2025), lo que impide calcular variaciones, tendencias o anomalías estadísticamente significativas.\n- No se dispone de datos de otros meses en el periodo solicitado para comparar el nivel de inversión ni identificar patrones estacionales o de crecimiento.\n- El pico descriptivo no implica causalidad ni permite inferir estacionalidad sin un historial suficiente de observaciones.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "analizar_anomalias_bicomp",
+        "arguments": {
+          "agregacion": "month",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "BMW"
+          },
+          "metrica": "inv_neta",
+          "granularidad": "month"
+        },
+        "result": {
+          "success": false,
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "La profundización sale del periodo solicitado."
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "BMW"
+        },
+        "row_count": null,
+        "step": 1,
+        "purpose": "Identificar el mes con mayor inversión neta para BMW en 2025 y obtener su valor, participación y contexto estadístico.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 0.14
+      },
+      {
+        "id": "e2",
+        "tool": "serie_temporal_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-11-01",
+          "fecha_fin": "2025-11-30",
+          "filtros": {
+            "marca": "BMW"
+          },
+          "agregacion": "sum",
+          "granularidad": "month"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "BMW"
+          },
+          "period": {
+            "start": "2025-11-01",
+            "end": "2025-11-30"
+          },
+          "requested_period": {
+            "start": "2025-11-01",
+            "end": "2025-11-30"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-11-01",
+            "end": "2025-11-30"
+          },
+          "effective_period": {
+            "start": "2025-11-01",
+            "end": "2025-11-30"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "granularity": "month",
+          "rows": [
+            {
+              "period": "2025-11-01",
+              "value": 489740.9467873,
+              "source_rows": 142,
+              "rank": 1,
+              "share_of_total_pct": 100.0,
+              "is_peak": true,
+              "total": 489740.9467873
+            }
+          ],
+          "row_count": 1,
+          "peak": {
+            "period": "2025-11-01",
+            "value": 489740.9467873,
+            "share_of_total_pct": 100.0,
+            "rank": 1
+          },
+          "statistics": {
+            "observations": 1,
+            "total": 489740.9467873,
+            "mean": 489740.9467873,
+            "median": 489740.9467873,
+            "stddev": 0.0,
+            "coefficient_variation_pct": 0.0,
+            "slope_per_observed_period": null,
+            "peak": {
+              "period": "2025-11-01",
+              "value": 489740.9467873,
+              "source_rows": 142,
+              "rank": 1,
+              "share_of_total_pct": 100.0,
+              "is_peak": true,
+              "total": 489740.9467873
+            },
+            "minimum": {
+              "period": "2025-11-01",
+              "value": 489740.9467873,
+              "source_rows": 142,
+              "rank": 1,
+              "share_of_total_pct": 100.0,
+              "is_peak": true,
+              "total": 489740.9467873
+            },
+            "first_to_last": {
+              "difference": 0.0,
+              "difference_pct": 0.0,
+              "ratio_a_over_b": 1.0
+            },
+            "last_acceleration": null,
+            "anomaly_method": "MAD robust z",
+            "anomaly_threshold": 3.5,
+            "minimum_observations": 6,
+            "anomaly_testable": false,
+            "anomalies": [],
+            "limitations": [
+              "Picos descriptivos no demuestran causalidad ni estacionalidad."
+            ]
+          },
+          "query_metadata": {
+            "bytes_processed": 19951115,
+            "duration_ms": 1149.76
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-11-01",
+              "end_date": "2025-11-30"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "6a9d64d9-2d9f-4432-80d6-62d5e8a17419",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:34:47.975992+00:00",
+            "duration_ms": 1149.76,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "row_count": 1,
+        "step": 2,
+        "purpose": "Obtener la evolución mensual de inv_neta para BMW en el periodo solicitado (2025-11-01 a 2025-11-30) para identificar el valor en el mes más fuerte dentro de ese rango.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "BMW",
+              "start_date": "2025-11-01",
+              "end_date": "2025-11-30"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "6a9d64d9-2d9f-4432-80d6-62d5e8a17419",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:34:47.975992+00:00",
+            "duration_ms": 1149.76,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 1822.05
+      },
+      {
+        "id": "e3",
+        "tool": "analizar_medios",
+        "arguments": {
+          "agregacion": "month",
+          "fecha_inicio": "2025-11-01",
+          "fecha_fin": "2025-11-30",
+          "filtros": {
+            "marca": "BMW"
+          },
+          "metrica": "inv_neta",
+          "limite": 10
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'analizar_medios': agregacion: 'month' is not one of ['sum']"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "BMW"
+        },
+        "row_count": null,
+        "step": 3,
+        "purpose": "Desglosar la inversión neta de BMW por medio en el mes pico identificado para entender la composición de la inversión.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 6.36
+      }
+    ],
+    "steps": 3,
+    "plan": {
+      "intent": "anomaly",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "analizar_anomalias_bicomp",
+          "purpose": "Identificar el mes con mayor inversión neta para BMW en 2025 y obtener su valor, participación y contexto estadístico.",
+          "arguments": {
+            "agregacion": "month",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "BMW"
+            },
+            "metrica": "inv_neta",
+            "granularity": "month"
+          }
+        },
+        {
+          "tool": "analizar_medios",
+          "purpose": "Desglosar la inversión neta de BMW por medio en el mes pico identificado para entender la composición de la inversión.",
+          "arguments": {
+            "agregacion": "month",
+            "fecha_inicio": "2025-11-01",
+            "fecha_fin": "2025-11-30",
+            "filtros": {
+              "marca": "BMW"
+            },
+            "metrica": "inv_neta",
+            "limite": 10
+          }
+        }
+      ],
+      "scope": {
+        "intent": "anomaly",
+        "scope_mode": "inherit",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "remove_filters": [],
+        "period": {
+          "kind": "peak",
+          "granularity": "month"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál fue el mes más fuerte para BMW en 2025?",
+        "¿Qué valor se alcanzó en ese mes?",
+        "¿Qué porcentaje representó ese mes del total anual?",
+        "¿Qué medio contribuyó más en ese mes?"
+      ],
+      "answer": "",
+      "budget": 4,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "BMW"
+        },
+        "requested_period": {
+          "start": "2025-11-01",
+          "end": "2025-11-30"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "anomaly",
+        "observed_period": {
+          "start": "2025-11-01",
+          "end": "2025-11-30"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "line",
+        "title": "Evolución de Inversión publicitaria neta · marca: BMW · 2025-11-01 a 2025-11-30",
+        "data": [
+          {
+            "period": "2025-11-01",
+            "value": 489740.9467873,
+            "source_rows": 142,
+            "rank": 1,
+            "share_of_total_pct": 100.0,
+            "is_peak": true,
+            "total": 489740.9467873
+          }
+        ],
+        "x": "period",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 8,
+      "total_tool_calls": 7,
+      "bigquery_bytes_processed": 50903030,
+      "bigquery_queries": 6,
+      "total_latency_ms": 41065.23,
+      "errors": [
+        "arguments",
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 53497,
+      "output_tokens": 3423,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3508.16
+        },
+        {
+          "stage": "plan",
+          "intent": "anomaly",
+          "scope": {
+            "intent": "anomaly",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "peak",
+              "granularity": "month"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "analizar_anomalias_bicomp",
+          "purpose": "Identificar el mes con mayor inversión neta para BMW en 2025 y obtener su valor, participación y contexto estadístico.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 3409.4
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "El usuario pregunta qué pasó en el mes más fuerte para BMW en inv_neta dentro del periodo solicitado (2025-11-01 a 2025-11-30). Dado que el periodo solicitado es solo un mes (noviembre 2025), el mes más fuerte dentro de ese periodo es necesariamente noviembre 2025. Sin embargo, para confirmar el valor de inv_neta en ese mes y asegurarnos de que no haya un error de interpretación (por ejemplo, si el usuario esperaba un análisis dentro de un periodo más amplio pero se limitó incorrectamente), necesitamos obtener la serie temporal mensual de inv_neta para BMW en el periodo solicitado. Esto nos permitirá identificar el valor en noviembre 2025 y verificar si es efectivamente el pico (aunque sea el único mes). La herramienta adecuada es 'serie_temporal_bicomp' con granularidad 'month'."
+        },
+        {
+          "stage": "tool",
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Obtener la evolución mensual de inv_neta para BMW en el periodo solicitado (2025-11-01 a 2025-11-30) para identificar el valor en el mes más fuerte dentro de ese rango.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "analizar_medios",
+          "purpose": "Desglosar la inversión neta de BMW por medio en el mes pico identificado para entender la composición de la inversión.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 3125.99
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\nEn noviembre de 2025, la inversión publicitaria neta de BMW alcanzó su valor más alto en el periodo observado, con 489,740.95 unidades de moneda local, representando el 100% del total registrado para ese mes.\n\n### Hallazgos principales\n**Valor máximo en el periodo solicitado**\n- Evidencia: inv_neta = 489,740.9467873 para el periodo 2025-11-01 a 2025-11-30, con share_of_total_pct = 100.0 y rank = 1.\n- Interpretación: Este valor constituye el pico observado en el análisis temporal de inv_neta para BMW en el mes de noviembre de 2025, sin otros valores comparativos en el mismo periodo para establecer variaciones relativas.\n\n### Advertencias\n- El análisis se basa en una única observación mensual (noviembre de 2025), lo que impide calcular variaciones, tendencias o anomalías estadísticamente significativas.\n- No se dispone de datos de otros meses en el periodo solicitado para comparar el nivel de inversión ni identificar patrones estacionales o de crecimiento.\n- El pico descriptivo no implica causalidad ni permite inferir estacionalidad sin un historial suficiente de observaciones."
+        },
+        {
+          "stage": "stop",
+          "reason": "arguments",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 2,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 19951115,
+        "input_tokens": 13026,
+        "output_tokens": 1122,
+        "cache_hits": 0,
+        "total_latency_ms": 11889.850000000002
+      },
+      "stop_reason": "arguments"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "partial_or_fallback"
+  ],
+  "expected_family": "diagnostic",
+  "actual_intent": "anomaly"
+}

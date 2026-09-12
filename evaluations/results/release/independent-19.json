@@ -1,0 +1,99 @@
+{
+  "id": "independent-19",
+  "question": "Explícame qué significa share.",
+  "family": "out_of_domain",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 3.23,
+  "result": {
+    "answer": "El share (o participación) es el porcentaje que representa una entidad (como una marca, medio o anunciante) sobre el total de una métrica (como inversión neta o inserciones) dentro de un alcance definido (por ejemplo, un periodo, mercado o segmento). Se calcula como (valor de la entidad / total del alcance) × 100.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "out_of_domain",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {
+        "intent": "out_of_domain",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": null,
+        "filters": {},
+        "period": {
+          "kind": "all"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [],
+      "answer": "El share (o participación) es el porcentaje que representa una entidad (como una marca, medio o anunciante) sobre el total de una métrica (como inversión neta o inserciones) dentro de un alcance definido (por ejemplo, un periodo, mercado o segmento). Se calcula como (valor de la entidad / total del alcance) × 100.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 3228.24,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 5602,
+      "output_tokens": 148,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3192.19
+        },
+        {
+          "stage": "plan",
+          "intent": "out_of_domain",
+          "scope": {
+            "intent": "out_of_domain",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "all"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "out_of_domain",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 5602,
+        "output_tokens": 148,
+        "cache_hits": 0,
+        "total_latency_ms": 3228.24
+      },
+      "stop_reason": "out_of_domain"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "out_of_domain",
+  "actual_intent": "out_of_domain"
+}

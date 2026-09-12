@@ -1,0 +1,228 @@
+{
+  "id": "conversation-02",
+  "question": "¿Y en 2026?",
+  "family": "open_analysis",
+  "elapsed_s": 13.93,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 8,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 68557.06,
+      "errors": [
+        "run:InvalidToolPlanError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 42046,
+      "output_tokens": 2357,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 9381.28
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "'month' is a required property\n\nFailed validating 'required' in schema['properties']['comparison_period']['allOf'][0]['then']:\n    {'required': ['month']}\n\nOn instance['comparison_period']:\n    {}",
+          "rejected_plan": {
+            "intent": "open_analysis",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "comparison_period": {},
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la inversión neta total de Volvo en 2026?",
+              "¿Cómo se distribuye la inversión de Volvo en 2026 por medio?",
+              "¿Cuál es la tendencia mensual de la inversión de Volvo en 2026?"
+            ],
+            "steps": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de Volvo en 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum"
+                }
+              },
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Desglosar la inversión de Volvo en 2026 por medio",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "dimension": "medio"
+                }
+              },
+              {
+                "tool": "serie_temporal_bicomp",
+                "purpose": "Analizar la tendencia mensual de la inversión de Volvo en 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "granularidad": "month"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 4515.33
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "'month' is a required property\n\nFailed validating 'required' in schema['properties']['comparison_period']['allOf'][0]['then']:\n    {'required': ['month']}\n\nOn instance['comparison_period']:\n    {}",
+          "rejected_plan": {
+            "intent": "open_analysis",
+            "operation": "change_period",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "remove_filters": [],
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "comparison_period": {},
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la inversión neta total de Volvo en 2026?",
+              "¿Cómo se distribuye la inversión de Volvo en 2026 por medio?",
+              "¿Cuál es la tendencia mensual de la inversión de Volvo en 2026?"
+            ],
+            "steps": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de Volvo en 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum"
+                }
+              },
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Desglosar la inversión de Volvo en 2026 por medio",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "dimension": "medio"
+                }
+              },
+              {
+                "tool": "serie_temporal_bicomp",
+                "purpose": "Analizar la tendencia mensual de la inversión de Volvo en 2026",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "filtros": {
+                    "marca": "Volvo"
+                  },
+                  "fecha_inicio": "2026-01-01",
+                  "fecha_fin": "2026-12-31",
+                  "agregacion": "sum",
+                  "granularidad": "month"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InvalidToolPlanError",
+          "detail": "'month' is a required property\n\nFailed validating 'required' in schema['properties']['comparison_period']['allOf'][0]['then']:\n    {'required': ['month']}\n\nOn instance['comparison_period']:\n    {}"
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 15094,
+        "output_tokens": 1097,
+        "cache_hits": 0,
+        "total_latency_ms": 13926.329999999994
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "lost_followup_entity",
+    "wrong_followup_year",
+    "lost_analysis_depth",
+    "partial_or_fallback"
+  ],
+  "expected_family": "open_analysis",
+  "actual_intent": "clarification"
+}

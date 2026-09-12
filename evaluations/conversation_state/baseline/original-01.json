@@ -1,0 +1,215 @@
+{
+  "id": "original-01",
+  "question": "¿Quién está creciendo más?",
+  "elapsed_s": 12.71,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "ranking",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "metric": "inv_neta",
+      "filters": {},
+      "period": {
+        "kind": "recent_months",
+        "count": 12
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis_questions": [
+        "¿Cuál es la marca con mayor crecimiento en inversión neta más alta en los últimos 12 meses?",
+        "¿Cuál es la marca con mayor crecimiento relativo en los últimos 12 meses?"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de marcas por inversión neta total en los últimos 12 meses para identificar la mayor inversión absoluta.",
+          "arguments": {
+            "dimension": "marca",
+            "limite": 10
+          }
+        },
+        {
+          "tool": "analizar_drivers_bicomp",
+          "purpose": "Identificar las marcas con mayor crecimiento relativo comparando los últimos 6 meses vs los 6 meses anteriores, calculando contribuciones por marca.",
+          "arguments": {
+            "dimension": "marca",
+            "periodo_a": {
+              "kind": "recent_months",
+              "count": 6
+            },
+            "periodo_b": {
+              "kind": "recent_months",
+              "count": 6
+            },
+            "limite": 10
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "clarification",
+    "domains": [
+      "none"
+    ],
+    "steps": [],
+    "scope": {},
+    "analysis_questions": [],
+    "answer": "No recibí una pregunta.",
+    "budget": 0,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {},
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "observed_period": {},
+      "available_period": {}
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 4,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 12711.37,
+      "errors": [
+        "planning:InternalServerError",
+        "planning:InternalServerError",
+        "planning:InternalServerError",
+        "run:InternalServerError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 6145,
+      "output_tokens": 324,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 8052.77
+        },
+        {
+          "stage": "coverage_resolution",
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          }
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "Los periodos de la herramienta cambian la orientación o alcance de comparación.",
+          "rejected_plan": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "recent_months",
+              "count": 12
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis_questions": [
+              "¿Cuál es la marca con mayor crecimiento en inversión neta más alta en los últimos 12 meses?",
+              "¿Cuál es la marca con mayor crecimiento relativo en los últimos 12 meses?"
+            ],
+            "steps": [
+              {
+                "tool": "ranking_por_dimension",
+                "purpose": "Obtener el ranking de marcas por inversión neta total en los últimos 12 meses para identificar la mayor inversión absoluta.",
+                "arguments": {
+                  "dimension": "marca",
+                  "limite": 10
+                }
+              },
+              {
+                "tool": "analizar_drivers_bicomp",
+                "purpose": "Identificar las marcas con mayor crecimiento relativo comparando los últimos 6 meses vs los 6 meses anteriores, calculando contribuciones por marca.",
+                "arguments": {
+                  "dimension": "marca",
+                  "periodo_a": {
+                    "kind": "recent_months",
+                    "count": 6
+                  },
+                  "periodo_b": {
+                    "kind": "recent_months",
+                    "count": 6
+                  },
+                  "limite": 10
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "InternalServerError",
+          "detail": "Error code: 503 - {'error': {'message': 'Service temporarily overloaded', 'type': 'Service Unavailable', 'code': 503}}"
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 4,
+        "total_tool_calls": 0,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 6145,
+        "output_tokens": 324,
+        "cache_hits": 0,
+        "total_latency_ms": 12711.37
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  }
+}

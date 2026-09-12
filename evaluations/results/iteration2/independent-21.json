@@ -1,0 +1,234 @@
+{
+  "id": "independent-21",
+  "question": "Analiza la calidad de la dimensión formato para Volvo en 2025: no interpretes NULL ni N/A como formatos reales.",
+  "family": "composition",
+  "expected_no_data": false,
+  "elapsed_s": 4.83,
+  "result": {
+    "answer": "Análisis parcial: arguments.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "obtener_valores_dimension_bicomp",
+        "arguments": {
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "dimension": "formato",
+          "limite": 1000
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'obtener_valores_dimension_bicomp': limite: 1000 is greater than the maximum of 100"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener todos los valores normalizados de la dimensión formato para Volvo en 2025, incluyendo nulos y N/A, para evaluar la calidad del dato.",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 3.42
+      },
+      {
+        "id": "e2",
+        "tool": "obtener_valores_dimension_bicomp",
+        "arguments": {
+          "dimension": "formato",
+          "filtros": {
+            "marca": "VOLVO",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31"
+          },
+          "limite": 100
+        },
+        "result": {
+          "success": false,
+          "source": "bigquery",
+          "error_type": "arguments",
+          "retryable": true,
+          "error": "Argumentos inválidos para 'obtener_valores_dimension_bicomp': filtros: 'fecha_inicio' is not one of ['pais', 'fecha', 'sector', 'subsector', 'categoria', 'anunciante', 'anunciante_agrupado', 'holding', 'central', 'agencia', 'marca', 'marca_agrupada', 'producto', 'medio', 'medio_agrupado', 'vehiculo', 'soporte', 'franja', 'genero', 'region', 'ciudad', 'tipo_pauta', 'formato', 'dispositivo']"
+        },
+        "source": "bigquery",
+        "metric": null,
+        "filters": {
+          "marca": "VOLVO",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31"
+        },
+        "row_count": null,
+        "step": 2,
+        "purpose": "Obtener los valores normalizados de la dimensión formato para Volvo en 2025, respetando el límite máximo de 100, para analizar la calidad de la dimensión (identificar si hay valores nulos, no disponibles o inválidos que deban excluirse del análisis).",
+        "cache_hit": false,
+        "queries": [],
+        "latency_ms": 2.07
+      }
+    ],
+    "steps": 2,
+    "plan": {
+      "intent": "diagnostic",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "obtener_valores_dimension_bicomp",
+          "purpose": "Obtener todos los valores normalizados de la dimensión formato para Volvo en 2025, incluyendo nulos y N/A, para evaluar la calidad del dato.",
+          "arguments": {
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "dimension": "formato",
+            "limite": 1000
+          }
+        },
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Ranking de inversión neta por formato para Volvo en 2025, excluyendo nulos y N/A mediante filtro posterior en análisis (los datos brutos incluyen todos los valores para evaluar calidad).",
+          "arguments": {
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "dimension": "formato",
+            "metrica": "inv_neta",
+            "limite": 20
+          }
+        }
+      ],
+      "scope": {
+        "intent": "diagnostic",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "formato"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuál es la proporción de registros con formato nulo o N/A para Volvo en 2025?",
+        "¿Qué formatos reales (excluyendo nulos y N/A) presentan mayor inversión para Volvo en 2025?",
+        "¿Existe un sesgo significativo en la asignación de inversión a formatos no válidos?"
+      ],
+      "answer": "",
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "formato"
+        ],
+        "intent": "diagnostic",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 2,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 4826.48,
+      "errors": [
+        "arguments",
+        "arguments"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 10335,
+      "output_tokens": 662,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3077.92
+        },
+        {
+          "stage": "plan",
+          "intent": "diagnostic",
+          "scope": {
+            "intent": "diagnostic",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "formato"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "obtener_valores_dimension_bicomp",
+          "purpose": "Obtener todos los valores normalizados de la dimensión formato para Volvo en 2025, incluyendo nulos y N/A, para evaluar la calidad del dato.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "correction",
+          "finish_reason": "stop",
+          "latency_ms": 1727.38
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "La herramienta obtener_valores_dimension_bicomp falló por límite excedido (1000 > 100). Se necesita reintentar con límite válido para obtener los valores reales de la dimensión formato para Volvo en 2025 y así evaluar su calidad (presencia de NULL/N/A, distribución, etc.)."
+        },
+        {
+          "stage": "tool",
+          "tool": "obtener_valores_dimension_bicomp",
+          "purpose": "Obtener los valores normalizados de la dimensión formato para Volvo en 2025, respetando el límite máximo de 100, para analizar la calidad de la dimensión (identificar si hay valores nulos, no disponibles o inválidos que deban excluirse del análisis).",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "arguments",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 2,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 10335,
+        "output_tokens": 662,
+        "cache_hits": 0,
+        "total_latency_ms": 4826.48
+      },
+      "stop_reason": "arguments"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "composition",
+  "actual_intent": "diagnostic"
+}

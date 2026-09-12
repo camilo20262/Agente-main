@@ -1,0 +1,182 @@
+{
+  "id": "independent-12",
+  "question": "Compara la inversión YTD de BMW frente al mismo periodo del año anterior.",
+  "family": "period_comparison",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 7.31,
+  "result": {
+    "answer": "Análisis parcial: no pude completar la investigación.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "clarification",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {},
+      "analysis_questions": [],
+      "answer": "No recibí una pregunta.",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 7311.36,
+      "errors": [
+        "run:ValueError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 11152,
+      "output_tokens": 555,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2622.02
+        },
+        {
+          "stage": "coverage_resolution",
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          }
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "Los periodos de la herramienta cambian la orientación o alcance de comparación.",
+          "rejected_plan": {
+            "intent": "period_comparison",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "period": {
+              "kind": "ytd"
+            },
+            "comparison_period": {
+              "kind": "previous_year"
+            },
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la inversión YTD de BMW en el periodo actual?",
+              "¿Cuál fue la inversión YTD de BMW en el mismo periodo del año anterior?",
+              "¿Cuál es la diferencia absoluta y porcentual entre ambos periodos?"
+            ],
+            "steps": [
+              {
+                "tool": "comparar_periodos_bicomp",
+                "purpose": "Comparar la inversión neta YTD de BMW frente al mismo periodo del año anterior, calculando diferencia absoluta y porcentual de forma determinista.",
+                "arguments": {
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "metrica": "inv_neta",
+                  "periodo_a": {
+                    "kind": "ytd"
+                  },
+                  "periodo_b": {
+                    "kind": "previous_year"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1959.5
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 1,
+          "issue": "Los periodos de la herramienta cambian la orientación o alcance de comparación.",
+          "rejected_plan": {
+            "intent": "period_comparison",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "BMW"
+            },
+            "period": {
+              "kind": "ytd"
+            },
+            "comparison_period": {
+              "kind": "previous_year"
+            },
+            "dimensions": [],
+            "analysis_questions": [
+              "¿Cuál es la inversión YTD de BMW en el periodo actual?",
+              "¿Cuál fue la inversión YTD de BMW en el mismo periodo del año anterior?",
+              "¿Cuál es la diferencia absoluta y porcentual entre ambos periodos?"
+            ],
+            "steps": [
+              {
+                "tool": "comparar_periodos_bicomp",
+                "purpose": "Comparar la inversión neta YTD de BMW frente al mismo periodo del año anterior, calculando diferencia absoluta y porcentual de forma determinista.",
+                "arguments": {
+                  "filtros": {
+                    "marca": "BMW"
+                  },
+                  "metrica": "inv_neta",
+                  "periodo_a": {
+                    "kind": "ytd"
+                  },
+                  "periodo_b": {
+                    "kind": "previous_year"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "error",
+          "type": "ValueError",
+          "detail": "Los periodos de la herramienta cambian la orientación o alcance de comparación."
+        },
+        {
+          "stage": "stop",
+          "reason": "controlled_error",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 0,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 11152,
+        "output_tokens": 555,
+        "cache_hits": 0,
+        "total_latency_ms": 7311.36
+      },
+      "stop_reason": "controlled_error"
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "no_evidence",
+    "partial_or_fallback"
+  ],
+  "expected_family": "period_comparison",
+  "actual_intent": "clarification"
+}

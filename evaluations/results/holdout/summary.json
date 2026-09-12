@@ -1,0 +1,2272 @@
+{
+  "started_at": "2026-09-11T12:39:11.916751+00:00",
+  "source_fingerprint": "42a46cc45a4e194bb31c396fa026b4f81aca480d23b99e2a63b3ba24da7cc69d",
+  "count": 8,
+  "passed": 8,
+  "failed": 0,
+  "records": [
+    {
+      "id": "holdout-01",
+      "family": "ranking",
+      "question": "Reporta los cinco holdings con más inserciones durante 2024.",
+      "expected_dimensions": [
+        "holding"
+      ],
+      "expected_metric": "total_insercion",
+      "elapsed_s": 6.66,
+      "result": {
+        "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nVolumen de inserciones publicitarias, alcance consultado (2024-01-01 a 2024-12-31), holding=N/D: 5.262.885.960,00 (100,00 % del universo consultado).",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "ranking_por_dimension",
+            "arguments": {
+              "dimension": "holding",
+              "limite": 5,
+              "metrica": "total_insercion",
+              "filtros": {},
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31"
+            },
+            "result": {
+              "domain": "bicomp",
+              "source": "bigquery",
+              "metric": "total_insercion",
+              "aggregation": "sum",
+              "filters": {},
+              "period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "effective_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "is_partial": false,
+              "known": true,
+              "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+              "warnings": [],
+              "unit": "count",
+              "metric_label": "Volumen de inserciones publicitarias",
+              "success": true,
+              "project": "nexuslatam-master",
+              "dataset": "NEXUS_GROUPM_BI_2",
+              "table": "tb_data_bicompetitive",
+              "dimension": "holding",
+              "composition": {
+                "denominator_known": true,
+                "total": 5262885960,
+                "shown_share_pct": 100.0,
+                "top3_share_pct": null
+              },
+              "data_quality": {
+                "unknown_share_pct": 0.0,
+                "unknown_value": 0,
+                "known_value": 5262885960,
+                "known_share_pct": 100.0
+              },
+              "rows": [
+                {
+                  "dimension": "N/D",
+                  "value": 5262885960,
+                  "source_rows": 168924,
+                  "rank": 1,
+                  "share_pct": 100.0,
+                  "total": 5262885960,
+                  "concentration_hhi": 10000.0,
+                  "unknown_value": 0
+                }
+              ],
+              "row_count": 1,
+              "query_metadata": {
+                "bytes_processed": 16307592,
+                "duration_ms": 1204.02
+              },
+              "evidence": {
+                "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`holding` AS STRING))) AS dimension,\n                SUM(`total_insercion`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31",
+                  "limit": "5"
+                },
+                "bytes_processed": 16307592,
+                "job_id": "27a8fb4b-d3f6-47bb-a171-85aba5833a32",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:17.501261+00:00",
+                "duration_ms": 1204.02,
+                "rows": 1
+              }
+            },
+            "source": "bigquery",
+            "metric": "total_insercion",
+            "filters": {},
+            "row_count": 1,
+            "step": 1,
+            "purpose": "Obtener el ranking de holdings por total de inserciones en 2024, limitado a los top 5.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`holding` AS STRING))) AS dimension,\n                SUM(`total_insercion`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31",
+                  "limit": "5"
+                },
+                "bytes_processed": 16307592,
+                "job_id": "27a8fb4b-d3f6-47bb-a171-85aba5833a32",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:17.501261+00:00",
+                "duration_ms": 1204.02,
+                "rows": 1
+              }
+            ],
+            "latency_ms": 3326.28
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "ranking",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "ranking_por_dimension",
+              "purpose": "Obtener el ranking de holdings por total de inserciones en 2024, limitado a los top 5.",
+              "arguments": {
+                "dimension": "holding",
+                "limite": 5
+              }
+            }
+          ],
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "total_insercion",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [
+              "holding"
+            ]
+          },
+          "analysis_questions": [
+            "¿Cuáles son los cinco holdings con mayor volumen de inserciones en 2024?"
+          ],
+          "answer": "",
+          "budget": 2,
+          "resolved_context": {
+            "metric": "total_insercion",
+            "filters": {},
+            "requested_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "holding"
+            ],
+            "intent": "ranking",
+            "observed_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          }
+        },
+        "chart_specs": [
+          {
+            "type": "ranking",
+            "title": "Ranking por holding — Volumen de inserciones publicitarias · 2024-01-01 a 2024-12-31",
+            "data": [
+              {
+                "dimension": "N/D",
+                "value": 5262885960,
+                "source_rows": 168924,
+                "rank": 1,
+                "share_pct": 100.0,
+                "total": 5262885960,
+                "concentration_hhi": 10000.0,
+                "unknown_value": 0
+              }
+            ],
+            "x": "value",
+            "y": "dimension"
+          }
+        ],
+        "metrics": {
+          "total_llm_calls": 2,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 16307592,
+          "bigquery_queries": 1,
+          "total_latency_ms": 6659.79,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 7447,
+          "output_tokens": 275,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 1769.29
+            },
+            {
+              "stage": "plan",
+              "intent": "ranking",
+              "scope": {
+                "intent": "ranking",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": "total_insercion",
+                "filters": {},
+                "period": {
+                  "kind": "year",
+                  "year": 2024
+                },
+                "dimensions": [
+                  "holding"
+                ]
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "ranking_por_dimension",
+              "purpose": "Obtener el ranking de holdings por total de inserciones en 2024, limitado a los top 5.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "final",
+              "finish_reason": "stop",
+              "latency_ms": 1547.11
+            },
+            {
+              "stage": "validation",
+              "attempt": 0,
+              "issues": [],
+              "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\nVolumen de inserciones publicitarias, alcance consultado (2024-01-01 a 2024-12-31), holding=N/D: 5.262.885.960,00 (100,00 % del universo consultado)."
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 2,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 16307592,
+            "input_tokens": 7447,
+            "output_tokens": 275,
+            "cache_hits": 0,
+            "total_latency_ms": 6659.79
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "ranking",
+      "actual_intent": "ranking"
+    },
+    {
+      "id": "holdout-02",
+      "family": "ranking",
+      "question": "¿Qué ciudades lideraron la inversión bruta en 2023? Muestra las cinco primeras.",
+      "expected_dimensions": [
+        "ciudad"
+      ],
+      "expected_metric": "inv_bruta",
+      "elapsed_s": 10.02,
+      "result": {
+        "answer": "### Resumen ejecutivo\n\n**Bogotá lideró la inversión bruta**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=BOGOTA: 33.089.305,00 (15,90 % del universo consultado).\n\nBogotá registró la mayor inversión bruta entre las ciudades identificadas.\n\n**Nacional ocupó el segundo lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=NACIONAL: 29.969.005,00 (14,41 % del universo consultado).\n\nNacional mostró el segundo nivel más alto de inversión bruta en el periodo.\n\n**Medellín se ubicó en tercer lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=MEDELLIN: 14.153.116,00 (6,80 % del universo consultado).\n\nMedellín presentó la tercera mayor inversión bruta entre las ciudades con datos disponibles.\n\n**Cali ocupó el cuarto lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=CALI: 7.621.368,00 (3,66 % del universo consultado).",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "ranking_por_dimension",
+            "arguments": {
+              "dimension": "ciudad",
+              "limite": 5,
+              "metrica": "inv_bruta",
+              "filtros": {},
+              "fecha_inicio": "2023-01-01",
+              "fecha_fin": "2023-12-31"
+            },
+            "result": {
+              "domain": "bicomp",
+              "source": "bigquery",
+              "metric": "inv_bruta",
+              "aggregation": "sum",
+              "filters": {},
+              "period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "requested_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "observed_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-01"
+              },
+              "effective_period": {
+                "start": "2023-01-01",
+                "end": "2023-12-31"
+              },
+              "is_partial": false,
+              "known": true,
+              "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+              "warnings": [],
+              "unit": "currency",
+              "metric_label": "Inversión publicitaria bruta",
+              "success": true,
+              "project": "nexuslatam-master",
+              "dataset": "NEXUS_GROUPM_BI_2",
+              "table": "tb_data_bicompetitive",
+              "dimension": "ciudad",
+              "composition": {
+                "denominator_known": true,
+                "total": 208043473.0,
+                "shown_share_pct": 95.9586201485879,
+                "top3_share_pct": 85.4923057355421
+              },
+              "data_quality": {
+                "unknown_share_pct": 55.18214551244297,
+                "unknown_value": 114802852.0,
+                "known_value": 93240621.0,
+                "known_share_pct": 44.81785448755703
+              },
+              "rows": [
+                {
+                  "dimension": "N/A",
+                  "value": 114802852.0,
+                  "source_rows": 58995,
+                  "rank": 1,
+                  "share_pct": 55.18214551244297,
+                  "total": 208043473.0,
+                  "concentration_hhi": 3569.17753045077,
+                  "unknown_value": 114802852.0
+                },
+                {
+                  "dimension": "BOGOTA",
+                  "value": 33089305.0,
+                  "source_rows": 4151,
+                  "rank": 2,
+                  "share_pct": 15.904995491014514,
+                  "total": 208043473.0,
+                  "concentration_hhi": 3569.17753045077,
+                  "unknown_value": 114802852.0
+                },
+                {
+                  "dimension": "NACIONAL",
+                  "value": 29969005.0,
+                  "source_rows": 1530,
+                  "rank": 3,
+                  "share_pct": 14.405164732084625,
+                  "total": 208043473.0,
+                  "concentration_hhi": 3569.17753045077,
+                  "unknown_value": 114802852.0
+                },
+                {
+                  "dimension": "MEDELLIN",
+                  "value": 14153116.0,
+                  "source_rows": 2784,
+                  "rank": 4,
+                  "share_pct": 6.802960840785426,
+                  "total": 208043473.0,
+                  "concentration_hhi": 3569.17753045077,
+                  "unknown_value": 114802852.0
+                },
+                {
+                  "dimension": "CALI",
+                  "value": 7621368.0,
+                  "source_rows": 3160,
+                  "rank": 5,
+                  "share_pct": 3.6633535722603514,
+                  "total": 208043473.0,
+                  "concentration_hhi": 3569.17753045077,
+                  "unknown_value": 114802852.0
+                }
+              ],
+              "row_count": 5,
+              "query_metadata": {
+                "bytes_processed": 17176402,
+                "duration_ms": 1237.86
+              },
+              "evidence": {
+                "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`ciudad` AS STRING))) AS dimension,\n                SUM(`inv_bruta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2023-01-01",
+                  "end_date": "2023-12-31",
+                  "limit": "5"
+                },
+                "bytes_processed": 17176402,
+                "job_id": "55f70bc3-8cf7-4688-b78f-8861d1bf0921",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:25.819633+00:00",
+                "duration_ms": 1237.86,
+                "rows": 5
+              }
+            },
+            "source": "bigquery",
+            "metric": "inv_bruta",
+            "filters": {},
+            "row_count": 5,
+            "step": 1,
+            "purpose": "Obtener el ranking de ciudades por inversión bruta en 2023, limitado a las cinco primeras posiciones.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`ciudad` AS STRING))) AS dimension,\n                SUM(`inv_bruta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2023-01-01",
+                  "end_date": "2023-12-31",
+                  "limit": "5"
+                },
+                "bytes_processed": 17176402,
+                "job_id": "55f70bc3-8cf7-4688-b78f-8861d1bf0921",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:25.819633+00:00",
+                "duration_ms": 1237.86,
+                "rows": 5
+              }
+            ],
+            "latency_ms": 3052.45
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "ranking",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "ranking_por_dimension",
+              "purpose": "Obtener el ranking de ciudades por inversión bruta en 2023, limitado a las cinco primeras posiciones.",
+              "arguments": {
+                "dimension": "ciudad",
+                "limite": 5
+              }
+            }
+          ],
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_bruta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2023
+            },
+            "dimensions": [
+              "ciudad"
+            ]
+          },
+          "analysis_questions": [
+            "¿Cuáles fueron las cinco ciudades con mayor inversión bruta en 2023?"
+          ],
+          "answer": "",
+          "budget": 2,
+          "resolved_context": {
+            "metric": "inv_bruta",
+            "filters": {},
+            "requested_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "ciudad"
+            ],
+            "intent": "ranking",
+            "observed_period": {
+              "start": "2023-01-01",
+              "end": "2023-12-01"
+            },
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          }
+        },
+        "chart_specs": [
+          {
+            "type": "ranking",
+            "title": "Ranking por ciudad — Inversión publicitaria bruta · 2023-01-01 a 2023-12-31",
+            "data": [
+              {
+                "dimension": "N/A",
+                "value": 114802852.0,
+                "source_rows": 58995,
+                "rank": 1,
+                "share_pct": 55.18214551244297,
+                "total": 208043473.0,
+                "concentration_hhi": 3569.17753045077,
+                "unknown_value": 114802852.0
+              },
+              {
+                "dimension": "BOGOTA",
+                "value": 33089305.0,
+                "source_rows": 4151,
+                "rank": 2,
+                "share_pct": 15.904995491014514,
+                "total": 208043473.0,
+                "concentration_hhi": 3569.17753045077,
+                "unknown_value": 114802852.0
+              },
+              {
+                "dimension": "NACIONAL",
+                "value": 29969005.0,
+                "source_rows": 1530,
+                "rank": 3,
+                "share_pct": 14.405164732084625,
+                "total": 208043473.0,
+                "concentration_hhi": 3569.17753045077,
+                "unknown_value": 114802852.0
+              },
+              {
+                "dimension": "MEDELLIN",
+                "value": 14153116.0,
+                "source_rows": 2784,
+                "rank": 4,
+                "share_pct": 6.802960840785426,
+                "total": 208043473.0,
+                "concentration_hhi": 3569.17753045077,
+                "unknown_value": 114802852.0
+              },
+              {
+                "dimension": "CALI",
+                "value": 7621368.0,
+                "source_rows": 3160,
+                "rank": 5,
+                "share_pct": 3.6633535722603514,
+                "total": 208043473.0,
+                "concentration_hhi": 3569.17753045077,
+                "unknown_value": 114802852.0
+              }
+            ],
+            "x": "value",
+            "y": "dimension"
+          }
+        ],
+        "metrics": {
+          "total_llm_calls": 2,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 17176402,
+          "bigquery_queries": 1,
+          "total_latency_ms": 10017.02,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 7856,
+          "output_tokens": 384,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 3694.62
+            },
+            {
+              "stage": "plan",
+              "intent": "ranking",
+              "scope": {
+                "intent": "ranking",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": "inv_bruta",
+                "filters": {},
+                "period": {
+                  "kind": "year",
+                  "year": 2023
+                },
+                "dimensions": [
+                  "ciudad"
+                ]
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "ranking_por_dimension",
+              "purpose": "Obtener el ranking de ciudades por inversión bruta en 2023, limitado a las cinco primeras posiciones.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "final",
+              "finish_reason": "stop",
+              "latency_ms": 3248.77
+            },
+            {
+              "stage": "validation",
+              "attempt": 0,
+              "issues": [],
+              "candidate": "### Resumen ejecutivo\n\n**Bogotá lideró la inversión bruta**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=BOGOTA: 33.089.305,00 (15,90 % del universo consultado).\n\nBogotá registró la mayor inversión bruta entre las ciudades identificadas.\n\n**Nacional ocupó el segundo lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=NACIONAL: 29.969.005,00 (14,41 % del universo consultado).\n\nNacional mostró el segundo nivel más alto de inversión bruta en el periodo.\n\n**Medellín se ubicó en tercer lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=MEDELLIN: 14.153.116,00 (6,80 % del universo consultado).\n\nMedellín presentó la tercera mayor inversión bruta entre las ciudades con datos disponibles.\n\n**Cali ocupó el cuarto lugar**\n\nInversión publicitaria bruta, alcance consultado (2023-01-01 a 2023-12-31), ciudad=CALI: 7.621.368,00 (3,66 % del universo consultado)."
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 2,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 17176402,
+            "input_tokens": 7856,
+            "output_tokens": 384,
+            "cache_hits": 0,
+            "total_latency_ms": 10017.02
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "ranking",
+      "actual_intent": "ranking"
+    },
+    {
+      "id": "holdout-03",
+      "family": "ranking",
+      "question": "Ordena los vehículos por duración publicitaria total de 2024, top cinco.",
+      "expected_dimensions": [
+        "vehiculo"
+      ],
+      "expected_metric": "total_duracion",
+      "elapsed_s": 14.93,
+      "result": {
+        "answer": "### Resumen ejecutivo\n\n**LA FM PEREIRA lidera en duración publicitaria total**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM PEREIRA: 173.700,00 (2,34 % del universo consultado).\n\nTiene la mayor duración publicitaria total entre los vehículos analizados para el periodo solicitado.\n\n**CANAL CARACOL ocupa el segundo puesto**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=CANAL CARACOL: 155.123,00 (2,09 % del universo consultado).\n\nSu duración publicitaria total es la segunda más alta dentro del ranking solicitado.\n\n**RADIOACKTIVA FM BOG se posiciona en tercer lugar**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=RADIOACKTIVA FM BOG: 152.730,00 (2,06 % del universo consultado).\n\nSu duración publicitaria total lo coloca como el tercer vehículo con mayor exposición en el periodo.\n\n**LA FM MED aparece en cuarta posición**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM MED: 146.795,00 (1,98 % del universo consultado).\n\nSu duración publicitaria total es la cuarta más alta entre los vehículos evaluados.\n\n**LA FM BOG completa el top cinco**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM BOG: 141.675,00 (1,91 % del universo consultado).\n\nTiene la quinta duración publicitaria total más alta dentro del conjunto de datos consultado.",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "ranking_por_dimension",
+            "arguments": {
+              "dimension": "vehiculo",
+              "limite": 5,
+              "metrica": "total_duracion",
+              "filtros": {},
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31"
+            },
+            "result": {
+              "domain": "bicomp",
+              "source": "bigquery",
+              "metric": "total_duracion",
+              "aggregation": "sum",
+              "filters": {},
+              "period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "effective_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "is_partial": false,
+              "known": true,
+              "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+              "warnings": [],
+              "unit": "duration",
+              "metric_label": "Duración total publicitaria",
+              "success": true,
+              "project": "nexuslatam-master",
+              "dataset": "NEXUS_GROUPM_BI_2",
+              "table": "tb_data_bicompetitive",
+              "dimension": "vehiculo",
+              "composition": {
+                "denominator_known": true,
+                "total": 7409813.0,
+                "shown_share_pct": 10.391935666932484,
+                "top3_share_pct": 6.498854964356051
+              },
+              "data_quality": {
+                "unknown_share_pct": 0.0,
+                "unknown_value": 0.0,
+                "known_value": 7409813.0,
+                "known_share_pct": 100.0
+              },
+              "rows": [
+                {
+                  "dimension": "LA FM PEREIRA",
+                  "value": 173700.0,
+                  "source_rows": 1108,
+                  "rank": 1,
+                  "share_pct": 2.3441887129945114,
+                  "total": 7409813.0,
+                  "concentration_hhi": 101.45136992104743,
+                  "unknown_value": 0.0
+                },
+                {
+                  "dimension": "CANAL CARACOL",
+                  "value": 155123.0,
+                  "source_rows": 3716,
+                  "rank": 2,
+                  "share_pct": 2.093480631697453,
+                  "total": 7409813.0,
+                  "concentration_hhi": 101.45136992104743,
+                  "unknown_value": 0.0
+                },
+                {
+                  "dimension": "RADIOACKTIVA FM BOG",
+                  "value": 152730.0,
+                  "source_rows": 708,
+                  "rank": 3,
+                  "share_pct": 2.0611856196640863,
+                  "total": 7409813.0,
+                  "concentration_hhi": 101.45136992104743,
+                  "unknown_value": 0.0
+                },
+                {
+                  "dimension": "LA FM MED",
+                  "value": 146795.0,
+                  "source_rows": 1240,
+                  "rank": 4,
+                  "share_pct": 1.9810891313991323,
+                  "total": 7409813.0,
+                  "concentration_hhi": 101.45136992104743,
+                  "unknown_value": 0.0
+                },
+                {
+                  "dimension": "LA FM BOG",
+                  "value": 141675.0,
+                  "source_rows": 985,
+                  "rank": 5,
+                  "share_pct": 1.9119915711773023,
+                  "total": 7409813.0,
+                  "concentration_hhi": 101.45136992104743,
+                  "unknown_value": 0.0
+                }
+              ],
+              "row_count": 5,
+              "query_metadata": {
+                "bytes_processed": 21205976,
+                "duration_ms": 1056.27
+              },
+              "evidence": {
+                "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`vehiculo` AS STRING))) AS dimension,\n                SUM(`total_duracion`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31",
+                  "limit": "5"
+                },
+                "bytes_processed": 21205976,
+                "job_id": "efbf65c3-7076-43c9-a2d4-b980be1b35ff",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:34.567575+00:00",
+                "duration_ms": 1056.27,
+                "rows": 5
+              }
+            },
+            "source": "bigquery",
+            "metric": "total_duracion",
+            "filters": {},
+            "row_count": 5,
+            "step": 1,
+            "purpose": "Obtener el ranking de vehículos por duración publicitaria total en 2024, limitado a los top 5.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "WITH analytical_result AS (\n        WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`vehiculo` AS STRING))) AS dimension,\n                SUM(`total_duracion`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit\n        ), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31",
+                  "limit": "5"
+                },
+                "bytes_processed": 21205976,
+                "job_id": "efbf65c3-7076-43c9-a2d4-b980be1b35ff",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:34.567575+00:00",
+                "duration_ms": 1056.27,
+                "rows": 5
+              }
+            ],
+            "latency_ms": 2675.6
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "ranking",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "ranking_por_dimension",
+              "purpose": "Obtener el ranking de vehículos por duración publicitaria total en 2024, limitado a los top 5.",
+              "arguments": {
+                "dimension": "vehiculo",
+                "limite": 5
+              }
+            }
+          ],
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "total_duracion",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [
+              "vehiculo"
+            ]
+          },
+          "analysis_questions": [
+            "¿Cuáles son los cinco vehículos con mayor duración publicitaria total en 2024?"
+          ],
+          "answer": "",
+          "budget": 2,
+          "resolved_context": {
+            "metric": "total_duracion",
+            "filters": {},
+            "requested_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "vehiculo"
+            ],
+            "intent": "ranking",
+            "observed_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          }
+        },
+        "chart_specs": [
+          {
+            "type": "ranking",
+            "title": "Ranking por vehiculo — Duración total publicitaria · 2024-01-01 a 2024-12-31",
+            "data": [
+              {
+                "dimension": "LA FM PEREIRA",
+                "value": 173700.0,
+                "source_rows": 1108,
+                "rank": 1,
+                "share_pct": 2.3441887129945114,
+                "total": 7409813.0,
+                "concentration_hhi": 101.45136992104743,
+                "unknown_value": 0.0
+              },
+              {
+                "dimension": "CANAL CARACOL",
+                "value": 155123.0,
+                "source_rows": 3716,
+                "rank": 2,
+                "share_pct": 2.093480631697453,
+                "total": 7409813.0,
+                "concentration_hhi": 101.45136992104743,
+                "unknown_value": 0.0
+              },
+              {
+                "dimension": "RADIOACKTIVA FM BOG",
+                "value": 152730.0,
+                "source_rows": 708,
+                "rank": 3,
+                "share_pct": 2.0611856196640863,
+                "total": 7409813.0,
+                "concentration_hhi": 101.45136992104743,
+                "unknown_value": 0.0
+              },
+              {
+                "dimension": "LA FM MED",
+                "value": 146795.0,
+                "source_rows": 1240,
+                "rank": 4,
+                "share_pct": 1.9810891313991323,
+                "total": 7409813.0,
+                "concentration_hhi": 101.45136992104743,
+                "unknown_value": 0.0
+              },
+              {
+                "dimension": "LA FM BOG",
+                "value": 141675.0,
+                "source_rows": 985,
+                "rank": 5,
+                "share_pct": 1.9119915711773023,
+                "total": 7409813.0,
+                "concentration_hhi": 101.45136992104743,
+                "unknown_value": 0.0
+              }
+            ],
+            "x": "value",
+            "y": "dimension"
+          }
+        ],
+        "metrics": {
+          "total_llm_calls": 2,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 21205976,
+          "bigquery_queries": 1,
+          "total_latency_ms": 14929.36,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 7838,
+          "output_tokens": 465,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 2797.81
+            },
+            {
+              "stage": "plan",
+              "intent": "ranking",
+              "scope": {
+                "intent": "ranking",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": "total_duracion",
+                "filters": {},
+                "period": {
+                  "kind": "year",
+                  "year": 2024
+                },
+                "dimensions": [
+                  "vehiculo"
+                ]
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "ranking_por_dimension",
+              "purpose": "Obtener el ranking de vehículos por duración publicitaria total en 2024, limitado a los top 5.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "final",
+              "finish_reason": "stop",
+              "latency_ms": 9437.13
+            },
+            {
+              "stage": "validation",
+              "attempt": 0,
+              "issues": [],
+              "candidate": "### Resumen ejecutivo\n\n**LA FM PEREIRA lidera en duración publicitaria total**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM PEREIRA: 173.700,00 (2,34 % del universo consultado).\n\nTiene la mayor duración publicitaria total entre los vehículos analizados para el periodo solicitado.\n\n**CANAL CARACOL ocupa el segundo puesto**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=CANAL CARACOL: 155.123,00 (2,09 % del universo consultado).\n\nSu duración publicitaria total es la segunda más alta dentro del ranking solicitado.\n\n**RADIOACKTIVA FM BOG se posiciona en tercer lugar**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=RADIOACKTIVA FM BOG: 152.730,00 (2,06 % del universo consultado).\n\nSu duración publicitaria total lo coloca como el tercer vehículo con mayor exposición en el periodo.\n\n**LA FM MED aparece en cuarta posición**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM MED: 146.795,00 (1,98 % del universo consultado).\n\nSu duración publicitaria total es la cuarta más alta entre los vehículos evaluados.\n\n**LA FM BOG completa el top cinco**\n\nDuración total publicitaria, alcance consultado (2024-01-01 a 2024-12-31), vehiculo=LA FM BOG: 141.675,00 (1,91 % del universo consultado).\n\nTiene la quinta duración publicitaria total más alta dentro del conjunto de datos consultado."
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 2,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 21205976,
+            "input_tokens": 7838,
+            "output_tokens": 465,
+            "cache_hits": 0,
+            "total_latency_ms": 14929.36
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "ranking",
+      "actual_intent": "ranking"
+    },
+    {
+      "id": "holdout-04",
+      "family": "composition",
+      "question": "¿Qué porcentaje conjunto de la inversión neta corresponde a RADIO y PRENSA en 2025?",
+      "expected_metric": "inv_neta",
+      "elapsed_s": 10.07,
+      "result": {
+        "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31): 154.376.204,27.\n\n**Medios disponibles en la muestra**\n\nValores disponibles (muestra): RADIO, PRENSA.\n\nLa consulta muestra que RADIO y PRENSA están presentes entre los valores disponibles para el análisis de composición.",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "consultar_participacion_bicomp",
+            "arguments": {
+              "dimension": "medio_agrupado",
+              "valores": [
+                "RADIO",
+                "PRENSA"
+              ],
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "agregacion": "sum",
+              "filtros": {}
+            },
+            "result": {
+              "success": true,
+              "source": "bigquery",
+              "row_count": 7,
+              "evidence": {
+                "sql": "WITH analytical_result AS (SELECT UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 19253525,
+                "job_id": "68121e67-552c-4cd7-bdf8-27e2fc8190af",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:52.673778+00:00",
+                "duration_ms": 1206.65,
+                "rows": 7
+              },
+              "domain": "bicomp",
+              "metric": "inv_neta",
+              "aggregation": "sum",
+              "filters": {},
+              "period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "effective_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "is_partial": false,
+              "known": true,
+              "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+              "warnings": [],
+              "unit": "currency",
+              "metric_label": "Inversión publicitaria neta",
+              "dimension": "medio_agrupado",
+              "values": [
+                "RADIO",
+                "PRENSA"
+              ],
+              "value": 154376204.27457726,
+              "total": 463938228.0684297,
+              "share_pct": 33.275163574536734,
+              "denominator_scope": {}
+            },
+            "source": "bigquery",
+            "metric": "inv_neta",
+            "filters": {},
+            "row_count": 7,
+            "step": 1,
+            "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "WITH analytical_result AS (SELECT UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 19253525,
+                "job_id": "68121e67-552c-4cd7-bdf8-27e2fc8190af",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:39:52.673778+00:00",
+                "duration_ms": 1206.65,
+                "rows": 7
+              }
+            ],
+            "latency_ms": 2997.43
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "composition",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "consultar_participacion_bicomp",
+              "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+              "arguments": {
+                "dimension": "medio_agrupado",
+                "valores": [
+                  "RADIO",
+                  "PRENSA"
+                ],
+                "metrica": "inv_neta",
+                "fecha_inicio": "2025-01-01",
+                "fecha_fin": "2025-12-31",
+                "agregacion": "sum"
+              }
+            }
+          ],
+          "scope": {
+            "intent": "composition",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "medio_agrupado"
+            ]
+          },
+          "analysis_questions": [
+            "¿Qué porcentaje conjunto de la inversión neta corresponde a RADIO y PRENSA en 2025?"
+          ],
+          "answer": null,
+          "budget": 2,
+          "resolved_context": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [
+              "medio_agrupado"
+            ],
+            "intent": "composition",
+            "observed_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          }
+        },
+        "chart_specs": [],
+        "metrics": {
+          "total_llm_calls": 2,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 19253525,
+          "bigquery_queries": 1,
+          "total_latency_ms": 10073.54,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 7400,
+          "output_tokens": 429,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 5646.04
+            },
+            {
+              "stage": "plan",
+              "intent": "composition",
+              "scope": {
+                "intent": "composition",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": "inv_neta",
+                "filters": {},
+                "period": {
+                  "kind": "year",
+                  "year": 2025
+                },
+                "dimensions": [
+                  "medio_agrupado"
+                ]
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "consultar_participacion_bicomp",
+              "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "final",
+              "finish_reason": "stop",
+              "latency_ms": 1412.62
+            },
+            {
+              "stage": "validation",
+              "attempt": 0,
+              "issues": [],
+              "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31): 154.376.204,27.\n\n**Medios disponibles en la muestra**\n\nValores disponibles (muestra): RADIO, PRENSA.\n\nLa consulta muestra que RADIO y PRENSA están presentes entre los valores disponibles para el análisis de composición."
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 2,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 19253525,
+            "input_tokens": 7400,
+            "output_tokens": 429,
+            "cache_hits": 0,
+            "total_latency_ms": 10073.54
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "composition",
+      "actual_intent": "composition"
+    },
+    {
+      "id": "holdout-05",
+      "family": "lookup",
+      "question": "Calcula el cociente de inversión bruta sobre inversión neta en 2024.",
+      "elapsed_s": 11.11,
+      "result": {
+        "answer": "el alcance consultado: Inversión publicitaria bruta de 1,82. Entre 2024-01-01 y 2024-12-31.",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "calcular_ratio_bicomp",
+            "arguments": {
+              "numerador": "inv_bruta",
+              "denominador": "inv_neta",
+              "fecha_inicio": "2024-01-01",
+              "fecha_fin": "2024-12-31",
+              "filtros": {}
+            },
+            "result": {
+              "domain": "bicomp",
+              "source": "bigquery",
+              "metric": "inv_bruta/inv_neta",
+              "aggregation": "sum",
+              "filters": {},
+              "period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "effective_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "is_partial": false,
+              "known": true,
+              "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+              "warnings": [],
+              "unit": "currency",
+              "metric_label": "Inversión publicitaria bruta",
+              "numerator": 989947034.5776348,
+              "denominator": 544109526.4489865,
+              "value": 1.8193892708299202,
+              "source_rows": 168924,
+              "success": true,
+              "numerator_metric": "inv_bruta",
+              "denominator_metric": "inv_neta",
+              "evidence": {
+                "sql": "WITH analytical_result AS (SELECT SUM(`inv_bruta`) AS numerator, SUM(`inv_neta`) AS denominator, SAFE_DIVIDE(SUM(`inv_bruta`), SUM(`inv_neta`)) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31"
+                },
+                "bytes_processed": 18637248,
+                "job_id": "ed6967bc-2924-431e-a76b-f7803ab9350d",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:40:05.197997+00:00",
+                "duration_ms": 1469.02,
+                "rows": 1
+              }
+            },
+            "source": "bigquery",
+            "metric": "inv_bruta/inv_neta",
+            "filters": {},
+            "row_count": null,
+            "step": 1,
+            "purpose": "Calcular el cociente de inversión bruta sobre inversión neta en 2024 sin realizar matemática manual.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "WITH analytical_result AS (SELECT SUM(`inv_bruta`) AS numerator, SUM(`inv_neta`) AS denominator, SAFE_DIVIDE(SUM(`inv_bruta`), SUM(`inv_neta`)) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "start_date": "2024-01-01",
+                  "end_date": "2024-12-31"
+                },
+                "bytes_processed": 18637248,
+                "job_id": "ed6967bc-2924-431e-a76b-f7803ab9350d",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:40:05.197997+00:00",
+                "duration_ms": 1469.02,
+                "rows": 1
+              }
+            ],
+            "latency_ms": 3147.04
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "lookup",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "calcular_ratio_bicomp",
+              "purpose": "Calcular el cociente de inversión bruta sobre inversión neta en 2024 sin realizar matemática manual.",
+              "arguments": {
+                "numerador": "inv_bruta",
+                "denominador": "inv_neta",
+                "fecha_inicio": "2024-01-01",
+                "fecha_fin": "2024-12-31",
+                "filtros": {}
+              }
+            }
+          ],
+          "scope": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": []
+          },
+          "analysis_questions": [
+            "¿Cuál es el cociente de inversión bruta sobre inversión neta en 2024?"
+          ],
+          "answer": null,
+          "budget": 1,
+          "resolved_context": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [],
+            "intent": "lookup",
+            "observed_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          }
+        },
+        "chart_specs": [],
+        "metrics": {
+          "total_llm_calls": 1,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 18637248,
+          "bigquery_queries": 1,
+          "total_latency_ms": 11105.73,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 6059,
+          "output_tokens": 225,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 7928.05
+            },
+            {
+              "stage": "plan",
+              "intent": "lookup",
+              "scope": {
+                "intent": "lookup",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": null,
+                "filters": {},
+                "period": {
+                  "kind": "year",
+                  "year": 2024
+                },
+                "dimensions": []
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "calcular_ratio_bicomp",
+              "purpose": "Calcular el cociente de inversión bruta sobre inversión neta en 2024 sin realizar matemática manual.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 1,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 18637248,
+            "input_tokens": 6059,
+            "output_tokens": 225,
+            "cache_hits": 0,
+            "total_latency_ms": 11105.73
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "lookup",
+      "actual_intent": "lookup"
+    },
+    {
+      "id": "holdout-06",
+      "family": "coverage",
+      "question": "¿Cuál es la cobertura temporal real disponible en la fuente?",
+      "elapsed_s": 6.76,
+      "result": {
+        "answer": "### Resumen ejecutivo\n\n**Rango de fechas disponible**\n\nCobertura disponible: 2019-01-01 a 2026-07-31.\n\nIndica el periodo efectivo para el cual se dispone de datos de inv_neta en la fuente.",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "obtener_cobertura_bicomp",
+            "arguments": {},
+            "result": {
+              "success": true,
+              "source": "bigquery",
+              "start": "2019-01-01",
+              "end": "2026-07-31",
+              "row_count": 776552,
+              "evidence": {
+                "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+                "query_parameters": {},
+                "bytes_processed": 0,
+                "job_id": "b63c2d0e-d36a-4bea-ac53-d9f833740980",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T12:40:09.964004+00:00",
+                "duration_ms": 1346.44,
+                "rows": 1
+              },
+              "domain": "bicomp",
+              "period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "schema": {
+                "pais_id": "INTEGER",
+                "cliente_id": "INTEGER",
+                "competencia_id": "INTEGER",
+                "pais": "STRING",
+                "anio": "INTEGER",
+                "anio_pais": "STRING",
+                "mes": "INTEGER",
+                "fecha": "DATE",
+                "semana": "INTEGER",
+                "sector": "STRING",
+                "subsector": "STRING",
+                "categoria": "STRING",
+                "anunciante": "STRING",
+                "anunciante_agrupado": "STRING",
+                "holding": "STRING",
+                "central": "STRING",
+                "agencia": "STRING",
+                "marca": "STRING",
+                "marca_agrupada": "STRING",
+                "producto": "STRING",
+                "referencia": "STRING",
+                "prod_ref": "STRING",
+                "medio": "STRING",
+                "medio_agrupado": "STRING",
+                "vehiculo": "STRING",
+                "soporte": "STRING",
+                "franja": "STRING",
+                "genero": "STRING",
+                "region": "STRING",
+                "ciudad": "STRING",
+                "cubrimiento": "STRING",
+                "periodicidad": "STRING",
+                "tipo_cobranding": "STRING",
+                "corte": "INTEGER",
+                "pos": "INTEGER",
+                "de": "INTEGER",
+                "tipo_aviso": "STRING",
+                "hora_pagina": "STRING",
+                "evento_circula": "STRING",
+                "cadena_editorial": "STRING",
+                "color": "STRING",
+                "cms": "FLOAT",
+                "col": "INTEGER",
+                "cxc": "FLOAT",
+                "total_duracion": "FLOAT",
+                "total_insercion": "INTEGER",
+                "impacto": "INTEGER",
+                "inv_bruta": "FLOAT",
+                "inv_neta": "FLOAT",
+                "inv_bruta_usd": "FLOAT",
+                "inv_neta_usd": "FLOAT",
+                "trm": "FLOAT",
+                "tipo_pauta": "STRING",
+                "formato": "STRING",
+                "dispositivo": "STRING",
+                "soldby": "STRING",
+                "advertisement": "STRING",
+                "target1": "FLOAT",
+                "target2": "FLOAT",
+                "target3": "FLOAT",
+                "target4": "FLOAT",
+                "target5": "FLOAT",
+                "target6": "FLOAT",
+                "target7": "FLOAT",
+                "target8": "FLOAT",
+                "target9": "FLOAT",
+                "target10": "FLOAT",
+                "segmento1": "STRING",
+                "segmento2": "STRING",
+                "segmento3": "STRING",
+                "segmento4": "STRING",
+                "segmento5": "STRING",
+                "segmento6": "STRING",
+                "segmento7": "STRING",
+                "duracion_video": "FLOAT"
+              }
+            },
+            "source": "bigquery",
+            "metric": null,
+            "filters": null,
+            "row_count": 776552,
+            "step": 1,
+            "purpose": "Obtener el rango de fechas, número de filas y esquema real disponible en la fuente BICOMP para determinar la cobertura temporal efectiva.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+                "query_parameters": {},
+                "bytes_processed": 0,
+                "job_id": "b63c2d0e-d36a-4bea-ac53-d9f833740980",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T12:40:09.964004+00:00",
+                "duration_ms": 1346.44,
+                "rows": 1
+              }
+            ],
+            "latency_ms": 3235.76
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "coverage",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "obtener_cobertura_bicomp",
+              "purpose": "Obtener el rango de fechas, número de filas y esquema real disponible en la fuente BICOMP para determinar la cobertura temporal efectiva.",
+              "arguments": {}
+            }
+          ],
+          "scope": {
+            "intent": "coverage",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "all"
+            },
+            "dimensions": []
+          },
+          "analysis_questions": [
+            "¿Cuál es la cobertura temporal real disponible en la fuente?"
+          ],
+          "answer": "",
+          "budget": 1,
+          "resolved_context": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {},
+            "comparison_period": {},
+            "dimensions": [],
+            "intent": "coverage",
+            "observed_period": {},
+            "available_period": {}
+          }
+        },
+        "chart_specs": [],
+        "metrics": {
+          "total_llm_calls": 2,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 0,
+          "bigquery_queries": 1,
+          "total_latency_ms": 6761.74,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 7202,
+          "output_tokens": 226,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 1509.1
+            },
+            {
+              "stage": "plan",
+              "intent": "coverage",
+              "scope": {
+                "intent": "coverage",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": null,
+                "filters": {},
+                "period": {
+                  "kind": "all"
+                },
+                "dimensions": []
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "obtener_cobertura_bicomp",
+              "purpose": "Obtener el rango de fechas, número de filas y esquema real disponible en la fuente BICOMP para determinar la cobertura temporal efectiva.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "final",
+              "finish_reason": "stop",
+              "latency_ms": 1999.5
+            },
+            {
+              "stage": "validation",
+              "attempt": 0,
+              "issues": [],
+              "candidate": "### Resumen ejecutivo\n\n**Rango de fechas disponible**\n\nCobertura disponible: 2019-01-01 a 2026-07-31.\n\nIndica el periodo efectivo para el cual se dispone de datos de inv_neta en la fuente."
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 2,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 0,
+            "input_tokens": 7202,
+            "output_tokens": 226,
+            "cache_hits": 0,
+            "total_latency_ms": 6761.74
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "coverage",
+      "actual_intent": "coverage"
+    },
+    {
+      "id": "holdout-07",
+      "family": "period_comparison",
+      "question": "Compara las inserciones de marzo de 2024 frente a marzo de 2023, usando el mismo mes.",
+      "expected_metric": "total_insercion",
+      "elapsed_s": 16.11,
+      "result": {
+        "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\ntotal_insercion, alcance consultado: 2024-03-01 a 2024-03-31 registra 281.144.122,00; 2023-03-01 a 2023-03-31, 266.373.740,00. Diferencia de 14.770.382,00; variación de 5,54 % sobre 2023-03-01 a 2023-03-31.\n\nEl volumen de inserciones aumentó en el periodo comparado.",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "comparar_periodos_bicomp",
+            "arguments": {
+              "metrica": "total_insercion",
+              "periodo_a": {
+                "start": "2024-03-01",
+                "end": "2024-03-31"
+              },
+              "periodo_b": {
+                "start": "2023-03-01",
+                "end": "2023-03-31"
+              },
+              "filtros": {}
+            },
+            "result": {
+              "success": true,
+              "domain": "bicomp",
+              "source": "bigquery",
+              "metric": "total_insercion",
+              "aggregation": "sum",
+              "period_a": {
+                "start": "2024-03-01",
+                "end": "2024-03-31"
+              },
+              "period_b": {
+                "start": "2023-03-01",
+                "end": "2023-03-31"
+              },
+              "requested_period_a": {
+                "start": "2024-03-01",
+                "end": "2024-03-31"
+              },
+              "requested_period_b": {
+                "start": "2023-03-01",
+                "end": "2023-03-31"
+              },
+              "comparison_equivalent": true,
+              "periods_adjusted": false,
+              "warnings": [],
+              "value_a": 281144122,
+              "value_b": 266373740,
+              "difference": 14770382,
+              "difference_pct": 5.544984276603242,
+              "ratio_a_over_b": 1.0554498427660324,
+              "filters": {},
+              "row_count": 21637,
+              "evidence": [
+                {
+                  "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+                  "query_parameters": {},
+                  "bytes_processed": 0,
+                  "job_id": "83960a70-afc4-4275-bfd1-598eaa49b4c3",
+                  "cache_hit": true,
+                  "executed_at": "2026-09-11T12:40:19.548416+00:00",
+                  "duration_ms": 1020.5,
+                  "rows": 1
+                },
+                {
+                  "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+                  "query_parameters": {
+                    "start_date": "2024-03-01",
+                    "end_date": "2024-03-31"
+                  },
+                  "bytes_processed": 12424832,
+                  "job_id": "5fbe7a04-1e99-497b-814b-a4799991be0b",
+                  "cache_hit": false,
+                  "executed_at": "2026-09-11T12:40:21.143900+00:00",
+                  "duration_ms": 1231.58,
+                  "rows": 1
+                },
+                {
+                  "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+                  "query_parameters": {
+                    "start_date": "2023-03-01",
+                    "end_date": "2023-03-31"
+                  },
+                  "bytes_processed": 12424832,
+                  "job_id": "265a7f74-2f35-42c5-abf2-91061c512bf7",
+                  "cache_hit": false,
+                  "executed_at": "2026-09-11T12:40:22.625642+00:00",
+                  "duration_ms": 1081.15,
+                  "rows": 1
+                }
+              ]
+            },
+            "source": "bigquery",
+            "metric": "total_insercion",
+            "filters": {},
+            "row_count": 21637,
+            "step": 1,
+            "purpose": "Comparar el volumen de inserciones entre marzo 2024 y marzo 2023 con cálculo determinista de diferencia absoluta y relativa.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+                "query_parameters": {},
+                "bytes_processed": 0,
+                "job_id": "83960a70-afc4-4275-bfd1-598eaa49b4c3",
+                "cache_hit": true,
+                "executed_at": "2026-09-11T12:40:19.548416+00:00",
+                "duration_ms": 1020.5,
+                "rows": 1
+              },
+              {
+                "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+                "query_parameters": {
+                  "start_date": "2024-03-01",
+                  "end_date": "2024-03-31"
+                },
+                "bytes_processed": 12424832,
+                "job_id": "5fbe7a04-1e99-497b-814b-a4799991be0b",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:40:21.143900+00:00",
+                "duration_ms": 1231.58,
+                "rows": 1
+              },
+              {
+                "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+                "query_parameters": {
+                  "start_date": "2023-03-01",
+                  "end_date": "2023-03-31"
+                },
+                "bytes_processed": 12424832,
+                "job_id": "265a7f74-2f35-42c5-abf2-91061c512bf7",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:40:22.625642+00:00",
+                "duration_ms": 1081.15,
+                "rows": 1
+              }
+            ],
+            "latency_ms": 5735.32
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "period_comparison",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "comparar_periodos_bicomp",
+              "purpose": "Comparar el volumen de inserciones entre marzo 2024 y marzo 2023 con cálculo determinista de diferencia absoluta y relativa.",
+              "arguments": {
+                "metrica": "total_insercion",
+                "periodo_a": {
+                  "kind": "month",
+                  "month": 3,
+                  "year": 2024
+                },
+                "periodo_b": {
+                  "kind": "month",
+                  "month": 3,
+                  "year": 2023
+                }
+              }
+            }
+          ],
+          "scope": {
+            "intent": "period_comparison",
+            "operation": "compare_periods",
+            "scope_mode": "replace",
+            "metric": "total_insercion",
+            "filters": {},
+            "period": {
+              "kind": "month",
+              "month": 3,
+              "year": 2024
+            },
+            "comparison_period": {
+              "kind": "month",
+              "month": 3,
+              "year": 2023
+            },
+            "dimensions": []
+          },
+          "analysis_questions": [
+            "¿Cuál es la diferencia absoluta e relativa en inserciones entre marzo 2024 y marzo 2023?"
+          ],
+          "answer": "",
+          "budget": 3,
+          "resolved_context": {
+            "metric": "total_insercion",
+            "filters": {},
+            "requested_period": {
+              "start": "2024-03-01",
+              "end": "2024-03-31"
+            },
+            "comparison_period": {
+              "start": "2023-03-01",
+              "end": "2023-03-31"
+            },
+            "dimensions": [],
+            "intent": "period_comparison",
+            "observed_period": {},
+            "available_period": {}
+          }
+        },
+        "chart_specs": [
+          {
+            "type": "comparison",
+            "title": "Periodos equivalentes — total_insercion",
+            "data": [
+              {
+                "label": "2024-03-01 a 2024-03-31",
+                "value": 281144122
+              },
+              {
+                "label": "2023-03-01 a 2023-03-31",
+                "value": 266373740
+              }
+            ],
+            "x": "label",
+            "y": "value"
+          }
+        ],
+        "metrics": {
+          "total_llm_calls": 2,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 24849664,
+          "bigquery_queries": 3,
+          "total_latency_ms": 16111.6,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 7425,
+          "output_tokens": 360,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 4905.5
+            },
+            {
+              "stage": "plan",
+              "intent": "period_comparison",
+              "scope": {
+                "intent": "period_comparison",
+                "operation": "compare_periods",
+                "scope_mode": "replace",
+                "metric": "total_insercion",
+                "filters": {},
+                "period": {
+                  "kind": "month",
+                  "month": 3,
+                  "year": 2024
+                },
+                "comparison_period": {
+                  "kind": "month",
+                  "month": 3,
+                  "year": 2023
+                },
+                "dimensions": []
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "comparar_periodos_bicomp",
+              "purpose": "Comparar el volumen de inserciones entre marzo 2024 y marzo 2023 con cálculo determinista de diferencia absoluta y relativa.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "final",
+              "finish_reason": "stop",
+              "latency_ms": 5452.17
+            },
+            {
+              "stage": "validation",
+              "attempt": 0,
+              "issues": [],
+              "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\ntotal_insercion, alcance consultado: 2024-03-01 a 2024-03-31 registra 281.144.122,00; 2023-03-01 a 2023-03-31, 266.373.740,00. Diferencia de 14.770.382,00; variación de 5,54 % sobre 2023-03-01 a 2023-03-31.\n\nEl volumen de inserciones aumentó en el periodo comparado."
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 2,
+            "total_tool_calls": 1,
+            "bigquery_queries": 3,
+            "bigquery_bytes_processed": 24849664,
+            "input_tokens": 7425,
+            "output_tokens": 360,
+            "cache_hits": 0,
+            "total_latency_ms": 16111.6
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "period_comparison",
+      "actual_intent": "period_comparison"
+    },
+    {
+      "id": "holdout-08",
+      "family": "lookup",
+      "question": "¿Cuánto invirtió la marca FUNCTIONAL ROOM en 2025?",
+      "expected_metric": "inv_neta",
+      "elapsed_s": 9.93,
+      "result": {
+        "answer": "FUNCTIONAL ROOM: Inversión publicitaria neta de 42.121.416,00. Entre 2025-01-01 y 2025-12-31.",
+        "evidence": [
+          {
+            "id": "e1",
+            "tool": "consultar_inversion_publicitaria",
+            "arguments": {
+              "metrica": "inv_neta",
+              "fecha_inicio": "2025-01-01",
+              "fecha_fin": "2025-12-31",
+              "filtros": {
+                "marca": "FUNCTIONAL ROOM"
+              },
+              "agregacion": "sum"
+            },
+            "result": {
+              "domain": "bicomp",
+              "source": "bigquery",
+              "metric": "inv_neta",
+              "aggregation": "sum",
+              "filters": {
+                "marca": "FUNCTIONAL ROOM"
+              },
+              "period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "requested_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              },
+              "observed_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "effective_period": {
+                "start": "2025-01-01",
+                "end": "2025-12-31"
+              },
+              "is_partial": false,
+              "known": true,
+              "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+              "warnings": [],
+              "unit": "currency",
+              "metric_label": "Inversión publicitaria neta",
+              "success": true,
+              "value": 42121416.0,
+              "row_count": 2065,
+              "valid_values": 2065,
+              "evidence": {
+                "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "filter_0": "FUNCTIONAL ROOM",
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 19951115,
+                "job_id": "20c3d892-5f35-4244-9b5a-2ebe4e877fdd",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:40:38.013516+00:00",
+                "duration_ms": 1439.36,
+                "rows": 1
+              }
+            },
+            "source": "bigquery",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "FUNCTIONAL ROOM"
+            },
+            "row_count": 2065,
+            "step": 1,
+            "purpose": "Obtener la inversión neta total de la marca FUNCTIONAL ROOM en 2025 mediante suma directa en BICOMP.",
+            "cache_hit": false,
+            "queries": [
+              {
+                "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+                "query_parameters": {
+                  "filter_0": "FUNCTIONAL ROOM",
+                  "start_date": "2025-01-01",
+                  "end_date": "2025-12-31"
+                },
+                "bytes_processed": 19951115,
+                "job_id": "20c3d892-5f35-4244-9b5a-2ebe4e877fdd",
+                "cache_hit": false,
+                "executed_at": "2026-09-11T12:40:38.013516+00:00",
+                "duration_ms": 1439.36,
+                "rows": 1
+              }
+            ],
+            "latency_ms": 3025.85
+          }
+        ],
+        "steps": 1,
+        "plan": {
+          "intent": "lookup",
+          "domains": [
+            "bicomp"
+          ],
+          "steps": [
+            {
+              "tool": "consultar_inversion_publicitaria",
+              "purpose": "Obtener la inversión neta total de la marca FUNCTIONAL ROOM en 2025 mediante suma directa en BICOMP.",
+              "arguments": {
+                "metrica": "inv_neta",
+                "fecha_inicio": "2025-01-01",
+                "fecha_fin": "2025-12-31",
+                "filtros": {
+                  "marca": "FUNCTIONAL ROOM"
+                },
+                "agregacion": "sum"
+              }
+            }
+          ],
+          "scope": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "FUNCTIONAL ROOM"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": []
+          },
+          "analysis_questions": [
+            "¿Cuál fue la inversión neta total de la marca FUNCTIONAL ROOM en 2025?"
+          ],
+          "answer": "",
+          "budget": 1,
+          "resolved_context": {
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "FUNCTIONAL ROOM"
+            },
+            "requested_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [],
+            "intent": "lookup",
+            "observed_period": {
+              "start": "2025-01-01",
+              "end": "2025-12-31"
+            },
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          }
+        },
+        "chart_specs": [],
+        "metrics": {
+          "total_llm_calls": 1,
+          "total_tool_calls": 1,
+          "bigquery_bytes_processed": 19951115,
+          "bigquery_queries": 1,
+          "total_latency_ms": 9930.59,
+          "errors": [],
+          "cache_hits": 0,
+          "input_tokens": 6059,
+          "output_tokens": 259,
+          "events": [
+            {
+              "stage": "planning",
+              "finish_reason": "stop",
+              "latency_ms": 6891.94
+            },
+            {
+              "stage": "plan",
+              "intent": "lookup",
+              "scope": {
+                "intent": "lookup",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": "inv_neta",
+                "filters": {
+                  "marca": "FUNCTIONAL ROOM"
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2025
+                },
+                "dimensions": []
+              }
+            },
+            {
+              "stage": "tool",
+              "tool": "consultar_inversion_publicitaria",
+              "purpose": "Obtener la inversión neta total de la marca FUNCTIONAL ROOM en 2025 mediante suma directa en BICOMP.",
+              "success": true,
+              "cache_hit": false
+            },
+            {
+              "stage": "stop",
+              "reason": "planned_evidence_complete",
+              "partial": false
+            }
+          ],
+          "turn": {
+            "total_llm_calls": 1,
+            "total_tool_calls": 1,
+            "bigquery_queries": 1,
+            "bigquery_bytes_processed": 19951115,
+            "input_tokens": 6059,
+            "output_tokens": 259,
+            "cache_hits": 0,
+            "total_latency_ms": 9930.59
+          },
+          "stop_reason": "planned_evidence_complete"
+        },
+        "is_partial": false
+      },
+      "status": "PASS",
+      "issues": [],
+      "expected_family": "lookup",
+      "actual_intent": "lookup"
+    }
+  ]
+}

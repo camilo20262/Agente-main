@@ -1,0 +1,221 @@
+{
+  "id": "independent-22",
+  "question": "¿Cuánto invirtió la marca MARCA_INEXISTENTE_AUDITORIA en 2025?",
+  "family": "lookup",
+  "allow_dimension_clarification": false,
+  "expected_no_data": true,
+  "elapsed_s": 4.09,
+  "result": {
+    "answer": "Análisis parcial: no encontré datos numéricos para el alcance solicitado.\n\nNo obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "MARCA_INEXISTENTE_AUDITORIA"
+          }
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "MARCA_INEXISTENTE_AUDITORIA"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {},
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": false,
+          "value": null,
+          "row_count": 0,
+          "valid_values": 0,
+          "error": "La consulta BICOMP no produjo resultados utilizables.",
+          "error_type": "no_data",
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "MARCA_INEXISTENTE_AUDITORIA",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d1f67ea8-4283-4c33-bb3e-31d64f11d868",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T23:45:51.255694+00:00",
+            "duration_ms": 886.08,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "MARCA_INEXISTENTE_AUDITORIA"
+        },
+        "row_count": 0,
+        "step": 1,
+        "purpose": "Obtener la inversión neta total de la marca MARCA_INEXISTENTE_AUDITORIA en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "MARCA_INEXISTENTE_AUDITORIA",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d1f67ea8-4283-4c33-bb3e-31d64f11d868",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T23:45:51.255694+00:00",
+            "duration_ms": 886.08,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 2405.66
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "lookup",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de la marca MARCA_INEXISTENTE_AUDITORIA en 2025.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "MARCA_INEXISTENTE_AUDITORIA"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "lookup",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "MARCA_INEXISTENTE_AUDITORIA"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "MARCA_INEXISTENTE_AUDITORIA"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 4086.57,
+      "errors": [
+        "no_data"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 5479,
+      "output_tokens": 232,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 1665.04
+        },
+        {
+          "stage": "plan",
+          "intent": "lookup",
+          "scope": {
+            "intent": "lookup",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "MARCA_INEXISTENTE_AUDITORIA"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de la marca MARCA_INEXISTENTE_AUDITORIA en 2025.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "no_data",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 5479,
+        "output_tokens": 232,
+        "cache_hits": 0,
+        "total_latency_ms": 4086.57
+      },
+      "stop_reason": "no_data"
+    },
+    "is_partial": true
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "lookup",
+  "actual_intent": "lookup"
+}

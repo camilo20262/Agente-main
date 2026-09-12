@@ -1,0 +1,309 @@
+{
+  "id": "holdout-07",
+  "family": "period_comparison",
+  "question": "Compara las inserciones de marzo de 2024 frente a marzo de 2023, usando el mismo mes.",
+  "expected_metric": "total_insercion",
+  "elapsed_s": 10.83,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\ntotal_insercion, alcance consultado: 2024-03-01 a 2024-03-31 registra 281.144.122,00; 2023-03-01 a 2023-03-31, 266.373.740,00. Diferencia de 14.770.382,00; variación de 5,54 % sobre 2023-03-01 a 2023-03-31.\n\nEl volumen de inserciones aumentó en el periodo comparado.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "metrica": "total_insercion",
+          "periodo_a": {
+            "start": "2024-03-01",
+            "end": "2024-03-31"
+          },
+          "periodo_b": {
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          "filtros": {}
+        },
+        "result": {
+          "success": true,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "total_insercion",
+          "aggregation": "sum",
+          "period_a": {
+            "start": "2024-03-01",
+            "end": "2024-03-31"
+          },
+          "period_b": {
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          "requested_period_a": {
+            "start": "2024-03-01",
+            "end": "2024-03-31"
+          },
+          "requested_period_b": {
+            "start": "2023-03-01",
+            "end": "2023-03-31"
+          },
+          "comparison_equivalent": true,
+          "periods_adjusted": false,
+          "warnings": [],
+          "value_a": 281144122,
+          "value_b": 266373740,
+          "difference": 14770382,
+          "difference_pct": 5.544984276603242,
+          "ratio_a_over_b": 1.0554498427660324,
+          "filters": {},
+          "row_count": 21637,
+          "evidence": [
+            {
+              "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+              "query_parameters": {},
+              "bytes_processed": 0,
+              "job_id": "433769b9-a3cf-4a86-aedd-a81f9ef53b4b",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:50:43.243084+00:00",
+              "duration_ms": 1291.29,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "start_date": "2024-03-01",
+                "end_date": "2024-03-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "ac54522e-2502-49d1-a998-c932c3bb33e5",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:50:44.803843+00:00",
+              "duration_ms": 943.8,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "start_date": "2023-03-01",
+                "end_date": "2023-03-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "1ad43d63-e454-42bd-bc54-f59dc000064c",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:50:46.180787+00:00",
+              "duration_ms": 1016.2,
+              "rows": 1
+            }
+          ]
+        },
+        "source": "bigquery",
+        "metric": "total_insercion",
+        "filters": {},
+        "row_count": 21637,
+        "step": 1,
+        "purpose": "Obtener la diferencia determinista de inserciones entre marzo 2024 y marzo 2023.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+            "query_parameters": {},
+            "bytes_processed": 0,
+            "job_id": "433769b9-a3cf-4a86-aedd-a81f9ef53b4b",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:50:43.243084+00:00",
+            "duration_ms": 1291.29,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "start_date": "2024-03-01",
+              "end_date": "2024-03-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "ac54522e-2502-49d1-a998-c932c3bb33e5",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:50:44.803843+00:00",
+            "duration_ms": 943.8,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`total_insercion`) AS value, COUNT(*) AS source_rows, COUNT(`total_insercion`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "start_date": "2023-03-01",
+              "end_date": "2023-03-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "1ad43d63-e454-42bd-bc54-f59dc000064c",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:50:46.180787+00:00",
+            "duration_ms": 1016.2,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 6140.06
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "period_comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Obtener la diferencia determinista de inserciones entre marzo 2024 y marzo 2023.",
+          "arguments": {
+            "metrica": "total_insercion",
+            "periodo_a": {
+              "kind": "month",
+              "month": 3,
+              "year": 2024
+            },
+            "periodo_b": {
+              "kind": "month",
+              "month": 3,
+              "year": 2023
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "period_comparison",
+        "operation": "compare_periods",
+        "scope_mode": "replace",
+        "metric": "total_insercion",
+        "filters": {},
+        "period": {
+          "kind": "month",
+          "month": 3,
+          "year": 2024
+        },
+        "comparison_period": {
+          "kind": "month",
+          "month": 3,
+          "year": 2023
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la variación absoluta y porcentual de las inserciones entre marzo 2024 y marzo 2023?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "total_insercion",
+        "filters": {},
+        "requested_period": {
+          "start": "2024-03-01",
+          "end": "2024-03-31"
+        },
+        "comparison_period": {
+          "start": "2023-03-01",
+          "end": "2023-03-31"
+        },
+        "dimensions": [],
+        "intent": "period_comparison",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "comparison",
+        "title": "Periodos equivalentes — total_insercion",
+        "data": [
+          {
+            "label": "2024-03-01 a 2024-03-31",
+            "value": 281144122
+          },
+          {
+            "label": "2023-03-01 a 2023-03-31",
+            "value": 266373740
+          }
+        ],
+        "x": "label",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 3,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 10828.25,
+      "errors": [
+        "final:InternalServerError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 7425,
+      "output_tokens": 357,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2801.88
+        },
+        {
+          "stage": "plan",
+          "intent": "period_comparison",
+          "scope": {
+            "intent": "period_comparison",
+            "operation": "compare_periods",
+            "scope_mode": "replace",
+            "metric": "total_insercion",
+            "filters": {},
+            "period": {
+              "kind": "month",
+              "month": 3,
+              "year": 2024
+            },
+            "comparison_period": {
+              "kind": "month",
+              "month": 3,
+              "year": 2023
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Obtener la diferencia determinista de inserciones entre marzo 2024 y marzo 2023.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 1451.38
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\ntotal_insercion, alcance consultado: 2024-03-01 a 2024-03-31 registra 281.144.122,00; 2023-03-01 a 2023-03-31, 266.373.740,00. Diferencia de 14.770.382,00; variación de 5,54 % sobre 2023-03-01 a 2023-03-31.\n\nEl volumen de inserciones aumentó en el periodo comparado."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 3,
+        "total_tool_calls": 1,
+        "bigquery_queries": 3,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7425,
+        "output_tokens": 357,
+        "cache_hits": 0,
+        "total_latency_ms": 10828.25
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "period_comparison",
+  "actual_intent": "period_comparison"
+}

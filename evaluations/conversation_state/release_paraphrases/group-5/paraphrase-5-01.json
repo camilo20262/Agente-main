@@ -1,0 +1,765 @@
+{
+  "id": "paraphrase-5-01",
+  "question": "Dame el total de inversión de Ford durante 2024.",
+  "elapsed_s": 8.91,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "last_entities": {
+      "brands": [
+        "Ford"
+      ]
+    },
+    "last_filters": {
+      "marca": "Ford"
+    },
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Ford"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {}
+    },
+    "last_strategy": [
+      {
+        "tool": "consultar_inversion_publicitaria",
+        "purpose": "Obtener la inversión neta total de Ford en 2024",
+        "arguments": {
+          "metrica": "inv_neta",
+          "agregacion": "sum",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "marca": "Ford"
+          }
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Ford"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {}
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Ford"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Ford"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "consultar_inversion_publicitaria",
+        "purpose": "Obtener la inversión neta total de Ford en 2024",
+        "arguments": {
+          "metrica": "inv_neta",
+          "agregacion": "sum",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "marca": "Ford"
+          }
+        }
+      }
+    ],
+    "last_request": {
+      "question": "Dame el total de inversión de Ford durante 2024.",
+      "scope": {
+        "intent": "lookup",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {
+          "marca": "Ford"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [],
+        "analysis": {}
+      },
+      "status": "planned_evidence_complete"
+    },
+    "recent_entities": [
+      {
+        "dimension": "marca",
+        "value": "FORD"
+      }
+    ]
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "lookup",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {
+        "marca": "Ford"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [],
+      "analysis_questions": [],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Ford en 2024",
+          "arguments": {
+            "metrica": "inv_neta",
+            "agregacion": "sum",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {
+              "marca": "Ford"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "lookup",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "consultar_inversion_publicitaria",
+        "purpose": "Obtener la inversión neta total de Ford en 2024",
+        "arguments": {
+          "metrica": "inv_neta",
+          "agregacion": "sum",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "marca": "Ford"
+          }
+        }
+      }
+    ],
+    "scope": {
+      "intent": "lookup",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "filters": {
+        "marca": "Ford"
+      },
+      "period": {
+        "kind": "year",
+        "year": 2024
+      },
+      "dimensions": [],
+      "analysis": {}
+    },
+    "analysis_questions": [],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {
+        "marca": "Ford"
+      },
+      "requested_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "comparison_period": {},
+      "dimensions": [],
+      "intent": "lookup",
+      "analysis": {},
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2024-01-01",
+        "end": "2024-12-01"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "FORD: Inversión publicitaria neta de 6.139.113,93. Entre 2024-01-01 y 2024-12-31.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "agregacion": "sum",
+          "fecha_inicio": "2024-01-01",
+          "fecha_fin": "2024-12-31",
+          "filtros": {
+            "marca": "FORD"
+          }
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "marca": "FORD"
+          },
+          "period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "requested_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-01"
+          },
+          "effective_period": {
+            "start": "2024-01-01",
+            "end": "2024-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "value": 6139113.926580802,
+          "row_count": 4370,
+          "valid_values": 4370,
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "FORD",
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "24cf0c32-1b29-4c82-8ccc-fe5b927e1311",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T16:36:02.510335+00:00",
+            "duration_ms": 954.14,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "FORD"
+        },
+        "row_count": 4370,
+        "step": 1,
+        "purpose": "Obtener la inversión neta total de Ford en 2024",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "FORD",
+              "start_date": "2024-01-01",
+              "end_date": "2024-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "24cf0c32-1b29-4c82-8ccc-fe5b927e1311",
+            "cache_hit": true,
+            "executed_at": "2026-09-12T16:36:02.510335+00:00",
+            "duration_ms": 954.14,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 2801.8
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "lookup",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Ford en 2024",
+          "arguments": {
+            "metrica": "inv_neta",
+            "agregacion": "sum",
+            "fecha_inicio": "2024-01-01",
+            "fecha_fin": "2024-12-31",
+            "filtros": {
+              "marca": "Ford"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "lookup",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "filters": {
+          "marca": "Ford"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2024
+        },
+        "dimensions": [],
+        "analysis": {}
+      },
+      "analysis_questions": [],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Ford"
+        },
+        "requested_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "analysis": {},
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2024-01-01",
+          "end": "2024-12-01"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 1,
+      "total_latency_ms": 8908.07,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 10058,
+      "output_tokens": 272,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 4064.82
+        },
+        {
+          "stage": "request_review",
+          "finish_reason": "stop",
+          "latency_ms": 2006.59
+        },
+        {
+          "stage": "semantic_review",
+          "proposal": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {
+              "marca": "Ford"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [],
+            "analysis_questions": [],
+            "steps": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de Ford en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "agregacion": "sum",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "marca": "Ford"
+                  }
+                }
+              }
+            ]
+          },
+          "valid": true,
+          "reason": "La propuesta coincide con la solicitud actual: lookup de inversión total de Ford en 2024, con operación new_analysis, scope_mode replace, filtro marca=Ford, periodo año 2024 y sin desglose.",
+          "corrections": {}
+        },
+        {
+          "stage": "plan",
+          "intent": "lookup",
+          "scope": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {
+              "marca": "Ford"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [],
+            "analysis": {}
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "lookup",
+          "requested_scope": {
+            "intent": "lookup",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "filters": {
+              "marca": "Ford"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2024
+            },
+            "dimensions": [],
+            "analysis": {}
+          },
+          "inherited_scope": {},
+          "scope_mutations": {
+            "filters": {
+              "before": null,
+              "after": {
+                "marca": "Ford"
+              }
+            },
+            "requested_period": {
+              "before": null,
+              "after": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              }
+            },
+            "comparison_period": {
+              "before": null,
+              "after": {}
+            },
+            "dimensions": {
+              "before": null,
+              "after": []
+            },
+            "intent": {
+              "before": null,
+              "after": "lookup"
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Ford"
+            },
+            "requested_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "comparison_period": {},
+            "dimensions": [],
+            "intent": "lookup",
+            "analysis": {},
+            "operation": "new_analysis",
+            "observed_period": {},
+            "available_period": {}
+          },
+          "requirements": {
+            "capability": "lookup",
+            "dimension": null,
+            "analysis": {},
+            "requires_reference": false,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "lookup"
+          ],
+          "tools": [
+            "consultar_inversion_publicitaria"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión neta total de Ford en 2024",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "sufficiency",
+          "requirements": {
+            "capability": "lookup",
+            "dimension": null,
+            "analysis": {},
+            "requires_reference": false,
+            "requires_series": false
+          },
+          "sufficient": true,
+          "successful_evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {}
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2024-01-01",
+              "end": "2024-12-31"
+            },
+            "last_entities": {
+              "brands": [
+                "Ford"
+              ]
+            },
+            "last_filters": {
+              "marca": "Ford"
+            },
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Ford"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "lookup",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {}
+            },
+            "last_strategy": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de Ford en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "agregacion": "sum",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "marca": "Ford"
+                  }
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Ford"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "lookup",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {}
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Ford"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "lookup",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {
+                "marca": "Ford"
+              },
+              "requested_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-31"
+              },
+              "comparison_period": {},
+              "dimensions": [],
+              "intent": "lookup",
+              "analysis": {},
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2024-01-01",
+                "end": "2024-12-01"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "consultar_inversion_publicitaria",
+                "purpose": "Obtener la inversión neta total de Ford en 2024",
+                "arguments": {
+                  "metrica": "inv_neta",
+                  "agregacion": "sum",
+                  "fecha_inicio": "2024-01-01",
+                  "fecha_fin": "2024-12-31",
+                  "filtros": {
+                    "marca": "Ford"
+                  }
+                }
+              }
+            ],
+            "last_request": {
+              "question": "Dame el total de inversión de Ford durante 2024.",
+              "scope": {
+                "intent": "lookup",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "filters": {
+                  "marca": "Ford"
+                },
+                "period": {
+                  "kind": "year",
+                  "year": 2024
+                },
+                "dimensions": [],
+                "analysis": {}
+              },
+              "status": "planned_evidence_complete"
+            },
+            "recent_entities": [
+              {
+                "dimension": "marca",
+                "value": "FORD"
+              }
+            ]
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 10058,
+        "output_tokens": 272,
+        "cache_hits": 0,
+        "total_latency_ms": 8908.07
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  }
+}

@@ -1,0 +1,1171 @@
+{
+  "id": "independent-17",
+  "question": "¿Cómo vamos?",
+  "family": "clarification",
+  "expected_no_data": false,
+  "elapsed_s": 63.67,
+  "result": {
+    "answer": "Análisis parcial: no pude producir una interpretación que superara la validación.\n\nInversión publicitaria neta para el alcance consultado. Entre 2026-05-01 y 2026-07-31.\n\n- 2026-05-01: 20.975.342,59.\n\n- 2026-06-01: 21.744.922,66.\n\n- 2026-07-01: 21.615.891,35.\n\n- RADIO: 25.508.503,85.\n\n- DIGITAL: 16.914.445,15.\n\n- VIA PUBLICA: 14.534.660,00.\n\n- TV NAL: 1.900.345,20.\n\n- TV ABIERTA: 1.622.511,00.\n\n- 360 FITNESS: 11.171.200,00.\n\n- SMART FIT: 10.493.025,14.\n\n- TECHNOGYM: 8.100.000,00.\n\n- FUNCTIONAL ROOM: 4.431.367,00.\n\n- PILATES TOOLBOX: 4.282.740,00.\n\n{'start': '2026-05-01', 'end': '2026-07-31'}: 64.336.156,60; {'start': '2025-05-01', 'end': '2025-07-31'}: 112.346.094,30 (inv_neta).\n\nDiferencia calculada: -48.009.937,69.\n\nVariación calculada: -42,73 %.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "serie_temporal_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "granularidad": "month",
+          "filtros": {},
+          "fecha_inicio": "2026-05-01",
+          "fecha_fin": "2026-07-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "requested_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "granularity": "month",
+          "rows": [
+            {
+              "period": "2026-05-01",
+              "value": 20975342.59218101,
+              "source_rows": 9397,
+              "rank": 3,
+              "share_of_total_pct": 32.602728697290054,
+              "is_peak": false,
+              "total": 64336156.604966894
+            },
+            {
+              "period": "2026-06-01",
+              "value": 21744922.662203696,
+              "source_rows": 8840,
+              "rank": 1,
+              "share_of_total_pct": 33.79891465342047,
+              "is_peak": true,
+              "total": 64336156.604966894
+            },
+            {
+              "period": "2026-07-01",
+              "value": 21615891.350582186,
+              "source_rows": 10883,
+              "rank": 2,
+              "share_of_total_pct": 33.59835664928948,
+              "is_peak": false,
+              "total": 64336156.604966894
+            }
+          ],
+          "row_count": 3,
+          "peak": {
+            "period": "2026-06-01",
+            "value": 21744922.662203696,
+            "share_of_total_pct": 33.79891465342047,
+            "rank": 1
+          },
+          "statistics": {
+            "observations": 3,
+            "total": 64336156.604966894,
+            "mean": 21445385.534988966,
+            "median": 21615891.350582186,
+            "stddev": 336518.9899617986,
+            "coefficient_variation_pct": 1.5691906746687068,
+            "slope_per_observed_period": 320274.3792005889,
+            "peak": {
+              "period": "2026-06-01",
+              "value": 21744922.662203696,
+              "source_rows": 8840,
+              "rank": 1,
+              "share_of_total_pct": 33.79891465342047,
+              "is_peak": true,
+              "total": 64336156.604966894
+            },
+            "minimum": {
+              "period": "2026-05-01",
+              "value": 20975342.59218101,
+              "source_rows": 9397,
+              "rank": 3,
+              "share_of_total_pct": 32.602728697290054,
+              "is_peak": false,
+              "total": 64336156.604966894
+            },
+            "first_to_last": {
+              "difference": 640548.7584011778,
+              "difference_pct": 3.0538178605957813,
+              "ratio_a_over_b": 1.0305381786059578
+            },
+            "last_acceleration": -898611.3816441968,
+            "anomaly_method": "MAD robust z > 3.5; mínimo 6 observaciones",
+            "anomalies": [],
+            "limitations": [
+              "Picos descriptivos no demuestran causalidad ni estacionalidad."
+            ]
+          },
+          "query_metadata": {
+            "bytes_processed": 12424832,
+            "duration_ms": 1040.28
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 12424832,
+            "job_id": "c43622d1-c462-4ee6-a882-882d193f10b0",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:41.511932+00:00",
+            "duration_ms": 1040.28,
+            "rows": 3
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 3,
+        "step": 1,
+        "purpose": "Obtener la serie mensual de inversión neta para identificar tendencia en los últimos 3 meses",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 12424832,
+            "job_id": "c43622d1-c462-4ee6-a882-882d193f10b0",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:41.511932+00:00",
+            "duration_ms": 1040.28,
+            "rows": 3
+          }
+        ],
+        "latency_ms": 1350.1
+      },
+      {
+        "id": "e2",
+        "tool": "analizar_medios",
+        "arguments": {
+          "metrica": "inv_neta",
+          "limite": 10,
+          "filtros": {},
+          "fecha_inicio": "2026-05-01",
+          "fecha_fin": "2026-07-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "requested_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "medio",
+          "composition": {
+            "denominator_known": true,
+            "total": 64336156.604966894,
+            "shown_share_pct": 99.78225253513328,
+            "top3_share_pct": 88.53125833222315
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0
+          },
+          "rows": [
+            {
+              "dimension": "RADIO",
+              "value": 25508503.85,
+              "source_rows": 6053,
+              "rank": 1,
+              "share_pct": 39.648784130245495,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "DIGITAL",
+              "value": 16914445.154966887,
+              "source_rows": 21007,
+              "rank": 2,
+              "share_pct": 26.29072989054036,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "VIA PUBLICA",
+              "value": 14534660.0,
+              "source_rows": 24,
+              "rank": 3,
+              "share_pct": 22.5917443114373,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV NAL",
+              "value": 1900345.2000000014,
+              "source_rows": 377,
+              "rank": 4,
+              "share_pct": 2.953774829398638,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV ABIERTA",
+              "value": 1622511.0,
+              "source_rows": 61,
+              "rank": 5,
+              "share_pct": 2.521927148931894,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "OOH",
+              "value": 1487223.7499999998,
+              "source_rows": 662,
+              "rank": 6,
+              "share_pct": 2.311645314984798,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PUBLICIDAD EXTERIOR",
+              "value": 945423.5499999999,
+              "source_rows": 109,
+              "rank": 7,
+              "share_pct": 1.4695057956368676,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV PAGA",
+              "value": 644525.350000002,
+              "source_rows": 756,
+              "rank": 8,
+              "share_pct": 1.0018089112122113,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PRENSA",
+              "value": 454148.79999999993,
+              "source_rows": 29,
+              "rank": 9,
+              "share_pct": 0.7058997987531923,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "REVISTA",
+              "value": 184279.6,
+              "source_rows": 13,
+              "rank": 10,
+              "share_pct": 0.2864324039925214,
+              "total": 64336156.604966894,
+              "concentration_hhi": 2797.8041779208256,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 10,
+          "query_metadata": {
+            "bytes_processed": 21107338,
+            "duration_ms": 1852.02
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31",
+              "limit": "10"
+            },
+            "bytes_processed": 21107338,
+            "job_id": "0608b592-b5f8-4b9b-830a-1e0c8cca866f",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:43.730397+00:00",
+            "duration_ms": 1852.02,
+            "rows": 10
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 10,
+        "step": 2,
+        "purpose": "Distribuir la inversión neta por medio en el último mes disponible",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31",
+              "limit": "10"
+            },
+            "bytes_processed": 21107338,
+            "job_id": "0608b592-b5f8-4b9b-830a-1e0c8cca866f",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:43.730397+00:00",
+            "duration_ms": 1852.02,
+            "rows": 10
+          }
+        ],
+        "latency_ms": 2218.02
+      },
+      {
+        "id": "e3",
+        "tool": "ranking_marcas",
+        "arguments": {
+          "metrica": "inv_neta",
+          "limite": 10,
+          "filtros": {},
+          "fecha_inicio": "2026-05-01",
+          "fecha_fin": "2026-07-31"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "requested_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "marca",
+          "composition": {
+            "denominator_known": true,
+            "total": 64336156.6049669,
+            "shown_share_pct": 80.37033072352489,
+            "top3_share_pct": 46.263604646680015
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0
+          },
+          "rows": [
+            {
+              "dimension": "360 FITNESS",
+              "value": 11171200.0,
+              "source_rows": 370,
+              "rank": 1,
+              "share_pct": 17.363797574344932,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "SMART FIT",
+              "value": 10493025.1365908,
+              "source_rows": 2195,
+              "rank": 2,
+              "share_pct": 16.309686015314,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TECHNOGYM",
+              "value": 8100000.0,
+              "source_rows": 3,
+              "rank": 3,
+              "share_pct": 12.590121057021086,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "FUNCTIONAL ROOM",
+              "value": 4431367.0,
+              "source_rows": 280,
+              "rank": 4,
+              "share_pct": 6.887832960257823,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PILATES TOOLBOX",
+              "value": 4282740.0,
+              "source_rows": 270,
+              "rank": 5,
+              "share_pct": 6.656816673548949,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "GLADIATOR MUAY THAI",
+              "value": 3744068.0,
+              "source_rows": 243,
+              "rank": 6,
+              "share_pct": 5.819539427866522,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "9ROUND",
+              "value": 2932613.0,
+              "source_rows": 15,
+              "rank": 7,
+              "share_pct": 4.558265763381948,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "WORLD GYM",
+              "value": 2374821.0,
+              "source_rows": 37,
+              "rank": 8,
+              "share_pct": 3.691269614661219,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "RICH FIT TIPS",
+              "value": 2204026.0,
+              "source_rows": 25,
+              "rank": 9,
+              "share_pct": 3.4257968089903645,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "FITNESS 24 SEVEN",
+              "value": 1973321.7016259995,
+              "source_rows": 306,
+              "rank": 10,
+              "share_pct": 3.0672048281380464,
+              "total": 64336156.6049669,
+              "concentration_hhi": 928.4982900840231,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 10,
+          "query_metadata": {
+            "bytes_processed": 19951115,
+            "duration_ms": 1439.25
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31",
+              "limit": "10"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "05bb9c0f-3134-4878-b822-c3575c70f38e",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:45.592626+00:00",
+            "duration_ms": 1439.25,
+            "rows": 10
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 10,
+        "step": 3,
+        "purpose": "Obtener el ranking de marcas por inversión neta en el último mes disponible",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31",
+              "limit": "10"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "05bb9c0f-3134-4878-b822-c3575c70f38e",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:45.592626+00:00",
+            "duration_ms": 1439.25,
+            "rows": 10
+          }
+        ],
+        "latency_ms": 1862.48
+      },
+      {
+        "id": "e4",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "periodo_a": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "periodo_b": {
+            "start": "2025-05-01",
+            "end": "2025-07-31"
+          },
+          "filtros": {}
+        },
+        "result": {
+          "success": true,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "period_a": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "period_b": {
+            "start": "2025-05-01",
+            "end": "2025-07-31"
+          },
+          "requested_period_a": {
+            "start": "2026-05-01",
+            "end": "2026-07-31"
+          },
+          "requested_period_b": {
+            "start": "2025-05-01",
+            "end": "2025-07-31"
+          },
+          "comparison_equivalent": true,
+          "periods_adjusted": false,
+          "warnings": [],
+          "value_a": 64336156.60496694,
+          "value_b": 112346094.29679011,
+          "difference": -48009937.69182317,
+          "difference_pct": -42.73396239747596,
+          "ratio_a_over_b": 0.5726603760252404,
+          "filters": {},
+          "row_count": 60772,
+          "evidence": [
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "start_date": "2026-05-01",
+                "end_date": "2026-07-31"
+              },
+              "bytes_processed": 12424832,
+              "job_id": "baeab8bf-30b0-4323-8ecd-5609f93e89aa",
+              "cache_hit": false,
+              "executed_at": "2026-09-10T18:53:59.935709+00:00",
+              "duration_ms": 911.6,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "start_date": "2025-05-01",
+                "end_date": "2025-07-31"
+              },
+              "bytes_processed": 12424832,
+              "job_id": "194c22d7-36cf-4db3-9ad1-8c3fbe311d33",
+              "cache_hit": false,
+              "executed_at": "2026-09-10T18:54:01.320608+00:00",
+              "duration_ms": 859.66,
+              "rows": 1
+            }
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 60772,
+        "step": 4,
+        "purpose": "Evaluar el desempeño interanual comparando mayo-julio 2026 vs mayo-julio 2025 para determinar si la inversión neta está creciendo o decreciendo.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "start_date": "2026-05-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 12424832,
+            "job_id": "baeab8bf-30b0-4323-8ecd-5609f93e89aa",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:53:59.935709+00:00",
+            "duration_ms": 911.6,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "start_date": "2025-05-01",
+              "end_date": "2025-07-31"
+            },
+            "bytes_processed": 12424832,
+            "job_id": "194c22d7-36cf-4db3-9ad1-8c3fbe311d33",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T18:54:01.320608+00:00",
+            "duration_ms": 859.66,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 2664.93
+      }
+    ],
+    "steps": 4,
+    "plan": {
+      "intent": "open_analysis",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Obtener la serie mensual de inversión neta para identificar tendencia en los últimos 3 meses",
+          "arguments": {
+            "metrica": "inv_neta",
+            "granularidad": "month"
+          }
+        },
+        {
+          "tool": "analizar_medios",
+          "purpose": "Distribuir la inversión neta por medio en el último mes disponible",
+          "arguments": {
+            "metrica": "inv_neta",
+            "limite": 10
+          }
+        },
+        {
+          "tool": "ranking_marcas",
+          "purpose": "Obtener el ranking de marcas por inversión neta en el último mes disponible",
+          "arguments": {
+            "metrica": "inv_neta",
+            "limite": 10
+          }
+        }
+      ],
+      "scope": {
+        "intent": "open_analysis",
+        "scope_mode": "inherit",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "recent_months",
+          "count": 3
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la tendencia de la inversión neta en los últimos 3 meses?",
+        "¿Cómo se distribuye la inversión neta por medio en el último mes disponible?",
+        "¿Cuál es el ranking de marcas por inversión neta en el último mes disponible?"
+      ],
+      "answer": "",
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-05-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "observed_period": {
+          "start": "2026-05-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "line",
+        "title": "Evolución de Inversión publicitaria neta · 2026-05-01 a 2026-07-31",
+        "data": [
+          {
+            "period": "2026-05-01",
+            "value": 20975342.59218101,
+            "source_rows": 9397,
+            "rank": 3,
+            "share_of_total_pct": 32.602728697290054,
+            "is_peak": false,
+            "total": 64336156.604966894
+          },
+          {
+            "period": "2026-06-01",
+            "value": 21744922.662203696,
+            "source_rows": 8840,
+            "rank": 1,
+            "share_of_total_pct": 33.79891465342047,
+            "is_peak": true,
+            "total": 64336156.604966894
+          },
+          {
+            "period": "2026-07-01",
+            "value": 21615891.350582186,
+            "source_rows": 10883,
+            "rank": 2,
+            "share_of_total_pct": 33.59835664928948,
+            "is_peak": false,
+            "total": 64336156.604966894
+          }
+        ],
+        "x": "period",
+        "y": "value"
+      },
+      {
+        "type": "ranking",
+        "title": "Ranking por medio — Inversión publicitaria neta · 2026-05-01 a 2026-07-31",
+        "data": [
+          {
+            "dimension": "RADIO",
+            "value": 25508503.85,
+            "source_rows": 6053,
+            "rank": 1,
+            "share_pct": 39.648784130245495,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "DIGITAL",
+            "value": 16914445.154966887,
+            "source_rows": 21007,
+            "rank": 2,
+            "share_pct": 26.29072989054036,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "VIA PUBLICA",
+            "value": 14534660.0,
+            "source_rows": 24,
+            "rank": 3,
+            "share_pct": 22.5917443114373,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV NAL",
+            "value": 1900345.2000000014,
+            "source_rows": 377,
+            "rank": 4,
+            "share_pct": 2.953774829398638,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV ABIERTA",
+            "value": 1622511.0,
+            "source_rows": 61,
+            "rank": 5,
+            "share_pct": 2.521927148931894,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "OOH",
+            "value": 1487223.7499999998,
+            "source_rows": 662,
+            "rank": 6,
+            "share_pct": 2.311645314984798,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PUBLICIDAD EXTERIOR",
+            "value": 945423.5499999999,
+            "source_rows": 109,
+            "rank": 7,
+            "share_pct": 1.4695057956368676,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV PAGA",
+            "value": 644525.350000002,
+            "source_rows": 756,
+            "rank": 8,
+            "share_pct": 1.0018089112122113,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PRENSA",
+            "value": 454148.79999999993,
+            "source_rows": 29,
+            "rank": 9,
+            "share_pct": 0.7058997987531923,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "REVISTA",
+            "value": 184279.6,
+            "source_rows": 13,
+            "rank": 10,
+            "share_pct": 0.2864324039925214,
+            "total": 64336156.604966894,
+            "concentration_hhi": 2797.8041779208256,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      },
+      {
+        "type": "ranking",
+        "title": "Ranking por marca — Inversión publicitaria neta · 2026-05-01 a 2026-07-31",
+        "data": [
+          {
+            "dimension": "360 FITNESS",
+            "value": 11171200.0,
+            "source_rows": 370,
+            "rank": 1,
+            "share_pct": 17.363797574344932,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "SMART FIT",
+            "value": 10493025.1365908,
+            "source_rows": 2195,
+            "rank": 2,
+            "share_pct": 16.309686015314,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TECHNOGYM",
+            "value": 8100000.0,
+            "source_rows": 3,
+            "rank": 3,
+            "share_pct": 12.590121057021086,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "FUNCTIONAL ROOM",
+            "value": 4431367.0,
+            "source_rows": 280,
+            "rank": 4,
+            "share_pct": 6.887832960257823,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PILATES TOOLBOX",
+            "value": 4282740.0,
+            "source_rows": 270,
+            "rank": 5,
+            "share_pct": 6.656816673548949,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "GLADIATOR MUAY THAI",
+            "value": 3744068.0,
+            "source_rows": 243,
+            "rank": 6,
+            "share_pct": 5.819539427866522,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "9ROUND",
+            "value": 2932613.0,
+            "source_rows": 15,
+            "rank": 7,
+            "share_pct": 4.558265763381948,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "WORLD GYM",
+            "value": 2374821.0,
+            "source_rows": 37,
+            "rank": 8,
+            "share_pct": 3.691269614661219,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "RICH FIT TIPS",
+            "value": 2204026.0,
+            "source_rows": 25,
+            "rank": 9,
+            "share_pct": 3.4257968089903645,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "FITNESS 24 SEVEN",
+            "value": 1973321.7016259995,
+            "source_rows": 306,
+            "rank": 10,
+            "share_pct": 3.0672048281380464,
+            "total": 64336156.6049669,
+            "concentration_hhi": 928.4982900840231,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      },
+      {
+        "type": "comparison",
+        "title": "Periodos equivalentes — inv_neta",
+        "data": [
+          {
+            "label": "2026-05-01 a 2026-07-31",
+            "value": 64336156.60496694
+          },
+          {
+            "label": "2025-05-01 a 2025-07-31",
+            "value": 112346094.29679011
+          }
+        ],
+        "x": "label",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 5,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 78332949,
+      "bigquery_queries": 5,
+      "total_latency_ms": 63669.31,
+      "errors": [
+        "response_validation:porcentaje_no_respaldado:42.73%",
+        "response_validation:porcentaje_no_respaldado:0.22%",
+        "response_validation:porcentaje_no_respaldado:19.63%",
+        "response_validation:cifra_no_respaldada:360",
+        "response_validation:direccion_contradice_comparacion"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 32204,
+      "output_tokens": 2648,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3019.09
+        },
+        {
+          "stage": "plan",
+          "intent": "open_analysis",
+          "scope": {
+            "intent": "open_analysis",
+            "scope_mode": "inherit",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "recent_months",
+              "count": 3
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Obtener la serie mensual de inversión neta para identificar tendencia en los últimos 3 meses",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "analizar_medios",
+          "purpose": "Distribuir la inversión neta por medio en el último mes disponible",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_marcas",
+          "purpose": "Obtener el ranking de marcas por inversión neta en el último mes disponible",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "deepening",
+          "finish_reason": "stop",
+          "latency_ms": 13061.11
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "La evidencia muestra que la inversión neta en el periodo mayo-julio 2026 totaliza 64,336,156.60, con un pico en junio (21,744,922.66) y una tendencia ligeramente creciente (+3.05% de mayo a julio). Por medio, RADIO lidera con 39.65%, seguido de DIGITAL (26.29%) y VIA PUBLICA (22.59%). Por marca, 360 FITNESS es la primera con 17.36%, SMART FIT segunda con 16.31% y TECHNOGYM tercera con 12.59%. La concentración es alta en medios (HHI 2,798) y moderada en marcas (HHI 928.5). No se detectan anomalías. Para profundizar en el 'cómo vamos', se sugiere comparar este trimestre con el mismo periodo de 2025 para evaluar crecimiento o declive interanual."
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Evaluar el desempeño interanual comparando mayo-julio 2026 vs mayo-julio 2025 para determinar si la inversión neta está creciendo o decreciendo.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "deepening",
+          "finish_reason": "stop",
+          "latency_ms": 10157.2
+        },
+        {
+          "stage": "research_decision",
+          "stop": true,
+          "reason": "La evidencia disponible (e1, e2, e3, e4) responde completamente a la pregunta abierta '¿Cómo vamos?' para el periodo solicitado (2026-05-01 a 2026-07-31). Se observan: inversión total de 64.3M, crecimiento mensual del 3.05% (de mayo a julio), pico en junio (21.7M), concentración alta en RADIO (39.6%), DIGITAL (26.3%) y VIA PUBLICA (22.6%), y las marcas líderes son 360 FITNESS (17.4%), SMART FIT (16.3%) y TECHNOGYM (12.6%). Además, hay una caída interanual del -42.7% respecto al mismo periodo de 2025. No se requiere análisis adicional para responder a la intención de open_analysis."
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 12682.15
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [
+            "porcentaje_no_respaldado:42.73%",
+            "cifra_no_respaldada:360"
+          ]
+        },
+        {
+          "stage": "repair",
+          "finish_reason": "stop",
+          "latency_ms": 16634.96
+        },
+        {
+          "stage": "validation",
+          "attempt": 1,
+          "issues": [
+            "porcentaje_no_respaldado:42.73%",
+            "porcentaje_no_respaldado:0.22%",
+            "porcentaje_no_respaldado:19.63%",
+            "cifra_no_respaldada:360",
+            "direccion_contradice_comparacion"
+          ]
+        },
+        {
+          "stage": "stop",
+          "reason": "La evidencia disponible (e1, e2, e3, e4) responde completamente a la pregunta abierta '¿Cómo vamos?' para el periodo solicitado (2026-05-01 a 2026-07-31). Se observan: inversión total de 64.3M, crecimiento mensual del 3.05% (de mayo a julio), pico en junio (21.7M), concentración alta en RADIO (39.6%), DIGITAL (26.3%) y VIA PUBLICA (22.6%), y las marcas líderes son 360 FITNESS (17.4%), SMART FIT (16.3%) y TECHNOGYM (12.6%). Además, hay una caída interanual del -42.7% respecto al mismo periodo de 2025. No se requiere análisis adicional para responder a la intención de open_analysis.",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 5,
+        "total_tool_calls": 4,
+        "bigquery_queries": 5,
+        "bigquery_bytes_processed": 78332949,
+        "input_tokens": 32204,
+        "output_tokens": 2648,
+        "cache_hits": 0,
+        "total_latency_ms": 63669.31
+      },
+      "stop_reason": "La evidencia disponible (e1, e2, e3, e4) responde completamente a la pregunta abierta '¿Cómo vamos?' para el periodo solicitado (2026-05-01 a 2026-07-31). Se observan: inversión total de 64.3M, crecimiento mensual del 3.05% (de mayo a julio), pico en junio (21.7M), concentración alta en RADIO (39.6%), DIGITAL (26.3%) y VIA PUBLICA (22.6%), y las marcas líderes son 360 FITNESS (17.4%), SMART FIT (16.3%) y TECHNOGYM (12.6%). Además, hay una caída interanual del -42.7% respecto al mismo periodo de 2025. No se requiere análisis adicional para responder a la intención de open_analysis."
+    },
+    "is_partial": true
+  },
+  "status": "FAIL",
+  "issues": [
+    "unnecessary_query",
+    "cifra_no_respaldada:360",
+    "partial_or_fallback"
+  ],
+  "expected_family": "clarification",
+  "actual_intent": "open_analysis"
+}

@@ -28,8 +28,8 @@ def build_agent_service(client: Any | None = None, **service_kwargs: Any) -> Age
     if client is None:
         if not _settings.openrouter_api_key:
             raise ValueError("No se encontró NVIDIA_API_KEY.")
-        client = OpenAI(base_url=_settings.llm_base_url, api_key=_settings.openrouter_api_key)
-    return AgentService(client=client, settings=_settings, registry=_registry, **service_kwargs)
+        client = OpenAI(base_url=_settings.llm_base_url, api_key=_settings.openrouter_api_key, timeout=_settings.llm_timeout_seconds, max_retries=0)
+    return AgentService(client=client, settings=_settings, registry=ToolRegistry(create_repository(_settings)), **service_kwargs)
 
 
 def preguntar(pregunta: str) -> str:

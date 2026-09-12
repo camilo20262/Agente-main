@@ -1,0 +1,248 @@
+{
+  "id": "holdout-04",
+  "family": "composition",
+  "question": "¿Qué porcentaje conjunto de la inversión neta corresponde a RADIO y PRENSA en 2025?",
+  "expected_metric": "inv_neta",
+  "elapsed_s": 10.07,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31): 154.376.204,27.\n\n**Medios disponibles en la muestra**\n\nValores disponibles (muestra): RADIO, PRENSA.\n\nLa consulta muestra que RADIO y PRENSA están presentes entre los valores disponibles para el análisis de composición.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_participacion_bicomp",
+        "arguments": {
+          "dimension": "medio_agrupado",
+          "valores": [
+            "RADIO",
+            "PRENSA"
+          ],
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum",
+          "filtros": {}
+        },
+        "result": {
+          "success": true,
+          "source": "bigquery",
+          "row_count": 7,
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 19253525,
+            "job_id": "68121e67-552c-4cd7-bdf8-27e2fc8190af",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:39:52.673778+00:00",
+            "duration_ms": 1206.65,
+            "rows": 7
+          },
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "dimension": "medio_agrupado",
+          "values": [
+            "RADIO",
+            "PRENSA"
+          ],
+          "value": 154376204.27457726,
+          "total": 463938228.0684297,
+          "share_pct": 33.275163574536734,
+          "denominator_scope": {}
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": 7,
+        "step": 1,
+        "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT UPPER(TRIM(CAST(`medio_agrupado` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 19253525,
+            "job_id": "68121e67-552c-4cd7-bdf8-27e2fc8190af",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:39:52.673778+00:00",
+            "duration_ms": 1206.65,
+            "rows": 7
+          }
+        ],
+        "latency_ms": 2997.43
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "composition",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+          "arguments": {
+            "dimension": "medio_agrupado",
+            "valores": [
+              "RADIO",
+              "PRENSA"
+            ],
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "composition",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "medio_agrupado"
+        ]
+      },
+      "analysis_questions": [
+        "¿Qué porcentaje conjunto de la inversión neta corresponde a RADIO y PRENSA en 2025?"
+      ],
+      "answer": null,
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "medio_agrupado"
+        ],
+        "intent": "composition",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 19253525,
+      "bigquery_queries": 1,
+      "total_latency_ms": 10073.54,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7400,
+      "output_tokens": 429,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 5646.04
+        },
+        {
+          "stage": "plan",
+          "intent": "composition",
+          "scope": {
+            "intent": "composition",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "medio_agrupado"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_participacion_bicomp",
+          "purpose": "Calcular la participación conjunta de RADIO y PRENSA sobre la inversión neta total en 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 1412.62
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Hallazgo**\n\nInversión publicitaria neta, alcance consultado (2025-01-01 a 2025-12-31): 154.376.204,27.\n\n**Medios disponibles en la muestra**\n\nValores disponibles (muestra): RADIO, PRENSA.\n\nLa consulta muestra que RADIO y PRENSA están presentes entre los valores disponibles para el análisis de composición."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 19253525,
+        "input_tokens": 7400,
+        "output_tokens": 429,
+        "cache_hits": 0,
+        "total_latency_ms": 10073.54
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "composition",
+  "actual_intent": "composition"
+}

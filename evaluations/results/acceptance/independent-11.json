@@ -1,0 +1,326 @@
+{
+  "id": "independent-11",
+  "question": "¿Subió la inversión de Volvo en 2026 frente a 2025? Usa ventanas equivalentes.",
+  "family": "period_comparison",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 11.97,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Incremento en inversión neta Volvo enero-julio**\n\ninv_neta, marca: VOLVO: 2026-01-01 a 2026-07-31 registra 1.490.266,32; 2025-01-01 a 2025-07-31, 1.426.721,81. Diferencia de 63.544,51; variación de 4,45 % sobre 2025-01-01 a 2025-07-31.\n\n### Advertencias\n\nComparación ajustada a ventanas equivalentes con cobertura disponible.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "comparar_periodos_bicomp",
+        "arguments": {
+          "filtros": {
+            "marca": "VOLVO"
+          },
+          "metrica": "inv_neta",
+          "periodo_a": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "periodo_b": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          }
+        },
+        "result": {
+          "success": true,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "period_a": {
+            "start": "2026-01-01",
+            "end": "2026-07-31"
+          },
+          "period_b": {
+            "start": "2025-01-01",
+            "end": "2025-07-31"
+          },
+          "requested_period_a": {
+            "start": "2026-01-01",
+            "end": "2026-12-31"
+          },
+          "requested_period_b": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "comparison_equivalent": true,
+          "periods_adjusted": true,
+          "warnings": [
+            "Comparación ajustada a ventanas equivalentes con cobertura disponible."
+          ],
+          "value_a": 1490266.315567202,
+          "value_b": 1426721.8082343028,
+          "difference": 63544.50733289914,
+          "difference_pct": 4.453882106949862,
+          "ratio_a_over_b": 1.0445388210694986,
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "row_count": 6746,
+          "evidence": [
+            {
+              "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+              "query_parameters": {},
+              "bytes_processed": 0,
+              "job_id": "954bcc37-8cf3-4033-ade1-ad275846d7a8",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:46:38.390598+00:00",
+              "duration_ms": 908.45,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "filter_0": "VOLVO",
+                "start_date": "2026-01-01",
+                "end_date": "2026-07-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "d3f6ae61-4f77-424c-b4e2-1ded409cab52",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:46:40.297177+00:00",
+              "duration_ms": 1293.82,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "filter_0": "VOLVO",
+                "start_date": "2025-01-01",
+                "end_date": "2025-07-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "f353ec32-c5c4-4c75-b2ba-ca09a206b535",
+              "cache_hit": true,
+              "executed_at": "2026-09-11T12:46:41.829984+00:00",
+              "duration_ms": 1108.12,
+              "rows": 1
+            }
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 6746,
+        "step": 1,
+        "purpose": "Comparar la inversión neta de Volvo entre 2026 y 2025 usando ventanas equivalentes, calculando diferencia absoluta y porcentual de forma determinista.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT MIN(DATE(`fecha`)) AS `start`, MAX(DATE(`fecha`)) AS `end`, COUNT(*) AS source_rows FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`",
+            "query_parameters": {},
+            "bytes_processed": 0,
+            "job_id": "954bcc37-8cf3-4033-ade1-ad275846d7a8",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:46:38.390598+00:00",
+            "duration_ms": 908.45,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2026-01-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d3f6ae61-4f77-424c-b4e2-1ded409cab52",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:46:40.297177+00:00",
+            "duration_ms": 1293.82,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-07-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "f353ec32-c5c4-4c75-b2ba-ca09a206b535",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:46:41.829984+00:00",
+            "duration_ms": 1108.12,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 5917.12
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "period_comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta de Volvo entre 2026 y 2025 usando ventanas equivalentes, calculando diferencia absoluta y porcentual de forma determinista.",
+          "arguments": {
+            "filtros": {
+              "marca": "Volvo"
+            },
+            "metrica": "inv_neta",
+            "periodo_a": {
+              "kind": "year",
+              "year": 2026
+            },
+            "periodo_b": {
+              "kind": "year",
+              "year": 2025
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "period_comparison",
+        "operation": "compare_periods",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2026
+        },
+        "comparison_period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál fue la inversión neta de Volvo en 2026?",
+        "¿Cuál fue la inversión neta de Volvo en 2025?",
+        "¿Cuál es la diferencia absoluta y porcentual entre ambos periodos?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2026-01-01",
+          "end": "2026-12-31"
+        },
+        "comparison_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "dimensions": [],
+        "intent": "period_comparison",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "comparison",
+        "title": "Periodos equivalentes — inv_neta · marca: VOLVO",
+        "data": [
+          {
+            "label": "2026-01-01 a 2026-07-31",
+            "value": 1490266.315567202
+          },
+          {
+            "label": "2025-01-01 a 2025-07-31",
+            "value": 1426721.8082343028
+          }
+        ],
+        "x": "label",
+        "y": "value"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 3,
+      "total_latency_ms": 11974.36,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 7418,
+      "output_tokens": 432,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2752.57
+        },
+        {
+          "stage": "plan",
+          "intent": "period_comparison",
+          "scope": {
+            "intent": "period_comparison",
+            "operation": "compare_periods",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2026
+            },
+            "comparison_period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_periodos_bicomp",
+          "purpose": "Comparar la inversión neta de Volvo entre 2026 y 2025 usando ventanas equivalentes, calculando diferencia absoluta y porcentual de forma determinista.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 3284.63
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Incremento en inversión neta Volvo enero-julio**\n\ninv_neta, marca: VOLVO: 2026-01-01 a 2026-07-31 registra 1.490.266,32; 2025-01-01 a 2025-07-31, 1.426.721,81. Diferencia de 63.544,51; variación de 4,45 % sobre 2025-01-01 a 2025-07-31.\n\n### Advertencias\n\nComparación ajustada a ventanas equivalentes con cobertura disponible."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 3,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 7418,
+        "output_tokens": 432,
+        "cache_hits": 0,
+        "total_latency_ms": 11974.36
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "period_comparison",
+  "actual_intent": "period_comparison"
+}

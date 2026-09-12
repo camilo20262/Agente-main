@@ -1,0 +1,317 @@
+{
+  "id": "independent-10",
+  "question": "Compara Digital vs TV para Volvo en 2025.",
+  "family": "comparison",
+  "allow_dimension_clarification": true,
+  "expected_no_data": false,
+  "elapsed_s": 17.61,
+  "result": {
+    "answer": "No encontré TV como valor exacto de medio en el alcance solicitado. Los valores disponibles son: DIGITAL, OOH, PRENSA, PUBLICIDAD EXTERIOR, RADIO, REVISTA, TELEVISION NACIONAL, TV NAL, TV PAGA, TV SUSCRIPCION. ¿Cuál quieres comparar?",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "comparar_entidades_bicomp",
+        "arguments": {
+          "dimension": "medio",
+          "valor_a": "Digital",
+          "valor_b": "TV",
+          "metrica": "inv_neta",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "marca": "VOLVO"
+          }
+        },
+        "result": {
+          "success": false,
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "clarification_options": {
+            "dimension": "medio",
+            "missing_values": [
+              "TV"
+            ],
+            "available_values": [
+              "DIGITAL",
+              "OOH",
+              "PRENSA",
+              "PUBLICIDAD EXTERIOR",
+              "RADIO",
+              "REVISTA",
+              "TELEVISION NACIONAL",
+              "TV NAL",
+              "TV PAGA",
+              "TV SUSCRIPCION"
+            ]
+          },
+          "error": "La consulta BICOMP no produjo resultados para medio: TV.",
+          "dimension": "medio",
+          "value_a_label": "Digital",
+          "value_b_label": "TV",
+          "filters": {
+            "marca": "VOLVO"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "coverage_a": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "coverage_b": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "warnings": [],
+          "value_a": 1815611.9267819005,
+          "value_b": null,
+          "difference": null,
+          "difference_pct": null,
+          "ratio_a_over_b": null,
+          "row_count": 1297,
+          "evidence": [
+            {
+              "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND UPPER(TRIM(CAST(`medio` AS STRING))) = @filter_1 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+              "query_parameters": {
+                "filter_0": "VOLVO",
+                "filter_1": "DIGITAL",
+                "start_date": "2025-01-01",
+                "end_date": "2025-12-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "7e4fd2df-2c80-4bce-b259-1ed68edea0bd",
+              "cache_hit": true,
+              "executed_at": "2026-09-10T23:33:13.783459+00:00",
+              "duration_ms": 985.66,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND UPPER(TRIM(CAST(`medio` AS STRING))) = @filter_1 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+              "query_parameters": {
+                "filter_0": "VOLVO",
+                "filter_1": "TV",
+                "start_date": "2025-01-01",
+                "end_date": "2025-12-31"
+              },
+              "bytes_processed": 0,
+              "job_id": "811a7a70-4e6e-406d-8930-68c3008c3c9a",
+              "cache_hit": true,
+              "executed_at": "2026-09-10T23:33:15.372154+00:00",
+              "duration_ms": 924.98,
+              "rows": 1
+            },
+            {
+              "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`medio` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date ORDER BY value LIMIT @limit",
+              "query_parameters": {
+                "filter_0": "VOLVO",
+                "start_date": "2025-01-01",
+                "end_date": "2025-12-31",
+                "limit": "21"
+              },
+              "bytes_processed": 22421205,
+              "job_id": "7b01ba1e-7633-4c83-9d13-bdbff67e6263",
+              "cache_hit": false,
+              "executed_at": "2026-09-10T23:33:16.944537+00:00",
+              "duration_ms": 1164.61,
+              "rows": 10
+            }
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "VOLVO"
+        },
+        "row_count": 1297,
+        "step": 1,
+        "purpose": "Comparar la inversión neta de Volvo entre los medios Digital y TV en 2025, obteniendo valores absolutos, diferencia y ratio.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND UPPER(TRIM(CAST(`medio` AS STRING))) = @filter_1 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "filter_1": "DIGITAL",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "7e4fd2df-2c80-4bce-b259-1ed68edea0bd",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T23:33:13.783459+00:00",
+            "duration_ms": 985.66,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND UPPER(TRIM(CAST(`medio` AS STRING))) = @filter_1 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "filter_1": "TV",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "811a7a70-4e6e-406d-8930-68c3008c3c9a",
+            "cache_hit": true,
+            "executed_at": "2026-09-10T23:33:15.372154+00:00",
+            "duration_ms": 924.98,
+            "rows": 1
+          },
+          {
+            "sql": "SELECT DISTINCT UPPER(TRIM(CAST(`medio` AS STRING))) AS value FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`marca` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date ORDER BY value LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "VOLVO",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "21"
+            },
+            "bytes_processed": 22421205,
+            "job_id": "7b01ba1e-7633-4c83-9d13-bdbff67e6263",
+            "cache_hit": false,
+            "executed_at": "2026-09-10T23:33:16.944537+00:00",
+            "duration_ms": 1164.61,
+            "rows": 10
+          }
+        ],
+        "latency_ms": 5585.96
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "comparison",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "comparar_entidades_bicomp",
+          "purpose": "Comparar la inversión neta de Volvo entre los medios Digital y TV en 2025, obteniendo valores absolutos, diferencia y ratio.",
+          "arguments": {
+            "dimension": "medio",
+            "valor_a": "Digital",
+            "valor_b": "TV",
+            "metrica": "inv_neta",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "filtros": {
+              "marca": "Volvo"
+            }
+          }
+        }
+      ],
+      "scope": {
+        "intent": "comparison",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión neta de Volvo en Digital en 2025?",
+        "¿Cuál es la inversión neta de Volvo en TV en 2025?",
+        "¿Cuál es la diferencia y el ratio entre ambas inversiones?"
+      ],
+      "answer": "",
+      "budget": 3,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "marca": "Volvo"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "comparison",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 22421205,
+      "bigquery_queries": 3,
+      "total_latency_ms": 17605.8,
+      "errors": [
+        "tool_error"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 6512,
+      "output_tokens": 298,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 12005.39
+        },
+        {
+          "stage": "plan",
+          "intent": "comparison",
+          "scope": {
+            "intent": "comparison",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "marca": "Volvo"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "comparar_entidades_bicomp",
+          "purpose": "Comparar la inversión neta de Volvo entre los medios Digital y TV en 2025, obteniendo valores absolutos, diferencia y ratio.",
+          "success": false,
+          "cache_hit": false
+        },
+        {
+          "stage": "stop",
+          "reason": "no_data",
+          "partial": true
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 3,
+        "bigquery_bytes_processed": 22421205,
+        "input_tokens": 6512,
+        "output_tokens": 298,
+        "cache_hits": 0,
+        "total_latency_ms": 17605.8
+      },
+      "stop_reason": "no_data"
+    },
+    "is_partial": true
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "comparison",
+  "actual_intent": "comparison"
+}

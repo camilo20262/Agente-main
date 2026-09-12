@@ -1,6 +1,6 @@
 # WPP Media Intelligence Agent
 
-Agente analítico BICOMP que interpreta preguntas con un LLM y delega todos los cálculos cuantitativos a BigQuery. La única fuente de datos es la tabla física `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`.
+Agente analítico BICOMP que interpreta preguntas con un LLM y delega los cálculos cuantitativos a BigQuery y Python. La única fuente de datos es la tabla física `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`.
 
 ## Arquitectura
 
@@ -13,8 +13,8 @@ El agente incluye memoria analítica compacta por sesión, caché TTL, métricas
 **Robustez del agente:**
 - Los argumentos de cada herramienta se validan contra su JSON Schema antes de ejecutar (tipos, campos requeridos, enums, formatos de fecha, y rechazo de propiedades no declaradas). Un argumento mal formado nunca ejecuta una consulta real.
 - El planner reconoce preguntas de seguimiento que cambian solo el periodo o la dimensión (por ejemplo "¿y en marzo?" o "y para 2026" después de una consulta previa) sin perder el contexto de marca/métrica ya establecido.
-- Si el agente agota los pasos permitidos o el modelo repite/inventa una herramienta, el sistema no falla con un error crudo: devuelve una respuesta parcial con la evidencia real obtenida hasta ese punto (marcada explícitamente como incompleta), recuperando incluso evidencia de una pregunta anterior en la misma sesión cuando aplica, siempre identificada como histórica.
-- La memoria de la conversación solo se actualiza con resultados confirmados como exitosos, nunca con intentos fallidos.
+- Si el agente agota los pasos permitidos o el modelo repite/inventa una herramienta, el sistema no falla con un error crudo: devuelve una respuesta parcial con la evidencia real obtenida hasta ese punto (marcada explícitamente como incompleta), sin presentar evidencia histórica como si respondiera una consulta nueva.
+- La memoria separa el último alcance solicitado del último análisis exitoso y de la evidencia confirmada. Un fallo conserva la solicitud para el siguiente turno; sus cifras nunca se consideran evidencia.
 
 ## Requisitos previos
 
@@ -121,3 +121,65 @@ python -m pytest -q
 ```
 
 La suite cubre el registro de herramientas, el planificador, la memoria analítica, la caché, el guard de SQL, la capa semántica, la visualización y el servicio de orquestación completo (incluyendo recuperación ante fallos, contenido multimodal y respuestas parciales), usando datos y clientes simulados — no requiere conexión real a BigQuery ni a NVIDIA para ejecutarse.
+
+
+## Auditoría y benchmark
+
+El planner recibe intención, alcance, calendario simbólico y capacidades semánticas.
+`AnalysisContext` resuelve fechas y valida el alcance antes de ejecutar. La narrativa
+selecciona hechos numéricos preparados por Python; el validador controla porcentajes,
+cobertura, terminación y varias clases de afirmaciones sin respaldo. La validación
+no equivale a una demostración semántica completa.
+
+- [Auditoría final](AUDITORIA_AGENTE_BI_FINAL.md)
+- [Benchmark real y fallos](BENCHMARK_AGENTE_BI.md)
+- [Decisiones de arquitectura](CAMBIOS_ARQUITECTURA_AGENT.md)
+
+Para repetir el benchmark contra **el proveedor y BigQuery reales**:
+
+```bash
+python -m evaluations.benchmark --live --output evaluations/results/retest --workers 1
+```
+
+Cada JSON conserva pregunta, plan, filtros, SQL, respuesta, validaciones, uso y veredicto.
+`--ids conversation-01` ejecuta la conversación completa para conservar contexto.
+Los artefactos contienen datos de negocio y deben conservar el mismo control de acceso
+que la fuente. El benchmark es optativo y no se ejecuta al lanzar pytest.
+
+Variables adicionales (ver también `.env.example`):
+
+```env
+LLM_PLAN_MAX_TOKENS=2200
+LLM_FINAL_MAX_TOKENS=1800
+LLM_REASONING_EFFORT=none
+LLM_TIMEOUT_SECONDS=60
+BIGQUERY_TIMEOUT_SECONDS=45
+RESPONSE_VALIDATION_RETRIES=1
+HISTORY_MAX_MESSAGES=12
+HISTORY_MAX_CHARS=16000
+LLM_VISION_MODELS=
+ENABLE_LOCAL_CLIPBOARD=0
+```
+
+Habilita visión únicamente para modelos cuya capacidad hayas confirmado. Sin visión
+configurada, el agente explica esa limitación antes de procesar una imagen. Los PDF
+se extraen como texto limitado y se adjuntan como datos, sin promoverlos a instrucciones.
+El portapapeles opcional pertenece al equipo que ejecuta Streamlit.
+
+
+## Estado conversacional y capacidades de cambio
+
+La revisión del 12 de septiembre está en [CONVERSATION_STATE_AUDIT.md](CONVERSATION_STATE_AUDIT.md), con fallos históricos y comprobaciones por turno. El registro expone 24 herramientas. Crecimiento y aceleración, extremos temporales, diagnóstico de dimensiones y participación conjunta tienen contratos de evidencia separados de los rankings por nivel.
+
+Las nuevas conversaciones reales se ejecutan explícitamente y consumen llamadas al proveedor y BigQuery:
+
+```bash
+.venv/bin/python -m evaluations.conversation_state --live --output evaluations/conversation_state/nueva_original
+.venv/bin/python -m evaluations.conversation_state --live --conversation additional --output evaluations/conversation_state/nueva_adicional
+.venv/bin/python -m evaluations.state_paraphrases --live --output evaluations/conversation_state/nuevas_parafrasis
+.venv/bin/python -m evaluations.state_report
+```
+
+Los catálogos pequeños configurados se validan contra la fuente y usan caché. Televisión genérica corresponde a los valores exactos de `filter_groups.television`; no se fusionan etiquetas de la tabla. Un diagnóstico compara como máximo tres dimensiones no redundantes, con dos agregaciones por dimensión, y necesita al menos dos particiones útiles. Su puntuación indica concentración del cambio contable, no causalidad.
+
+`PLAN_SEMANTIC_REVIEW=false` es el valor por defecto. La revisión LLM adicional de intención y alcance es experimental: las pruebas reales mostraron correcciones útiles y también cambios de periodo equivocados. Puede activarse con `true` para evaluación controlada; añade una llamada LLM sin herramientas y conserva una sola reparación de plan. Sus resultados se registran por separado.

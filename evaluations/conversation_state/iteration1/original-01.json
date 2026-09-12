@@ -1,0 +1,887 @@
+{
+  "id": "original-01",
+  "question": "¿Quién está creciendo más?",
+  "elapsed_s": 10.46,
+  "memory_before": {
+    "last_domain": null,
+    "last_metric": null,
+    "last_period": {},
+    "last_entities": {},
+    "last_filters": {}
+  },
+  "memory_after": {
+    "last_domain": "bicomp",
+    "last_metric": "inv_neta",
+    "last_period": {
+      "start": "2026-07-01",
+      "end": "2026-07-31"
+    },
+    "last_entities": {},
+    "last_filters": {},
+    "analysis_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 1
+        }
+      }
+    ],
+    "last_requested_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      },
+      "operation": "new_analysis",
+      "observed_period": {},
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_successful_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_confirmed_evidence_scope": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    },
+    "last_analysis_strategy": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 1
+        }
+      }
+    ],
+    "last_request": {
+      "question": "¿Quién está creciendo más?",
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "current_month"
+        },
+        "comparison_period": {
+          "kind": "previous_period"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 1
+        }
+      },
+      "status": "planned_evidence_complete"
+    }
+  },
+  "raw_planner_outputs": [
+    {
+      "intent": "ranking_change",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "metric": "inv_neta",
+      "filters": {},
+      "period": {
+        "kind": "current_month"
+      },
+      "comparison_period": {
+        "kind": "previous_period"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis_questions": [
+        "¿Qué marca tiene el mayor crecimiento absoluto en inversión neta este mes respecto al mes anterior?"
+      ],
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      },
+      "steps": [
+        {
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener el ranking de marcas por cambio absoluto de inversión neta entre el mes actual y el mes anterior, para identificar la que crece más.",
+          "arguments": {
+            "dimension": "marca",
+            "criterio": "absolute",
+            "orden": "desc",
+            "limite": 1
+          }
+        }
+      ]
+    }
+  ],
+  "compiled_transition": {
+    "intent": "ranking_change",
+    "domains": [
+      "bicomp"
+    ],
+    "steps": [
+      {
+        "tool": "ranking_cambio_bicomp",
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 1
+        }
+      }
+    ],
+    "scope": {
+      "intent": "ranking_change",
+      "operation": "new_analysis",
+      "scope_mode": "replace",
+      "metric": "inv_neta",
+      "filters": {},
+      "period": {
+        "kind": "current_month"
+      },
+      "comparison_period": {
+        "kind": "previous_period"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      }
+    },
+    "analysis_questions": [
+      "¿Qué marca tiene el mayor crecimiento absoluto en inversión neta este mes respecto al mes anterior?"
+    ],
+    "answer": "",
+    "budget": 1,
+    "resolved_context": {
+      "metric": "inv_neta",
+      "filters": {},
+      "requested_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "comparison_period": {
+        "start": "2026-06-01",
+        "end": "2026-06-30"
+      },
+      "dimensions": [
+        "marca"
+      ],
+      "intent": "ranking_change",
+      "analysis": {
+        "change_basis": "absolute",
+        "direction": "desc",
+        "limit": 1
+      },
+      "operation": "new_analysis",
+      "observed_period": {
+        "start": "2026-07-01",
+        "end": "2026-07-31"
+      },
+      "available_period": {
+        "start": "2019-01-01",
+        "end": "2026-07-31"
+      }
+    }
+  },
+  "inherited_scope": {},
+  "result": {
+    "answer": "Criterio: cambio absoluto, orden desc; foco 2026-07-01 a 2026-07-31, referencia 2026-06-01 a 2026-06-30.\n\ninv_neta, alcance consultado (2026-07-01 a 2026-07-31), marca=RICH FIT TIPS: actual 1.067.799,00, referencia 0,00; cambio absoluto 1.067.799,00; cambio porcentual Sin información (base no positiva).\n\nOrden por cambio absoluto.\n\nAusencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_cambio_bicomp",
+        "arguments": {
+          "dimension": "marca",
+          "criterio": "absolute",
+          "orden": "desc",
+          "aceleracion": false,
+          "limite": 1,
+          "metrica": "inv_neta",
+          "filtros": {},
+          "periodo_a": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "periodo_b": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          }
+        },
+        "result": {
+          "success": true,
+          "error_type": null,
+          "source": "bigquery",
+          "domain": "bicomp",
+          "metric": "inv_neta",
+          "filters": {},
+          "dimension": "marca",
+          "rows": [
+            {
+              "dimension": "RICH FIT TIPS",
+              "value": 1067799.0,
+              "current_value": 1067799.0,
+              "previous_value": 0,
+              "difference": 1067799.0,
+              "difference_pct": null,
+              "new_in_window": true,
+              "order_value": 1067799.0,
+              "rank": 1
+            }
+          ],
+          "ranked_entities": 73,
+          "excluded_entities": [],
+          "capability": "rank_change",
+          "criterion": "absolute",
+          "direction": "desc",
+          "period_a": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "period_b": {
+            "start": "2026-06-01",
+            "end": "2026-06-30"
+          },
+          "period_c": null,
+          "comparison_equivalent": true,
+          "evidence": [
+            {
+              "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+              "query_parameters": {
+                "start_date": "2026-07-01",
+                "end_date": "2026-07-31"
+              },
+              "bytes_processed": 19951115,
+              "job_id": "881225f3-589a-4b71-a2fe-d590b47785c7",
+              "cache_hit": false,
+              "executed_at": "2026-09-11T23:42:18.514203+00:00",
+              "duration_ms": 1865.55,
+              "rows": 57
+            },
+            {
+              "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+              "query_parameters": {
+                "start_date": "2026-06-01",
+                "end_date": "2026-06-30"
+              },
+              "bytes_processed": 19951115,
+              "job_id": "53d82d08-7791-466b-b792-c46e0e090042",
+              "cache_hit": false,
+              "executed_at": "2026-09-11T23:42:20.229740+00:00",
+              "duration_ms": 1261.17,
+              "rows": 66
+            }
+          ],
+          "requested_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "effective_period": {
+            "start": "2026-07-01",
+            "end": "2026-07-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Orden por cambio absoluto.",
+            "Ausencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente."
+          ]
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {},
+        "row_count": null,
+        "step": 1,
+        "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2026-07-01",
+              "end_date": "2026-07-31"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "881225f3-589a-4b71-a2fe-d590b47785c7",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T23:42:18.514203+00:00",
+            "duration_ms": 1865.55,
+            "rows": 57
+          },
+          {
+            "sql": "SELECT UPPER(TRIM(CAST(`marca` AS STRING))) AS dimension, SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY dimension",
+            "query_parameters": {
+              "start_date": "2026-06-01",
+              "end_date": "2026-06-30"
+            },
+            "bytes_processed": 19951115,
+            "job_id": "53d82d08-7791-466b-b792-c46e0e090042",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T23:42:20.229740+00:00",
+            "duration_ms": 1261.17,
+            "rows": 66
+          }
+        ],
+        "latency_ms": 4087.8
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking_change",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+          "arguments": {
+            "dimension": "marca",
+            "criterio": "absolute",
+            "orden": "desc",
+            "aceleracion": false,
+            "limite": 1
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking_change",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {},
+        "period": {
+          "kind": "current_month"
+        },
+        "comparison_period": {
+          "kind": "previous_period"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 1
+        }
+      },
+      "analysis_questions": [
+        "¿Qué marca tiene el mayor crecimiento absoluto en inversión neta este mes respecto al mes anterior?"
+      ],
+      "answer": "",
+      "budget": 1,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "comparison_period": {
+          "start": "2026-06-01",
+          "end": "2026-06-30"
+        },
+        "dimensions": [
+          "marca"
+        ],
+        "intent": "ranking_change",
+        "analysis": {
+          "change_basis": "absolute",
+          "direction": "desc",
+          "limit": 1
+        },
+        "operation": "new_analysis",
+        "observed_period": {
+          "start": "2026-07-01",
+          "end": "2026-07-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 39902230,
+      "bigquery_queries": 3,
+      "total_latency_ms": 10463.85,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 8015,
+      "output_tokens": 233,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2375.47
+        },
+        {
+          "stage": "coverage_resolution",
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          }
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking_change",
+          "scope": {
+            "intent": "ranking_change",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "current_month"
+            },
+            "comparison_period": {
+              "kind": "previous_period"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 1
+            }
+          }
+        },
+        {
+          "stage": "request_contract",
+          "requested_intent": "ranking_change",
+          "requested_scope": {
+            "intent": "ranking_change",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {},
+            "period": {
+              "kind": "current_month"
+            },
+            "comparison_period": {
+              "kind": "previous_period"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 1
+            }
+          },
+          "inherited_scope": {},
+          "scope_mutations": {
+            "filters": {
+              "before": null,
+              "after": {}
+            },
+            "requested_period": {
+              "before": null,
+              "after": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              }
+            },
+            "comparison_period": {
+              "before": null,
+              "after": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              }
+            },
+            "dimensions": {
+              "before": null,
+              "after": [
+                "marca"
+              ]
+            },
+            "intent": {
+              "before": null,
+              "after": "ranking_change"
+            }
+          },
+          "resolved_scope": {
+            "metric": "inv_neta",
+            "filters": {},
+            "requested_period": {
+              "start": "2026-07-01",
+              "end": "2026-07-31"
+            },
+            "comparison_period": {
+              "start": "2026-06-01",
+              "end": "2026-06-30"
+            },
+            "dimensions": [
+              "marca"
+            ],
+            "intent": "ranking_change",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 1
+            },
+            "operation": "new_analysis",
+            "observed_period": {},
+            "available_period": {
+              "start": "2019-01-01",
+              "end": "2026-07-31"
+            }
+          },
+          "requirements": {
+            "capability": "rank_change",
+            "dimension": "marca",
+            "analysis": {
+              "change_basis": "absolute",
+              "direction": "desc",
+              "limit": 1
+            },
+            "requires_reference": true,
+            "requires_series": false
+          },
+          "selected_capabilities": [
+            "rank_change"
+          ],
+          "tools": [
+            "ranking_cambio_bicomp"
+          ]
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_cambio_bicomp",
+          "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "memory_transition",
+          "before": {
+            "last_domain": null,
+            "last_metric": null,
+            "last_period": {},
+            "last_entities": {},
+            "last_filters": {}
+          },
+          "after": {
+            "last_domain": "bicomp",
+            "last_metric": "inv_neta",
+            "last_period": {
+              "start": "2026-07-01",
+              "end": "2026-07-31"
+            },
+            "last_entities": {},
+            "last_filters": {},
+            "analysis_context": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 1
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "absolute",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 1
+                }
+              }
+            ],
+            "last_requested_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 1
+              },
+              "operation": "new_analysis",
+              "observed_period": {},
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_successful_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 1
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_confirmed_evidence_scope": {
+              "metric": "inv_neta",
+              "filters": {},
+              "requested_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "comparison_period": {
+                "start": "2026-06-01",
+                "end": "2026-06-30"
+              },
+              "dimensions": [
+                "marca"
+              ],
+              "intent": "ranking_change",
+              "analysis": {
+                "change_basis": "absolute",
+                "direction": "desc",
+                "limit": 1
+              },
+              "operation": "new_analysis",
+              "observed_period": {
+                "start": "2026-07-01",
+                "end": "2026-07-31"
+              },
+              "available_period": {
+                "start": "2019-01-01",
+                "end": "2026-07-31"
+              }
+            },
+            "last_analysis_strategy": [
+              {
+                "tool": "ranking_cambio_bicomp",
+                "purpose": "Obtener evidencia determinística exigida por la capacidad rank_change.",
+                "arguments": {
+                  "dimension": "marca",
+                  "criterio": "absolute",
+                  "orden": "desc",
+                  "aceleracion": false,
+                  "limite": 1
+                }
+              }
+            ],
+            "last_request": {
+              "question": "¿Quién está creciendo más?",
+              "scope": {
+                "intent": "ranking_change",
+                "operation": "new_analysis",
+                "scope_mode": "replace",
+                "metric": "inv_neta",
+                "filters": {},
+                "period": {
+                  "kind": "current_month"
+                },
+                "comparison_period": {
+                  "kind": "previous_period"
+                },
+                "dimensions": [
+                  "marca"
+                ],
+                "analysis": {
+                  "change_basis": "absolute",
+                  "direction": "desc",
+                  "limit": 1
+                }
+              },
+              "status": "planned_evidence_complete"
+            }
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 1,
+        "bigquery_queries": 3,
+        "bigquery_bytes_processed": 39902230,
+        "input_tokens": 8015,
+        "output_tokens": 233,
+        "cache_hits": 0,
+        "total_latency_ms": 10463.85
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  }
+}

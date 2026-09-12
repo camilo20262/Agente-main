@@ -1,0 +1,99 @@
+{
+  "id": "independent-18",
+  "question": "Hola.",
+  "family": "out_of_domain",
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 2.27,
+  "result": {
+    "answer": "Hola. ¿En qué puedo ayudarte con análisis de inversión publicitaria?",
+    "evidence": [],
+    "steps": 0,
+    "plan": {
+      "intent": "out_of_domain",
+      "domains": [
+        "none"
+      ],
+      "steps": [],
+      "scope": {
+        "intent": "out_of_domain",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": null,
+        "filters": {},
+        "period": {
+          "kind": "all"
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [],
+      "answer": "Hola. ¿En qué puedo ayudarte con análisis de inversión publicitaria?",
+      "budget": 0,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {},
+        "requested_period": {},
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "lookup",
+        "observed_period": {},
+        "available_period": {}
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 1,
+      "total_tool_calls": 0,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 0,
+      "total_latency_ms": 2271.69,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 5594,
+      "output_tokens": 88,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 2255.5
+        },
+        {
+          "stage": "plan",
+          "intent": "out_of_domain",
+          "scope": {
+            "intent": "out_of_domain",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": null,
+            "filters": {},
+            "period": {
+              "kind": "all"
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "stop",
+          "reason": "out_of_domain",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 1,
+        "total_tool_calls": 0,
+        "bigquery_queries": 0,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 5594,
+        "output_tokens": 88,
+        "cache_hits": 0,
+        "total_latency_ms": 2271.69
+      },
+      "stop_reason": "out_of_domain"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "out_of_domain",
+  "actual_intent": "out_of_domain"
+}

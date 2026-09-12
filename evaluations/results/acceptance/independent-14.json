@@ -1,0 +1,1498 @@
+{
+  "id": "independent-14",
+  "question": "Analiza el sector automotriz en 2025.",
+  "family": "open_analysis",
+  "expected_dimensions": [],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 67.36,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**Inversión total y distribución por medio**\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): 138.473.346,80.\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31), medio=PRENSA: 46.206.068,49 (33,37 % del universo consultado).\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31), medio=RADIO: 27.618.617,07 (19,95 % del universo consultado).\n\n**Concentración en noviembre**\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): 2025-11-01 registra 52.742.436,65 y representa 38,09 % del acumulado consultado.\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): 2025-11-01 registra 52.742.436,65 y representa 38,09 % del acumulado consultado; es el máximo observado.\n\n**Variabilidad mensual extrema**\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): acumulado observado 138.473.346,80; promedio por periodo observado 11.539.445,57; coeficiente de variación 109,77 %.\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): en 2025-11-01, el cambio frente a la observación anterior es 47.324.548,87 (873,49 %).\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): en 2025-12-01, el cambio frente a la observación anterior es -42.767.038,65 (-81,09 %).",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "consultar_inversion_publicitaria",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "value": 138473346.80351385,
+          "row_count": 55297,
+          "valid_values": 55297,
+          "evidence": {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d9b249b3-261b-4d59-adac-b28ed4e8449c",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:43.334635+00:00",
+            "duration_ms": 980.37,
+            "rows": 1
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "sector": "AUTOMOTRIZ"
+        },
+        "row_count": 55297,
+        "step": 1,
+        "purpose": "Obtener la inversión publicitaria neta total del sector automotriz en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (SELECT SUM(`inv_neta`) AS value, COUNT(*) AS source_rows, COUNT(`inv_neta`) AS valid_values, MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "d9b249b3-261b-4d59-adac-b28ed4e8449c",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:43.334635+00:00",
+            "duration_ms": 980.37,
+            "rows": 1
+          }
+        ],
+        "latency_ms": 2625.66
+      },
+      {
+        "id": "e2",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum",
+          "dimension": "medio",
+          "limite": 10
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "medio",
+          "composition": {
+            "denominator_known": true,
+            "total": 138473346.80351427,
+            "shown_share_pct": 99.59564326018136,
+            "top3_share_pct": 70.45727522550031
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "unknown_value": 0.0,
+            "known_value": 138473346.80351427,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "PRENSA",
+              "value": 46206068.48836599,
+              "source_rows": 393,
+              "rank": 1,
+              "share_pct": 33.36820374099122,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "RADIO",
+              "value": 27618617.0745772,
+              "source_rows": 15146,
+              "rank": 2,
+              "share_pct": 19.94507803279026,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV SUSCRIPCION",
+              "value": 23739861.508370396,
+              "source_rows": 12734,
+              "rank": 3,
+              "share_pct": 17.143993451718835,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TELEVISION NACIONAL",
+              "value": 17904512.5933024,
+              "source_rows": 1047,
+              "rank": 4,
+              "share_pct": 12.929934176219396,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV NAL",
+              "value": 5925172.349999957,
+              "source_rows": 1223,
+              "rank": 5,
+              "share_pct": 4.278926224270029,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "TV PAGA",
+              "value": 5021500.050000121,
+              "source_rows": 4950,
+              "rank": 6,
+              "share_pct": 3.626329662650056,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "PUBLICIDAD EXTERIOR",
+              "value": 3899809.626760401,
+              "source_rows": 2633,
+              "rank": 7,
+              "share_pct": 2.816288994801293,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "OOH",
+              "value": 3674233.799999981,
+              "source_rows": 1981,
+              "rank": 8,
+              "share_pct": 2.6533870126021495,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "DIGITAL",
+              "value": 3084108.9991182005,
+              "source_rows": 14827,
+              "rank": 9,
+              "share_pct": 2.227222111916147,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "REVISTA",
+              "value": 839536.0023672001,
+              "source_rows": 75,
+              "rank": 10,
+              "share_pct": 0.6062798522219972,
+              "total": 138473346.80351427,
+              "concentration_hhi": 2024.197443433409,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 10,
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 1080.58
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "a481f50b-f291-4754-abe6-401260ea4e30",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:44.826885+00:00",
+            "duration_ms": 1080.58,
+            "rows": 10
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "sector": "AUTOMOTRIZ"
+        },
+        "row_count": 10,
+        "step": 2,
+        "purpose": "Ranking de la inversión publicitaria neta del sector automotriz en 2025 por medio.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`medio` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "a481f50b-f291-4754-abe6-401260ea4e30",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:44.826885+00:00",
+            "duration_ms": 1080.58,
+            "rows": 10
+          }
+        ],
+        "latency_ms": 1492.11
+      },
+      {
+        "id": "e3",
+        "tool": "serie_temporal_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "filtros": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "agregacion": "sum",
+          "granularidad": "month"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "granularity": "month",
+          "rows": [
+            {
+              "period": "2025-01-01",
+              "value": 4681201.31,
+              "source_rows": 1496,
+              "rank": 12,
+              "share_of_total_pct": 3.3805793086248968,
+              "is_peak": false,
+              "total": 138473346.8035143
+            },
+            {
+              "period": "2025-02-01",
+              "value": 6469497.549999993,
+              "source_rows": 2629,
+              "rank": 8,
+              "share_of_total_pct": 4.672016456119774,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": 1788296.2399999937,
+                "difference_pct": 38.20165213104227,
+                "ratio_a_over_b": 1.3820165213104227
+              }
+            },
+            {
+              "period": "2025-03-01",
+              "value": 6118865.969999993,
+              "source_rows": 2850,
+              "rank": 9,
+              "share_of_total_pct": 4.418804131803293,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": -350631.5800000001,
+                "difference_pct": -5.4197652490029995,
+                "ratio_a_over_b": 0.94580234750997
+              }
+            },
+            {
+              "period": "2025-04-01",
+              "value": 5806242.619999982,
+              "source_rows": 2402,
+              "rank": 10,
+              "share_of_total_pct": 4.193039854982855,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": -312623.3500000108,
+                "difference_pct": -5.109171397653791,
+                "ratio_a_over_b": 0.9489082860234621
+              }
+            },
+            {
+              "period": "2025-05-01",
+              "value": 7199224.180000001,
+              "source_rows": 1995,
+              "rank": 6,
+              "share_of_total_pct": 5.198996302310281,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": 1392981.5600000182,
+                "difference_pct": 23.991101494825624,
+                "ratio_a_over_b": 1.2399110149482562
+              }
+            },
+            {
+              "period": "2025-06-01",
+              "value": 10325428.199999994,
+              "source_rows": 3216,
+              "rank": 3,
+              "share_of_total_pct": 7.456617781219069,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": 3126204.019999993,
+                "difference_pct": 43.42417935372576,
+                "ratio_a_over_b": 1.4342417935372576
+              }
+            },
+            {
+              "period": "2025-07-01",
+              "value": 8991769.49999999,
+              "source_rows": 2946,
+              "rank": 5,
+              "share_of_total_pct": 6.493501968114336,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": -1333658.700000003,
+                "difference_pct": -12.91625561833846,
+                "ratio_a_over_b": 0.8708374438166154
+              }
+            },
+            {
+              "period": "2025-08-01",
+              "value": 6958285.749999988,
+              "source_rows": 2638,
+              "rank": 7,
+              "share_of_total_pct": 5.025000052806837,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": -2033483.7500000028,
+                "difference_pct": -22.614945256325854,
+                "ratio_a_over_b": 0.7738505474367414
+              }
+            },
+            {
+              "period": "2025-09-01",
+              "value": 13787109.290000018,
+              "source_rows": 5312,
+              "rank": 2,
+              "share_of_total_pct": 9.956507593886014,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": 6828823.54000003,
+                "difference_pct": 98.13945252248432,
+                "ratio_a_over_b": 1.9813945252248433
+              }
+            },
+            {
+              "period": "2025-10-01",
+              "value": 5417887.784396018,
+              "source_rows": 5735,
+              "rank": 11,
+              "share_of_total_pct": 3.9125852804610033,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": -8369221.505604,
+                "difference_pct": -60.70323611400043,
+                "ratio_a_over_b": 0.39296763885999564
+              }
+            },
+            {
+              "period": "2025-11-01",
+              "value": 52742436.651200525,
+              "source_rows": 10362,
+              "rank": 1,
+              "share_of_total_pct": 38.08851152131031,
+              "is_peak": true,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": 47324548.86680451,
+                "difference_pct": 873.4870626723439,
+                "ratio_a_over_b": 9.734870626723438
+              }
+            },
+            {
+              "period": "2025-12-01",
+              "value": 9975397.997917801,
+              "source_rows": 13716,
+              "rank": 4,
+              "share_of_total_pct": 7.203839748361333,
+              "is_peak": false,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": -42767038.653282724,
+                "difference_pct": -81.08658106964661,
+                "ratio_a_over_b": 0.18913418930353385
+              }
+            }
+          ],
+          "row_count": 12,
+          "peak": {
+            "period": "2025-11-01",
+            "value": 52742436.651200525,
+            "share_of_total_pct": 38.08851152131031,
+            "rank": 1
+          },
+          "statistics": {
+            "observations": 12,
+            "total": 138473346.8035143,
+            "mean": 11539445.566959525,
+            "median": 7078754.964999994,
+            "stddev": 12667015.584547326,
+            "coefficient_variation_pct": 109.77144015321092,
+            "slope_per_observed_period": 1774942.7536317238,
+            "peak": {
+              "period": "2025-11-01",
+              "value": 52742436.651200525,
+              "source_rows": 10362,
+              "rank": 1,
+              "share_of_total_pct": 38.08851152131031,
+              "is_peak": true,
+              "total": 138473346.8035143,
+              "change_from_previous_observation": {
+                "difference": 47324548.86680451,
+                "difference_pct": 873.4870626723439,
+                "ratio_a_over_b": 9.734870626723438
+              }
+            },
+            "minimum": {
+              "period": "2025-01-01",
+              "value": 4681201.31,
+              "source_rows": 1496,
+              "rank": 12,
+              "share_of_total_pct": 3.3805793086248968,
+              "is_peak": false,
+              "total": 138473346.8035143
+            },
+            "first_to_last": {
+              "difference": 5294196.687917802,
+              "difference_pct": 113.09483052156546,
+              "ratio_a_over_b": 2.1309483052156546
+            },
+            "last_acceleration": -90091587.52008724,
+            "anomaly_method": "MAD robust z",
+            "anomaly_threshold": 3.5,
+            "minimum_observations": 6,
+            "anomaly_testable": true,
+            "anomalies": [
+              {
+                "period": "2025-11-01",
+                "value": 52742436.651200525,
+                "source_rows": 10362,
+                "rank": 1,
+                "share_of_total_pct": 38.08851152131031,
+                "is_peak": true,
+                "total": 138473346.8035143,
+                "change_from_previous_observation": {
+                  "difference": 47324548.86680451,
+                  "difference_pct": 873.4870626723439,
+                  "ratio_a_over_b": 9.734870626723438
+                },
+                "robust_z_score": 17.235984677461516
+              }
+            ],
+            "limitations": [
+              "Picos descriptivos no demuestran causalidad ni estacionalidad."
+            ]
+          },
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 964.38
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "b24318f7-dd9a-4fb2-a3d7-e0170c6f82dc",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:46.166661+00:00",
+            "duration_ms": 964.38,
+            "rows": 12
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "sector": "AUTOMOTRIZ"
+        },
+        "row_count": 12,
+        "step": 3,
+        "purpose": "Evolución mensual de la inversión publicitaria neta del sector automotriz en 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                DATE_TRUNC(DATE(`fecha`), MONTH) AS period,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY period\n        ),\n        scored AS (\n            SELECT\n                period,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_of_total_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            period,\n            value,\n            source_rows,\n            rank,\n            share_of_total_pct,\n            rank = 1 AS is_peak, total, _observed_start, _observed_end\n        FROM scored\n        ORDER BY period",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31"
+            },
+            "bytes_processed": 0,
+            "job_id": "b24318f7-dd9a-4fb2-a3d7-e0170c6f82dc",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:46.166661+00:00",
+            "duration_ms": 964.38,
+            "rows": 12
+          }
+        ],
+        "latency_ms": 1340.17
+      },
+      {
+        "id": "e4",
+        "tool": "ranking_por_dimension",
+        "arguments": {
+          "metrica": "inv_neta",
+          "agregacion": "sum",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "dimension": "anunciante"
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta",
+          "aggregation": "sum",
+          "filters": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta",
+          "success": true,
+          "project": "nexuslatam-master",
+          "dataset": "NEXUS_GROUPM_BI_2",
+          "table": "tb_data_bicompetitive",
+          "dimension": "anunciante",
+          "composition": {
+            "denominator_known": true,
+            "total": 138473346.8035144,
+            "shown_share_pct": 71.78018735325689,
+            "top3_share_pct": 32.84537791657927
+          },
+          "data_quality": {
+            "unknown_share_pct": 0.0,
+            "unknown_value": 0.0,
+            "known_value": 138473346.8035144,
+            "known_share_pct": 100.0
+          },
+          "rows": [
+            {
+              "dimension": "DINISSAN",
+              "value": 17004935.210276805,
+              "source_rows": 4065,
+              "rank": 1,
+              "share_pct": 12.28029480244008,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "GM COLMOTORES",
+              "value": 14701717.1278228,
+              "source_rows": 6368,
+              "rank": 2,
+              "share_pct": 10.61700137043967,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "SOFASA S.A.",
+              "value": 13775441.733250132,
+              "source_rows": 6871,
+              "rank": 3,
+              "share_pct": 9.948081743699516,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "NEOCORP SAS",
+              "value": 10127133.677822841,
+              "source_rows": 4398,
+              "rank": 4,
+              "share_pct": 7.313417283249935,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "DERCO SA",
+              "value": 9244895.6489376,
+              "source_rows": 987,
+              "rank": 5,
+              "share_pct": 6.676299708459829,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "VOLKSWAGEN INT",
+              "value": 8047509.854849598,
+              "source_rows": 2910,
+              "rank": 6,
+              "share_pct": 5.811594823564527,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "AUTOMOT ESCANDINAVA",
+              "value": 7837313.693550808,
+              "source_rows": 1086,
+              "rank": 7,
+              "share_pct": 5.659799430334777,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "COM AUTOMOTRIZ",
+              "value": 6590012.2642436,
+              "source_rows": 372,
+              "rank": 8,
+              "share_pct": 4.759047438634124,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "KIA MOTORS",
+              "value": 6361731.603706402,
+              "source_rows": 2681,
+              "rank": 9,
+              "share_pct": 4.59419213195831,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            },
+            {
+              "dimension": "MOTORYSA VEHICULOS",
+              "value": 5705736.9554272005,
+              "source_rows": 815,
+              "rank": 10,
+              "share_pct": 4.120458620476119,
+              "total": 138473346.8035144,
+              "concentration_hhi": 645.7592288367129,
+              "unknown_value": 0.0
+            }
+          ],
+          "row_count": 10,
+          "query_metadata": {
+            "bytes_processed": 0,
+            "duration_ms": 989.83
+          },
+          "evidence": {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`anunciante` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "bd6bb8cc-02d1-4861-8b9a-74cb2a25d4de",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:52.025934+00:00",
+            "duration_ms": 989.83,
+            "rows": 10
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta",
+        "filters": {
+          "sector": "AUTOMOTRIZ"
+        },
+        "row_count": 10,
+        "step": 4,
+        "purpose": "Obtener el ranking de anunciantes por inversión neta en el sector automotriz durante 2025 para identificar los principales actores y su concentración.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH grouped AS (\n            SELECT\n                UPPER(TRIM(CAST(`anunciante` AS STRING))) AS dimension,\n                SUM(`inv_neta`) AS value,\n                COUNT(*) AS source_rows,\n                MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`\n             WHERE UPPER(TRIM(CAST(`sector` AS STRING))) = @filter_0 AND DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date\n            GROUP BY dimension\n        ),\n        scored AS (\n            SELECT\n                dimension,\n                value,\n                source_rows,\n                DENSE_RANK() OVER (ORDER BY value DESC) AS rank,\n                SUM(value) OVER () AS total,\n                MIN(_observed_start) OVER () AS _observed_start, MAX(_observed_end) OVER () AS _observed_end,\n                SAFE_MULTIPLY(\n                    SAFE_DIVIDE(value, SUM(value) OVER ()),\n                    100\n                ) AS share_pct\n            FROM grouped\n            WHERE value IS NOT NULL\n        )\n        SELECT\n            dimension,\n            value,\n            source_rows,\n            rank,\n            share_pct, total, _observed_start, _observed_end,\n            SUM(POW(SAFE_DIVIDE(value, total), 2)) OVER () * 10000 AS concentration_hhi,\n            SUM(IF(dimension IS NULL OR CAST(dimension AS STRING) IN ('', 'N/A', 'UNKNOWN', 'NULL', 'DESCONOCIDO'), value, 0)) OVER () AS unknown_value\n        FROM scored\n        ORDER BY value DESC, CAST(dimension AS STRING)\n        LIMIT @limit",
+            "query_parameters": {
+              "filter_0": "AUTOMOTRIZ",
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "10"
+            },
+            "bytes_processed": 0,
+            "job_id": "bd6bb8cc-02d1-4861-8b9a-74cb2a25d4de",
+            "cache_hit": true,
+            "executed_at": "2026-09-11T12:47:52.025934+00:00",
+            "duration_ms": 989.83,
+            "rows": 10
+          }
+        ],
+        "latency_ms": 1710.83
+      },
+      {
+        "tool": "serie_temporal_bicomp",
+        "arguments": {
+          "metrica": "inv_neta",
+          "agregacion": "sum",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {
+            "sector": "AUTOMOTRIZ"
+          },
+          "granularidad": "month"
+        },
+        "step": 5,
+        "purpose": "Recalcular la serie temporal mensual de inversión neta para el sector automotriz en 2025 con el fin de obtener los valores exactos de cada mes y determinar el mes pico y el mes mínimo, así como su desviación respecto al promedio.",
+        "result": {
+          "success": false,
+          "error_type": "duplicate",
+          "error": "Consulta ya ejecutada; usar evidencia existente.",
+          "existing_evidence_id": "e3"
+        }
+      }
+    ],
+    "steps": 5,
+    "plan": {
+      "intent": "open_analysis",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión publicitaria neta total del sector automotriz en 2025.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "sector": "automotriz"
+            },
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum"
+          }
+        },
+        {
+          "tool": "ranking_por_dimension",
+          "purpose": "Ranking de la inversión publicitaria neta del sector automotriz en 2025 por medio.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "sector": "automotriz"
+            },
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum",
+            "dimension": "medio",
+            "limite": 10
+          }
+        },
+        {
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Evolución mensual de la inversión publicitaria neta del sector automotriz en 2025.",
+          "arguments": {
+            "metrica": "inv_neta",
+            "filtros": {
+              "sector": "automotriz"
+            },
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31",
+            "agregacion": "sum",
+            "granularidad": "month"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "open_analysis",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta",
+        "filters": {
+          "sector": "automotriz"
+        },
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": []
+      },
+      "analysis_questions": [
+        "¿Cuál es la inversión publicitaria neta total del sector automotriz en 2025?",
+        "¿Cómo se distribuye la inversión del sector automotriz en 2025 por medio?",
+        "¿Cuál es la evolución mensual de la inversión del sector automotriz en 2025?"
+      ],
+      "answer": "",
+      "budget": 5,
+      "resolved_context": {
+        "metric": "inv_neta",
+        "filters": {
+          "sector": "automotriz"
+        },
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [],
+        "intent": "open_analysis",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [
+      {
+        "type": "ranking",
+        "title": "Ranking por medio — Inversión publicitaria neta · sector: AUTOMOTRIZ · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": "PRENSA",
+            "value": 46206068.48836599,
+            "source_rows": 393,
+            "rank": 1,
+            "share_pct": 33.36820374099122,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "RADIO",
+            "value": 27618617.0745772,
+            "source_rows": 15146,
+            "rank": 2,
+            "share_pct": 19.94507803279026,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV SUSCRIPCION",
+            "value": 23739861.508370396,
+            "source_rows": 12734,
+            "rank": 3,
+            "share_pct": 17.143993451718835,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TELEVISION NACIONAL",
+            "value": 17904512.5933024,
+            "source_rows": 1047,
+            "rank": 4,
+            "share_pct": 12.929934176219396,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV NAL",
+            "value": 5925172.349999957,
+            "source_rows": 1223,
+            "rank": 5,
+            "share_pct": 4.278926224270029,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "TV PAGA",
+            "value": 5021500.050000121,
+            "source_rows": 4950,
+            "rank": 6,
+            "share_pct": 3.626329662650056,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "PUBLICIDAD EXTERIOR",
+            "value": 3899809.626760401,
+            "source_rows": 2633,
+            "rank": 7,
+            "share_pct": 2.816288994801293,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "OOH",
+            "value": 3674233.799999981,
+            "source_rows": 1981,
+            "rank": 8,
+            "share_pct": 2.6533870126021495,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "DIGITAL",
+            "value": 3084108.9991182005,
+            "source_rows": 14827,
+            "rank": 9,
+            "share_pct": 2.227222111916147,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "REVISTA",
+            "value": 839536.0023672001,
+            "source_rows": 75,
+            "rank": 10,
+            "share_pct": 0.6062798522219972,
+            "total": 138473346.80351427,
+            "concentration_hhi": 2024.197443433409,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      },
+      {
+        "type": "line",
+        "title": "Evolución de Inversión publicitaria neta · sector: AUTOMOTRIZ · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "period": "2025-01-01",
+            "value": 4681201.31,
+            "source_rows": 1496,
+            "rank": 12,
+            "share_of_total_pct": 3.3805793086248968,
+            "is_peak": false,
+            "total": 138473346.8035143
+          },
+          {
+            "period": "2025-02-01",
+            "value": 6469497.549999993,
+            "source_rows": 2629,
+            "rank": 8,
+            "share_of_total_pct": 4.672016456119774,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": 1788296.2399999937,
+              "difference_pct": 38.20165213104227,
+              "ratio_a_over_b": 1.3820165213104227
+            }
+          },
+          {
+            "period": "2025-03-01",
+            "value": 6118865.969999993,
+            "source_rows": 2850,
+            "rank": 9,
+            "share_of_total_pct": 4.418804131803293,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": -350631.5800000001,
+              "difference_pct": -5.4197652490029995,
+              "ratio_a_over_b": 0.94580234750997
+            }
+          },
+          {
+            "period": "2025-04-01",
+            "value": 5806242.619999982,
+            "source_rows": 2402,
+            "rank": 10,
+            "share_of_total_pct": 4.193039854982855,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": -312623.3500000108,
+              "difference_pct": -5.109171397653791,
+              "ratio_a_over_b": 0.9489082860234621
+            }
+          },
+          {
+            "period": "2025-05-01",
+            "value": 7199224.180000001,
+            "source_rows": 1995,
+            "rank": 6,
+            "share_of_total_pct": 5.198996302310281,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": 1392981.5600000182,
+              "difference_pct": 23.991101494825624,
+              "ratio_a_over_b": 1.2399110149482562
+            }
+          },
+          {
+            "period": "2025-06-01",
+            "value": 10325428.199999994,
+            "source_rows": 3216,
+            "rank": 3,
+            "share_of_total_pct": 7.456617781219069,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": 3126204.019999993,
+              "difference_pct": 43.42417935372576,
+              "ratio_a_over_b": 1.4342417935372576
+            }
+          },
+          {
+            "period": "2025-07-01",
+            "value": 8991769.49999999,
+            "source_rows": 2946,
+            "rank": 5,
+            "share_of_total_pct": 6.493501968114336,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": -1333658.700000003,
+              "difference_pct": -12.91625561833846,
+              "ratio_a_over_b": 0.8708374438166154
+            }
+          },
+          {
+            "period": "2025-08-01",
+            "value": 6958285.749999988,
+            "source_rows": 2638,
+            "rank": 7,
+            "share_of_total_pct": 5.025000052806837,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": -2033483.7500000028,
+              "difference_pct": -22.614945256325854,
+              "ratio_a_over_b": 0.7738505474367414
+            }
+          },
+          {
+            "period": "2025-09-01",
+            "value": 13787109.290000018,
+            "source_rows": 5312,
+            "rank": 2,
+            "share_of_total_pct": 9.956507593886014,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": 6828823.54000003,
+              "difference_pct": 98.13945252248432,
+              "ratio_a_over_b": 1.9813945252248433
+            }
+          },
+          {
+            "period": "2025-10-01",
+            "value": 5417887.784396018,
+            "source_rows": 5735,
+            "rank": 11,
+            "share_of_total_pct": 3.9125852804610033,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": -8369221.505604,
+              "difference_pct": -60.70323611400043,
+              "ratio_a_over_b": 0.39296763885999564
+            }
+          },
+          {
+            "period": "2025-11-01",
+            "value": 52742436.651200525,
+            "source_rows": 10362,
+            "rank": 1,
+            "share_of_total_pct": 38.08851152131031,
+            "is_peak": true,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": 47324548.86680451,
+              "difference_pct": 873.4870626723439,
+              "ratio_a_over_b": 9.734870626723438
+            }
+          },
+          {
+            "period": "2025-12-01",
+            "value": 9975397.997917801,
+            "source_rows": 13716,
+            "rank": 4,
+            "share_of_total_pct": 7.203839748361333,
+            "is_peak": false,
+            "total": 138473346.8035143,
+            "change_from_previous_observation": {
+              "difference": -42767038.653282724,
+              "difference_pct": -81.08658106964661,
+              "ratio_a_over_b": 0.18913418930353385
+            }
+          }
+        ],
+        "x": "period",
+        "y": "value"
+      },
+      {
+        "type": "ranking",
+        "title": "Ranking por anunciante — Inversión publicitaria neta · sector: AUTOMOTRIZ · 2025-01-01 a 2025-12-31",
+        "data": [
+          {
+            "dimension": "DINISSAN",
+            "value": 17004935.210276805,
+            "source_rows": 4065,
+            "rank": 1,
+            "share_pct": 12.28029480244008,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "GM COLMOTORES",
+            "value": 14701717.1278228,
+            "source_rows": 6368,
+            "rank": 2,
+            "share_pct": 10.61700137043967,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "SOFASA S.A.",
+            "value": 13775441.733250132,
+            "source_rows": 6871,
+            "rank": 3,
+            "share_pct": 9.948081743699516,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "NEOCORP SAS",
+            "value": 10127133.677822841,
+            "source_rows": 4398,
+            "rank": 4,
+            "share_pct": 7.313417283249935,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "DERCO SA",
+            "value": 9244895.6489376,
+            "source_rows": 987,
+            "rank": 5,
+            "share_pct": 6.676299708459829,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "VOLKSWAGEN INT",
+            "value": 8047509.854849598,
+            "source_rows": 2910,
+            "rank": 6,
+            "share_pct": 5.811594823564527,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "AUTOMOT ESCANDINAVA",
+            "value": 7837313.693550808,
+            "source_rows": 1086,
+            "rank": 7,
+            "share_pct": 5.659799430334777,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "COM AUTOMOTRIZ",
+            "value": 6590012.2642436,
+            "source_rows": 372,
+            "rank": 8,
+            "share_pct": 4.759047438634124,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "KIA MOTORS",
+            "value": 6361731.603706402,
+            "source_rows": 2681,
+            "rank": 9,
+            "share_pct": 4.59419213195831,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          },
+          {
+            "dimension": "MOTORYSA VEHICULOS",
+            "value": 5705736.9554272005,
+            "source_rows": 815,
+            "rank": 10,
+            "share_pct": 4.120458620476119,
+            "total": 138473346.8035144,
+            "concentration_hhi": 645.7592288367129,
+            "unknown_value": 0.0
+          }
+        ],
+        "x": "value",
+        "y": "dimension"
+      }
+    ],
+    "metrics": {
+      "total_llm_calls": 5,
+      "total_tool_calls": 4,
+      "bigquery_bytes_processed": 0,
+      "bigquery_queries": 4,
+      "total_latency_ms": 67358.95,
+      "errors": [
+        "planning:ValueError"
+      ],
+      "cache_hits": 0,
+      "input_tokens": 34966,
+      "output_tokens": 3616,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "length",
+          "latency_ms": 33093.7
+        },
+        {
+          "stage": "plan_validation",
+          "attempt": 0,
+          "issue": "El proveedor truncó el plan JSON.",
+          "rejected_plan": null
+        },
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 10288.34
+        },
+        {
+          "stage": "plan",
+          "intent": "open_analysis",
+          "scope": {
+            "intent": "open_analysis",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta",
+            "filters": {
+              "sector": "automotriz"
+            },
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": []
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "consultar_inversion_publicitaria",
+          "purpose": "Obtener la inversión publicitaria neta total del sector automotriz en 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Ranking de la inversión publicitaria neta del sector automotriz en 2025 por medio.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "tool",
+          "tool": "serie_temporal_bicomp",
+          "purpose": "Evolución mensual de la inversión publicitaria neta del sector automotriz en 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "deepening",
+          "finish_reason": "stop",
+          "latency_ms": 4145.63
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "Se tiene evidencia de inversión neta total, distribución por medio y serie temporal mensual para el sector automotriz en 2025. Para completar el análisis abierto, se necesita profundizar en la distribución por anunciante (top anunciantes) para entender la concentración del gasto y los principales actores."
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_por_dimension",
+          "purpose": "Obtener el ranking de anunciantes por inversión neta en el sector automotriz durante 2025 para identificar los principales actores y su concentración.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "deepening",
+          "finish_reason": "stop",
+          "latency_ms": 4142.17
+        },
+        {
+          "stage": "research_decision",
+          "stop": false,
+          "reason": "Se tiene evidencia de inversión neta total, distribución por medio y anunciante, y serie temporal mensual para el sector automotriz en 2025. Para completar el análisis abierto, se necesita identificar los meses con mayor y menor inversión y su variación respecto al promedio mensual, lo cual requiere un cálculo adicional basado en la serie temporal ya obtenida."
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 8492.29
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**Inversión total y distribución por medio**\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): 138.473.346,80.\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31), medio=PRENSA: 46.206.068,49 (33,37 % del universo consultado).\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31), medio=RADIO: 27.618.617,07 (19,95 % del universo consultado).\n\n**Concentración en noviembre**\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): 2025-11-01 registra 52.742.436,65 y representa 38,09 % del acumulado consultado.\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): 2025-11-01 registra 52.742.436,65 y representa 38,09 % del acumulado consultado; es el máximo observado.\n\n**Variabilidad mensual extrema**\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): acumulado observado 138.473.346,80; promedio por periodo observado 11.539.445,57; coeficiente de variación 109,77 %.\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): en 2025-11-01, el cambio frente a la observación anterior es 47.324.548,87 (873,49 %).\n\nInversión publicitaria neta, sector: AUTOMOTRIZ (2025-01-01 a 2025-12-31): en 2025-12-01, el cambio frente a la observación anterior es -42.767.038,65 (-81,09 %)."
+        },
+        {
+          "stage": "stop",
+          "reason": "duplicate",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 5,
+        "total_tool_calls": 4,
+        "bigquery_queries": 4,
+        "bigquery_bytes_processed": 0,
+        "input_tokens": 34966,
+        "output_tokens": 3616,
+        "cache_hits": 0,
+        "total_latency_ms": 67358.95
+      },
+      "stop_reason": "duplicate"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "open_analysis",
+  "actual_intent": "open_analysis"
+}

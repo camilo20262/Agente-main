@@ -1,0 +1,705 @@
+{
+  "id": "independent-26",
+  "question": "Muestra las cinco categorías con mayor inversión neta USD por region en 2025.",
+  "family": "ranking",
+  "expected_dimensions": [
+    "categoria",
+    "region"
+  ],
+  "allow_dimension_clarification": false,
+  "expected_no_data": false,
+  "elapsed_s": 12.05,
+  "result": {
+    "answer": "### Resumen ejecutivo\n\n**ANTIOQUIA: GIMNASIOS, CENTROS DE ESTETICA lidera inversión neta**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=ANTIOQUIA, categoria=GIMNASIOS, CENTROS DE ESTETICA: 212.210,49 (99,91 % del grupo).\n\n**ANTIOQUIA: VEHICULOS ELECTRICOS E HIBRIDOS segunda posición**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=ANTIOQUIA, categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 183,50 (0,09 % del grupo).\n\nEsta categoría muestra una participación significativamente menor pero relevante dentro del ranking de ANTIOQUIA.\n\n**CAFETERA: GIMNASIOS, CENTROS DE ESTETICA lidera inversión neta**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=CAFETERA, categoria=GIMNASIOS, CENTROS DE ESTETICA: 99.019,39 (99,96 % del grupo).\n\n**CAFETERA: VEHICULOS ELECTRICOS E HIBRIDOS segunda posición**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=CAFETERA, categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 35,89 (0,04 % del grupo).\n\nEsta categoría muestra una participación significativamente menor pero relevante dentro del ranking de CAFETERA.\n\n**ANTIOQUIA: PICK UP tercera posición**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=ANTIOQUIA, categoria=PICK UP: 1,97 (0,00 % del grupo).\n\nEsta categoría tiene una inversión neta mínima pero aparece como tercera en el ranking de ANTIOQUIA por disponibilidad de datos.\n\n### Advertencias\n\nParticipaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.\n\nLa respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia.",
+    "evidence": [
+      {
+        "id": "e1",
+        "tool": "ranking_segmentado_bicomp",
+        "arguments": {
+          "dimension": "categoria",
+          "dimension_grupo": "region",
+          "limite": 5,
+          "metrica": "inv_neta_usd",
+          "fecha_inicio": "2025-01-01",
+          "fecha_fin": "2025-12-31",
+          "filtros": {}
+        },
+        "result": {
+          "domain": "bicomp",
+          "source": "bigquery",
+          "metric": "inv_neta_usd",
+          "aggregation": "sum",
+          "filters": {},
+          "period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "requested_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "available_period": {
+            "start": "2019-01-01",
+            "end": "2026-07-31"
+          },
+          "observed_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "effective_period": {
+            "start": "2025-01-01",
+            "end": "2025-12-31"
+          },
+          "is_partial": false,
+          "known": true,
+          "basis": "límites temporales de la tabla; no certifica completitud de cada día",
+          "warnings": [
+            "Participaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.",
+            "La respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia."
+          ],
+          "unit": "currency",
+          "metric_label": "Inversión publicitaria neta expresada en dólares",
+          "success": true,
+          "dimension": "categoria",
+          "segment_dimension": "region",
+          "dimensions": [
+            "region",
+            "categoria"
+          ],
+          "rows": [
+            {
+              "segment": "ANTIOQUIA",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 212210.49090909085,
+              "group_total": 212397.61323181813,
+              "rank": 1,
+              "share_pct": 99.91189998800832,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ANTIOQUIA",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 183.49715909090935,
+              "group_total": 212397.61323181813,
+              "rank": 2,
+              "share_pct": 0.08639323027167645,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ANTIOQUIA",
+              "dimension": "PICK UP",
+              "value": 1.9693818181818177,
+              "group_total": 212397.61323181813,
+              "rank": 3,
+              "share_pct": 0.000927214665087769,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ANTIOQUIA",
+              "dimension": "MULTIPRODUCTO",
+              "value": 0.9807272727272727,
+              "group_total": 212397.61323181813,
+              "rank": 4,
+              "share_pct": 0.0004617411927585424,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ANTIOQUIA",
+              "dimension": "PREMIUM",
+              "value": 0.6295272727272726,
+              "group_total": 212397.61323181813,
+              "rank": 5,
+              "share_pct": 0.00029639093544812326,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CAFETERA",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 99019.38863636361,
+              "group_total": 99060.91301590907,
+              "rank": 1,
+              "share_pct": 99.95808197372581,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CAFETERA",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 35.894534090909126,
+              "group_total": 99060.91301590907,
+              "rank": 2,
+              "share_pct": 0.036234810479835275,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CAFETERA",
+              "dimension": "UTILITY",
+              "value": 4.447227272727273,
+              "group_total": 99060.91301590907,
+              "rank": 3,
+              "share_pct": 0.004489386517175602,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CAFETERA",
+              "dimension": "PICK UP",
+              "value": 0.9495999999999998,
+              "group_total": 99060.91301590907,
+              "rank": 4,
+              "share_pct": 0.0009586021076218984,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CAFETERA",
+              "dimension": "MULTIPRODUCTO",
+              "value": 0.19112727272727267,
+              "group_total": 99060.91301590907,
+              "rank": 5,
+              "share_pct": 0.00019293913906949135,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CARIBE",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 330851.6113636365,
+              "group_total": 330923.3513909092,
+              "rank": 1,
+              "share_pct": 99.97832125567108,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CARIBE",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 71.13588181818186,
+              "group_total": 330923.3513909092,
+              "rank": 2,
+              "share_pct": 0.021496180767899727,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CARIBE",
+              "dimension": "PICK UP",
+              "value": 0.4639999999999999,
+              "group_total": 330923.3513909092,
+              "rank": 3,
+              "share_pct": 0.00014021373772801285,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CARIBE",
+              "dimension": "PREMIUM",
+              "value": 0.10298181818181816,
+              "group_total": 330923.3513909092,
+              "rank": 4,
+              "share_pct": 3.111953802866242e-05,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CARIBE",
+              "dimension": "MULTIPRODUCTO",
+              "value": 0.03716363636363636,
+              "group_total": 330923.3513909092,
+              "rank": 5,
+              "share_pct": 1.123028526316843e-05,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CENTRO",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 237491.13181818186,
+              "group_total": 240440.63918863639,
+              "rank": 1,
+              "share_pct": 98.7732908295338,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CENTRO",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 2528.007449999981,
+              "group_total": 240440.63918863639,
+              "rank": 2,
+              "share_pct": 1.0514060595291659,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CENTRO",
+              "dimension": "MULTIPRODUCTO",
+              "value": 413.29361363636366,
+              "group_total": 240440.63918863639,
+              "rank": 3,
+              "share_pct": 0.17189008273768414,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CENTRO",
+              "dimension": "PICK UP",
+              "value": 3.116072727272727,
+              "group_total": 240440.63918863639,
+              "rank": 4,
+              "share_pct": 0.0012959842137285407,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "CENTRO",
+              "dimension": "COMERCIO AUTOMOTORES",
+              "value": 2.2152159090909094,
+              "group_total": 240440.63918863639,
+              "rank": 5,
+              "share_pct": 0.0009213150973837554,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "COSTA RICA",
+              "dimension": "DEPORTES Y ENTRETENIMIENTO",
+              "value": 57384.08999999938,
+              "group_total": 57384.08999999938,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "GAM",
+              "dimension": "DEPORTES Y ENTRETENIMIENTO",
+              "value": 208599.09000000186,
+              "group_total": 208599.09000000186,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/A",
+              "dimension": "DEPORTES Y TIEMPO LIBRE - VARIOS",
+              "value": 2291908.9660793454,
+              "group_total": 2292193.9168196623,
+              "rank": 1,
+              "share_pct": 99.98756864599343,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/A",
+              "dimension": "DEPORTES Y TIEMPO LIBRE - ARTÍCULOS DEPORTIVOS",
+              "value": 284.9507403166771,
+              "group_total": 2292193.9168196623,
+              "rank": 2,
+              "share_pct": 0.012431354006559628,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/D",
+              "dimension": "TARJETAS DE CREDITO Y DEBITO",
+              "value": 9420718.368139854,
+              "group_total": 58911177.86931101,
+              "rank": 1,
+              "share_pct": 15.991393669022955,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/D",
+              "dimension": "MULTIPRODUCTO",
+              "value": 8001837.118642265,
+              "group_total": 58911177.86931101,
+              "rank": 2,
+              "share_pct": 13.582884281135236,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/D",
+              "dimension": "YOGURT,KUMIS",
+              "value": 6798002.263636369,
+              "group_total": 58911177.86931101,
+              "rank": 3,
+              "share_pct": 11.539409853113288,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/D",
+              "dimension": "OTROS LACTEOS",
+              "value": 6730535.922727272,
+              "group_total": 58911177.86931101,
+              "rank": 4,
+              "share_pct": 11.424887714277828,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "N/D",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 6711552.304646071,
+              "group_total": 58911177.86931101,
+              "rank": 5,
+              "share_pct": 11.392663578268673,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "NACIONAL",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 692849.3454545455,
+              "group_total": 695442.7668898281,
+              "rank": 1,
+              "share_pct": 99.62708341235886,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "NACIONAL",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 1287.175795454542,
+              "group_total": 695442.7668898281,
+              "rank": 2,
+              "share_pct": 0.185087236036845,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "NACIONAL",
+              "dimension": "AUTOMOCIÓN - AUTOMÓVILES",
+              "value": 1184.425753369228,
+              "group_total": 695442.7668898281,
+              "rank": 3,
+              "share_pct": 0.17031246994863983,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "NACIONAL",
+              "dimension": "UTILITY",
+              "value": 88.45602272727272,
+              "group_total": 695442.7668898281,
+              "rank": 4,
+              "share_pct": 0.01271938208845961,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "NACIONAL",
+              "dimension": "AUTOMOCIÓN - CONCESIONARIAS",
+              "value": 31.096211915863634,
+              "group_total": 695442.7668898281,
+              "rank": 5,
+              "share_pct": 0.004471426463306632,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ND",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 10432.124999999998,
+              "group_total": 12033.73356590906,
+              "rank": 1,
+              "share_pct": 86.69067619673469,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ND",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 1590.4134590908802,
+              "group_total": 12033.73356590906,
+              "rank": 2,
+              "share_pct": 13.216292768824786,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ND",
+              "dimension": "PREMIUM",
+              "value": 4.510329545454542,
+              "group_total": 12033.73356590906,
+              "rank": 3,
+              "share_pct": 0.03748071636081482,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ND",
+              "dimension": "UTILITY",
+              "value": 3.6722318181818183,
+              "group_total": 12033.73356590906,
+              "rank": 4,
+              "share_pct": 0.03051614694698792,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ND",
+              "dimension": "MULTIPRODUCTO",
+              "value": 3.0125454545454544,
+              "group_total": 12033.73356590906,
+              "rank": 5,
+              "share_pct": 0.025034171132721758,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ORIENTE",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 44648.20000000001,
+              "group_total": 44669.26731136365,
+              "rank": 1,
+              "share_pct": 99.95283712352658,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ORIENTE",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 19.868111363636363,
+              "group_total": 44669.26731136365,
+              "rank": 2,
+              "share_pct": 0.0444782566616713,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ORIENTE",
+              "dimension": "PICK UP",
+              "value": 0.9440727272727273,
+              "group_total": 44669.26731136365,
+              "rank": 3,
+              "share_pct": 0.0021134726045362283,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ORIENTE",
+              "dimension": "MULTIPRODUCTO",
+              "value": 0.20669090909090904,
+              "group_total": 44669.26731136365,
+              "rank": 4,
+              "share_pct": 0.0004627139004770017,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "ORIENTE",
+              "dimension": "PREMIUM",
+              "value": 0.04843636363636363,
+              "group_total": 44669.26731136365,
+              "rank": 5,
+              "share_pct": 0.00010843330672684136,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "PACIFICO",
+              "dimension": "GIMNASIOS, CENTROS DE ESTETICA",
+              "value": 88909.57272727271,
+              "group_total": 89066.89050454543,
+              "rank": 1,
+              "share_pct": 99.82337120294473,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "PACIFICO",
+              "dimension": "VEHICULOS ELECTRICOS E HIBRIDOS",
+              "value": 151.75210454545476,
+              "group_total": 89066.89050454543,
+              "rank": 2,
+              "share_pct": 0.17037992870954696,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "PACIFICO",
+              "dimension": "E Y E AUTOMOTRIZ",
+              "value": 2.656581818181817,
+              "group_total": 89066.89050454543,
+              "rank": 3,
+              "share_pct": 0.0029826816711943497,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "PACIFICO",
+              "dimension": "PICK UP",
+              "value": 1.8717090909090903,
+              "group_total": 89066.89050454543,
+              "rank": 4,
+              "share_pct": 0.0021014645064021515,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "PACIFICO",
+              "dimension": "MULTIPRODUCTO",
+              "value": 0.9727999999999999,
+              "group_total": 89066.89050454543,
+              "rank": 5,
+              "share_pct": 0.0010922128239677954,
+              "ranked_rows_total": 50
+            },
+            {
+              "segment": "PANAMA",
+              "dimension": "DEPORTES Y ENTRETENIMIENTO",
+              "value": 504890.0,
+              "group_total": 504890.0,
+              "rank": 1,
+              "share_pct": 100.0,
+              "ranked_rows_total": 50
+            }
+          ],
+          "ranking_truncated": false,
+          "row_count": 50,
+          "evidence": {
+            "sql": "WITH analytical_result AS (WITH grouped AS (\n            SELECT UPPER(TRIM(CAST(`region` AS STRING))) AS segment, UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension, SUM(`inv_neta_usd`) AS value,\n                   MIN(DATE(fecha)) AS _observed_start, MAX(DATE(fecha)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY segment, dimension\n        ), scored AS (\n            SELECT *, SUM(value) OVER (PARTITION BY segment) AS group_total,\n                   DENSE_RANK() OVER (PARTITION BY segment ORDER BY value DESC) AS rank,\n                   MIN(_observed_start) OVER () AS _scope_start,\n                   MAX(_observed_end) OVER () AS _scope_end\n            FROM grouped WHERE value IS NOT NULL\n        )\n        SELECT segment, dimension, value, group_total, rank,\n               SAFE_DIVIDE(value, group_total) * 100 AS share_pct,\n               _scope_start AS _observed_start, _scope_end AS _observed_end,\n               COUNT(*) OVER () AS ranked_rows_total\n        FROM scored WHERE rank <= @limit\n        ORDER BY CAST(segment AS STRING), rank, CAST(dimension AS STRING)\n        LIMIT 500), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 32476507,
+            "job_id": "f1b8c274-c1a2-47bf-8f81-67742d9e705e",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:37:58.172703+00:00",
+            "duration_ms": 1276.71,
+            "rows": 50
+          }
+        },
+        "source": "bigquery",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "row_count": 50,
+        "step": 1,
+        "purpose": "Obtener el top 5 de categorías por inversión neta USD dentro de cada región para 2025.",
+        "cache_hit": false,
+        "queries": [
+          {
+            "sql": "WITH analytical_result AS (WITH grouped AS (\n            SELECT UPPER(TRIM(CAST(`region` AS STRING))) AS segment, UPPER(TRIM(CAST(`categoria` AS STRING))) AS dimension, SUM(`inv_neta_usd`) AS value,\n                   MIN(DATE(fecha)) AS _observed_start, MAX(DATE(fecha)) AS _observed_end\n            FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive` WHERE DATE(`fecha`) >= @start_date AND DATE(`fecha`) <= @end_date GROUP BY segment, dimension\n        ), scored AS (\n            SELECT *, SUM(value) OVER (PARTITION BY segment) AS group_total,\n                   DENSE_RANK() OVER (PARTITION BY segment ORDER BY value DESC) AS rank,\n                   MIN(_observed_start) OVER () AS _scope_start,\n                   MAX(_observed_end) OVER () AS _scope_end\n            FROM grouped WHERE value IS NOT NULL\n        )\n        SELECT segment, dimension, value, group_total, rank,\n               SAFE_DIVIDE(value, group_total) * 100 AS share_pct,\n               _scope_start AS _observed_start, _scope_end AS _observed_end,\n               COUNT(*) OVER () AS ranked_rows_total\n        FROM scored WHERE rank <= @limit\n        ORDER BY CAST(segment AS STRING), rank, CAST(dimension AS STRING)\n        LIMIT 500), source_coverage AS (SELECT MIN(DATE(`fecha`)) AS _available_start, MAX(DATE(`fecha`)) AS _available_end FROM `nexuslatam-master.NEXUS_GROUPM_BI_2.tb_data_bicompetitive`) SELECT analytical_result.*, source_coverage.* FROM analytical_result CROSS JOIN source_coverage",
+            "query_parameters": {
+              "start_date": "2025-01-01",
+              "end_date": "2025-12-31",
+              "limit": "5"
+            },
+            "bytes_processed": 32476507,
+            "job_id": "f1b8c274-c1a2-47bf-8f81-67742d9e705e",
+            "cache_hit": false,
+            "executed_at": "2026-09-11T12:37:58.172703+00:00",
+            "duration_ms": 1276.71,
+            "rows": 50
+          }
+        ],
+        "latency_ms": 2840.0
+      }
+    ],
+    "steps": 1,
+    "plan": {
+      "intent": "ranking",
+      "domains": [
+        "bicomp"
+      ],
+      "steps": [
+        {
+          "tool": "ranking_segmentado_bicomp",
+          "purpose": "Obtener el top 5 de categorías por inversión neta USD dentro de cada región para 2025.",
+          "arguments": {
+            "dimension": "categoria",
+            "dimension_grupo": "region",
+            "limite": 5,
+            "metrica": "inv_neta_usd",
+            "fecha_inicio": "2025-01-01",
+            "fecha_fin": "2025-12-31"
+          }
+        }
+      ],
+      "scope": {
+        "intent": "ranking",
+        "operation": "new_analysis",
+        "scope_mode": "replace",
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "period": {
+          "kind": "year",
+          "year": 2025
+        },
+        "dimensions": [
+          "categoria",
+          "region"
+        ]
+      },
+      "analysis_questions": [
+        "¿Cuáles son las cinco categorías con mayor inversión neta USD en cada región durante 2025?"
+      ],
+      "answer": "",
+      "budget": 2,
+      "resolved_context": {
+        "metric": "inv_neta_usd",
+        "filters": {},
+        "requested_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "comparison_period": {},
+        "dimensions": [
+          "categoria",
+          "region"
+        ],
+        "intent": "ranking",
+        "observed_period": {
+          "start": "2025-01-01",
+          "end": "2025-12-31"
+        },
+        "available_period": {
+          "start": "2019-01-01",
+          "end": "2026-07-31"
+        }
+      }
+    },
+    "chart_specs": [],
+    "metrics": {
+      "total_llm_calls": 2,
+      "total_tool_calls": 1,
+      "bigquery_bytes_processed": 32476507,
+      "bigquery_queries": 1,
+      "total_latency_ms": 12045.82,
+      "errors": [],
+      "cache_hits": 0,
+      "input_tokens": 8314,
+      "output_tokens": 624,
+      "events": [
+        {
+          "stage": "planning",
+          "finish_reason": "stop",
+          "latency_ms": 3639.36
+        },
+        {
+          "stage": "plan",
+          "intent": "ranking",
+          "scope": {
+            "intent": "ranking",
+            "operation": "new_analysis",
+            "scope_mode": "replace",
+            "metric": "inv_neta_usd",
+            "filters": {},
+            "period": {
+              "kind": "year",
+              "year": 2025
+            },
+            "dimensions": [
+              "categoria",
+              "region"
+            ]
+          }
+        },
+        {
+          "stage": "tool",
+          "tool": "ranking_segmentado_bicomp",
+          "purpose": "Obtener el top 5 de categorías por inversión neta USD dentro de cada región para 2025.",
+          "success": true,
+          "cache_hit": false
+        },
+        {
+          "stage": "final",
+          "finish_reason": "stop",
+          "latency_ms": 5546.34
+        },
+        {
+          "stage": "validation",
+          "attempt": 0,
+          "issues": [],
+          "candidate": "### Resumen ejecutivo\n\n**ANTIOQUIA: GIMNASIOS, CENTROS DE ESTETICA lidera inversión neta**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=ANTIOQUIA, categoria=GIMNASIOS, CENTROS DE ESTETICA: 212.210,49 (99,91 % del grupo).\n\n**ANTIOQUIA: VEHICULOS ELECTRICOS E HIBRIDOS segunda posición**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=ANTIOQUIA, categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 183,50 (0,09 % del grupo).\n\nEsta categoría muestra una participación significativamente menor pero relevante dentro del ranking de ANTIOQUIA.\n\n**CAFETERA: GIMNASIOS, CENTROS DE ESTETICA lidera inversión neta**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=CAFETERA, categoria=GIMNASIOS, CENTROS DE ESTETICA: 99.019,39 (99,96 % del grupo).\n\n**CAFETERA: VEHICULOS ELECTRICOS E HIBRIDOS segunda posición**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=CAFETERA, categoria=VEHICULOS ELECTRICOS E HIBRIDOS: 35,89 (0,04 % del grupo).\n\nEsta categoría muestra una participación significativamente menor pero relevante dentro del ranking de CAFETERA.\n\n**ANTIOQUIA: PICK UP tercera posición**\n\nInversión publicitaria neta expresada en dólares, alcance consultado (2025-01-01 a 2025-12-31), region=ANTIOQUIA, categoria=PICK UP: 1,97 (0,00 % del grupo).\n\nEsta categoría tiene una inversión neta mínima pero aparece como tercera en el ranking de ANTIOQUIA por disponibilidad de datos.\n\n### Advertencias\n\nParticipaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.\n\nLa respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia."
+        },
+        {
+          "stage": "stop",
+          "reason": "planned_evidence_complete",
+          "partial": false
+        }
+      ],
+      "turn": {
+        "total_llm_calls": 2,
+        "total_tool_calls": 1,
+        "bigquery_queries": 1,
+        "bigquery_bytes_processed": 32476507,
+        "input_tokens": 8314,
+        "output_tokens": 624,
+        "cache_hits": 0,
+        "total_latency_ms": 12045.82
+      },
+      "stop_reason": "planned_evidence_complete"
+    },
+    "is_partial": false
+  },
+  "status": "PASS",
+  "issues": [],
+  "expected_family": "ranking",
+  "actual_intent": "ranking"
+}

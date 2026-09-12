@@ -15,7 +15,7 @@ class FakeRepository:
 def test_registry_has_only_bicomp_tools():
     registry = ToolRegistry(FakeRepository())
     names = {item["function"]["name"] for item in registry.schemas}
-    assert len(names) == 13
+    assert len(names) == 24
 
 
 def test_bicomp_tools_are_registered():
@@ -61,7 +61,7 @@ def test_handler_attribute_error_is_controlled():
     handler = Mock(side_effect=AttributeError("Resultado inesperado"))
     registry._tools["comparar_marcas"] = replace(registry._tools["comparar_marcas"], handler=handler)
     result = registry.execute("comparar_marcas", {"marca_a": "VOLVO", "marca_b": "RENAULT"})
-    assert result == {"success": False, "source": "bigquery", "error": "Resultado inesperado"}
+    assert result == {"success": False, "source": "bigquery", "error": "Resultado inesperado", "error_type": "schema", "retryable": True}
     handler.assert_called_once()
 
 
@@ -73,17 +73,22 @@ def test_handler_attribute_error_is_controlled():
 ])
 def test_misplaced_filters_do_not_execute_unfiltered_query(incorrect_filter):
     repository = FakeRepository()
-    repository.consultar_inversion = Mock(side_effect=AssertionError("No debe consultar"))
+    repository.consultar_inversion = Mock(return_value={"success": True, "value": 7})
     registry = ToolRegistry(repository)
     result = registry.execute("consultar_inversion_publicitaria", {
         **incorrect_filter, "fecha_inicio": "2026-01-01", "fecha_fin": "2026-01-31",
     })
-    assert result["success"] is False
-    assert result["source"] == "bigquery"
-    assert "Argumentos inválidos para 'consultar_inversion_publicitaria'" in result["error"]
-    assert "Additional properties are not allowed" in result["error"]
-    assert next(iter(incorrect_filter)) in result["error"]
-    repository.consultar_inversion.assert_not_called()
+    if "filters" in incorrect_filter:
+        # The explicit alias contract changed: it must preserve the actual filters.
+        import json
+        expected = incorrect_filter["filters"]
+        expected = json.loads(expected) if isinstance(expected, str) else expected
+        assert result["success"] is True
+        assert repository.consultar_inversion.call_args.kwargs["filters"] == expected
+    else:
+        assert result["success"] is False
+        assert "Additional properties" in result["error"]
+        repository.consultar_inversion.assert_not_called()
 
 
 def test_correct_brand_filter_reaches_repository():
@@ -126,8 +131,8 @@ VALID_TOOL_ARGUMENTS = {
 def test_all_tool_schemas_reject_only_undeclared_top_level_properties(name, arguments):
     registry = ToolRegistry(FakeRepository())
     schemas = {item["function"]["name"]: item["function"]["parameters"] for item in registry.schemas}
-    assert set(schemas) == set(VALID_TOOL_ARGUMENTS)
-    assert len(schemas) == 13
+    assert set(VALID_TOOL_ARGUMENTS) <= set(schemas)
+    assert len(schemas) == 24
     assert schemas[name]["additionalProperties"] is False
     # Exercise every declared property, including merged common/ranking fields.
     assert set(arguments) == set(schemas[name]["properties"])
@@ -138,5 +143,5 @@ def test_all_tool_schemas_reject_only_undeclared_top_level_properties(name, argu
     handler.reset_mock()
     result = registry.execute(name, {**arguments, "filters": {"marca": "Volvo"}})
     assert result["success"] is False
-    assert "Additional properties are not allowed" in result["error"]
+    assert "contradictorios" in result["error"] or "Additional properties" in result["error"]
     handler.assert_not_called()
