@@ -53,4 +53,10 @@ El tercer turno debe ejecutar una única comparación con:
 - `fecha_fin=2026-02-28`
 - sin `filtros.fecha`
 
-La validación queda cerrada únicamente cuando esa repetición devuelve evidencia utilizable y el PDF nuevo muestra completos los gráficos y sus etiquetas.
+La repetición devolvió evidencia utilizable para febrero: BMW 88.994,42; Volvo 204.028,21; diferencia -115.033,79 y variación -56,38 % sobre Volvo. Quedaron confirmados el periodo, las entidades y el desglose por medio, sin `filtros.fecha`.
+
+Esta respuesta reveló dos defectos posteriores. Las cuatro contribuciones narradas sumaban -110.972,10 y omitían un resto neto de -4.061,69, equivalente al 3,53 % de la diferencia. Además, la interpretación de TV SUSCRIPCION decía que su contribución positiva aumentaba la desventaja de BMW, cuando contablemente la compensa.
+
+El renderer ahora conserva las cuatro contribuciones principales, calcula y muestra obligatoriamente el resto neto de las categorías omitidas y no admite interpretación cualitativa libre junto a hechos de drivers. La prueba completa posterior queda en **355 aprobadas, 0 fallidas y 0 advertencias**.
+
+Queda pendiente verificar una nueva exportación del gráfico; la ruta funcional de febrero sí quedó comprobada con la ejecución real.

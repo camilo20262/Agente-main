@@ -95,11 +95,27 @@ def fact_catalog(evidence):
                 denominator = 'grupo' if segment else 'universo consultado'
                 category = 'grouped_ranking' if segment else 'ranking'
                 add(f"{prefix}{segment}, {r.get('dimension', 'dimensión')}={label}: {display(row['value'])}" + (f" ({display(share)} % del {denominator})" if share is not None else '') + '.', record, category=category)
-        for row in r.get('drivers', [])[:6]:
+        drivers = r.get('drivers', [])
+        displayed_drivers = drivers[:4]
+        drivers_total = int(r.get('drivers_total', len(drivers)) or len(drivers))
+        needs_closure = drivers_total > len(displayed_drivers)
+        for row in displayed_drivers:
             def driver_scope(key, fallback):
                 p = r.get('period_' + key, {})
                 return r.get('brand_' + key) or r.get('value_' + key + '_label') or (f"{p['start']} a {p['end']}" if p.get('start') else fallback)
-            add(f"{prefix}, {row['dimension']}={display(row['value'])}: {display(row['current_value'])} en {driver_scope('a', 'A')} frente a {display(row['previous_value'])} en {driver_scope('b', 'B')}; contribución a la diferencia {display(row['contribution'])}" + (f" ({display(row['contribution_pct'])} % de la diferencia neta)" if row.get('contribution_pct') is not None else '') + '.', record)
+            add(f"{prefix}, {row['dimension']}={display(row['value'])}: {display(row['current_value'])} en {driver_scope('a', 'A')} frente a {display(row['previous_value'])} en {driver_scope('b', 'B')}; contribución a la diferencia {display(row['contribution'])}" + (f" ({display(row['contribution_pct'])} % de la diferencia neta)" if row.get('contribution_pct') is not None else '') + '.', record,
+                mandatory=needs_closure, category='driver')
+        net_difference = number(r.get('difference'))
+        contributions = [number(row.get('contribution')) for row in displayed_drivers]
+        if needs_closure and net_difference is not None and all(value is not None for value in contributions):
+            shown_total = sum(contributions)
+            residual = net_difference - shown_total
+            residual_pct = None if not net_difference else residual / net_difference * 100
+            omitted = max(0, drivers_total - len(displayed_drivers))
+            add(f"Las {len(displayed_drivers)} contribuciones principales suman {display(shown_total)}; "
+                f"el resto neto de {omitted} categorías no mostradas es {display(residual)}"
+                + (f" ({display(residual_pct)} % de la diferencia neta)." if residual_pct is not None else '.'),
+                record, mandatory=True, category='driver_closure')
         quality = r.get('data_quality', {})
         if quality.get('unknown_share_pct') is not None:
             add(f"{prefix}: valores sin información en {r.get('dimension')} representan {display(quality['unknown_share_pct'])} %; valores informados, {display(quality['known_share_pct'])} %. Las etiquetas ausentes no son categorías de negocio.", record,
@@ -125,6 +141,7 @@ def render_narrative(raw, facts, evidence):
     if not isinstance(content, dict) or not isinstance(content.get('findings'), list) or not content['findings']:
         raise ValueError('La narrativa requiere hallazgos con fact_ids válidos.')
     by_id = {f['id']: f['text'] for f in facts}
+    metadata_by_id = {f['id']: f for f in facts}
     labels = [str(r.get('dimension', '')) for e in evidence for r in e.get('result', {}).get('rows', [])]
     labels += [str(v) for e in evidence for v in e.get('result', {}).get('filters', {}).values()]
     def qualitative(value):
@@ -143,7 +160,9 @@ def render_narrative(raw, facts, evidence):
             raise ValueError('Referencia factual ausente o desconocida.')
         lines.append('**' + (qualitative(finding.get('title')) or 'Hallazgo') + '**')
         lines.extend(by_id[key] for key in list(dict.fromkeys(ids))[:3])
-        if finding.get('interpretation'): lines.append(qualitative(finding['interpretation']))
+        selected_categories = {metadata_by_id[key].get('category') for key in ids}
+        if finding.get('interpretation') and 'driver' not in selected_categories:
+            lines.append(qualitative(finding['interpretation']))
     omitted_rows = [f['text'] for f in facts if f.get('category') == 'ranking' and f['text'] not in lines]
     if omitted_rows:
         lines.extend(['**Otros resultados del desglose solicitado**', *omitted_rows])
@@ -154,7 +173,12 @@ def render_narrative(raw, facts, evidence):
             if not h.get('validation'): raise ValueError('La hipótesis necesita cómo validarla.')
             lines.append(str(h.get('hypothesis', '')) + ' Validación: ' + str(h['validation']))
     selected_text = set(lines)
-    mandatory = list(dict.fromkeys(f['text'] for f in facts if f.get('mandatory') and f['text'] not in selected_text))
+    driver_closure = list(dict.fromkeys(f['text'] for f in facts
+        if f.get('mandatory') and f.get('category') in {'driver', 'driver_closure'} and f['text'] not in selected_text))
+    if driver_closure:
+        lines.extend(['**Cierre del desglose**', *driver_closure])
+    mandatory = list(dict.fromkeys(f['text'] for f in facts
+        if f.get('mandatory') and f.get('category') not in {'driver', 'driver_closure'} and f['text'] not in selected_text))
     limitations = list(dict.fromkeys(str(w) for e in evidence for w in e.get('result', {}).get('warnings', [])))
     partial = list(dict.fromkeys(f['text'] for f in facts if f['text'].startswith('Cobertura parcial:')))
     if limitations or partial or mandatory:

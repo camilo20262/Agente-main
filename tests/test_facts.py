@@ -71,3 +71,34 @@ def test_driver_facts_identify_both_entities_without_needing_another_fact():
                      'contribution': 10, 'contribution_pct': 100}]}}]
     text = fact_catalog(data)[0]['text']
     assert '30,00 en ENTIDAD X' in text and '20,00 en ENTIDAD Y' in text
+
+
+def test_driver_response_closes_top_four_and_omits_free_directional_interpretation():
+    drivers = [
+        {'dimension': 'medio', 'value': 'TV NAL', 'current_value': 0, 'previous_value': 51068.40,
+         'contribution': -51068.40, 'contribution_pct': 44.39},
+        {'dimension': 'medio', 'value': 'TELEVISION NACIONAL', 'current_value': 0, 'previous_value': 51068.30,
+         'contribution': -51068.30, 'contribution_pct': 44.39},
+        {'dimension': 'medio', 'value': 'RADIO', 'current_value': 0, 'previous_value': 50877.40,
+         'contribution': -50877.40, 'contribution_pct': 44.23},
+        {'dimension': 'medio', 'value': 'TV SUSCRIPCION', 'current_value': 42042, 'previous_value': 0,
+         'contribution': 42042, 'contribution_pct': -36.55},
+        {'dimension': 'medio', 'value': 'OTRO A', 'current_value': 0, 'previous_value': 3000,
+         'contribution': -3000, 'contribution_pct': 2.61},
+        {'dimension': 'medio', 'value': 'OTRO B', 'current_value': 0, 'previous_value': 1061.69,
+         'contribution': -1061.69, 'contribution_pct': 0.92},
+    ]
+    data = [{'id': 'e1', 'result': {'success': True, 'metric': 'inv_neta',
+        'value_a_label': 'BMW', 'value_b_label': 'Volvo', 'value_a': 88994.42, 'value_b': 204028.21,
+        'difference': -115033.79, 'difference_pct': -56.38, 'drivers': drivers, 'drivers_total': 6}}]
+    facts = fact_catalog(data)
+    tv_subscription = next(f for f in facts if 'TV SUSCRIPCION' in f['text'])
+    output = render_narrative(json.dumps({'findings': [{'title': 'TV SUSCRIPCION',
+        'fact_ids': [tv_subscription['id']],
+        'interpretation': 'Esto aumenta la desventaja de BMW.'}]}), facts, data)
+    assert 'Esto aumenta la desventaja' not in output
+    assert 'Las 4 contribuciones principales suman -110.972,10' in output
+    assert '2 categorías no mostradas es -4.061,69' in output
+    assert '3,53 % de la diferencia neta' in output
+    for label in ('TV NAL', 'TELEVISION NACIONAL', 'RADIO', 'TV SUSCRIPCION'):
+        assert label in output
