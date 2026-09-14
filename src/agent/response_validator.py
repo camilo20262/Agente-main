@@ -43,7 +43,10 @@ def compact_evidence(evidence, *, ranking_rows=10, series_rows=24, failed_tools=
         result = item.get('result', {})
         if result.get('success') is not True:
             if failures < failed_tools:
-                compact.append({'tool': item.get('tool'), 'success': False, 'error_type': result.get('error_type'), 'error': result.get('error')})
+                if result.get('usable_partial_evidence') is True:
+                    compact.append({'tool': item.get('tool'), **clean(result)})
+                else:
+                    compact.append({'tool': item.get('tool'), 'success': False, 'error_type': result.get('error_type'), 'error': result.get('error')})
             failures += 1
             continue
         entry = {'id': item.get('id'), 'tool': item.get('tool'), **clean(result)}
@@ -121,9 +124,11 @@ def _percentage_supported(match, text, candidates):
     value = parse_display(raw) if ',' in raw and '.' in raw else float(raw.replace(',', '.'))
     if _supported(value, candidates, raw):
         return True
-    clause = re.split(r'[;\n]', text[max(0, match.start()-65):match.end()])[ -1]
+    before = re.split(r'[;\n]', text[max(0, match.start()-65):match.start()])[-1]
+    after = re.split(r'[;\n]', text[match.end():min(len(text), match.end()+55)])[0]
+    clause = before + match[0] + after
     # A fall of 12% is the ordinary verbal rendering of a signed -12% change.
-    if value > 0 and re.search(r'cay[oó]|baj[oó]|disminu|ca[ií]da|reducci[oó]n|menos|inferior', clause, re.I):
+    if value > 0 and re.search(r'cay[oó]|baj[oó]|disminu|ca[ií]da|reducci[oó]n|menos|inferior|debajo|compens', clause, re.I):
         return _supported(-value, candidates, raw)
     return False
 

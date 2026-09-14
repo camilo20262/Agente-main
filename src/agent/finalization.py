@@ -2,7 +2,7 @@
 from __future__ import annotations
 from src.agent.prompts import FINAL_RESPONSE_PROMPT
 from src.agent.response_validator import compact_evidence, validate_answer
-from src.agent.facts import fact_catalog, render_narrative
+from src.agent.facts import analytical_context, fact_catalog, period_label, present_limitation, render_narrative
 
 
 def display(value):
@@ -12,31 +12,37 @@ def display(value):
 
 
 def safe_answer(evidence, *, reason=None):
-    explanations = {'no_data': 'no encontré datos numéricos para el alcance solicitado',
-                    'arguments': 'no pude resolver los argumentos de una consulta',
-                    'schema': 'una consulta no superó la validación del esquema',
-                    'infrastructure': 'la fuente de datos no estuvo disponible',
-                    'duplicate': 'se omitió una consulta repetida',
-                    'intent_budget': 'se alcanzó el presupuesto de investigación'}
+    explanations = {'no_data': 'la información disponible no permite responder la solicitud con suficiente rigor',
+                    'arguments': 'no fue posible definir con precisión el alcance solicitado',
+                    'schema': 'la consulta no pudo completarse con la estructura disponible',
+                    'infrastructure': 'la fuente de información no estuvo disponible',
+                    'duplicate': 'la investigación no requirió repetir una consulta ya realizada',
+                    'intent_budget': 'el análisis alcanzó el límite de investigación definido'}
     entity_gap = next((item.get('result', {}) for item in evidence
                        if item.get('result', {}).get('comparison_status') == 'incomplete_entity_observation'), None)
     if entity_gap:
         metric = entity_gap.get('metric_label') or entity_gap.get('metric', 'la métrica solicitada')
         period = entity_gap.get('effective_period') or entity_gap.get('requested_period') or {}
-        interval = (f" entre {period['start']} y {period['end']}"
-                    if period.get('start') and period.get('end') else '')
+        interval = period_label(period)
+        period_text = f'Durante {interval}' if interval else 'En el periodo analizado'
         observations = entity_gap.get('entity_observations') or []
         missing_rows = [str(item.get('label')) for item in observations if item.get('status') == 'no_rows']
         missing_numbers = [str(item.get('label')) for item in observations if item.get('status') == 'non_numeric']
         observed = [item for item in observations if item.get('status') == 'observed']
-        lines = ['Análisis parcial: faltan observaciones para completar la comparación.']
+        lines = ['Análisis parcial: la información disponible no permite completar la comparación.',
+                 '### Lectura disponible']
         if missing_rows:
-            lines.append(f'BICOMP no contiene filas para {", ".join(missing_rows)}{interval}.')
+            lines.append(f'{period_text}, la fuente analizada no presenta registros para {", ".join(missing_rows)}.')
         if missing_numbers:
-            lines.append(f'BICOMP no contiene valores numéricos utilizables para {", ".join(missing_numbers)}{interval}.')
+            lines.append(f'{period_text}, no hay valores numéricos utilizables para {", ".join(missing_numbers)}.')
         for item in observed:
-            lines.append(f"{item['label']} sí tiene datos observados: {display(item.get('observed_value'))} ({metric}){interval}.")
-        lines.append('No calculé la diferencia ni las contribuciones por dimensión, porque la ausencia de filas no demuestra una inversión de cero.')
+            lines.append(f"En el mismo periodo, {item['label']} registró {display(item.get('observed_value'))} en {metric.lower()}.")
+        lines.extend([
+            '### Implicación para el análisis',
+            'La ausencia de registros no equivale necesariamente a una inversión de cero. Por esta razón, no se presenta una diferencia ni un desglose por dimensión.',
+            '### Recomendación',
+            'Validar la cobertura de la entidad sin registros antes de utilizar esta comparación en una decisión o presentación externa.',
+        ])
         return '\n\n'.join(dict.fromkeys(lines))
     lines = [f'Análisis parcial: {explanations.get(reason, reason)}.'] if reason else []
     for item in evidence:
@@ -49,41 +55,40 @@ def safe_answer(evidence, *, reason=None):
                     f'Los valores disponibles son: {available}. ¿Cuál quieres comparar?')
         if result.get('success') is not True or item.get('historical'):
             continue
-        scope = ', '.join(str(v) for v in result.get('filters', {}).values()) or result.get('brand') or 'el alcance consultado'
         label = result.get('metric_label') or result.get('metric', 'Resultado')
         period = result.get('effective_period') or result.get('observed_period') or result.get('period') or {}
-        period_text = f" Entre {period['start']} y {period['end']}." if period.get('start') and period.get('end') else ''
+        context = analytical_context(result.get('filters', {}), period)
         if result.get('capability') in {'rank_change', 'rank_acceleration', 'temporal_extrema', 'dimension_search'} or (result.get('values') and result.get('share_pct') is not None):
             lines.extend(f['text'] for f in fact_catalog([item]))
         elif result.get('value') is not None:
-            lines.append(f"{scope}: {label} de {display(result['value'])}.{period_text}")
+            lines.append(f"{context}, {label.lower()} fue de {display(result['value'])}.")
             if result.get('share_pct') is not None:
-                lines.append(f"Participación calculada: {display(result['share_pct'])} %.")
+                lines.append(f"Este resultado representa {display(result['share_pct'])} % del universo analizado.")
         elif result.get('value_a') is not None and result.get('value_b') is not None:
             a = result.get('brand_a') or result.get('value_a_label') or str(result.get('period_a', 'Periodo actual'))
             b = result.get('brand_b') or result.get('value_b_label') or str(result.get('period_b', 'Periodo anterior'))
-            lines.append(f"{a}: {display(result['value_a'])}; {b}: {display(result['value_b'])} ({label}).")
+            lines.append(f"{context}, {a} registró {display(result['value_a'])}, frente a {display(result['value_b'])} de {b}, en {label.lower()}.")
             if result.get('difference') is not None:
-                lines.append(f"Diferencia calculada: {display(result['difference'])}.")
+                lines.append(f"La diferencia fue de {display(result['difference'])}.")
             if result.get('difference_pct') is not None:
-                lines.append(f"Variación calculada: {display(result['difference_pct'])} %.")
+                lines.append(f"Esto equivale a una variación de {display(result['difference_pct'])} % sobre {b}.")
         elif result.get('rows'):
-            lines.append(f'{label} para {scope}.{period_text}')
+            lines.append(f'{context}, estos son los principales resultados de {label.lower()}:')
             for row in result['rows'][:5]:
                 category = display(row.get('dimension', row.get('period', 'Dato')))
                 if result.get('segment_dimension'):
                     category = f"{result['segment_dimension']}={display(row.get('segment'))}, {category}"
                 lines.append(f"- {category}: {display(row.get('value'))}.")
         elif result.get('values'):
-            lines.append('Valores disponibles (muestra): ' + ', '.join(map(str, result['values'][:10])) + '.')
+            lines.append('Los valores disponibles incluyen: ' + ', '.join(map(str, result['values'][:10])) + '.')
         elif result.get('start') and result.get('end'):
-            lines.append(f"Cobertura disponible: {result['start']} a {result['end']}.")
+            lines.append(f"La fuente dispone de información entre {result['start']} y {result['end']}.")
         if result.get('is_partial'):
-            lines.append('Corresponde al acumulado disponible, con cobertura parcial del periodo solicitado.')
+            lines.append('El resultado corresponde al acumulado disponible y tiene cobertura parcial del periodo solicitado.')
         for warning in result.get('warnings', [])[:2]:
-            lines.append(str(warning).rstrip('.') + '.')
+            lines.append(present_limitation(warning) + '.')
     if not lines or (reason and len(lines) == 1):
-        lines.append('No obtuve evidencia utilizable para responder esta pregunta. No puedo afirmar valores ni variaciones.')
+        lines.append('No fue posible obtener información suficiente para emitir una conclusión confiable. Conviene revisar el alcance o la disponibilidad de la fuente antes de utilizar este resultado.')
     return '\n\n'.join(dict.fromkeys(lines))
 
 

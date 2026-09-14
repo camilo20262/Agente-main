@@ -23,7 +23,7 @@ def test_factual_labels_and_partial_cutoff_are_preserved():
     facts = fact_catalog(data)
     output = render_narrative(json.dumps({'summary': 'Predomina la falta de información.', 'findings': [
         {'title': 'Calidad de datos', 'fact_ids': ['F1'], 'interpretation': ''}], 'hypotheses': []}), facts, data)
-    assert 'Sin información' in output and '2026-07-31' in output
+    assert 'Sin información' in output and '31 de julio de 2026' in output
     assert validate_answer(output, data).valid
 
 
@@ -60,7 +60,7 @@ def test_missing_categories_are_replaced_by_mandatory_quality_fact():
     facts = fact_catalog(data)
     assert len(facts) == 2 and 'VIDEO' in facts[0]['text']
     output = render_narrative(json.dumps({'findings': [{'title': 'Formato identificado', 'fact_ids': ['F1']}]}), facts, data)
-    assert '90,00 %' in output and 'no son categorías de negocio' in output
+    assert '90,00 %' in output and 'no se interpretan como categorías de negocio' in output
     assert 'formato=Sin información' not in output
     assert validate_answer(output, data).valid
 
@@ -70,7 +70,7 @@ def test_driver_facts_identify_both_entities_without_needing_another_fact():
         'drivers': [{'dimension': 'medio', 'value': 'RADIO', 'current_value': 30, 'previous_value': 20,
                      'contribution': 10, 'contribution_pct': 100}]}}]
     text = fact_catalog(data)[0]['text']
-    assert '30,00 en ENTIDAD X' in text and '20,00 en ENTIDAD Y' in text
+    assert 'ENTIDAD X registró 30,00' in text and '20,00 de ENTIDAD Y' in text
 
 
 def test_driver_response_closes_top_four_and_omits_free_directional_interpretation():
@@ -99,9 +99,27 @@ def test_driver_response_closes_top_four_and_omits_free_directional_interpretati
         'fact_ids': [tv_subscription['id']],
         'interpretation': 'Esto aumenta la desventaja de BMW.'}]}), facts, data)
     assert 'Esto aumenta la desventaja' not in output
-    assert 'Las 4 contribuciones principales suman -110.972,10' in output
-    assert '2 categorías no mostradas es -4.061,69' in output
+    assert 'Las 4 categorías con mayor contribución suman -110.972,10' in output
+    assert 'Las 2 categorías restantes aportan, en términos netos, -4.061,69' in output
     assert '3,53 % de la diferencia neta' in output
     for label in ('TV NAL', 'TELEVISION NACIONAL', 'RADIO', 'TV SUSCRIPCION'):
         assert label in output
+    assert validate_answer(output, data).valid
+
+
+def test_client_narrative_uses_business_language_and_natural_scope():
+    data = [{'id': 'e1', 'result': {'success': True, 'metric_label': 'Inversión publicitaria neta',
+        'effective_period': {'start': '2025-01-01', 'end': '2025-12-31'},
+        'value_a_label': 'BMW', 'value_b_label': 'Volvo', 'value_a': 100, 'value_b': 200,
+        'difference': -100, 'difference_pct': -50,
+        'drivers': [{'dimension': 'medio', 'value': 'RADIO', 'current_value': 25,
+                    'previous_value': 100, 'contribution': -75, 'contribution_pct': 75}]}}]
+    facts = fact_catalog(data)
+    output = render_narrative(json.dumps({'summary': 'Volvo mantiene una posición superior en el periodo.',
+        'findings': [{'title': 'Brecha de inversión', 'fact_ids': ['F1']},
+                     {'title': 'Aporte de radio', 'fact_ids': ['F2']}], 'hypotheses': []}), facts, data)
+    assert '### Lectura ejecutiva' in output and '### Hallazgos clave' in output
+    assert 'Durante 2025' in output and 'BMW se ubicó 50,00 % por debajo de Volvo' in output
+    assert 'el medio RADIO' in output
+    assert all(term not in output for term in ('medio=', 'alcance consultado', 'BigQuery', 'source_rows'))
     assert validate_answer(output, data).valid

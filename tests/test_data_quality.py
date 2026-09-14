@@ -126,8 +126,10 @@ def test_entity_difference_reports_observed_side_when_other_entity_has_no_rows(m
     assert 'periodos' not in result['error']
     evidence = [{'tool': 'explicar_diferencia_entidades_bicomp', 'result': result}]
     answer = safe_answer(evidence, reason='no_data')
-    assert all(text in answer for text in ('BMW', 'Volvo', '50,00', '2026-05-01', '2026-05-31'))
-    assert 'no demuestra una inversión de cero' in answer
+    assert all(text in answer for text in ('BMW', 'Volvo', '50,00', 'mayo de 2026'))
+    assert all(section in answer for section in ('### Lectura disponible', '### Implicación para el análisis', '### Recomendación'))
+    assert all(term not in answer for term in ('BICOMP', 'BigQuery', '2026-05-01', '2026-05-31'))
+    assert 'no equivale necesariamente a una inversión de cero' in answer
     assert validate_answer(answer, evidence, intent='diagnostic').valid
 
 

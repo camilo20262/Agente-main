@@ -72,3 +72,11 @@ La respuesta anterior ocultaba ese hallazgo con el texto genérico «no obtuve e
 La primera ejecución idéntica había terminado antes de crear una consulta, pero su diagnóstico quedó irrecuperable porque la interfaz solo mostraba debug cuando había evidencia y reutilizaba las métricas del último turno. Las métricas y el plan quedan ahora almacenados por mensaje, y el panel debug aparece también en fallos previos a la consulta. Así, una repetición futura permitirá distinguir un rechazo del plan, un fallo del proveedor y un resultado sin filas.
 
 Verificación posterior: **356 pruebas aprobadas, 0 fallidas y 0 advertencias**.
+
+## Presentación para clientes
+
+La revisión visual mostró que las respuestas seguían exponiendo hechos correctos con una redacción demasiado cercana al resultado de consulta: fechas ISO, pares `dimensión=valor`, repetición del alcance y limitaciones formuladas como detalles del sistema. La capa factual se reescribió para conservar exactamente las mismas cifras con una voz ejecutiva, periodos naturales en español y contexto integrado en oraciones de negocio.
+
+Las respuestas completas se organizan ahora en lectura ejecutiva, hallazgos clave, hipótesis de trabajo y consideraciones del análisis. Los medios que amplían una brecha se distinguen de los que la compensan. Las salidas parciales explican qué información sí está disponible, su implicación y el siguiente paso recomendado, sin mencionar BigQuery, SQL, JSON, herramientas, filas o validadores.
+
+El cambio mantiene el control numérico: porcentajes negativos pueden expresarse como magnitudes «por debajo» o «compensó» solo cuando la evidencia contiene el valor firmado correspondiente. La regresión incluye una comparación de clientes completa y el caso de una entidad sin observaciones. Verificación final: **357 pruebas aprobadas, 0 fallidas y 0 advertencias**.
