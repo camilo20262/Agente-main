@@ -93,7 +93,8 @@ def fact_catalog(evidence):
                 share = row.get('share_pct')
                 segment = f", {r['segment_dimension']}={display(row.get('segment'))}" if r.get('segment_dimension') else ''
                 denominator = 'grupo' if segment else 'universo consultado'
-                add(f"{prefix}{segment}, {r.get('dimension', 'dimensión')}={label}: {display(row['value'])}" + (f" ({display(share)} % del {denominator})" if share is not None else '') + '.', record, category='ranking')
+                category = 'grouped_ranking' if segment else 'ranking'
+                add(f"{prefix}{segment}, {r.get('dimension', 'dimensión')}={label}: {display(row['value'])}" + (f" ({display(share)} % del {denominator})" if share is not None else '') + '.', record, category=category)
         for row in r.get('drivers', [])[:6]:
             def driver_scope(key, fallback):
                 p = r.get('period_' + key, {})

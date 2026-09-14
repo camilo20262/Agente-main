@@ -655,7 +655,8 @@ class BigQueryRepository:
             candidates = [v for v in catalog.get('values', []) if v is not None]
             if candidates and len(candidates) <= 20:
                 clarification = {'dimension': dimension, 'missing_values': missing, 'available_values': candidates}
-        return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum",
+        return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric,
+                "metric_label": first.get("metric_label"), "unit": first.get("unit"), "aggregation": "sum",
                 "clarification_options": clarification,
                 **({"error": f"La consulta BICOMP no produjo resultados para {dimension}: " + ", ".join(missing) + "."} if missing else {}),
                 "dimension": dimension, "value_a_label": value_a, "value_b_label": value_b,

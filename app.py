@@ -6,7 +6,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from openai import OpenAI
 
-import PyPDF2
+from pypdf import PdfReader
 from PIL import Image, ImageGrab
 
 from agent import (
@@ -111,6 +111,32 @@ st.markdown("""
             max-width: 1180px;
             padding-top: 2.2rem;
             padding-bottom: 7rem;
+        }
+
+        @media print {
+            section[data-testid="stSidebar"],
+            [data-testid="stHeader"],
+            [data-testid="stBottom"] {
+                display: none !important;
+            }
+
+            [data-testid="stAppViewContainer"],
+            [data-testid="stMain"],
+            [data-testid="stMainBlockContainer"],
+            .block-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding-left: 0.2in !important;
+                padding-right: 0.2in !important;
+                overflow: visible !important;
+            }
+
+            [data-testid="stPlotlyChart"] {
+                width: 100% !important;
+                max-width: 100% !important;
+                break-inside: avoid;
+            }
         }
 
         h1, h2, h3 {
@@ -549,7 +575,7 @@ SYSTEM_PROMPT = AGENT_SYSTEM_PROMPT
 
 def extraer_texto_pdf(archivo_pdf):
     try:
-        pdf_reader = PyPDF2.PdfReader(archivo_pdf)
+        pdf_reader = PdfReader(archivo_pdf)
         return "\n".join([p.extract_text() or "" for p in pdf_reader.pages])
     except Exception as e:
         st.error(f"Error al leer el PDF: {e}")
@@ -786,7 +812,7 @@ with ajustes_col:
 
         mostrar_consultas = st.checkbox(
             "Mostrar trazabilidad",
-            value=True,
+            value=False,
             help="Muestra los filtros y resultados reales usados en cada respuesta."
         )
         modo_debug = st.checkbox("Modo debug", value=False, help="Muestra plan interno validado y métricas operativas.")

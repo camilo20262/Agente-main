@@ -121,6 +121,37 @@ def is_elliptical_entity_reference(question: str, steps: list[dict]) -> bool:
     return False
 
 
+def normalize_temporal_filter(payload: dict[str, Any]) -> dict[str, Any]:
+    """Promote an LLM-emitted ``filters.fecha`` range to the calendar scope.
+
+    Dates are controlled by ``period`` throughout the executor. Accepting the
+    same range as a categorical filter duplicates the scope and later violates
+    every tool schema. This only normalizes an explicit start/end object.
+    """
+    promoted = []
+    containers = [payload.setdefault('filters', {})]
+    for step in payload.get('steps', []):
+        arguments = step.get('arguments', {})
+        for key in ('filtros', 'filters'):
+            if isinstance(arguments.get(key), dict):
+                containers.append(arguments[key])
+    for filters in containers:
+        date_filter = filters.pop('fecha', None)
+        if date_filter is None:
+            continue
+        if not isinstance(date_filter, dict) or set(date_filter) != {'start', 'end'}:
+            raise ValueError('fecha no es un filtro categórico; declara el intervalo con period.start y period.end.')
+        promoted.append({'kind': 'range', 'start': date_filter['start'], 'end': date_filter['end']})
+    if not promoted:
+        return payload
+    if any(item != promoted[0] for item in promoted[1:]):
+        raise ValueError('El plan contiene intervalos de fecha contradictorios.')
+    payload['period'] = promoted[0]
+    if payload.get('operation') in {'filter_scope', 'continue_analysis'}:
+        payload['operation'] = 'change_period'
+    return payload
+
+
 class AnalyticalPlanner:
     def __init__(self, allowed_tools: set[str], interpreter: Callable[..., dict[str, Any]] | None = None):
         self.allowed_tools = allowed_tools
@@ -134,6 +165,7 @@ class AnalyticalPlanner:
         try:
             payload = deepcopy(payload)
             payload.setdefault('analysis_questions', [])  # Optional prose is not an evidence contract.
+            payload = normalize_temporal_filter(payload)
             previous_scope = (memory or {}).get('analysis_context', {})
             if payload.get('operation') == 'filter_scope' and previous_scope:
                 changed_filters = any(previous_scope.get('filters', {}).get(k) != v for k, v in payload.get('filters', {}).items()) or payload.get('remove_filters')
@@ -194,6 +226,10 @@ class AnalyticalPlanner:
                         'Solo conserva esa restricción con analysis.retain_filters si el usuario la pidió explícitamente.')
             if (set(payload['filters']) | set(payload.get('remove_filters', []))) - set(semantic['dimensions']):
                 raise ValueError('Filtro fuera del modelo semántico.')
+            for item in payload['steps']:
+                if item.get('tool') == 'ranking_segmentado_bicomp' and item.get('arguments', {}).get('dimension_grupo') == 'fecha':
+                    raise ValueError('ranking_segmentado_bicomp no agrupa por fecha sin granularidad. '
+                        'Usa serie_temporal_bicomp para la tendencia y un ranking categórico separado para la distribución.')
             steps = [PlanStep(**item) for item in payload['steps']]
             intent = payload['intent']
             previous = (memory or {}).get('analysis_context', {})

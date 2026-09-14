@@ -1,7 +1,7 @@
 from datetime import date
 import pytest
 from src.agent.analysis_context import AnalysisContext
-from src.agent.planner import AnalyticalPlanner, InvalidToolPlanError
+from src.agent.planner import AnalyticalPlanner, InvalidToolPlanError, normalize_temporal_filter
 from src.tools.registry import ToolRegistry
 from tests.test_agent_service import payload, step, FakeRepository
 
@@ -29,6 +29,44 @@ def test_explicit_period_inheritance_is_independent_of_filter_replacement():
     context = AnalysisContext.resolve(p, {'analysis_context': {'filters': {'marca': 'A'},
         'requested_period': {'start': '2024-01-01', 'end': '2024-12-31'}}}, today=date(2026, 9, 10))
     assert context.filters == {} and context.requested_period['start'] == '2024-01-01'
+
+
+def test_date_range_filter_is_promoted_to_authoritative_period():
+    p = payload('diagnostic', mode='inherit', filters={'fecha': {'start': '2026-02-01', 'end': '2026-02-28'}},
+        period={'kind': 'inherit'}, steps=[step('explicar_diferencia_entidades_bicomp', {
+            'dimension_entidad': 'marca', 'dimension': 'medio', 'valor_a': 'BMW', 'valor_b': 'Volvo',
+            'filtros': {'fecha': {'start': '2026-02-01', 'end': '2026-02-28'}}})])
+    p['operation'] = 'filter_scope'
+    normalized = normalize_temporal_filter(p)
+    assert normalized['operation'] == 'change_period'
+    assert normalized['period'] == {'kind': 'range', 'start': '2026-02-01', 'end': '2026-02-28'}
+    assert normalized['filters'] == {} and normalized['steps'][0]['arguments']['filtros'] == {}
+
+
+def test_date_filter_followup_preserves_entity_comparison_and_uses_only_february():
+    previous = {'intent': 'diagnostic', 'filters': {}, 'dimensions': ['medio'],
+        'requested_period': {'start': '2026-01-01', 'end': '2026-12-31'}}
+    strategy = [step('explicar_diferencia_entidades_bicomp', {
+        'dimension_entidad': 'marca', 'dimension': 'medio', 'valor_a': 'BMW', 'valor_b': 'Volvo'})]
+    p = payload('diagnostic', mode='inherit', filters={'fecha': {'start': '2026-02-01', 'end': '2026-02-28'}},
+        period={'kind': 'inherit'}, steps=strategy)
+    p['operation'] = 'filter_scope'
+    plan = planner().plan('Solo de febrero.', {'analysis_context': previous, 'last_strategy': strategy}, payload=p)
+    context = AnalysisContext.resolve(plan.scope, {'analysis_context': previous}, today=date(2026, 9, 14))
+    args = context.bind(plan.steps[0].arguments, {
+        'metrica': {}, 'filtros': {}, 'fecha_inicio': {}, 'fecha_fin': {}})
+    assert context.requested_period == {'start': '2026-02-01', 'end': '2026-02-28'}
+    assert context.filters == {}
+    assert args['fecha_inicio'] == '2026-02-01' and args['fecha_fin'] == '2026-02-28'
+    assert args['valor_a'] == 'BMW' and args['valor_b'] == 'Volvo'
+
+
+def test_segmented_ranking_rejects_raw_date_grouping():
+    p = payload('open_analysis', steps=[step('serie_temporal_bicomp', {'granularidad': 'month'}),
+        step('ranking_segmentado_bicomp', {'dimension': 'medio', 'dimension_grupo': 'fecha'})])
+    p['dimensions'] = ['fecha', 'medio']
+    with pytest.raises(InvalidToolPlanError, match='no agrupa por fecha'):
+        planner().plan('Analiza tendencias y distribución.', payload=p)
 
 
 def test_diagnostic_can_use_one_tool_with_comparison_and_drivers():

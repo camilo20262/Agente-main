@@ -13,6 +13,9 @@ def test_ranking_chart_spec():
     spec = build_chart_spec("ranking_marcas", {"success": True, "metric": "inv_neta", "rows": [{"dimension": "VOLVO", "value": 20}]})
     assert spec["type"] == "ranking"
     assert spec["title"] == "Ranking por inv_neta"
+    figure = render_plotly(spec)
+    assert list(figure.data[0].text) == [20]
+    assert figure.data[0].cliponaxis is False
 
 
 def test_generic_dimension_ranking_chart_spec():

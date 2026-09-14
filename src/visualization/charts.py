@@ -48,10 +48,16 @@ def render_plotly(spec):
     import plotly.express as px
     data, kind = spec['data'], spec['type']
     if kind == 'line':
-        return px.line(data, x=spec['x'], y=spec['y'], color=spec.get('color'), markers=True, title=spec.get('title'))
+        figure = px.line(data, x=spec['x'], y=spec['y'], color=spec.get('color'), markers=True, title=spec.get('title'))
+        figure.update_layout(margin={'l': 50, 'r': 35, 't': 70, 'b': 55})
+        return figure
     if kind in {'bar', 'ranking', 'comparison'}:
         figure = px.bar(data, x=spec['x'], y=spec['y'], orientation='h' if kind == 'ranking' else 'v',
-                        title=spec.get('title'), facet_col=spec.get('facet_col'))
+                        title=spec.get('title'), facet_col=spec.get('facet_col'),
+                        text=spec['x'] if kind == 'ranking' else spec['y'])
+        figure.update_traces(texttemplate='%{text:,.2f}', textposition='outside', cliponaxis=False)
+        figure.update_layout(margin={'l': 60, 'r': 70, 't': 70, 'b': 70},
+                             uniformtext_minsize=9, uniformtext_mode='hide')
         if kind == 'ranking':
             figure.update_layout(yaxis={'categoryorder': 'total ascending'})
         return figure

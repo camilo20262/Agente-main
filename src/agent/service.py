@@ -218,6 +218,13 @@ class AgentService:
         step = PlanStep(**steps[0])
         if len(step.purpose) < 8:
             raise InvalidToolPlanError('La consulta no explica qué evidencia agrega.')
+        if error and evidence:
+            original = evidence[-1].get('arguments', {})
+            for key in ('dimension_entidad', 'valor_a', 'valor_b', 'marca_a', 'marca_b'):
+                if original.get(key) is not None and step.arguments.get(key) != original[key]:
+                    raise InvalidToolPlanError(
+                        f'Una corrección de argumentos no puede cambiar {key}; conserva la comparación solicitada.'
+                    )
         self.planner.validate(AnalyticalPlan(context.intent, ['bicomp'], [step]))
         return step, decision['reason']
 
