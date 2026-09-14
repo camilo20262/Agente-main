@@ -290,10 +290,21 @@ def test_correctable_unneeded_step_can_be_omitted_after_explicit_sufficiency_rev
     assert result.evidence[-1]['result']['success'] is False
 
 
+def test_argument_correction_cannot_replace_compared_entities():
+    s, _, _ = service([{'stop': False, 'reason': 'Intentar una corrección de argumentos.', 'steps': [
+        step('comparar_marcas', {'marca_a': 'TOYOTA', 'marca_b': 'VOLVO'})]}])
+    context = s._context(s.planner.plan('Compara BMW y Volvo', payload=payload(
+        'comparison', filters={}, steps=[step('comparar_marcas', {'marca_a': 'BMW', 'marca_b': 'VOLVO'})])))
+    evidence = [{'arguments': {'marca_a': 'BMW', 'marca_b': 'VOLVO'},
+                 'result': {'success': False, 'error_type': 'arguments'}}]
+    with pytest.raises(Exception, match='no puede cambiar marca_a'):
+        s._next_step('Compara BMW y Volvo', context, evidence, 1, None, error=evidence[-1]['result'])
+
+
 def test_open_analysis_cannot_finish_complete_with_only_total_and_one_distribution():
     plan = payload('open_analysis', steps=[step('consultar_inversion_publicitaria'), step('analizar_medios')])
     s, _, repo = service([plan, {'stop': True, 'reason': 'El modelo cree que basta.', 'steps': []}, 'La inversión fue 100.'])
     result = s.run([{'role': 'user', 'content': 'Analiza esta entidad.'}])
     assert result.is_partial and len(repo.calls) == 2
     assert result.metrics['stop_reason'] == 'insufficient_evidence'
-    assert result.answer.startswith('Análisis parcial:')
+    assert result.answer.startswith('### Resultado sujeto a validación')

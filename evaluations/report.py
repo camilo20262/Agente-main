@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import math
+import argparse
 from pathlib import Path
 from statistics import median
 from types import SimpleNamespace
@@ -23,17 +24,26 @@ def cell(value):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--run', help='Nombre exacto de una corrida; por defecto usa la más reciente.')
+    args = parser.parse_args()
     runs = sorted(((p.parent.name, read(p)) for p in RESULTS.glob('*/summary.json')),
                   key=lambda item: item[1]['started_at'])
+    if not runs:
+        raise SystemExit('No hay corridas con summary.json.')
+    if args.run:
+        selected = [(name, run) for name, run in runs if name == args.run]
+        if not selected:
+            raise SystemExit(f'No existe la corrida: {args.run}')
+        selected_name, selected_run = selected[0]
+    else:
+        selected_name, selected_run = runs[-1]
     metadata = {c['id']: c for group in cases() + read(ROOT / 'evaluations/holdout_cases.json') for c in group}
-    latest = {}
-    for name, run in runs:
-        for record in run['records']:
-            latest[record['id']] = (name, record)
     reviews_path = RESULTS / 'manual_review.json'
     reviews = read(reviews_path) if reviews_path.exists() else {}
     records = []
-    for case_id, (name, original) in sorted(latest.items()):
+    for original in sorted(selected_run['records'], key=lambda record: record['id']):
+        case_id, name = original['id'], selected_name
         record = dict(original)
         result = SimpleNamespace(**record['result'])
         verdict = assess({**record, **metadata.get(case_id, {})}, result)
@@ -43,18 +53,17 @@ def main():
                       automatic_status=verdict['status'], manual_review=manual)
         records.append(record)
     passed = sum(r['status'] == 'PASS' for r in records)
-    acceptance = next((run for name, run in runs if name == 'acceptance'), None)
     report = ['# Benchmark real del agente BI', '',
-        'Fecha: 11 de septiembre de 2026. Ejecuciones del servicio real con el proveedor NVIDIA '
-        'configurado y la tabla BigQuery autorizada. Los JSON incluyen plan, argumentos, SQL, '
+        f'Corrida seleccionada: `{selected_name}`. Inicio UTC: `{selected_run["started_at"]}`. '
+        'Ejecución del servicio real con el proveedor configurado y la tabla BigQuery autorizada. '
+        'Los JSON incluyen plan, argumentos, SQL, '
         'evidencia, respuesta, errores, contadores y latencia. No se usan respuestas simuladas en esta batería.', '',
         '## Resultado y alcance', '',
-        f'**Último resultado por pregunta: {passed}/{len(records)} PASS y {len(records)-passed} FAIL.** '
-        'Se toma siempre el intento más reciente, aunque sea peor que uno anterior; no se selecciona el mejor.', '']
-    if acceptance:
-        report += [f'La corrida completa `acceptance` comenzó en `{acceptance["started_at"]}`; '
-                   f'huella SHA-256 del código Python de `src`: `{acceptance["source_fingerprint"]}`. '
-                   'Las correcciones posteriores, si existen, aparecen como repeticiones separadas con su propia procedencia.', '']
+        f'**Resultado de esta corrida: {passed}/{len(records)} PASS y {len(records)-passed} FAIL.** '
+        'Todos los casos, estadísticas y conclusiones de este documento pertenecen a esa misma ejecución.', '',
+        f'Huella SHA-256 del código: `{selected_run.get("source_fingerprint", "no disponible")}`. '
+        f'Commit: `{selected_run.get("git_commit", "no registrado")}`. '
+        f'Huella de casos: `{selected_run.get("cases_fingerprint", "no registrada")}`.', '']
     report += ['El corpus contiene 28 preguntas independientes, una conversación obligatoria de siete turnos, '
         'otra de tres turnos sobre el mes pico y ocho preguntas adicionales con dimensiones/métricas diferentes. '
         'Cuatro rankings se generan a partir del modelo semántico. Las ocho preguntas adicionales se introdujeron '
@@ -97,7 +106,7 @@ def main():
     for name, run in runs:
         report.append(f'| {name} | {run["count"]} | {run["passed"]} | {run["failed"]} | '
                       f'[JSON](evaluations/results/{name}/summary.json) |')
-    report += ['', '## Preguntas y últimos resultados', '',
+    report += ['', '## Preguntas y resultados de la corrida', '',
         'BQ cuenta jobs ejecutados; una herramienta puede requerir varios. LLM incluye planificación, '
         'investigación, redacción y reparaciones. El número de pasos incluye intentos fallidos. '
         'La intención es la detectada; un seguimiento puede conservar un diagnóstico previo aunque '
@@ -113,7 +122,7 @@ def main():
                       f'{tools} | {result["steps"]} | {turn.get("bigquery_queries", 0)} | '
                       f'{turn.get("total_llm_calls", 0)} | [{cell(outcome)}]({link}) ({r["run"]}) |')
     report += ['', '## Latencia y consumo observados', '',
-        'Estadística del último intento por pregunta, incluyendo fallos, aclaraciones y caché. '
+        'Estadística de los casos de la corrida seleccionada, incluyendo fallos, aclaraciones y caché. '
         'P95 usa el rango más próximo superior. Son observaciones del endpoint y entorno concretos, '
         'no un SLA ni una medición de carga concurrente de producción.', '',
         '| Medida | Total | Mediana | P95 | Máximo |', '|---|---:|---:|---:|---:|']
@@ -138,12 +147,14 @@ def main():
         '[manual_review.json](evaluations/results/manual_review.json).', '',
         '## Reproducción', '', '```sh', '.venv/bin/python -m pytest -q',
         '.venv/bin/python -m evaluations.benchmark --live --cases evaluations/results/acceptance_cases.json --output evaluations/results/new_run --workers 2',
-        '.venv/bin/python -m evaluations.report', '```', '',
+        f'.venv/bin/python -m evaluations.report --run {selected_name}', '```', '',
         'La segunda orden realiza llamadas reales y requiere credenciales válidas del entorno. '
         'Usar un directorio nuevo conserva el historial. Los resultados contienen datos de negocio y SQL, '
         'por lo que deben permanecer bajo controles de acceso equivalentes a la fuente.', '']
     (ROOT / 'BENCHMARK_AGENTE_BI.md').write_text('\n'.join(report))
-    (RESULTS / 'latest_assessment.json').write_text(json.dumps({'count': len(records), 'passed': passed,
+    (RESULTS / 'latest_assessment.json').write_text(json.dumps({'run': selected_name,
+        'started_at': selected_run['started_at'], 'source_fingerprint': selected_run.get('source_fingerprint'),
+        'cases_fingerprint': selected_run.get('cases_fingerprint'), 'count': len(records), 'passed': passed,
         'failed': len(records)-passed, 'records': [{k: r[k] for k in ('id', 'run', 'status', 'issues', 'automatic_status', 'manual_review')} for r in records]}, ensure_ascii=False, indent=2) + '\n')
     print(f'Report generated: {passed}/{len(records)} PASS.')
 

@@ -139,6 +139,7 @@ Para repetir el benchmark contra **el proveedor y BigQuery reales**:
 
 ```bash
 python -m evaluations.benchmark --live --output evaluations/results/retest --workers 1
+python -m evaluations.report --run retest
 ```
 
 Cada JSON conserva pregunta, plan, filtros, SQL, respuesta, validaciones, uso y veredicto.
@@ -159,7 +160,20 @@ HISTORY_MAX_MESSAGES=12
 HISTORY_MAX_CHARS=16000
 LLM_VISION_MODELS=
 ENABLE_LOCAL_CLIPBOARD=0
+BICOMP_CURRENCY_CODE=
+BICOMP_CURRENCY_SCALE=
+ENABLE_TECHNICAL_TRACE=false
+ENABLE_DEBUG_UI=false
 ```
+
+Las métricas monetarias nativas requieren `BICOMP_CURRENCY_CODE` y
+`BICOMP_CURRENCY_SCALE` (`unit`, `thousand` o `million`) confirmados por el propietario
+de la fuente. Si faltan, la respuesta declara que la moneda y la escala están pendientes;
+no las infiere. Las métricas `*_usd` declaran USD en el modelo semántico.
+
+La trazabilidad técnica y el modo debug permanecen ocultos salvo habilitación explícita
+del despliegue. Esos interruptores no sustituyen autenticación ni autorización por usuario;
+un despliegue para clientes debe proteger también la aplicación y los artefactos del benchmark.
 
 Habilita visión únicamente para modelos cuya capacidad hayas confirmado. Sin visión
 configurada, el agente explica esa limitación antes de procesar una imagen. Los PDF
@@ -180,6 +194,12 @@ Las nuevas conversaciones reales se ejecutan explícitamente y consumen llamadas
 .venv/bin/python -m evaluations.state_report
 ```
 
-Los catálogos pequeños configurados se validan contra la fuente y usan caché. Televisión genérica corresponde a los valores exactos de `filter_groups.television`; no se fusionan etiquetas de la tabla. Un diagnóstico compara como máximo tres dimensiones no redundantes, con dos agregaciones por dimensión, y necesita al menos dos particiones útiles. Su puntuación indica concentración del cambio contable, no causalidad.
+Los catálogos pequeños configurados se validan contra la fuente y usan caché. La homologación
+de etiquetas se define en `canonical_taxonomy` y solo se aplica cuando su política está marcada
+como aprobada. Mientras falte esa aprobación, los desgloses afectados conservan las etiquetas
+de origen, muestran una advertencia y no se consideran evidencia apta para una decisión final.
+Un diagnóstico compara como máximo tres dimensiones no redundantes, con dos agregaciones por
+dimensión, y necesita al menos dos particiones útiles. Su puntuación indica concentración del
+cambio contable, no causalidad.
 
 `PLAN_SEMANTIC_REVIEW=false` es el valor por defecto. La revisión LLM adicional de intención y alcance es experimental: las pruebas reales mostraron correcciones útiles y también cambios de periodo equivocados. Puede activarse con `true` para evaluación controlada; añade una llamada LLM sin herramientas y conserva una sola reparación de plan. Sus resultados se registran por separado.

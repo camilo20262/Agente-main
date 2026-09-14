@@ -2,7 +2,7 @@
 from __future__ import annotations
 from src.agent.prompts import FINAL_RESPONSE_PROMPT
 from src.agent.response_validator import compact_evidence, validate_answer
-from src.agent.facts import analytical_context, fact_catalog, period_label, present_limitation, render_narrative
+from src.agent.facts import analytical_context, fact_catalog, metric_value, period_label, present_limitation, render_narrative
 
 
 def display(value):
@@ -36,7 +36,7 @@ def safe_answer(evidence, *, reason=None):
         if missing_numbers:
             lines.append(f'{period_text}, no hay valores numéricos utilizables para {", ".join(missing_numbers)}.')
         for item in observed:
-            lines.append(f"En el mismo periodo, {item['label']} registró {display(item.get('observed_value'))} en {metric.lower()}.")
+            lines.append(f"En el mismo periodo, {item['label']} registró {metric_value(item.get('observed_value'), entity_gap)} en {metric.lower()}.")
         lines.extend([
             '### Implicación para el análisis',
             'La ausencia de registros no equivale necesariamente a una inversión de cero. Por esta razón, no se presenta una diferencia ni un desglose por dimensión.',
@@ -44,7 +44,7 @@ def safe_answer(evidence, *, reason=None):
             'Validar la cobertura de la entidad sin registros antes de utilizar esta comparación en una decisión o presentación externa.',
         ])
         return '\n\n'.join(dict.fromkeys(lines))
-    lines = [f'Análisis parcial: {explanations.get(reason, reason)}.'] if reason else []
+    lines = [f'### Resultado sujeto a validación\n\n{explanations.get(reason, reason).capitalize()}.'] if reason else []
     for item in evidence:
         result = item.get('result', {})
         options = result.get('clarification_options')
@@ -61,15 +61,15 @@ def safe_answer(evidence, *, reason=None):
         if result.get('capability') in {'rank_change', 'rank_acceleration', 'temporal_extrema', 'dimension_search'} or (result.get('values') and result.get('share_pct') is not None):
             lines.extend(f['text'] for f in fact_catalog([item]))
         elif result.get('value') is not None:
-            lines.append(f"{context}, {label.lower()} fue de {display(result['value'])}.")
+            lines.append(f"{context}, {label.lower()} fue de {metric_value(result['value'], result)}.")
             if result.get('share_pct') is not None:
                 lines.append(f"Este resultado representa {display(result['share_pct'])} % del universo analizado.")
         elif result.get('value_a') is not None and result.get('value_b') is not None:
             a = result.get('brand_a') or result.get('value_a_label') or str(result.get('period_a', 'Periodo actual'))
             b = result.get('brand_b') or result.get('value_b_label') or str(result.get('period_b', 'Periodo anterior'))
-            lines.append(f"{context}, {a} registró {display(result['value_a'])}, frente a {display(result['value_b'])} de {b}, en {label.lower()}.")
+            lines.append(f"{context}, {a} registró {metric_value(result['value_a'], result)}, frente a {metric_value(result['value_b'], result)} de {b}, en {label.lower()}.")
             if result.get('difference') is not None:
-                lines.append(f"La diferencia fue de {display(result['difference'])}.")
+                lines.append(f"La diferencia fue de {metric_value(result['difference'], result)}.")
             if result.get('difference_pct') is not None:
                 lines.append(f"Esto equivale a una variación de {display(result['difference_pct'])} % sobre {b}.")
         elif result.get('rows'):
@@ -78,7 +78,7 @@ def safe_answer(evidence, *, reason=None):
                 category = display(row.get('dimension', row.get('period', 'Dato')))
                 if result.get('segment_dimension'):
                     category = f"{result['segment_dimension']}={display(row.get('segment'))}, {category}"
-                lines.append(f"- {category}: {display(row.get('value'))}.")
+                lines.append(f"- {category}: {metric_value(row.get('value'), result)}.")
         elif result.get('values'):
             lines.append('Los valores disponibles incluyen: ' + ', '.join(map(str, result['values'][:10])) + '.')
         elif result.get('start') and result.get('end'):
@@ -127,7 +127,11 @@ class AnswerFinalizer:
             self.metrics.events.append({'stage': 'validation', 'attempt': attempt, 'issues': list(validation.issues), 'candidate': answer})
             if validation.valid:
                 if partial_reason:
-                    answer = 'Análisis parcial: no se completó toda la investigación planificada.\n\n' + answer
+                    lead = {
+                        'insufficient_evidence': 'La evidencia disponible no cumple todos los criterios necesarios para una conclusión definitiva.',
+                        'intent_budget': 'El análisis alcanzó el límite de investigación definido antes de completar todas las verificaciones.',
+                    }.get(partial_reason, 'No fue posible completar todas las verificaciones previstas para este análisis.')
+                    answer = f'### Resultado sujeto a validación\n\n{lead}\n\n' + answer
                 return answer, bool(partial_reason), []
             issues = list(validation.issues)
             previous_answer = answer

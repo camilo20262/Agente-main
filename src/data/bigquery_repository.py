@@ -15,6 +15,7 @@ from typing import Any
 
 from src.config import Settings
 from src.data.sql_guard import validate_read_only_sql
+from src.data.serialization import json_value
 from src.semantic import load_semantic_layer
 
 
@@ -32,11 +33,18 @@ class BigQueryRepository:
         self._client = client
         self._catalog_cache = QueryResultCache(settings.query_cache_ttl_seconds)
         self._coverage_cache = QueryResultCache(settings.query_cache_ttl_seconds)
+        self._integrity_cache = QueryResultCache(settings.query_cache_ttl_seconds)
         self.query_count = 0
         self.bytes_processed = 0
         semantic = load_semantic_layer()
+        self.semantic = semantic
         self.allowed_metrics = set(semantic["metrics"].keys())
         self.allowed_dimensions = set(semantic["dimensions"].keys())
+
+    @staticmethod
+    def _measurement_fields(result: dict[str, Any]) -> dict[str, Any]:
+        keys = ("metric_label", "unit", "currency_code", "currency_scale", "display_unit", "unit_verified")
+        return {key: result.get(key) for key in keys if key in result}
 
 
     @property
@@ -81,7 +89,7 @@ class BigQueryRepository:
         started = time.perf_counter()
         job = self.client.query(sql, job_config=config, location=self.settings.bigquery_location)
         self.query_count += 1
-        rows = [dict(row.items()) for row in job.result(timeout=self.settings.bigquery_timeout_seconds)]
+        rows = [json_value(dict(row.items())) for row in job.result(timeout=self.settings.bigquery_timeout_seconds)]
         processed = getattr(job, "total_bytes_processed", None)
         processed = estimated if processed is None else int(processed)
         self.bytes_processed += processed
@@ -139,13 +147,54 @@ class BigQueryRepository:
     def _dimension_group_expression(self, dimension: str) -> str:
         """Return a safe grouping expression for categorical dimensions.
 
-        Only case/whitespace normalization is applied. Semantic aliases such as
-        "TV NAL" and "TELEVISION NACIONAL" are intentionally left separate.
+        Canonical aliases are applied only when the source-owner-approved policy
+        is enabled in the semantic layer.
         """
         self._bicomp_field(dimension)
         if self.get_bicomp_schema().get(dimension) == "STRING":
-            return f"UPPER(TRIM(CAST(`{dimension}` AS STRING)))"
+            normalized = f"UPPER(TRIM(CAST(`{dimension}` AS STRING)))"
+            policy = self.semantic.get('business_rules', {}).get('canonical_taxonomy', {}).get(dimension, {})
+            aliases = policy.get('aliases') or {}
+            if policy.get('approved') is True and aliases:
+                clauses = []
+                for canonical, source_values in aliases.items():
+                    values = {str(canonical).strip().upper(), *(str(value).strip().upper() for value in source_values)}
+                    literals = ', '.join("'" + value.replace("'", "''") + "'" for value in sorted(values))
+                    canonical_literal = str(canonical).strip().upper().replace("'", "''")
+                    clauses.append(f"WHEN {normalized} IN ({literals}) THEN '{canonical_literal}'")
+                return f"CASE {' '.join(clauses)} ELSE {normalized} END"
+            return normalized
         return f"`{dimension}`"
+
+    def _canonical_filter_values(self, dimension: str, values: list[Any]) -> list[str]:
+        normalized_values = [str(value).strip().upper() for value in values]
+        policy = self.semantic.get('business_rules', {}).get('canonical_taxonomy', {}).get(dimension, {})
+        aliases = policy.get('aliases') or {}
+        if policy.get('approved') is not True or not aliases:
+            return normalized_values
+        groups = {
+            str(canonical).strip().upper(): {
+                str(canonical).strip().upper(), *(str(value).strip().upper() for value in source_values)
+            }
+            for canonical, source_values in aliases.items()
+        }
+        reverse = {value: group for canonical, group in groups.items() for value in group}
+        expanded = []
+        for value in normalized_values:
+            expanded.extend(sorted(reverse.get(value, {value})))
+        return list(dict.fromkeys(expanded))
+
+    def _taxonomy_context(self, dimension: str) -> dict[str, Any]:
+        policy = self.semantic.get('business_rules', {}).get('canonical_taxonomy', {}).get(dimension)
+        if not policy:
+            return {}
+        approved = policy.get('approved') is True
+        decision_grade = not policy.get('decision_grade_required') or approved
+        warning = [] if approved else [
+            f"La taxonomía de {dimension} no está homologada por el propietario de la fuente; las etiquetas se muestran tal como llegan y el desglose no es apto para decisiones finales."
+        ]
+        return {"taxonomy_status": "approved" if approved else "unverified",
+                "decision_eligible": decision_grade, "taxonomy_warnings": warning}
 
     def _bicomp_filters(self, filters: dict[str, Any] | None, start_date: str | date | None, end_date: str | date | None) -> tuple[str, list[tuple[str, str, Any]]]:
         if filters is not None and not isinstance(filters, dict):
@@ -159,10 +208,15 @@ class BigQueryRepository:
             name = f"filter_{index}"
             if isinstance(value, (list, tuple)):
                 clauses.append(f"UPPER(TRIM(CAST(`{field}` AS STRING))) IN UNNEST(@{name})")
-                parameters.append((name, "STRING", [str(item).strip().upper() for item in value]))
+                parameters.append((name, "STRING", self._canonical_filter_values(field, list(value))))
             else:
-                clauses.append(f"UPPER(TRIM(CAST(`{field}` AS STRING))) = @{name}")
-                parameters.append((name, "STRING", str(value).strip().upper()))
+                expanded = self._canonical_filter_values(field, [value])
+                if len(expanded) > 1:
+                    clauses.append(f"UPPER(TRIM(CAST(`{field}` AS STRING))) IN UNNEST(@{name})")
+                    parameters.append((name, "STRING", expanded))
+                else:
+                    clauses.append(f"UPPER(TRIM(CAST(`{field}` AS STRING))) = @{name}")
+                    parameters.append((name, "STRING", expanded[0]))
         if start_date is not None or end_date is not None:
             self._bicomp_field("fecha")
         for name, operator, value in (("start_date", ">=", start_date), ("end_date", "<=", end_date)):
@@ -210,10 +264,94 @@ class BigQueryRepository:
             warnings.append("Periodo solicitado parcialmente disponible; usar el acumulado disponible y declarar el corte, no un total anual completo.")
         if not info["known"]:
             warnings.append("Cobertura temporal no verificada.")
+        metric_config = load_semantic_layer()["metrics"][metric]
+        currency_code = metric_config.get("currency_code")
+        currency_scale = metric_config.get("currency_scale")
+        if metric_config.get("unit") == "currency" and not currency_code:
+            currency_code = self.settings.bicomp_currency_code
+            currency_scale = self.settings.bicomp_currency_scale
+        scale_labels = {"unit": "", "thousand": "miles de ", "million": "millones de "}
+        display_unit = None
+        if currency_code and currency_scale in scale_labels:
+            display_unit = f"{scale_labels[currency_scale]}{currency_code}".strip()
+        unit_verified = metric_config.get("unit") != "currency" or bool(display_unit)
+        if not unit_verified:
+            warnings.append("La moneda y la escala de la métrica no están configuradas; el valor no debe presentarse externamente como un importe monetario confirmado.")
         return {"domain": "bicomp", "source": self.source, "metric": metric, "aggregation": "sum",
                 "filters": filters or {}, "period": requested, **info, "warnings": warnings,
-                "unit": load_semantic_layer()["metrics"][metric].get("unit"),
-                "metric_label": load_semantic_layer()["metrics"][metric].get("description", metric)}
+                "unit": metric_config.get("unit"), "currency_code": currency_code,
+                "currency_scale": currency_scale, "display_unit": display_unit,
+                "unit_verified": unit_verified,
+                "metric_label": metric_config.get("description", metric)}
+
+    def profile_integrity(self, *, metric: str, filters: dict[str, Any] | None = None,
+                          start_date: str | date | None = None,
+                          end_date: str | date | None = None) -> dict[str, Any]:
+        """Profile repeated monetary values across independent source dimensions."""
+        policy = self.semantic.get('business_rules', {}).get('data_integrity', {})
+        if policy.get('enabled') is not True or self.semantic['metrics'].get(metric, {}).get('unit') != 'currency':
+            return {'status': 'not_applicable', 'decision_eligible': True}
+        cache_args = {'metric': metric, 'filters': filters or {}, 'start_date': start_date, 'end_date': end_date}
+        cached = self._integrity_cache.get('integrity', cache_args)
+        if cached is not None:
+            return {**cached, 'cache_hit': True}
+        self._bicomp_field(metric, metric=True)
+        schema = self.get_bicomp_schema()
+        dimensions = [field for field in ('marca', 'anunciante', 'medio', 'vehiculo', 'fecha') if field in schema]
+        where, parameters = self._bicomp_filters(filters, start_date, end_date)
+        metric_predicate = f" AND `{metric}` IS NOT NULL" if where else f" WHERE `{metric}` IS NOT NULL"
+        select_dimensions = ', '.join(f'CAST(`{field}` AS STRING) AS `{field}`' for field in dimensions)
+        distincts = ', '.join(
+            f'COUNT(DISTINCT `{field}`) AS distinct_{field}' for field in dimensions
+        )
+        sql = f'''WITH scoped AS (
+            SELECT CAST(`{metric}` AS FLOAT64) AS metric_value{', ' if select_dimensions else ''}{select_dimensions}
+            FROM `{self.bicomp_table}`{where}{metric_predicate}
+        ), totals AS (
+            SELECT COUNT(*) AS source_rows, COUNT(DISTINCT metric_value) AS distinct_values,
+                   SUM(ABS(metric_value)) AS total_abs_value FROM scoped
+        ), frequencies AS (
+            SELECT metric_value AS repeated_value, COUNT(*) AS repeated_rows,
+                   SUM(ABS(metric_value)) AS repeated_abs_value{', ' if distincts else ''}{distincts}
+            FROM scoped GROUP BY metric_value
+        ), top_frequency AS (
+            SELECT * FROM frequencies ORDER BY repeated_rows DESC, repeated_abs_value DESC LIMIT 1
+        )
+        SELECT totals.*, top_frequency.* FROM totals LEFT JOIN top_frequency ON TRUE'''
+        result = self._execute_bicomp(QuerySpec(sql, parameters))
+        row = result.get('rows', [{}])[0] if result.get('rows') else {}
+        source_rows = int(row.get('source_rows') or 0)
+        repeated_rows = int(row.get('repeated_rows') or 0)
+        total_abs = float(row.get('total_abs_value') or 0)
+        repeated_abs = float(row.get('repeated_abs_value') or 0)
+        row_share = repeated_rows / source_rows if source_rows else 0
+        value_share = repeated_abs / total_abs if total_abs else 0
+        diverse_dates = int(row.get('distinct_fecha') or 0) >= 2
+        diverse_media = int(row.get('distinct_medio') or 0) >= 2
+        diverse_entities = int(row.get('distinct_marca') or 0) >= 2 or int(row.get('distinct_anunciante') or 0) >= 2
+        enough = source_rows >= int(policy.get('minimum_rows', 20)) and repeated_rows >= int(policy.get('minimum_repeated_rows', 10))
+        high_repeat = (row_share >= float(policy.get('repeated_row_share_threshold', .25))
+                       and value_share >= float(policy.get('repeated_value_share_threshold', .25)))
+        status = 'suspect' if enough and high_repeat and diverse_dates and diverse_media and diverse_entities else (
+            'review' if enough and high_repeat else 'clear')
+        quarantine = next((item for item in policy.get('quarantined_periods', [])
+                           if start_date and end_date and str(start_date) <= str(item.get('end'))
+                           and str(end_date) >= str(item.get('start'))), None)
+        if quarantine:
+            status = 'suspect'
+        response = {
+            'status': status,
+            'decision_eligible': status == 'clear',
+            'scope': {'filters': filters or {}, 'start': str(start_date) if start_date else None,
+                      'end': str(end_date) if end_date else None},
+            'profile': {key: row.get(key) for key in row if key not in {'total_abs_value', 'repeated_abs_value'}},
+            'repeated_row_share_pct': row_share * 100,
+            'repeated_value_share_pct': value_share * 100,
+            'quarantine_reason': quarantine.get('reason') if quarantine else None,
+            'evidence': result.get('evidence'),
+        }
+        self._integrity_cache.put('integrity', cache_args, response)
+        return response
 
     def consultar_inversion(self, *, metric: str = "inv_neta", filters: dict[str, Any] | None = None,
                             start_date: str | date | None = None, end_date: str | date | None = None) -> dict[str, Any]:
@@ -264,6 +402,7 @@ class BigQueryRepository:
             for label, value, result in ((brand_a, a, first), (brand_b, b, second))
         ]
         return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum", "brand_a": brand_a, "brand_b": brand_b,
+                **self._measurement_fields(first),
                 **({"error": "La consulta BICOMP no produjo resultados para las marcas: " + ", ".join(missing) + "."} if missing else {}),
                 **self._entity_gap(observations),
                 "filters": filters or {}, "period": first.get("period", {}), "coverage_a": first.get("effective_period"), "coverage_b": second.get("effective_period"),
@@ -285,6 +424,7 @@ class BigQueryRepository:
         va, vb = a.get("value"), b.get("value")
         difference = None if va is None or vb is None else va - vb
         return {"success": difference is not None, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum",
+                **self._measurement_fields(a),
                 "period_a": period_a, "period_b": period_b, "requested_period_a": requested_a, "requested_period_b": requested_b,
                 "comparison_equivalent": True, "periods_adjusted": period_a != requested_a or period_b != requested_b,
                 "warnings": (["Comparación ajustada a ventanas equivalentes con cobertura disponible."] if period_a != requested_a or period_b != requested_b else []), "value_a": va, "value_b": vb, "difference": difference,
@@ -317,6 +457,7 @@ class BigQueryRepository:
             evidence.extend([current["evidence"], previous["evidence"]])
         drivers.sort(key=lambda item: abs(item["contribution"]), reverse=True)
         return {"success": comparison["success"], "domain": "bicomp", "source": "bigquery", "brand": brand, "metric": metric,
+                **self._measurement_fields(comparison),
                 "current_period": current_period, "previous_period": previous_period, "current_value": comparison["value_a"],
                 "previous_value": comparison["value_b"], "change": comparison["difference"], "change_pct": comparison["difference_pct"],
                 "filters": base_filters, "drivers": drivers[:driver_limit], "drivers_by_dimension": {d: [r for r in drivers if r["dimension"] == d][:driver_limit] for d in ("medio", "vehiculo", "formato")},
@@ -418,6 +559,7 @@ class BigQueryRepository:
 
         rows = sorted(result["rows"], key=lambda row: (-(row.get("value") or 0), str(row.get("dimension"))))
         has_data = bool(rows)
+        taxonomy = self._taxonomy_context(dimension)
 
         return {
             **context,
@@ -436,6 +578,7 @@ class BigQueryRepository:
                 "end": str(end_date) if end_date else None,
             },
             "composition": composition_summary(rows, total=rows[0].get("total") if rows else None),
+            **taxonomy,
             "data_quality": {"unknown_share_pct": percentage(rows[0].get("unknown_value"), rows[0].get("total")),
                              "unknown_value": rows[0].get("unknown_value"),
                              "known_value": rows[0].get("total", 0) - rows[0].get("unknown_value", 0),
@@ -451,6 +594,7 @@ class BigQueryRepository:
                 "bytes_processed": result["evidence"]["bytes_processed"],
                 "duration_ms": result["evidence"]["duration_ms"],
             },
+            "warnings": [*context.get("warnings", []), *taxonomy.get("taxonomy_warnings", [])],
             "evidence": result["evidence"],
         }
 
@@ -688,7 +832,7 @@ class BigQueryRepository:
             if candidates and len(candidates) <= 20:
                 clarification = {'dimension': dimension, 'missing_values': missing, 'available_values': candidates}
         return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric,
-                "metric_label": first.get("metric_label"), "unit": first.get("unit"), "aggregation": "sum",
+                **self._measurement_fields(first), "aggregation": "sum",
                 "clarification_options": clarification,
                 **({"error": f"La consulta BICOMP no produjo resultados para {dimension}: " + ", ".join(missing) + "."} if missing else {}),
                 **self._entity_gap(observations),
@@ -721,7 +865,10 @@ class BigQueryRepository:
                f'MIN(DATE(`fecha`)) AS _observed_start, MAX(DATE(`fecha`)) AS _observed_end '
                f'FROM `{self.bicomp_table}`{where} GROUP BY dimension')
         result = self._scoped_execute(QuerySpec(sql, parameters))
-        return {**result, **self._context(result, metric=metric, filters=filters, start_date=period.get('start'), end_date=period.get('end'))}
+        context = self._context(result, metric=metric, filters=filters, start_date=period.get('start'), end_date=period.get('end'))
+        taxonomy = self._taxonomy_context(dimension)
+        return {**result, **context, **taxonomy,
+                'warnings': [*context.get('warnings', []), *taxonomy.get('taxonomy_warnings', [])]}
 
     def analizar_drivers(self, *, dimension, period_a, period_b, metric='inv_neta', filters=None, limit=10):
         """One partition of the change, with equivalent windows and complete categories."""
@@ -737,11 +884,15 @@ class BigQueryRepository:
         calculated = self._partition_difference(current, previous, dimension, limit)
         if not calculated['success']:
             return calculated
+        measurement = self._measurement_fields(current) if hasattr(self, '_measurement_fields') else {}
         return {**calculated, 'success': True, 'source': self.source, 'domain': 'bicomp', 'metric': metric, 'filters': filters or {},
+                **measurement,
                 'dimension': dimension, 'period_a': a, 'period_b': b, 'current_period': a, 'previous_period': b,
                 'requested_period_a': period_a, 'requested_period_b': period_b, 'comparison_equivalent': True,
                 'evidence': evidence, **coverage(period_a, available, current.get('observed_period', {})),
-                'warnings': ['Contribuciones contables de una dimensión; no demuestran causas de negocio.']}
+                'decision_eligible': current.get('decision_eligible', True),
+                'taxonomy_status': current.get('taxonomy_status'),
+                'warnings': [*current.get('warnings', []), 'Contribuciones contables de una dimensión; no demuestran causas de negocio.']}
 
     def _partition_difference(self, current, previous, dimension, limit):
         if not current['rows'] or not previous['rows'] or any(r['value'] is None for r in current['rows'] + previous['rows']):
@@ -802,13 +953,16 @@ class BigQueryRepository:
                     'observed_value': sum(row['value'] for row in rows) if numeric else None,
                 })
             calculated.update(self._entity_gap(observations))
+        measurement = self._measurement_fields(current) if hasattr(self, '_measurement_fields') else {}
         return {**calculated, 'source': self.source, 'domain': 'bicomp', 'metric': metric,
-                'metric_label': current.get('metric_label'), 'filters': filters or {},
+                **measurement, 'filters': filters or {},
                 'entity_dimension': entity_dimension, 'dimension': dimension,
                 'value_a_label': value_a, 'value_b_label': value_b, 'comparison_type': 'entities',
                 **{k: current.get(k) for k in ('requested_period', 'effective_period', 'observed_period', 'available_period', 'is_partial')},
                 'evidence': [current['evidence'], previous['evidence']],
-                'warnings': ['Contribuciones contables entre entidades en el mismo periodo; no representan crecimiento temporal ni causas de negocio.']}
+                'decision_eligible': current.get('decision_eligible', True),
+                'taxonomy_status': current.get('taxonomy_status'),
+                'warnings': [*current.get('warnings', []), 'Contribuciones contables entre entidades en el mismo periodo; no representan crecimiento temporal ni causas de negocio.']}
 
     def calcular_ratio(self, *, numerator, denominator, filters=None, start_date=None, end_date=None):
         self._bicomp_field(numerator, metric=True)
@@ -878,15 +1032,19 @@ class BigQueryRepository:
         LIMIT 500'''
         result = self._scoped_execute(QuerySpec(sql, parameters))
         context = self._context(result, metric=metric, filters=filters, start_date=start_date, end_date=end_date)
+        taxonomy_a, taxonomy_b = self._taxonomy_context(dimension), self._taxonomy_context(group_dimension)
+        taxonomy_warnings = [*taxonomy_a.get('taxonomy_warnings', []), *taxonomy_b.get('taxonomy_warnings', [])]
         rows = sorted(result['rows'], key=lambda r: (str(r['segment']), r['rank'], str(r['dimension'])))
         truncated = bool(rows and rows[0]['ranked_rows_total'] > len(rows))
-        warnings = [*context.get('warnings', []), 'Participaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.',
+        warnings = [*context.get('warnings', []), *taxonomy_warnings, 'Participaciones calculadas dentro de cada grupo; los porcentajes de grupos diferentes no se suman.',
                     'La respuesta selecciona hallazgos; el ranking devuelto por grupo está disponible en la evidencia.']
         if any(row.get('segment') is None or str(row.get('segment')).strip().upper() in MISSING_LABELS for row in rows):
             warnings.append(f'Hay grupos sin información en {group_dimension}; no representan una entidad identificada.')
         if truncated:
             warnings.append('El resultado excede el límite de presentación de filas; requiere acotar el alcance para verlo completo.')
         return {**context, 'success': bool(rows), 'dimension': dimension, 'segment_dimension': group_dimension,
+                'decision_eligible': taxonomy_a.get('decision_eligible', True) and taxonomy_b.get('decision_eligible', True),
+                'taxonomy_status': {dimension: taxonomy_a.get('taxonomy_status'), group_dimension: taxonomy_b.get('taxonomy_status')},
                 'dimensions': [group_dimension, dimension], 'rows': rows, 'ranking_truncated': truncated,
                 'row_count': len(rows), 'warnings': warnings, 'evidence': result['evidence'],
                 **({} if rows else {'error_type': 'no_data', 'error': 'No hay grupos con datos numéricos.'})}

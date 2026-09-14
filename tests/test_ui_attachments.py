@@ -34,6 +34,7 @@ def test_repeated_charts_across_turns_and_new_conversation(monkeypatch):
     monkeypatch.setenv('NVIDIA_API_KEY', 'test-ui-key')
     at = AppTest.from_file(str(__import__('pathlib').Path(__file__).resolve().parents[1] / 'app.py'), default_timeout=15).run()
     assert not at.exception
+    assert all(box.label not in {'Mostrar trazabilidad técnica', 'Modo debug'} for box in at.checkbox)
     at.chat_input[0].set_value('Pregunta uno.').run()
     at.chat_input[0].set_value('Pregunta dos.').run()
     at.run()

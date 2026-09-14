@@ -1,7 +1,9 @@
 from types import SimpleNamespace
+from datetime import date, datetime, timezone
+from decimal import Decimal
 
 from src.config import Settings
-from src.data.bigquery_repository import BigQueryRepository
+from src.data.bigquery_repository import BigQueryRepository, QuerySpec
 
 
 class FakeRow(dict):
@@ -20,14 +22,14 @@ class FakeClient:
     def get_table(self, table):
         fields = {
             "fecha": "DATE", "marca": "STRING", "anunciante": "STRING", "medio": "STRING",
-            "pais": "STRING", "inv_neta": "NUMERIC", "total_insercion": "INTEGER",
+            "pais": "STRING", "inv_neta": "NUMERIC", "inv_neta_usd": "NUMERIC", "total_insercion": "INTEGER",
         }
         return SimpleNamespace(schema=[SimpleNamespace(name=name, field_type=typ) for name, typ in fields.items()])
     def query(self, sql, job_config, location):
         self.queries.append((sql, job_config, location))
         if job_config.dry_run:
             return FakeJob()
-        if "SUM(`inv_neta`)" in sql:
+        if "SUM(`inv_neta" in sql:
             if "GROUP BY dimension" in sql:
                 return FakeJob([FakeRow(dimension="Renault", value=900, source_rows=4), FakeRow(dimension="Volvo", value=350, source_rows=2)])
             return FakeJob([FakeRow(value=1250, source_rows=8)])
@@ -127,3 +129,51 @@ def test_generic_and_specialized_brand_rankings_are_equivalent(monkeypatch):
     assert generic["dimension"] == "marca"
     assert generic["filters"] == arguments["filters"]
     assert generic["rows"] == rows
+
+
+def test_repository_boundary_normalizes_bigquery_values_for_json():
+    client = FakeClient()
+    client.query = lambda sql, job_config, location: (FakeJob() if job_config.dry_run else FakeJob([
+        FakeRow(day=date(2026, 5, 1), moment=datetime(2026, 5, 1, 10, tzinfo=timezone.utc),
+                amount=Decimal('12.50'), nested={'amount': Decimal('2')})
+    ]))
+    row = BigQueryRepository(settings(), client=client)._execute_bicomp(
+        QuerySpec(
+            f"SELECT * FROM `{settings().gcp_project_id}.{settings().bigquery_dataset}.{settings().bigquery_bicomp_table}`", []))['rows'][0]
+    assert row == {'day': '2026-05-01', 'moment': '2026-05-01T10:00:00+00:00',
+                   'amount': 12.5, 'nested': {'amount': 2}}
+
+
+def test_currency_contract_is_explicit_and_usd_is_defined(monkeypatch):
+    native = BigQueryRepository(Settings(bicomp_currency_code='COP', bicomp_currency_scale='thousand'), client=FakeClient())
+    native_result = native.consultar_inversion(metric='inv_neta')
+    assert native_result['display_unit'] == 'miles de COP' and native_result['unit_verified']
+    usd = BigQueryRepository(Settings(), client=FakeClient()).consultar_inversion(metric='inv_neta_usd')
+    assert usd['display_unit'] == 'USD' and usd['unit_verified']
+
+
+def test_taxonomy_aliases_apply_only_after_approval(monkeypatch):
+    repo = BigQueryRepository(settings(), client=FakeClient())
+    monkeypatch.setattr(repo, 'get_bicomp_schema', lambda: {'medio': 'STRING'})
+    policy = repo.semantic['business_rules']['canonical_taxonomy']['medio']
+    policy.update({'approved': False, 'aliases': {'TELEVISION NACIONAL': ['TV NAL']}})
+    assert repo._dimension_group_expression('medio') == 'UPPER(TRIM(CAST(`medio` AS STRING)))'
+    assert repo._taxonomy_context('medio')['decision_eligible'] is False
+    policy['approved'] = True
+    expression = repo._dimension_group_expression('medio')
+    assert "THEN 'TELEVISION NACIONAL'" in expression and "'TV NAL'" in expression
+    assert repo._canonical_filter_values('medio', ['TELEVISION NACIONAL']) == ['TELEVISION NACIONAL', 'TV NAL']
+
+
+def test_integrity_profile_flags_cross_dimension_repetition(monkeypatch):
+    repo = BigQueryRepository(settings(), client=object())
+    monkeypatch.setattr(repo, 'get_bicomp_schema', lambda: {
+        'fecha': 'DATE', 'marca': 'STRING', 'anunciante': 'STRING', 'medio': 'STRING', 'vehiculo': 'STRING', 'inv_neta': 'NUMERIC'})
+    monkeypatch.setattr(repo, '_execute_bicomp', lambda spec: {'rows': [{
+        'source_rows': 100, 'distinct_values': 8, 'total_abs_value': 1000,
+        'repeated_value': 10, 'repeated_rows': 50, 'repeated_abs_value': 500,
+        'distinct_marca': 5, 'distinct_anunciante': 4, 'distinct_medio': 3,
+        'distinct_vehiculo': 8, 'distinct_fecha': 10}], 'evidence': {'sql': spec.sql}})
+    profile = repo.profile_integrity(metric='inv_neta', start_date='2025-01-01', end_date='2025-01-31')
+    assert profile['status'] == 'suspect' and not profile['decision_eligible']
+    assert profile['repeated_row_share_pct'] == 50

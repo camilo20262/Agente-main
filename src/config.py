@@ -38,6 +38,12 @@ class Settings:
     history_max_messages: int = 12
     history_max_chars: int = 16000
     vision_models: tuple[str, ...] = ()
+    # The source owner must explicitly confirm these for native-currency metrics.
+    bicomp_currency_code: str | None = None
+    bicomp_currency_scale: str | None = None
+    # Deployment-level gates. User-level authorization remains an external concern.
+    enable_technical_trace: bool = False
+    enable_debug_ui: bool = False
 
     def __post_init__(self) -> None:
         for name in ("max_agent_steps", "llm_max_tokens", "llm_final_max_tokens", "llm_plan_max_tokens",
@@ -47,6 +53,8 @@ class Settings:
                 raise ValueError(f"{name} debe ser positivo.")
         if self.query_cache_ttl_seconds < 0 or not 0 <= self.response_validation_retries <= 1:
             raise ValueError("TTL debe ser no negativo y se permite como máximo una reparación final.")
+        if self.bicomp_currency_scale not in {None, "unit", "thousand", "million"}:
+            raise ValueError("BICOMP_CURRENCY_SCALE debe ser unit, thousand o million.")
 
     @classmethod
     def from_env(
@@ -125,6 +133,10 @@ class Settings:
             plan_semantic_review=os.getenv("PLAN_SEMANTIC_REVIEW", "false").lower() == "true",
             history_max_messages=int(os.getenv("HISTORY_MAX_MESSAGES", "12")),
             history_max_chars=int(os.getenv("HISTORY_MAX_CHARS", "16000")),
+            bicomp_currency_code=(os.getenv("BICOMP_CURRENCY_CODE") or '').strip().upper() or None,
+            bicomp_currency_scale=(os.getenv("BICOMP_CURRENCY_SCALE") or '').strip().lower() or None,
+            enable_technical_trace=os.getenv("ENABLE_TECHNICAL_TRACE", "false").lower() == "true",
+            enable_debug_ui=os.getenv("ENABLE_DEBUG_UI", "false").lower() == "true",
         )
 
     def validate_bigquery(self) -> None:

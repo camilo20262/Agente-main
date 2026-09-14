@@ -45,3 +45,25 @@ diagnostic_dimensions:
   anunciante_agrupado: {family: entity}
 # Validate only small categorical vocabularies; entity catalogues can be unbounded.
 validate_value_dimensions: [medio, medio_agrupado]
+
+# Canonical aliases must be approved by the source owner before activation.
+# Example shape (do not enable without that approval):
+# aliases: {TELEVISION NACIONAL: [TV NAL, TELEVISION NACIONAL]}
+canonical_taxonomy:
+  medio:
+    approved: false
+    aliases: {}
+    decision_grade_required: true
+
+data_integrity:
+  enabled: true
+  minimum_rows: 20
+  minimum_repeated_rows: 10
+  repeated_row_share_threshold: 0.25
+  repeated_value_share_threshold: 0.25
+  # Add source-owner-confirmed incidents as {start: YYYY-MM-DD, end: YYYY-MM-DD, reason: ...}.
+  quarantined_periods: []
+  medio_agrupado:
+    approved: false
+    aliases: {}
+    decision_grade_required: true

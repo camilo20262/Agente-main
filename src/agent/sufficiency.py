@@ -3,6 +3,8 @@
 
 def evidence_sufficient(intent, evidence, scope=None):
     results = [e['result'] for e in evidence if e.get('result', {}).get('success') is True]
+    if intent != 'lookup':
+        results = [result for result in results if result.get('decision_eligible', True)]
     if intent in {'ranking_change', 'ranking_acceleration'}:
         capability = 'rank_acceleration' if intent == 'ranking_acceleration' else 'rank_change'
         return any(r.get('capability') == capability and r.get('rows') and r.get('comparison_equivalent')

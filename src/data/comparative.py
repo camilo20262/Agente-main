@@ -51,14 +51,17 @@ def ranking_change(repo, *, dimension, period_a, period_b, metric='inv_neta', fi
     rows.sort(key=lambda r: ((-1 if direction == 'desc' else 1)*r['order_value'], r['dimension']))
     for rank, row in enumerate(rows, 1):
         row['rank'] = rank
+    measurement = repo._measurement_fields(results[0]) if hasattr(repo, '_measurement_fields') else {}
     return {'success': bool(rows), 'error_type': None if rows else 'no_data',
             'source': repo.source, 'domain': 'bicomp', 'metric': metric, 'filters': filters or {},
+            **measurement, 'decision_eligible': all(r.get('decision_eligible', True) for r in results),
+            'taxonomy_status': results[0].get('taxonomy_status'),
             'dimension': dimension, 'rows': rows[:limit], 'ranked_entities': len(rows), 'excluded_entities': excluded,
             'capability': 'rank_acceleration' if acceleration else 'rank_change',
             'criterion': criterion, 'direction': direction, 'period_a': a, 'period_b': b,
             'period_c': periods[2] if acceleration else None, 'comparison_equivalent': True,
             'evidence': evidence, **coverage(period_a, available, results[0].get('observed_period', {})),
-            'warnings': ['Orden por ' + ('aceleración del cambio' if acceleration else 'cambio') +
+            'warnings': [*results[0].get('warnings', []), 'Orden por ' + ('aceleración del cambio' if acceleration else 'cambio') +
                 (' absoluto.' if criterion == 'absolute' else ' porcentual; bases cero o negativas excluidas.'),
                 'Ausencia de una categoría en una ventana con datos se trata como cero; no acredita actividad fuera de la fuente.']}
 
@@ -115,7 +118,7 @@ def dimension_search(repo, *, period_a, period_b, metric='inv_neta', filters=Non
         known_abs = sum(abs(r['contribution']) for r in known)
         top = sum(sorted((abs(r['contribution']) for r in known), reverse=True)[:3])
         score = percentage(top, magnitude) if magnitude else 0
-        evaluations.append({'dimension': dimension, 'eligible': result.get('success') is True and len(known) > 1,
+        evaluations.append({'dimension': dimension, 'eligible': result.get('success') is True and result.get('decision_eligible', True) and len(known) > 1,
                             'score_pct': score, 'known_change_pct': percentage(known_abs, magnitude),
                             'categories': len(rows), 'absolute_change': magnitude})
     eligible = [e for e in evaluations if e['eligible']]

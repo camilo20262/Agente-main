@@ -7,8 +7,11 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import time
+from urllib.parse import urlparse
 from src.agent.response_validator import validate_answer
+from src.config import get_settings
 from src.semantic import load_semantic_layer
 
 
@@ -133,15 +136,39 @@ def main():
     args = parser.parse_args()
     if not args.live: parser.error('Use --live to authorize the network benchmark.')
     output = Path(args.output); output.mkdir(parents=True, exist_ok=True)
-    groups = json.loads(Path(args.cases).read_text()) if args.cases else cases()
-    if args.ids: groups = [g for g in groups if any(c['id'] in args.ids for c in g)]
+    case_path = Path(args.cases) if args.cases else None
+    groups = json.loads(case_path.read_text()) if case_path else cases()
+    cases_fingerprint = hashlib.sha256(
+        json.dumps(groups, ensure_ascii=False, sort_keys=True).encode()
+    ).hexdigest()
+    if args.ids:
+        selected_ids = set(args.ids)
+        groups = [group for group in groups if any(case['id'] in selected_ids for case in group)]
     started = datetime.now(timezone.utc).isoformat()
-    fingerprint = hashlib.sha256(''.join(p.read_text() for p in sorted(Path('src').rglob('*.py'))).encode()).hexdigest()
+    tracked = subprocess.run(['git', 'ls-files'], check=True, capture_output=True, text=True).stdout.splitlines()
+    source_hash = hashlib.sha256()
+    for name in tracked:
+        path = Path(name)
+        if path.is_file() and not name.startswith('evaluations/results/'):
+            source_hash.update(name.encode()); source_hash.update(b'\0'); source_hash.update(path.read_bytes())
+    fingerprint = source_hash.hexdigest()
+    git_commit = subprocess.run(['git', 'rev-parse', 'HEAD'], check=True, capture_output=True, text=True).stdout.strip()
+    git_dirty = bool(subprocess.run(['git', 'status', '--porcelain'], check=True, capture_output=True, text=True).stdout.strip())
+    settings = get_settings()
     records = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = [pool.submit(run_group, group, output) for group in groups]
         for future in as_completed(futures): records.extend(future.result())
-    report = {'started_at': started, 'source_fingerprint': fingerprint, 'count': len(records),
+    report = {'started_at': started, 'source_fingerprint': fingerprint,
+              'git_commit': git_commit, 'git_worktree_dirty': git_dirty,
+              'cases_fingerprint': cases_fingerprint,
+              'cases_file': str(case_path) if case_path else 'evaluations.benchmark.cases',
+              'selected_case_ids': sorted(case['id'] for group in groups for case in group),
+              'runtime': {'model': settings.openrouter_model,
+                          'llm_host': urlparse(settings.llm_base_url).hostname,
+                          'bigquery_table': '.'.join(filter(None, (settings.gcp_project_id, settings.bigquery_dataset, settings.bigquery_bicomp_table))),
+                          'source_snapshot_status': 'live_query_without_fixed_snapshot'},
+              'count': len(records),
               'passed': sum(r['status']=='PASS' for r in records), 'failed': sum(r['status']=='FAIL' for r in records),
               'records': sorted(records, key=lambda r:r['id'])}
     (output / 'summary.json').write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str))

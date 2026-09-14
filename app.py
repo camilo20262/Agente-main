@@ -1,6 +1,7 @@
 import os
 import base64
 import io
+import logging
 
 import streamlit as st
 from dotenv import load_dotenv
@@ -548,6 +549,7 @@ st.markdown("""
 load_dotenv()
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 configured_model = settings.openrouter_model
 configured_models = [item.strip() for item in os.getenv("NVIDIA_MODELS", "").split(",") if item.strip()]
 available_models = list(dict.fromkeys([configured_model, *configured_models]))
@@ -577,8 +579,9 @@ def extraer_texto_pdf(archivo_pdf):
     try:
         pdf_reader = PdfReader(archivo_pdf)
         return "\n".join([p.extract_text() or "" for p in pdf_reader.pages])
-    except Exception as e:
-        st.error(f"Error al leer el PDF: {e}")
+    except Exception:
+        logger.exception("No fue posible leer el PDF adjunto")
+        st.error("No fue posible leer el PDF. Verifica que el archivo sea válido e inténtalo nuevamente.")
         return None
 
 
@@ -813,12 +816,14 @@ with ajustes_col:
             0.1
         )
 
-        mostrar_consultas = st.checkbox(
-            "Mostrar trazabilidad",
+        mostrar_consultas = settings.enable_technical_trace and st.checkbox(
+            "Mostrar trazabilidad técnica",
             value=False,
-            help="Muestra los filtros y resultados reales usados en cada respuesta."
+            help="Muestra filtros, resultados, consultas y parámetros. Requiere habilitación del despliegue."
         )
-        modo_debug = st.checkbox("Modo debug", value=False, help="Muestra plan interno validado y métricas operativas.")
+        modo_debug = settings.enable_debug_ui and st.checkbox(
+            "Modo debug", value=False, help="Muestra plan interno validado y métricas operativas."
+        )
 
 pregunta_sugerida = None
 hay_conversacion = any(
@@ -1015,5 +1020,6 @@ if pregunta:
                     st.session_state.metricas_por_turno[indice_nuevo_mensaje] = metricas
                 st.session_state.metricas_agente = metricas
 
-            except Exception as e:
-                st.error(f"❌ Error: {e}")
+            except Exception:
+                logger.exception("Fallo no controlado al procesar una solicitud")
+                st.error("No fue posible completar la solicitud. Inténtalo nuevamente o contacta al equipo de soporte.")

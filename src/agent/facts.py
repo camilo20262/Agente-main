@@ -13,6 +13,17 @@ def display(value):
     return 'Sin información' if value is None or str(value).upper() in MISSING_LABELS else str(value)
 
 
+def metric_value(value, result):
+    """Render a measured value with its contractual unit when one exists."""
+    rendered = display(value)
+    if result.get('unit') == 'currency':
+        unit = result.get('display_unit') or 'unidades monetarias con moneda y escala pendientes de confirmar'
+        return f'{rendered} {unit}'
+    if result.get('unit') == 'count':
+        return f'{rendered} inserciones'
+    return rendered
+
+
 MONTH_NAMES = ('enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre')
 
@@ -99,6 +110,13 @@ def present_limitation(value):
         return 'El periodo solicitado tiene cobertura parcial; la lectura corresponde al acumulado disponible'
     if 'cobertura temporal no verificada' in lowered:
         return 'La cobertura temporal de la fuente requiere validación antes de utilizar el resultado externamente'
+    if 'moneda y la escala de la métrica no están configuradas' in lowered:
+        return ('La moneda y la escala de la métrica están pendientes de confirmación por el propietario de la fuente; '
+                'los importes no deben utilizarse externamente hasta completar esa configuración')
+    if 'taxonomía' in lowered and 'no' in lowered:
+        return text
+    if 'integridad' in lowered:
+        return text
     if 'comparación ajustada a ventanas equivalentes' in lowered:
         return 'La comparación utiliza ventanas equivalentes dentro de la cobertura disponible'
     if 'ausencia de una categoría en una ventana con datos se trata como cero' in lowered:
@@ -125,19 +143,19 @@ def fact_catalog(evidence):
             ordering = 'de mayor a menor' if r['direction'] == 'desc' else 'de menor a mayor'
             add(f"El ranking se ordena por cambio {'absoluto' if r['criterion'] == 'absolute' else 'porcentual'}, {ordering}. El periodo analizado es {period_label(a)} y la referencia es {period_label(b)}.", record, mandatory=True)
             for row in r['rows'][:10]:
-                text = (f"{context}, {dimension_phrase(r['dimension'])} {row['dimension']} registró {display(row['current_value'])}, "
-                        f"frente a {display(row['previous_value'])} en la referencia. El cambio absoluto fue {display(row['difference'])}; "
+                text = (f"{context}, {dimension_phrase(r['dimension'])} {row['dimension']} registró {metric_value(row['current_value'], r)}, "
+                        f"frente a {metric_value(row['previous_value'], r)} en la referencia. El cambio absoluto fue {metric_value(row['difference'], r)}; "
                         f"el cambio porcentual fue {display(row['difference_pct'])}" + (' %.' if row['difference_pct'] is not None else ' y no se expresa en porcentaje porque la base no fue positiva.'))
                 if r['capability'] == 'rank_acceleration':
                     c = r['period_c']
-                    text += f" En la segunda referencia, {period_label(c)}, registró {display(row['previous_previous_value'])}, con un cambio previo de {display(row['previous_difference'])}."
-                    text += f" La aceleración absoluta fue de {display(row['acceleration'])}; la aceleración porcentual, de {display(row['acceleration_pp'])} puntos porcentuales."
+                    text += f" En la segunda referencia, {period_label(c)}, registró {metric_value(row['previous_previous_value'], r)}, con un cambio previo de {metric_value(row['previous_difference'], r)}."
+                    text += f" La aceleración absoluta fue de {metric_value(row['acceleration'], r)}; la aceleración porcentual, de {display(row['acceleration_pp'])} puntos porcentuales."
                 add(text, record)
             continue
         if r.get('capability') == 'temporal_extrema':
             for row in r['extrema']:
                 observed = observation_period_label(row['period'], r.get('granularity'))
-                add(f"{context}, el {'máximo' if r['extreme'] == 'max' else 'mínimo'} se registró en {observed}, con {display(row['value'])}. La evaluación consideró {r['evaluated_periods']} periodos con información disponible.", record, mandatory=True)
+                add(f"{context}, el {'máximo' if r['extreme'] == 'max' else 'mínimo'} se registró en {observed}, con {metric_value(row['value'], r)}. La evaluación consideró {r['evaluated_periods']} periodos con información disponible.", record, mandatory=True)
             continue
         if r.get('capability') == 'dimension_search':
             add('Dimensión seleccionada entre las evaluadas: ' + r['selected_dimension'] + '. El criterio mide concentración del cambio observado, no causalidad.', record, mandatory=True)
@@ -146,9 +164,9 @@ def fact_catalog(evidence):
                     add(f"{candidate['dimension']}: concentración del cambio absoluto en categorías informadas principales {display(candidate['score_pct'])} %; cambio con etiqueta informada {display(candidate['known_change_pct'])} %.", record)
         if joint_share:
             add(f"{context}, " + ', '.join(display(v) for v in r['values'])
-                + f" alcanzaron en conjunto {display(r['value'])}, sobre un total analizado de {display(r['total'])}. Su participación combinada fue {display(r['share_pct'])} %.", record)
+                + f" alcanzaron en conjunto {metric_value(r['value'], r)}, sobre un total analizado de {metric_value(r['total'], r)}. Su participación combinada fue {display(r['share_pct'])} %.", record)
         elif number(r.get('value')) is not None:
-            add(f"{context}, {metric.lower()} fue de {display(r['value'])}.", record)
+            add(f"{context}, {metric.lower()} fue de {metric_value(r['value'], r)}.", record)
         if number(r.get('value_a')) is not None and number(r.get('value_b')) is not None:
             def label(key, fallback):
                 p = r.get('period_' + key, {})
@@ -163,12 +181,12 @@ def fact_catalog(evidence):
                 relative = f" {a} se ubicó {display(pct)} % por encima de {b}."
             else:
                 relative = f' Ambas entidades registraron el mismo nivel.'
-            add(f"{context}, {a} registró {display(r['value_a'])} en {metric.lower()}, frente a {display(r['value_b'])} de {b}. La diferencia fue de {display(r.get('difference'))}.{relative}", record)
+            add(f"{context}, {a} registró {metric_value(r['value_a'], r)} en {metric.lower()}, frente a {metric_value(r['value_b'], r)} de {b}. La diferencia fue de {metric_value(r.get('difference'), r)}.{relative}", record)
         rows = r.get('rows', [])
         if r.get('granularity'):
             stats = r.get('statistics', {})
             if stats.get('total') is not None:
-                add(f"{context}, el acumulado fue de {display(stats['total'])}, con un promedio de {display(stats['mean'])} por periodo observado y un coeficiente de variación de {display(stats['coefficient_variation_pct'])} %.", record)
+                add(f"{context}, el acumulado fue de {metric_value(stats['total'], r)}, con un promedio de {metric_value(stats['mean'], r)} por periodo observado y un coeficiente de variación de {display(stats['coefficient_variation_pct'])} %.", record)
             selected = [r.get('peak'), stats.get('minimum'), *rows[-2:]]
             seen = set()
             for row in selected:
@@ -176,16 +194,16 @@ def fact_catalog(evidence):
                 seen.add(row['period'])
                 share = row.get('share_of_total_pct', row.get('share_pct'))
                 observed = observation_period_label(row['period'], r.get('granularity'))
-                add(f"{context}, {observed} registró {display(row['value'])}" + (f" y representó {display(share)} % del acumulado" if share is not None else '') + ("; fue el máximo del periodo analizado." if row.get('is_peak') else '.'), record)
+                add(f"{context}, {observed} registró {metric_value(row['value'], r)}" + (f" y representó {display(share)} % del acumulado" if share is not None else '') + ("; fue el máximo del periodo analizado." if row.get('is_peak') else '.'), record)
                 change = row.get('change_from_previous_observation', {})
                 if change.get('difference') is not None:
-                    add(f"En {observed}, el cambio frente al periodo observado anterior fue de {display(change['difference'])}" + (f" ({display(change['difference_pct'])} %)" if change.get('difference_pct') is not None else '') + '.', record)
+                    add(f"En {observed}, el cambio frente al periodo observado anterior fue de {metric_value(change['difference'], r)}" + (f" ({display(change['difference_pct'])} %)" if change.get('difference_pct') is not None else '') + '.', record)
             anomalies = stats.get('anomalies', [])
             if stats.get('anomaly_testable'):
                 if anomalies:
                     for anomaly in anomalies[:4]:
                         observed = observation_period_label(anomaly['period'], r.get('granularity'))
-                        add(f"{context}, se identificó una señal atípica en {observed}, con un valor de {display(anomaly['value'])}. La puntuación robusta fue de {display(anomaly['robust_z_score'])}, frente a un umbral absoluto de {display(stats['anomaly_threshold'])}.", record)
+                        add(f"{context}, se identificó una señal atípica en {observed}, con un valor de {metric_value(anomaly['value'], r)}. La puntuación robusta fue de {display(anomaly['robust_z_score'])}, frente a un umbral absoluto de {display(stats['anomaly_threshold'])}.", record)
                 else:
                     add(f'{context}, el análisis robusto no identificó anomalías en las observaciones disponibles.', record)
             else:
@@ -202,7 +220,7 @@ def fact_catalog(evidence):
                 denominator = 'grupo' if grouped else 'universo analizado'
                 category = 'grouped_ranking' if grouped else 'ranking'
                 group_context = f" dentro de {dimension_label(r['segment_dimension'])} {display(row.get('segment'))}" if grouped else ''
-                add(f"{context}, {dimension_phrase(r.get('dimension'))} {label}{group_context} registró {display(row['value'])}" + (f" y representó {display(share)} % del {denominator}" if share is not None else '') + '.', record, category=category)
+                add(f"{context}, {dimension_phrase(r.get('dimension'))} {label}{group_context} registró {metric_value(row['value'], r)}" + (f" y representó {display(share)} % del {denominator}" if share is not None else '') + '.', record, category=category)
         drivers = r.get('drivers', [])
         closure = r.get('driver_closure') or {}
         shown_count = int(closure.get('shown_count', min(4, len(drivers))))
@@ -219,13 +237,13 @@ def fact_catalog(evidence):
                 contribution_reading = f' y compensó {display(abs(contribution_pct))} % de la diferencia total'
             else:
                 contribution_reading = f' y explicó {display(contribution_pct)} % de la diferencia total'
-            add(f"En {dimension_phrase(row['dimension'])} {display(row['value'])}, {driver_scope('a', 'A')} registró {display(row['current_value'])}, frente a {display(row['previous_value'])} de {driver_scope('b', 'B')}. Su aporte neto a la diferencia fue de {display(row['contribution'])}{contribution_reading}.", record,
+            add(f"En {dimension_phrase(row['dimension'])} {display(row['value'])}, {driver_scope('a', 'A')} registró {metric_value(row['current_value'], r)}, frente a {metric_value(row['previous_value'], r)} de {driver_scope('b', 'B')}. Su aporte neto a la diferencia fue de {metric_value(row['contribution'], r)}{contribution_reading}.", record,
                 mandatory=needs_closure, category='driver')
         if needs_closure and all(number(closure.get(key)) is not None for key in
                                  ('shown_contribution', 'residual_contribution', 'omitted_count')):
             residual_pct = closure.get('residual_contribution_pct')
-            add(f"Las {shown_count} categorías con mayor contribución suman {display(closure['shown_contribution'])}. "
-                f"Las {int(closure['omitted_count'])} categorías restantes aportan, en términos netos, {display(closure['residual_contribution'])}"
+            add(f"Las {shown_count} categorías con mayor contribución suman {metric_value(closure['shown_contribution'], r)}. "
+                f"Las {int(closure['omitted_count'])} categorías restantes aportan, en términos netos, {metric_value(closure['residual_contribution'], r)}"
                 + (f" ({display(residual_pct)} % de la diferencia neta)." if residual_pct is not None else '.'),
                 record, mandatory=True, category='driver_closure')
         quality = r.get('data_quality', {})
