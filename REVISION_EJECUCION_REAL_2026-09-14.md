@@ -60,3 +60,5 @@ Esta respuesta reveló dos defectos posteriores. Las cuatro contribuciones narra
 El renderer ahora conserva las cuatro contribuciones principales, calcula y muestra obligatoriamente el resto neto de las categorías omitidas y no admite interpretación cualitativa libre junto a hechos de drivers. La prueba completa posterior queda en **355 aprobadas, 0 fallidas y 0 advertencias**.
 
 Queda pendiente verificar una nueva exportación del gráfico; la ruta funcional de febrero sí quedó comprobada con la ejecución real.
+
+Una nueva captura reveló que el primer cierre se calculaba durante el renderizado. Aunque era aritméticamente correcto, el validador lo rechazaba porque esas cifras derivadas todavía no existían en el objeto de evidencia, por lo que la interfaz mostraba el fallback parcial. El cierre se movió a `_partition_difference`: `shown_contribution`, `residual_contribution`, sus conteos y porcentaje llegan ahora como evidencia determinística. La regresión renderiza la respuesta completa y la valida con el mismo control numérico de producción. La suite permanece en **355 aprobadas, 0 fallidas y 0 advertencias**.

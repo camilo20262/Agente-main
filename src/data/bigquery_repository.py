@@ -728,9 +728,19 @@ class BigQueryRepository:
                          'current_share_pct': percentage(x, va), 'previous_share_pct': percentage(y, vb),
                          'mix_change_pp': None if not va or not vb else percentage(x, va) - percentage(y, vb)})
         rows.sort(key=lambda r: (-abs(r['contribution']), r['value']))
+        narrative_rows = rows[:min(limit, 4)]
+        shown_contribution = sum(row['contribution'] for row in narrative_rows)
+        residual_contribution = summary['difference'] - shown_contribution
+        driver_closure = {
+            'shown_count': len(narrative_rows),
+            'shown_contribution': shown_contribution,
+            'omitted_count': len(rows) - len(narrative_rows),
+            'residual_contribution': residual_contribution,
+            'residual_contribution_pct': percentage(residual_contribution, summary['difference']),
+        }
         return {'success': True, 'value_a': va, 'value_b': vb, 'current_value': va, 'previous_value': vb,
                 **summary, 'change': summary['difference'], 'change_pct': summary['difference_pct'],
-                'drivers': rows[:limit], 'drivers_total': len(rows)}
+                'drivers': rows[:limit], 'drivers_total': len(rows), 'driver_closure': driver_closure}
 
     def explicar_diferencia_entidades(self, *, entity_dimension, value_a, value_b, dimension,
                                      metric='inv_neta', filters=None, start_date=None, end_date=None, limit=10):

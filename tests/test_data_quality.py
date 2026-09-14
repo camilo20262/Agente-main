@@ -89,6 +89,10 @@ def test_entity_difference_has_complete_partition_and_same_period(monkeypatch):
     assert result['difference'] == 50 and result['difference_pct'] == 100
     assert sum(r['contribution'] for r in result['drivers']) == 50
     assert sum(r['contribution_pct'] for r in result['drivers']) == pytest.approx(100)
+    assert result['driver_closure'] == {
+        'shown_count': 3, 'shown_contribution': 50, 'omitted_count': 0,
+        'residual_contribution': 0, 'residual_contribution_pct': 0,
+    }
     assert full.call_args_list[0].args[-1] == full.call_args_list[1].args[-1]
     assert result['comparison_type'] == 'entities'
 

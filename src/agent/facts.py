@@ -96,24 +96,21 @@ def fact_catalog(evidence):
                 category = 'grouped_ranking' if segment else 'ranking'
                 add(f"{prefix}{segment}, {r.get('dimension', 'dimensión')}={label}: {display(row['value'])}" + (f" ({display(share)} % del {denominator})" if share is not None else '') + '.', record, category=category)
         drivers = r.get('drivers', [])
-        displayed_drivers = drivers[:4]
-        drivers_total = int(r.get('drivers_total', len(drivers)) or len(drivers))
-        needs_closure = drivers_total > len(displayed_drivers)
+        closure = r.get('driver_closure') or {}
+        shown_count = int(closure.get('shown_count', min(4, len(drivers))))
+        displayed_drivers = drivers[:shown_count]
+        needs_closure = int(closure.get('omitted_count', 0) or 0) > 0
         for row in displayed_drivers:
             def driver_scope(key, fallback):
                 p = r.get('period_' + key, {})
                 return r.get('brand_' + key) or r.get('value_' + key + '_label') or (f"{p['start']} a {p['end']}" if p.get('start') else fallback)
             add(f"{prefix}, {row['dimension']}={display(row['value'])}: {display(row['current_value'])} en {driver_scope('a', 'A')} frente a {display(row['previous_value'])} en {driver_scope('b', 'B')}; contribución a la diferencia {display(row['contribution'])}" + (f" ({display(row['contribution_pct'])} % de la diferencia neta)" if row.get('contribution_pct') is not None else '') + '.', record,
                 mandatory=needs_closure, category='driver')
-        net_difference = number(r.get('difference'))
-        contributions = [number(row.get('contribution')) for row in displayed_drivers]
-        if needs_closure and net_difference is not None and all(value is not None for value in contributions):
-            shown_total = sum(contributions)
-            residual = net_difference - shown_total
-            residual_pct = None if not net_difference else residual / net_difference * 100
-            omitted = max(0, drivers_total - len(displayed_drivers))
-            add(f"Las {len(displayed_drivers)} contribuciones principales suman {display(shown_total)}; "
-                f"el resto neto de {omitted} categorías no mostradas es {display(residual)}"
+        if needs_closure and all(number(closure.get(key)) is not None for key in
+                                 ('shown_contribution', 'residual_contribution', 'omitted_count')):
+            residual_pct = closure.get('residual_contribution_pct')
+            add(f"Las {shown_count} contribuciones principales suman {display(closure['shown_contribution'])}; "
+                f"el resto neto de {int(closure['omitted_count'])} categorías no mostradas es {display(closure['residual_contribution'])}"
                 + (f" ({display(residual_pct)} % de la diferencia neta)." if residual_pct is not None else '.'),
                 record, mandatory=True, category='driver_closure')
         quality = r.get('data_quality', {})

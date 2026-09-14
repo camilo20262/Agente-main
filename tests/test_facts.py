@@ -90,7 +90,9 @@ def test_driver_response_closes_top_four_and_omits_free_directional_interpretati
     ]
     data = [{'id': 'e1', 'result': {'success': True, 'metric': 'inv_neta',
         'value_a_label': 'BMW', 'value_b_label': 'Volvo', 'value_a': 88994.42, 'value_b': 204028.21,
-        'difference': -115033.79, 'difference_pct': -56.38, 'drivers': drivers, 'drivers_total': 6}}]
+        'difference': -115033.79, 'difference_pct': -56.38, 'drivers': drivers, 'drivers_total': 6,
+        'driver_closure': {'shown_count': 4, 'shown_contribution': -110972.10, 'omitted_count': 2,
+                           'residual_contribution': -4061.69, 'residual_contribution_pct': 3.53}}}]
     facts = fact_catalog(data)
     tv_subscription = next(f for f in facts if 'TV SUSCRIPCION' in f['text'])
     output = render_narrative(json.dumps({'findings': [{'title': 'TV SUSCRIPCION',
@@ -102,3 +104,4 @@ def test_driver_response_closes_top_four_and_omits_free_directional_interpretati
     assert '3,53 % de la diferencia neta' in output
     for label in ('TV NAL', 'TELEVISION NACIONAL', 'RADIO', 'TV SUSCRIPCION'):
         assert label in output
+    assert validate_answer(output, data).valid
