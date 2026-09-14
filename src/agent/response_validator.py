@@ -94,8 +94,9 @@ def evidence_numbers(evidence, percentages=False):
         elif number(value) is not None and (not percentages or key.endswith('_pct') or key.endswith('_percentage')):
             values.append(float(value))
     for item in evidence:
-        if item.get('result', {}).get('success') is True and not item.get('historical'):
-            visit(item['result'])
+        result = item.get('result', {})
+        if (result.get('success') is True or result.get('usable_partial_evidence') is True) and not item.get('historical'):
+            visit(result)
     return values
 
 
@@ -145,7 +146,10 @@ def validate_answer(answer: str, evidence: list[dict[str, Any]], *, finish_reaso
         issues.append('markdown_enlace_incompleto')
     if re.search(r'(?m)^\s*\|.*\|\s*$', text):
         issues.append('tabla_markdown_no_permitida')
-    successful = [i['result'] for i in evidence if i.get('result', {}).get('success') is True and not i.get('historical')]
+    successful = [i['result'] for i in evidence
+                  if (i.get('result', {}).get('success') is True
+                      or i.get('result', {}).get('usable_partial_evidence') is True)
+                  and not i.get('historical')]
     if intent not in {'out_of_domain', 'attachment_analysis', 'clarification'}:
         pcts = evidence_numbers(evidence, percentages=True)
         for match in PERCENT.finditer(text):

@@ -97,6 +97,40 @@ def test_entity_difference_has_complete_partition_and_same_period(monkeypatch):
     assert result['comparison_type'] == 'entities'
 
 
+def test_entity_difference_reports_observed_side_when_other_entity_has_no_rows(monkeypatch):
+    from src.agent.finalization import safe_answer
+    from src.agent.response_validator import validate_answer
+
+    repo = BigQueryRepository(Settings(), client=object())
+    monkeypatch.setattr(repo, '_bicomp_field', lambda field, **kw: field)
+    empty = {'rows': [], 'evidence': {'rows': 0}, 'metric_label': 'Inversión publicitaria neta',
+             'requested_period': {'start': '2026-05-01', 'end': '2026-05-31'},
+             'effective_period': {'start': '2026-05-01', 'end': '2026-05-31'}}
+    observed = {'rows': [
+        {'dimension': 'RADIO', 'value': 30, 'source_rows': 1},
+        {'dimension': 'TV NAL', 'value': 20, 'source_rows': 1},
+    ], 'evidence': {'rows': 2}, 'metric_label': 'Inversión publicitaria neta'}
+    monkeypatch.setattr(repo, '_full_dimension', Mock(side_effect=[empty, observed]))
+
+    result = repo.explicar_diferencia_entidades(
+        entity_dimension='marca', value_a='BMW', value_b='Volvo', dimension='medio',
+        start_date='2026-05-01', end_date='2026-05-31')
+
+    assert result['success'] is False and result['error_type'] == 'no_data'
+    assert result['comparison_status'] == 'incomplete_entity_observation'
+    assert result['missing_entities'] == ['BMW']
+    assert result['entity_observations'] == [
+        {'label': 'BMW', 'status': 'no_rows', 'source_rows': 0, 'group_count': 0, 'observed_value': None},
+        {'label': 'Volvo', 'status': 'observed', 'source_rows': 2, 'group_count': 2, 'observed_value': 50},
+    ]
+    assert 'periodos' not in result['error']
+    evidence = [{'tool': 'explicar_diferencia_entidades_bicomp', 'result': result}]
+    answer = safe_answer(evidence, reason='no_data')
+    assert all(text in answer for text in ('BMW', 'Volvo', '50,00', '2026-05-01', '2026-05-31'))
+    assert 'no demuestra una inversión de cero' in answer
+    assert validate_answer(answer, evidence, intent='diagnostic').valid
+
+
 def test_external_query_cannot_bypass_allowlist():
     with pytest.raises(UnsafeQueryError):
         validate_read_only_sql("SELECT * FROM EXTERNAL_QUERY('connection', 'SELECT * FROM secret')", {'p.d.t'})

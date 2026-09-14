@@ -18,6 +18,26 @@ def safe_answer(evidence, *, reason=None):
                     'infrastructure': 'la fuente de datos no estuvo disponible',
                     'duplicate': 'se omitió una consulta repetida',
                     'intent_budget': 'se alcanzó el presupuesto de investigación'}
+    entity_gap = next((item.get('result', {}) for item in evidence
+                       if item.get('result', {}).get('comparison_status') == 'incomplete_entity_observation'), None)
+    if entity_gap:
+        metric = entity_gap.get('metric_label') or entity_gap.get('metric', 'la métrica solicitada')
+        period = entity_gap.get('effective_period') or entity_gap.get('requested_period') or {}
+        interval = (f" entre {period['start']} y {period['end']}"
+                    if period.get('start') and period.get('end') else '')
+        observations = entity_gap.get('entity_observations') or []
+        missing_rows = [str(item.get('label')) for item in observations if item.get('status') == 'no_rows']
+        missing_numbers = [str(item.get('label')) for item in observations if item.get('status') == 'non_numeric']
+        observed = [item for item in observations if item.get('status') == 'observed']
+        lines = ['Análisis parcial: faltan observaciones para completar la comparación.']
+        if missing_rows:
+            lines.append(f'BICOMP no contiene filas para {", ".join(missing_rows)}{interval}.')
+        if missing_numbers:
+            lines.append(f'BICOMP no contiene valores numéricos utilizables para {", ".join(missing_numbers)}{interval}.')
+        for item in observed:
+            lines.append(f"{item['label']} sí tiene datos observados: {display(item.get('observed_value'))} ({metric}){interval}.")
+        lines.append('No calculé la diferencia ni las contribuciones por dimensión, porque la ausencia de filas no demuestra una inversión de cero.')
+        return '\n\n'.join(dict.fromkeys(lines))
     lines = [f'Análisis parcial: {explanations.get(reason, reason)}.'] if reason else []
     for item in evidence:
         result = item.get('result', {})

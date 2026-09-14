@@ -665,6 +665,8 @@ if "graficas_por_turno" not in st.session_state:
     st.session_state.graficas_por_turno = {}
 if "metricas_agente" not in st.session_state:
     st.session_state.metricas_agente = {}
+if "metricas_por_turno" not in st.session_state:
+    st.session_state.metricas_por_turno = {}
 if "planes_por_turno" not in st.session_state:
     st.session_state.planes_por_turno = {}
 if "agent_service" not in st.session_state:
@@ -693,6 +695,7 @@ with st.sidebar:
         st.session_state.consultas_por_turno = {}
         st.session_state.graficas_por_turno = {}
         st.session_state.metricas_agente = {}
+        st.session_state.metricas_por_turno = {}
         st.session_state.planes_por_turno = {}
         st.session_state.agent_service = build_agent_service(client)
         st.session_state.pdf_contexto_nombre = None
@@ -916,9 +919,12 @@ for indice, mensaje in enumerate(st.session_state.mensajes):
                                     st.json(query.get("query_parameters") or {})
                         st.markdown("**Resultado:**")
                         st.json(c["resultado"])
-                if modo_debug:
+            if modo_debug:
+                plan_turno = st.session_state.planes_por_turno.get(indice)
+                metricas_turno = st.session_state.metricas_por_turno.get(indice)
+                if plan_turno or metricas_turno:
                     with st.expander("🛠 Debug del agente"):
-                        st.json({"plan": st.session_state.planes_por_turno.get(indice), "metrics": st.session_state.metricas_agente})
+                        st.json({"plan": plan_turno, "metrics": metricas_turno})
 
 # =========================================================
 # INPUT
@@ -1006,6 +1012,7 @@ if pregunta:
                     st.session_state.consultas_por_turno[indice_nuevo_mensaje] = consultas
                     st.session_state.graficas_por_turno[indice_nuevo_mensaje] = graficas
                     st.session_state.planes_por_turno[indice_nuevo_mensaje] = plan
+                    st.session_state.metricas_por_turno[indice_nuevo_mensaje] = metricas
                 st.session_state.metricas_agente = metricas
 
             except Exception as e:

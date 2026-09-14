@@ -62,3 +62,13 @@ El renderer ahora conserva las cuatro contribuciones principales, calcula y mues
 Queda pendiente verificar una nueva exportación del gráfico; la ruta funcional de febrero sí quedó comprobada con la ejecución real.
 
 Una nueva captura reveló que el primer cierre se calculaba durante el renderizado. Aunque era aritméticamente correcto, el validador lo rechazaba porque esas cifras derivadas todavía no existían en el objeto de evidencia, por lo que la interfaz mostraba el fallback parcial. El cierre se movió a `_partition_difference`: `shown_contribution`, `residual_contribution`, sus conteos y porcentaje llegan ahora como evidencia determinística. La regresión renderiza la respuesta completa y la valida con el mismo control numérico de producción. La suite permanece en **355 aprobadas, 0 fallidas y 0 advertencias**.
+
+## Seguimiento `solo mayo`
+
+La trazabilidad de la ejecución confirmó que el seguimiento conservó BMW, Volvo, el desglose por medio y resolvió correctamente `2026-05-01` a `2026-05-31`. La partición de BMW devolvió cero filas y la de Volvo devolvió dos. Por tanto, el fallo actual no era de memoria ni calendario: la comparación no tenía observaciones para ambas entidades.
+
+La respuesta anterior ocultaba ese hallazgo con el texto genérico «no obtuve evidencia utilizable», y el error del repositorio hablaba de «ambos periodos» aunque se comparaban entidades. Ahora el resultado conserva una observación estructurada por entidad, comunica cuál no tiene filas, muestra el total de la entidad que sí tiene datos y omite diferencia y drivers. La ausencia de filas no se convierte en inversión cero.
+
+La primera ejecución idéntica había terminado antes de crear una consulta, pero su diagnóstico quedó irrecuperable porque la interfaz solo mostraba debug cuando había evidencia y reutilizaba las métricas del último turno. Las métricas y el plan quedan ahora almacenados por mensaje, y el panel debug aparece también en fallos previos a la consulta. Así, una repetición futura permitirá distinguir un rechazo del plan, un fallo del proveedor y un resultado sin filas.
+
+Verificación posterior: **356 pruebas aprobadas, 0 fallidas y 0 advertencias**.

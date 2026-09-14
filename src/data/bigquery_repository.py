@@ -231,14 +231,41 @@ class BigQueryRepository:
                 **({"error": "La consulta BICOMP no produjo resultados utilizables.", "error_type": "no_data"} if not has_data else {}),
                 "evidence": result["evidence"]}
 
+    @staticmethod
+    def _entity_gap(observations: list[dict[str, Any]]) -> dict[str, Any]:
+        unavailable = [item['label'] for item in observations if item['status'] != 'observed']
+        if not unavailable:
+            return {}
+        without_rows = [item['label'] for item in observations if item['status'] == 'no_rows']
+        without_numbers = [item['label'] for item in observations if item['status'] == 'non_numeric']
+        details = []
+        if without_rows:
+            details.append('No se observaron filas para ' + ', '.join(map(str, without_rows)))
+        if without_numbers:
+            details.append('No se obtuvieron valores numéricos para ' + ', '.join(map(str, without_numbers)))
+        return {
+            'error_type': 'no_data',
+            'usable_partial_evidence': True,
+            'comparison_status': 'incomplete_entity_observation',
+            'entity_observations': observations,
+            'missing_entities': unavailable,
+            'error': '; '.join(details) + ' en el alcance solicitado; no se asume inversión cero.',
+        }
+
     def comparar_marcas(self, *, brand_a: str, brand_b: str, metric: str = "inv_neta", filters: dict[str, Any] | None = None, start_date: str | date | None = None, end_date: str | date | None = None) -> dict[str, Any]:
         first = self.consultar_inversion(metric=metric, filters={**(filters or {}), "marca": brand_a}, start_date=start_date, end_date=end_date)
         second = self.consultar_inversion(metric=metric, filters={**(filters or {}), "marca": brand_b}, start_date=start_date, end_date=end_date)
         a, b = first["value"], second["value"]
         difference = None if a is None or b is None else a - b
         missing = [brand for brand, value in ((brand_a, a), (brand_b, b)) if value is None]
+        observations = [
+            {'label': label, 'status': 'observed' if value is not None else ('no_rows' if not result.get('row_count') else 'non_numeric'),
+             'source_rows': int(result.get('row_count') or 0), 'observed_value': value}
+            for label, value, result in ((brand_a, a, first), (brand_b, b, second))
+        ]
         return {"success": a is not None and b is not None, "domain": "bicomp", "source": "bigquery", "metric": metric, "aggregation": "sum", "brand_a": brand_a, "brand_b": brand_b,
                 **({"error": "La consulta BICOMP no produjo resultados para las marcas: " + ", ".join(missing) + "."} if missing else {}),
+                **self._entity_gap(observations),
                 "filters": filters or {}, "period": first.get("period", {}), "coverage_a": first.get("effective_period"), "coverage_b": second.get("effective_period"),
                 "requested_period": first.get("requested_period", {}), "effective_period": first.get("effective_period", {}), "is_partial": first.get("is_partial", False),
                 "warnings": first.get("warnings", []) + second.get("warnings", []),
@@ -649,6 +676,11 @@ class BigQueryRepository:
         a, b = first["value"], second["value"]
         difference = None if a is None or b is None else a - b
         missing = [label for label, value in ((value_a, a), (value_b, b)) if value is None]
+        observations = [
+            {'label': label, 'status': 'observed' if value is not None else ('no_rows' if not result.get('row_count') else 'non_numeric'),
+             'source_rows': int(result.get('row_count') or 0), 'observed_value': value}
+            for label, value, result in ((value_a, a, first), (value_b, b, second))
+        ]
         clarification = {}
         if missing:
             catalog = self._catalog(dimension, filters=filters, start_date=start_date, end_date=end_date, limit=21)
@@ -659,6 +691,7 @@ class BigQueryRepository:
                 "metric_label": first.get("metric_label"), "unit": first.get("unit"), "aggregation": "sum",
                 "clarification_options": clarification,
                 **({"error": f"La consulta BICOMP no produjo resultados para {dimension}: " + ", ".join(missing) + "."} if missing else {}),
+                **self._entity_gap(observations),
                 "dimension": dimension, "value_a_label": value_a, "value_b_label": value_b,
                 "filters": filters or {}, "period": first.get("period", {}), "coverage_a": first.get("effective_period"), "coverage_b": second.get("effective_period"),
                 "requested_period": first.get("requested_period", {}), "effective_period": first.get("effective_period", {}), "is_partial": first.get("is_partial", False),
@@ -756,6 +789,19 @@ class BigQueryRepository:
         current = self._full_dimension(dimension, metric, {**(filters or {}), entity_dimension: value_a}, period)
         previous = self._full_dimension(dimension, metric, {**(filters or {}), entity_dimension: value_b}, period)
         calculated = self._partition_difference(current, previous, dimension, limit)
+        if calculated.get('success') is not True:
+            observations = []
+            for label, partition in ((value_a, current), (value_b, previous)):
+                rows = partition.get('rows') or []
+                numeric = bool(rows) and all(row.get('value') is not None for row in rows)
+                observations.append({
+                    'label': label,
+                    'status': 'observed' if numeric else ('no_rows' if not rows else 'non_numeric'),
+                    'source_rows': sum(int(row.get('source_rows') or 0) for row in rows),
+                    'group_count': len(rows),
+                    'observed_value': sum(row['value'] for row in rows) if numeric else None,
+                })
+            calculated.update(self._entity_gap(observations))
         return {**calculated, 'source': self.source, 'domain': 'bicomp', 'metric': metric,
                 'metric_label': current.get('metric_label'), 'filters': filters or {},
                 'entity_dimension': entity_dimension, 'dimension': dimension,
